@@ -1,0 +1,113 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body>
+<h1>Używanie znaczników formatowania tekstu</h1>
+
+<p>Program wykorzystuje bibliotekę PyTextile (autorstwa <a href="http://www.diveintomark.org" title="Strony Marka Pilgrima">Marka Pilgrima</a>), bazującą z kolei na orginalnym pomyśle Deana Allena i jego bibliotece <a href="http://www.textism.com/tools/textile" title="Strona domowa biblioteki (PHP) Textile">Textile</a>. Idea tego mechanizmu polega na zastępowaniu prostych znaczników, które łatwiej jest pisać, właściwymi znacznikami języka HTML. Podstawowa różnica, między edytowaniem dokumentu hipertekstowego, a dokumentu Textile polega na tym, że znaczniki są jedynie otwierane (nie ma znaczników zamykających), a ich zapis jest mocno uproszczony. Ponadto biblioteka Textile obsługuje jedynie niektóre, podstawowe znaczniki HTML.</p>
+<h2>Formatowanie bloków tekstu</h2>
+<p>Aby zastosowany został znacznik z tej grupy, pomiędzy wierszami musi zostać zachowany odstęp co najmniej jednej linii - wpisanie kolejnych linii "jedna pod drugą" (bez odstępu) spowoduje, że wstawiane będą jedynie znaczniki nowego wiersza w tym samym akapicie. Znaczniki list wymagają, by kolejne elementy, które mają utworzyć listę, były podawane bez rozdzielających wierszy, bo w przeciwnym przypadku będą tworzone nowe listy.</p>
+<ul>
+<li><strong>Nagłówek: hn</strong><br>
+Akapity, zaczynające się od znacznika 'hn.&nbsp;' (gdzie n przyjmuje wartość od 1 do 6) zostaną zamknięte w znacznikach nagłówków odpowiedniego poziomu.</li>
+<li><strong>Nagłówek z deklaracją klasy CSS: hn(klasa)</strong><br>
+Nagłówki, zaczynające się od znacznika 'hn(klasa).&nbsp;' otrzymają atrybut wskazanej klasy z arkusza stylów CSS.</li>
+<li><strong>Akapit: p. (znacznik domyślny)</strong><br>
+Znacznik akapitu 'p.&nbsp;' jest znacznikiem nadawanym domyślnie, jeżeli żaden inny nie zostanie podany.</li>
+<li><strong>Akapit z definicją klasy CSS: p(klasa)</strong><br>
+Akapity, zaczynające się od znacznika 'p(klasa).&nbsp;' otrzymają atrybut wskazanej klasy z arkusza stylów CSS.</li>
+<li><strong>Blok cytatu: bq</strong><br>
+Akapity, zaczynające się od znacznika 'bq.&nbsp;' zostaną zamknięte w znacznikach bloku cytowania.</li>
+<li><strong>Lista numerowana: #</strong><br>
+Kolejne wiersze, zaczynające się od znacznika '#&nbsp;' utworzą listę numerowaną. Kolejne wiersze muszą występować dokładnie jeden pod drugim.</li>
+<li><strong>Lista nienumerowana: *</strong><br>
+Kolejne wiersze, zaczynające się od znacznika '*&nbsp;' utworzą listę nienumerowaną.</li>
+</ul>
+<h2>Formatowanie fragmentów akapitu</h2>
+<p><strong>Uwaga!</strong> Nie wszystkie style mogą być poprawnie wyświetlane, gdy dokument ten jest oglądany w okienku pomocy programu JogTools! Aby zapoznać się dokładnie z działaniem wszystkich znaczników, najlepiej będzie otworzyć ten dokument w samodzielnej przeglądarce dokumentów HTML, np. Mozilla, Netscape czy Opera.</p>
+<p><table border="1" cellpadding="4">
+<tr>
+<td>_emfaza_</td>
+<td><em>emfaza</em></td>
+</tr>
+<tr>
+<td>__kursywa__</td>
+<td><i>kursywa</i></td>
+</tr>
+<tr>
+<td>*wzmocnienie*</td>
+<td><strong>wzmocnienie</strong></td>
+</tr>
+<tr>
+<td>**pogrubienie**</td>
+<td><b>pogrubienie</b></td>
+</tr>
+<tr>
+<td>??cytowanie??</td>
+<td><cite>cytowanie</cite></td>
+</tr>
+<tr>
+<td>-usunięty-</td>
+<td><del>usunięty</del></td>
+</tr>
+<tr>
+<td>+wstawiony+</td>
+<td><ins>wstawiony</ins></td>
+</tr>
+<tr>
+<td>^indeks górny^</td>
+<td><sup>indeks górny</sup></td>
+</tr>
+<tr>
+<td>~indeks dolny~</td>
+<td><sub>indeks dolny</sub></td>
+</tr>
+<tr>
+<td>@kod@</td>
+<td><code>kod</code></td>
+</tr>
+<tr>
+<td>==bez formatowania==</td>
+<td>bez formatowania</td>
+</tr>
+<tr>
+<td>"odnośnik":adres</td>
+<td><a href="adres">odnośnik</a></td>
+</tr>
+<tr>
+<td>"odnośnik(Tytuł odnośnika)":adres</td>
+<td><a href="adres" title="Tytuł odnośnika">odnośnik</a></td>
+</tr>
+<tr>
+<td>!pomidor.jpg!</td>
+<td><img src="pomidor.jpg" /></td>
+</tr>
+<tr>
+<td>!pomidor.jpg(To jest pomidor)!</td>
+<td><img src="pomidor.jpg" alt="To jest pomidor" /></td>
+</tr>
+<tr>
+<td>!pomidor.jpg!:adres</td>
+<td><a href="adres"><img src="pomidor.jpg" /></a></td>
+</tr>
+<tr>
+<td>ABC(Always Be Closing)</td>
+<td><acronym title="Always Be Closing">ABC</acronym></td>
+</tr>
+</table></p>
+<h2>Przykład</h2>
+<p>Oto przykładowy fragment, zawierający znaczniki Textile:</p>
+<pre>
+p. To jest pierwsza wiadomość i jej pierwszy akapit - całkiem 
+zwyczajny, taki, jak wiele ich występuje w każdym tekście.
+bq. Dzięki temu, że jest pierwsza, ma specjalne prawa - 
+np. zamieszczę w niej "link do strony na zewnątrz":http://www.artima.com i
+jeden akapit dam jako _blokowe wcięcie_.
+</pre>
+<p>Po przetworzeniu będzie on wyglądać następująco:</p>
+<p>To jest pierwsza wiadomość i jej pierwszy akapit - całkiem zwyczajny, taki, jak wiele ich występuje w każdym tekście.</p>
+<blockquote>Dzięki temu, że jest pierwsza, ma specjalne prawa - np. zamieszczę w niej <a href="http://www.artima.com">link do strony na zewnątrz</a> i jeden akapit dam jako <em>blokowe wcięcie</em>.</blockquote>
+</body>
+</html>
