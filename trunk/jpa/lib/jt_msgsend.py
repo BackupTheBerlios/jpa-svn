@@ -18,8 +18,6 @@
 
 import threading
 
-from qt import *
-
 import jt_transport2
 
 class Sender:
@@ -32,8 +30,7 @@ class Sender:
 
     def send(self, message):
         if message['msgid'] in self.locks:
-            raise IOError, qApp.translate('Misc', 
-                'Already sending this message.', None)
+            raise IOError, 'Already sending this message.'
         else:
             self.locks.append(message['msgid'])
             sender = MessageSender(message, self.receiver, self.locks)
@@ -67,11 +64,14 @@ class MessageSender(threading.Thread):
 
 class Event:
 
-    def __init__(self, text):
-        self.text = text
+    def __init__(self, evtType):
+        self.evtType = evtType
         
     def setData(self, data):
-        self.eventData = data
+        self.evtData = data
         
     def data(self):
-        return self.eventData
+        return self.evtData
+        
+    def type(self):
+        return self.evtType
