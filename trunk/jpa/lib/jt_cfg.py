@@ -209,7 +209,7 @@ class AppConfig:
     def getCurrentProfileOption(self, name):
         try:
             return self.profiles[self.currentProfile][name]
-        except KeyError:
+        except (KeyError, AttributeError):
             # ignore any errors, we build new configuration
             pass
 
