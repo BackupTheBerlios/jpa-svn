@@ -50,10 +50,7 @@ def msgNew(parent, config):
         body = unicode(dlg.teBody.text()).strip()
         bodyType = unicode(dlg.cbxMsgType.currentText()).strip()
         level = unicode(dlg.sbxLevel.text())
-        if (len(title) == 0):
-            #TODO warning maybe ...
-            title = "forgoten"
-        if (len(title) > 0) and (len(body) > 0):
+        if (len(title) > 0) or (len(body) > 0):
             msg['title'] = title
             msg['body'] = body
             msg['edited'].append(time.localtime())
@@ -68,7 +65,7 @@ def msgEdit(parent, message):
         body = unicode(dlg.teBody.text()).strip()
         bodyType = unicode(dlg.cbxMsgType.currentText()).strip()
         level = unicode(dlg.sbxLevel.text())
-        if (len(title) > 0) and (len(body) > 0):
+        if (len(title) > 0) or (len(body) > 0):
             message['title'] = title
             message['body'] = body
             message['edited'].append(time.localtime())
@@ -103,9 +100,12 @@ class MsgEditDialog(MsgEditDialogImpl):
         msg['body'] = unicode(self.teBody.text()).strip()
         msg['content-type'] = unicode(self.cbxMsgType.currentText()).strip()
         qjt_msgpreviewdialog.msgPreview(self, msg)
-        
+    
     def checkClick(self):
         curText = unicode(self.teBody.text())
         newText = qjt_spellcheckdialog.checkSpelling(curText, self)
         if newText != curText:
             self.teBody.setText(newText)
+
+    def closeEvent(self, e):
+        pass

@@ -266,7 +266,7 @@ class MainForm(MainFormImpl):
             if msg is None:
                 msg = self.__tr('Message has been sent.')
             QMessageBox.information(self, self.__tr('Information'),
-                unicode(msg, 'UTF-8', 'replace'), QMessageBox.Ok)
+                unicode(msg), QMessageBox.Ok)
             self.msgItemSelected()
         elif t == 10001:
             # sender thread started work
