@@ -16,7 +16,8 @@
 # along with JPA; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-import sys, locale
+import sys, locale, glob, os, string
+import os.path as op
 
 try:
     import aspell
@@ -74,6 +75,12 @@ class SpellChecker:
     def addToSessionDict(self, word):
         abstractMethod(self)
 
+    def getLangs(self):
+        abstractMethod(self)
+
+    def setLang(self, lang):
+        abstractMethod(self)
+
 
 class AspellChecker(SpellChecker):
     """Aspell-based spell checker"""
@@ -98,6 +105,23 @@ class AspellChecker(SpellChecker):
     def addToSessionDict(self, word):
         self.__s.addtoSession(word)
 
+    def getLangs(self):
+        directory = self.__s.getoption('dict-dir')
+        allDicts = glob.glob(op.join(directory, '*.multi'))
+        dicts = []
+        for d in allDicts:
+            if d.find('-') == -1:
+                dictName = op.splitext(op.basename(d))[0]
+                normName = locale.normalize(dictName).split('.')[0]
+                if not normName in dicts:
+                    dicts.append(normName)
+        dicts.sort()
+        print dicts
+        return dicts
+
+    def setLang(self, lang):
+        self.__s.setoption('lang', lang)
+
 
 class MyspellChecker(SpellChecker):
     """Myspell-based spell checker"""
@@ -120,8 +144,15 @@ class MyspellChecker(SpellChecker):
         return self.__s.suggest(word)
 
     def addToUserDict(self, word):
+        """Myspell has no such feature, so we just ignore this call..."""
         pass
 
     def addToSessionDict(self, word):
         if not (word in self.sessionDict):
             self.sessionDict.append(word)
+
+    def getLangs(self):
+        return self.__s.list_languages()
+
+    def setLang(self, lang):
+        self.__s.load_language(lang)

@@ -19,19 +19,14 @@
 import locale
 import shlex, string, StringIO
 
-try:
-    from myspell import MySpell
-    __hasMyspell = True
-except ImportError:
-    # no MySpell library, go to bed
-    __hasMyspell = False
-
 from qt import *
 
 from spellcheckdialog_impl import SpellCheckDialogImpl
+import jt_spellcheck
 
 def checkSpelling(text, parent):
-    if not __hasMyspell:
+    if jt_spellcheck.getSpellChecker() is None:
+        # no spell checker available
         return text
     dlg = SpellCheckDialog(text, parent=parent)
     if dlg.exec_loop() == 1:
@@ -46,8 +41,9 @@ class SpellCheckDialog(SpellCheckDialogImpl):
         qApp.setOverrideCursor(QCursor(Qt.WaitCursor))
         try:
             self.tbText.setText(text)
-            self.speller = MySpell()
-            langs = self.speller.list_languages()
+            self.speller = jt_spellcheck.getSpellChecker()
+            langs = self.speller.getLangs()
+            self.cbxLang.clear()
             for lang in langs:
                 self.cbxLang.insertItem(lang)
             self.lang, self.enc = locale.getlocale()
@@ -66,7 +62,7 @@ class SpellCheckDialog(SpellCheckDialogImpl):
         qApp.setOverrideCursor(QCursor(Qt.WaitCursor))
         try:
             self.src = unicode(self.tbText.text()).encode(self.enc)
-            self.speller.load_language(unicode(self.cbxLang.currentText()))
+            self.speller.setLang(unicode(self.cbxLang.currentText()))
             self.fp = StringIO.StringIO(self.src)
             self.tokenizer = shlex.shlex(self.fp)
             self.tokenizer.whitespace += ',./()-;:"*_~<>{}[]+=|&?#@$%!' \
@@ -81,7 +77,7 @@ class SpellCheckDialog(SpellCheckDialogImpl):
         if self.curWord:
             (found, self.curPara, self.curPos) = \
                 self.tbText.find(QString(self.curWord), True, True)
-            if not self.speller.spell(self.curWord):
+            if not self.speller.checkWord(self.curWord):
                 suggestions = self.speller.suggest(self.curWord)
                 self.lbxSuggest.clear()
                 for s in suggestions:
@@ -115,7 +111,7 @@ class SpellCheckDialog(SpellCheckDialogImpl):
         while self.curWord:
             (found, self.curPara, self.curPos) = \
                 self.tbText.find(QString(self.curWord), True, True)
-            if (self.speller.spell(self.curWord) or 
+            if (self.speller.checkWord(self.curWord) or 
                 (self.curWord in self.ignoredWords)):
                 self.curWord = self.tokenizer.get_token()
             else:

@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>487</width>
-            <height>431</height>
+            <height>433</height>
         </rect>
     </property>
     <property name="caption">
@@ -136,7 +136,7 @@
                                         </property>
                                         <widget class="QLayoutWidget">
                                             <property name="name">
-                                                <cstring>layout8</cstring>
+                                                <cstring>layout7</cstring>
                                             </property>
                                             <vbox>
                                                 <property name="name">
@@ -186,6 +186,17 @@
                                                 </widget>
                                                 <widget class="QPushButton">
                                                     <property name="name">
+                                                        <cstring>btnAddToDict</cstring>
+                                                    </property>
+                                                    <property name="text">
+                                                        <string>Add to &amp;dict</string>
+                                                    </property>
+                                                    <property name="accel">
+                                                        <string>Alt+D</string>
+                                                    </property>
+                                                </widget>
+                                                <widget class="QPushButton">
+                                                    <property name="name">
                                                         <cstring>btnSkip</cstring>
                                                     </property>
                                                     <property name="text">
@@ -225,7 +236,7 @@
                                                     <property name="sizeHint">
                                                         <size>
                                                             <width>20</width>
-                                                            <height>40</height>
+                                                            <height>80</height>
                                                         </size>
                                                     </property>
                                                 </spacer>
@@ -358,6 +369,12 @@
         <receiver>SpellCheckDialogImpl</receiver>
         <slot>ignoreClick()</slot>
     </connection>
+    <connection>
+        <sender>btnAddToDict</sender>
+        <signal>clicked()</signal>
+        <receiver>SpellCheckDialogImpl</receiver>
+        <slot>addToDictClick()</slot>
+    </connection>
 </connections>
 <slots>
     <slot>suggestDblClick()</slot>
@@ -366,6 +383,7 @@
     <slot>replaceAllClick()</slot>
     <slot>skipClick()</slot>
     <slot>ignoreClick()</slot>
+    <slot>addToDictClick()</slot>
 </slots>
 <layoutdefaults spacing="8" margin="8"/>
 </UI>
