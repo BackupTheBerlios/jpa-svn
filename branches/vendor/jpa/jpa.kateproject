@@ -1,0 +1,19 @@
+[Dir bin]
+Dirs=
+Files=qtjpa.py
+
+[Dir doc]
+Dirs=
+Files=about.htm/CHANGELOG/COPYING/INSTALL/jt.rc/pomidor.jpg/README/tags.htm/usage.htm
+
+[Dir lib]
+Dirs=
+Files=aboutdialog_impl.py/applogdialog_impl.py/asynchttp.py/id3reader.py/__init__.py/jt_cfg.py/jt_const.py/jt_storage2.py/jt_transport2.py/jt_version.py/jt_xmmsinfo.py/mainform_impl.py/msgeditdialog_impl.py/msghistorydialog_impl.py/msgimport_impl.py/msgpreviewdialog_impl.py/optionsdialog_impl.py/qjt_aboutdialog.py/qjt_applogdialog.py/qjt_main.py/qjt_msgeditdialog.py/qjt_msghistorydialog.py/qjt_msgimport.py/qjt_msgpreviewdialog.py/qjt_msgsend.py/qjt_optionsdialog.py/textile.py/spellcheckdialog_impl.py/qjt_spellcheckdialog.py/mainform2_impl.py/qjt_main2.py/archviewdialog_impl.py/qjt_archviewdialog.py/qjt_pixmapprovider.py/qjt_cfg.py/jt_storage.py/repleditdialog_impl.py
+
+[Project Dir]
+Dirs=lib/bin/doc
+Files=
+
+[Project File]
+Name=JPA
+Type=Default
