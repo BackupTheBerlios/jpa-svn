@@ -132,9 +132,13 @@ class MyspellChecker(SpellChecker):
         case the dictionary is not available, en_US will be used."""
         self.__s = myspell.MySpell()
         if lang is None:
-            (lang, enc) = locale.getdefaultlocale()
-        else:
-            self.__s.load_language(lang)
+            (lang, enc) = locale.getlocale()
+            if lang is None:
+                (lang, enc) = locale.getdefaultlocale()
+        l = self.__s.list_languages()
+        if not lang in l:
+            lang = 'en_US'
+        self.__s.load_language(lang)
         self.sessionDict = []
 
     def checkWord(self, word):
