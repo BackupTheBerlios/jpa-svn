@@ -1,0 +1,258 @@
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<class>AboutDialogImpl</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>AboutDialogImpl</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>511</width>
+            <height>458</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>About JPA</string>
+    </property>
+    <property name="modal">
+        <bool>true</bool>
+    </property>
+    <hbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout16</cstring>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QFrame">
+                    <property name="name">
+                        <cstring>pnTop</cstring>
+                    </property>
+                    <property name="frameShape">
+                        <enum>StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                        <enum>Raised</enum>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>layout5</cstring>
+                            </property>
+                            <vbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QLabel">
+                                    <property name="name">
+                                        <cstring>imgLogo</cstring>
+                                    </property>
+                                    <property name="pixmap">
+                                        <pixmap>image0</pixmap>
+                                    </property>
+                                    <property name="scaledContents">
+                                        <bool>false</bool>
+                                    </property>
+                                    <property name="alignment">
+                                        <set>AlignCenter</set>
+                                    </property>
+                                </widget>
+                                <widget class="QTabWidget">
+                                    <property name="name">
+                                        <cstring>tabWidget2</cstring>
+                                    </property>
+                                    <property name="tabShape">
+                                        <enum>Rounded</enum>
+                                    </property>
+                                    <widget class="QWidget">
+                                        <property name="name">
+                                            <cstring>tab</cstring>
+                                        </property>
+                                        <attribute name="title">
+                                            <string>Program</string>
+                                        </attribute>
+                                        <hbox>
+                                            <property name="name">
+                                                <cstring>unnamed</cstring>
+                                            </property>
+                                            <widget class="QLayoutWidget">
+                                                <property name="name">
+                                                    <cstring>layout4</cstring>
+                                                </property>
+                                                <vbox>
+                                                    <property name="name">
+                                                        <cstring>unnamed</cstring>
+                                                    </property>
+                                                    <widget class="QLabel">
+                                                        <property name="name">
+                                                            <cstring>lbProgName</cstring>
+                                                        </property>
+                                                        <property name="font">
+                                                            <font>
+                                                                <pointsize>14</pointsize>
+                                                                <bold>1</bold>
+                                                            </font>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string>Jogger Publishing Assistant</string>
+                                                        </property>
+                                                    </widget>
+                                                    <widget class="QLabel">
+                                                        <property name="name">
+                                                            <cstring>lbProgVer</cstring>
+                                                        </property>
+                                                        <property name="font">
+                                                            <font>
+                                                                <bold>1</bold>
+                                                            </font>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string></string>
+                                                        </property>
+                                                    </widget>
+                                                    <widget class="QLabel">
+                                                        <property name="name">
+                                                            <cstring>lbProgCopy</cstring>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string>Copyright: (C) 2003, 2004 Jarek Zgoda &lt;jzgoda@gazeta.pl&gt;</string>
+                                                        </property>
+                                                    </widget>
+                                                    <spacer>
+                                                        <property name="name">
+                                                            <cstring>spacer3</cstring>
+                                                        </property>
+                                                        <property name="orientation">
+                                                            <enum>Vertical</enum>
+                                                        </property>
+                                                        <property name="sizeType">
+                                                            <enum>Expanding</enum>
+                                                        </property>
+                                                        <property name="sizeHint">
+                                                            <size>
+                                                                <width>20</width>
+                                                                <height>40</height>
+                                                            </size>
+                                                        </property>
+                                                    </spacer>
+                                                </vbox>
+                                            </widget>
+                                        </hbox>
+                                    </widget>
+                                    <widget class="QWidget">
+                                        <property name="name">
+                                            <cstring>tab</cstring>
+                                        </property>
+                                        <attribute name="title">
+                                            <string>License</string>
+                                        </attribute>
+                                        <hbox>
+                                            <property name="name">
+                                                <cstring>unnamed</cstring>
+                                            </property>
+                                            <widget class="QTextBrowser">
+                                                <property name="name">
+                                                    <cstring>tbLicense</cstring>
+                                                </property>
+                                                <property name="textFormat">
+                                                    <enum>PlainText</enum>
+                                                </property>
+                                                <property name="wordWrap">
+                                                    <enum>NoWrap</enum>
+                                                </property>
+                                                <property name="tabChangesFocus">
+                                                    <bool>true</bool>
+                                                </property>
+                                            </widget>
+                                        </hbox>
+                                    </widget>
+                                </widget>
+                            </vbox>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QFrame">
+                    <property name="name">
+                        <cstring>pnBottom</cstring>
+                    </property>
+                    <property name="frameShape">
+                        <enum>StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                        <enum>Sunken</enum>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>layout1</cstring>
+                            </property>
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <spacer>
+                                    <property name="name">
+                                        <cstring>spacer1</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Horizontal</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Expanding</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>40</width>
+                                            <height>20</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                                <widget class="QPushButton">
+                                    <property name="name">
+                                        <cstring>btnClose</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>&amp;Close</string>
+                                    </property>
+                                    <property name="accel">
+                                        <string>Alt+C</string>
+                                    </property>
+                                    <property name="default">
+                                        <bool>true</bool>
+                                    </property>
+                                </widget>
+                            </hbox>
+                        </widget>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+    </hbox>
+</widget>
+<images>
+    <image name="image0">
+        <data format="XPM.GZ" length="21717">789ced9c5973e23810c7dff329a8e46d6a2b931020a1b6f681c34ce6dc79dcaaad7d902f62329823f880a9fdeeabee966c0e1944c2324a70a78af0b7ba25ab7f58926592f7ef2a7f7dff5a79f7feec69c6668153711ed8b4f2ce8d86c3f9dffffcf1f3ecbc767555a9572bb55ae5fafcb7b3f3a8e2542eeaac56bbbe0369816c546b4ef50a640f25abd7497e03797b737b7d7b03b28bd2aebb541a82bcbb6908e7164abbe1569b20bf826cd69af5660d641ba5735ba7d2114856bb15ce314ae74e94ce41dab5bbe60d9ef318a4536f5e93eca0749ba23401e9d69928fd4ed2adba75905f507af0037202d26b3046ce294acfaede60bb0b907ec36624ff24093f202f51fa8c5d617f3f09e991bccf2426d6276957afb1f442c806a5dd969252f7414846f26326f1340652d2397f16d2a39364241dd10547ca1a3aff10924302d917d26ba07449ba55e2fb2064e3ce06f928a4d774400e497a5586321092d92ec827213d07e58ca4dfa0b44f85641e4a4f486e9858d3ec829db499c8e4c49198c8e4d49118c8e4e49198c7a444621c931289714c4a24cc3426251230a3989448d04c625222213388498944583113dbe16697488e6fc54c5c8f9b5b2239be99c2a444929b214c4a244b56ccc471b9392592e39b0e13bfff1004813ba0e3be1b048fce004aed7505be8fdcf7e1475ec50f77180cfb87471286e168498ec2709c154c0e90995d36e1edecf21967e7989fde6ed318bb06538f2cf021e94f5e66ce9ae214a4ef6c20ab207b3cf8551245d1724ec2288ab382e45935ee67096f67974f9c9d637e7abb6d37137f9a2536e087fbde328555b5ecfbb4cac41b1c18c94933c1b4cf5c99587cf3e44e89c2aa22dfe983daf72548d2988f14f3c5f22162b298b7f8f89062a75badb09d60c1888eb13114263886b4f9b18e08e5c3ceb88dbe3c3e0c5b5031af3f811166c4121a9414b1e94838a7edb035ca9914c672265dee3a964cb2d6d89c1f6d170cb2bb9988df8148ecaadc5ab82e9f8f043e93dcac6528c864615149029d464b9978d363f258077223de2d57c7b324e27b0b4a5a0875d2875b112bc2ba8cf5c431c96457ec985cf2d66481f282fed54cf406ae16cf44c213315f6732e7a03abcb485d749077b09c9863eb309e4050bb9b4622b1b3e125180f13daab80d7edcc582c6dacad8966862923741b62d16ab8f8949de5a7eb6e631d19c4bc2ac5b6b4ce2ec054b259304077b7c59f3c898ac17c030839718eb8254b9289a20d38d5555651c13dde9fd084ce0581a8997643f26bab1af828926125cdd27968209dc00a4dd43308174ce23f192eec74437f6d7319905d355df62fba00b852f6868525e63024ba028dac224ece5536f5e990a163f064ba988d653aa58eed70b554cb6c79ac044980e93fb8f7a44162d5aa60826780b4d4cc402a6904914e932910b37aa57152b3d36996c8d7d654c2e2f6d2d263089a66b630f769abfb3926df349328ee3b11613bcde225cadb6993296fbb593388ed30d265b634d60f2e8a0f95a4c3e695d296b737cce649f397e0713bce2ba728854c516ce27db634d60b221b7dabdfdd90c2638e2e0dd39646a3f265b635f1f13ad89fe184c70311b8fe135dd97c9d6d8d7c84463a2e75db0c22863227754b097516889ae5a7c514c37d9bd1edc54835bd782215ec1a46b89f928828a61d3056aece0275e34b11e1b8b2652b8678726f23dc8e258ac7e9edf03516bf26c4d65a231d14f2c9a42e55a78821b4e23defd2e1500130b40e0a2b60739e369eea05bb8503181ad10ee125ba2265a3c4db2ed6645ec02a7726bcc0b21bab7c4a438164eb0bd9073966c0d3a64bd90c9d09f6933195ecef664a271a52449baa2d344746792e47bab93ac8bf2e0244956369373264c962449c1cebe227691e4152bea55c6a62b9e596bbca6e7331978b9c9b5d4142148269952faea3cd2ffa433d11fce741e7dfcff6700d79cb250e339e363966650ce52da9d357579395cf1dde36b169a378f87cbc831db539f011fd73aca429defadb8381679337aa8de879d93991c9e5655e6fbd45fad62a7ddeb6fb3bc792b66f2b094509fee018539cec0cf9f1dae2afafea4bf51db6e2ba1482b603208e8cb0f8aef9bf4036ef4dc7d43bdc474f7bedebe153011f3c454f181cff7b4861bea65a6b7f7f5f66d2b9399eaa1474661e86fa89799deded7dbb70226308138eaafffd8b4c53850a917dafd87a32e894d3583fefe04ac9ce899714cca899e19c7a49ce899814cca2bc53c26c7defb32d0cc63524ef4263239f5e1cb4426a73ed1e3ff22fcfaad34830cffc7e397efa51964e7fffe7ef61face6ec54</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>btnClose</sender>
+        <signal>clicked()</signal>
+        <receiver>AboutDialogImpl</receiver>
+        <slot>reject()</slot>
+    </connection>
+</connections>
+<layoutdefaults spacing="8" margin="8"/>
+</UI>
