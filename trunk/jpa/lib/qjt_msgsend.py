@@ -60,7 +60,7 @@ class MessageSender(QThread):
     
     def run(self):
         if not self.mutex.tryLock():
-            raise IOError, aApp.translate('Misc', 
+            raise IOError, qApp.translate('Misc', 
                 'Already sending this message.', None)
             return
         if not self.stopped:

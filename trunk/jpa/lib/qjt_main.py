@@ -19,13 +19,14 @@
 import os
 import os.path as op
 import time
+import Queue
 
 from qt import *
 import textile
 
 import jt_cfg, jt_storage2, qjt_msgeditdialog, qjt_optionsdialog, \
     qjt_msgimport, qjt_aboutdialog, jt_const, qjt_msghistorydialog, \
-    qjt_msgsend
+    qjt_msgsend, jt_msgsend
 from mainform_impl import MainFormImpl
 from jt_version import VERSION
 from jt_const import MSGTEMPLATE
@@ -37,6 +38,7 @@ class MainForm(MainFormImpl):
         MainFormImpl.__init__(self, parent, name, fl)
         qApp.setOverrideCursor(QCursor(Qt.WaitCursor))
         try:
+            self.events = Queue.Queue()
             self.cfg = jt_cfg.AppConfig()
             self.fileName = op.join(op.expanduser('~'),
                 'jpadata', '%s.dat' % time.strftime('%Y-%m'))
@@ -44,7 +46,8 @@ class MainForm(MainFormImpl):
             self.setGeometry(geom[0], geom[1], geom[2], geom[3])
             self.data = jt_storage2.Storage(self.fileName)
             self.setCaption('JPA v. %s - %s' % (VERSION, self.fileName))
-            self.sender = qjt_msgsend.Sender(self)
+            self.sender = jt_msgsend.Sender(self)
+            #self.sender = qjt_msgsend.Sender(self)
             self.__loadData()
         finally:
             qApp.restoreOverrideCursor()
