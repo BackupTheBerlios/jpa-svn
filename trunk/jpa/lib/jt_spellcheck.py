@@ -116,7 +116,6 @@ class AspellChecker(SpellChecker):
                 if not normName in dicts:
                     dicts.append(normName)
         dicts.sort()
-        print dicts
         return dicts
 
     def setLang(self, lang):

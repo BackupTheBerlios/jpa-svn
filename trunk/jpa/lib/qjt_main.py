@@ -41,8 +41,6 @@ class MainForm(MainFormImpl):
             self.cfg = jt_cfg.AppConfig()
             self.fileName = op.join(op.expanduser('~'),
                 'jpadata', '%s.dat' % time.strftime('%Y-%m'))
-            geom = self.cfg.getWindowGeometry('mainform')
-            self.setGeometry(geom[0], geom[1], geom[2], geom[3])
             self.data = jt_storage2.Storage(self.fileName)
             self.setCaption('JPA v. %s - %s' % (VERSION, self.fileName))
             #self.sender = jt_msgsend.Sender(self)
@@ -250,9 +248,6 @@ class MainForm(MainFormImpl):
         if len(self.sender.threads) > 0:
             # I really don't know how to do things...
             e.ignore()
-        g = self.geometry()
-        self.cfg.setWindowGeometry('mainform',
-            (g.left(), g.top(), g.width(), g.height()))
         self.cfg.saveConfig()
         self.data.close()
         e.accept()
@@ -265,8 +260,10 @@ class MainForm(MainFormImpl):
             msg = e.data()
             if msg is None:
                 msg = self.__tr('Message has been sent.')
+            if type(msg) == type(''):
+                msg = unicode(msg)
             QMessageBox.information(self, self.__tr('Information'),
-                unicode(msg), QMessageBox.Ok)
+                msg, QMessageBox.Ok)
             self.msgItemSelected()
         elif t == 10001:
             # sender thread started work

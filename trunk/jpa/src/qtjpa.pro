@@ -1,8 +1,8 @@
-unix {
-  UI_DIR = .ui
-  MOC_DIR = .moc
-  OBJECTS_DIR = .obj
-}
+TEMPLATE	= app
+LANGUAGE	= C++
+
+CONFIG	+= qt warn_on release
+
 FORMS	= mainform.ui \
 	msgeditdialog.ui \
 	optionsdialog.ui \
@@ -16,6 +16,9 @@ FORMS	= mainform.ui \
 	archviewdialog.ui \
 	repleditdialog.ui \
 	logindialog.ui
-TEMPLATE	=app
-CONFIG	+= qt warn_on release
-LANGUAGE	= C++
+
+unix {
+  UI_DIR = .ui
+  MOC_DIR = .moc
+  OBJECTS_DIR = .obj
+}

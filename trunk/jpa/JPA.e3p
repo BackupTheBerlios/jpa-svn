@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-3.5.dtd">
 <!-- Project file for project JPA -->
-<!-- Saved: 2004-12-10, 22:05:27 -->
+<!-- Saved: 2004-12-12, 12:22:51 -->
 <!-- Copyright (C) 2004 Jarek Zgoda, jzgoda@o2.pl -->
 <Project version="3.5">
   <Description>Jogger Publishing Assistant</Description>
@@ -192,6 +192,14 @@
     <Source>
       <Dir>lib</Dir>
       <Name>qjt_msgimport.py</Name>
+    </Source>
+    <Source>
+      <Dir>lib</Dir>
+      <Name>jt_tokenizer.py</Name>
+    </Source>
+    <Source>
+      <Dir>lib</Dir>
+      <Name>test_tokenizer.py</Name>
     </Source>
   </Sources>
   <Forms>
