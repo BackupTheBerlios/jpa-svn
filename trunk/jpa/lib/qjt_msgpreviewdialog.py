@@ -37,9 +37,9 @@ class MsgPreviewDialog(MsgPreviewDialogImpl):
             self.setCaption('%s - %s' % (self.__tr('Message preview'),
                 unicode(message['title'])))
             if message['content-type'] == 'textile':
-                body = textile.textile(parent.parent.cfg.useReplacements(message['body']))
+                body = textile.textile(message['body'])
             else:
-                body = parent.parent.cfg.useReplacements(message['body'])
+                body = message['body']
             msgText = MSGTEMPLATE % (message['title'], body)
             self.tbPreview.setText(msgText)
         finally:
