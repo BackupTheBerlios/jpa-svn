@@ -1,7 +1,7 @@
 # -*- coding: ISO8859-2 -*-
 
 # This file is part of JPA.
-# Copyright: (C) 2003, 2004 Jarek Zgoda <jzgoda@gazeta.pl>
+# Copyright: (C) 2003 - 2005 Jarek Zgoda <jzgoda@gazeta.pl>
 #
 # JPA is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
