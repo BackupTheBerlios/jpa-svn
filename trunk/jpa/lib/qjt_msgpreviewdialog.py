@@ -34,7 +34,7 @@ class MsgPreviewDialog(MsgPreviewDialogImpl):
         MsgPreviewDialogImpl.__init__(self, parent, name, modal, fl)
         qApp.setOverrideCursor(QCursor(Qt.WaitCursor))
         try:
-            self.setCaption('%s - %s' % (self.__tr('Message previev'),
+            self.setCaption('%s - %s' % (self.__tr('Message preview'),
                 unicode(message['title'])))
             if message['content-type'] == 'textile':
                 body = textile.textile(parent.parent.cfg.useReplacements(message['body']))
