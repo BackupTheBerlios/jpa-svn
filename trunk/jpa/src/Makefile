@@ -3,7 +3,8 @@ all: ../lib/mainform_impl.py ../lib/msgeditdialog_impl.py \
     ../lib/aboutdialog_impl.py ../lib/applogdialog_impl.py \
     ../lib/msghistorydialog_impl.py ../lib/msgpreviewdialog_impl.py \
     ../lib/spellcheckdialog_impl.py ../lib/mainform2_impl.py \
-    ../lib/archviewdialog_impl.py ../lib/repleditdialog_impl.py
+    ../lib/archviewdialog_impl.py ../lib/repleditdialog_impl.py \
+    ../lib/logindialog_impl.py
 
 ../lib/mainform_impl.py : mainform.ui
 	pyuic -o ../lib/mainform_impl.py -p 4 -x mainform.ui
@@ -40,4 +41,7 @@ all: ../lib/mainform_impl.py ../lib/msgeditdialog_impl.py \
 
 ../lib/repleditdialog_impl.py : repleditdialog.ui
 	pyuic -o ../lib/repleditdialog_impl.py -p 4 -x repleditdialog.ui
+
+../lib/logindialog_impl.py : logindialog.ui
+	pyuic -o ../lib/logindialog_impl.py -p 4 -x logindialog.ui
 

@@ -14,7 +14,8 @@ FORMS	= mainform.ui \
 	spellcheckdialog.ui \
 	mainform2.ui \
 	archviewdialog.ui \
-	repleditdialog.ui
+	repleditdialog.ui \
+	logindialog.ui
 TEMPLATE	=app
 CONFIG	+= qt warn_on release
 LANGUAGE	= C++
