@@ -20,115 +20,45 @@
 import os, sys
 import ConfigParser
 
-EMPTY_PROFILE = {'name': '', \
-    'default': False, \
-    'jogger address': '', \
-    'jabber server': '', \
-    'jabber username': '', \
-    'jabber password': '', \
-    'jabber port': 5222, \
-    'use ssl': False, \
-    'replacements': {}\
-    }
+class AppConfig(ConfigParser.RawConfigParser):
 
-class AppConfig:
-
-    def __init__(self):
-        if sys.platform == 'win32':
-            self.confFileName = os.path.join(os.getcwd(), 'jt.ini')
-            self.defFont = 'arial|8|9|10|12|14|16|18'
+    def __init__(self, fileName=None):
+        ConfigParser.RawConfigParser.__init__(self)
+        self.optionxform = str
+        if fileName is not None:
+            self.confFileName = fileName
         else:
             self.confFileName = os.path.expanduser('~/.jtrc')
-            self.defFont = 'helvetica|8|9|10|12|14|16|18'
-        self.profiles = dict()
-        self.cp = ConfigParser.ConfigParser()
         try:
             f = open(self.confFileName)
             try:
-                self.cp.readfp(f)
+                self.readfp(f)
             finally:
                 f.close()
-            self.__loadProfiles()
         except IOError:
             # ignore error, when config file does not exists
             pass
-            
-    def __loadProfiles(self):
-        self.currentProfile = ''
-        name = ''
-        for section in self.cp.sections():
-            if section.startswith('profile_'):
-                name = section[8:]
-                cfgItems = dict(self.cp.items(section))
-                self.profiles[name] = cfgItems.copy()
-                self.profiles[name]['name'] = name
-                try:
-                    if self.profiles[name]['default'] == 'True':
-                        self.setCurrentProfile(name)
-                except KeyError:
-                    # ignore, no profile has been set as default yet
-                    pass
-        if self.currentProfile == '' and name != '':
-            self.setCurrentProfile(name)
-
-    def writeProfile(self, items):
-        section = 'profile_' + items['name']
-        self.profiles[items['name']] = items
-        if not self.cp.has_section(section):
-            self.cp.add_section(section)
-        # first set other's "default" flag to false if this one
-        # should be the default
-        try:
-            if items['default']:
-                for profile in self.profiles.iterkeys():
-                    if self.profiles[profile]['name'] == items['name']:
-                        pass
-                    else:
-                        self.profiles[profile]['default'] = False
-        except KeyError:
-            # ignore errors when reading old configuration files
-            pass
-        for key in items.iterkeys():
-            self.cp.set(section, key, items[key])
-            
-    def getDefaultProfile(self):
-        for section in self.cp.sections():
-            try:
-                if section.startswith('profile_'):
-                    if self.cp.getboolean(section, 'default'):
-                        self.defaultProfile = section[8:]
-                        break
-            except ConfigParser.NoOptionError:
-                continue
 
     def saveConfig(self):
-        # write all edits to profiles
-        for profile in self.profiles.iterkeys():
-            self.writeProfile(self.profiles[profile])
         f = open(self.confFileName, 'w')
         try:
-            self.cp.write(f)
+            self.write(f)
         finally:
             f.close()
 
-    def getData(self, section, item, default=''):
-        if self.cp.has_option(section, item):
-            return self.cp.get(section, item)
-        else:
-            if not self.cp.has_section(section):
-                self.cp.add_section(section)
-            self.cp.set(section, item, default)
+    def getOption(self, section, item, default=''):
+        try:
+            return self.get(section, item)
+        except ConfigParser.NoSectionError:
+            self.add_section(section)
+            return default
+        except ConfigParser.NoOptionError:
             return default
 
     def setOption(self, section, option, value):
-        if not self.cp.has_section(section):
-            self.addSection(section)
-        if not self.cp.has_option(section, option):
-            self.cp.add_option(section, option)
-        self.cp.set(section, option, str(value))
-
-    def addSection(self, section):
-        self.cp.add_section(section)
+        if not self.has_section(section):
+            self.add_section(section)
+        self.set(section, option, str(value))
 
     def getFont(self, viewName):
         if not self.cp.has_section('fonts'):
@@ -139,30 +69,30 @@ class AppConfig:
             return self.defFont
 
     def getWindowSize(self, windowName):
-        if self.cp.has_section(windowName):
-            return (self.cp.getint(windowName, 'width'),
-                self.cp.getint(windowName, 'height'))
+        if self.has_section(windowName):
+            return (self.getint(windowName, 'width'),
+                self.getint(windowName, 'height'))
         else:
             return (640, 480)
 
     def getWindowPos(self, windowName):
-        if self.cp.has_section(windowName):
-            return (self.cp.getint(windowName, 'top'),
-                self.cp.getint(windowName, 'left'))
+        if self.has_section(windowName):
+            return (self.getint(windowName, 'top'),
+                self.getint(windowName, 'left'))
         else:
             return (150, 150)
 
     def setWindowSize(self, windowName, width, height):
-        if not self.cp.has_section(windowName):
-            self.cp.add_section(windowName)
-        self.cp.set(windowName, 'width', str(width))
-        self.cp.set(windowName, 'height', str(height))
+        if not self.has_section(windowName):
+            self.add_section(windowName)
+        self.set(windowName, 'width', str(width))
+        self.set(windowName, 'height', str(height))
 
     def setWindowPos(self, windowName, left, top):
-        if not self.cp.has_section(windowName):
-            self.cp.add_section(windowName)
-        self.cp.set(windowName, 'left', str(left))
-        self.cp.set(windowName, 'top', str(top))
+        if not self.has_section(windowName):
+            self.add_section(windowName)
+        self.set(windowName, 'left', str(left))
+        self.set(windowName, 'top', str(top))
 
     def getWindowGeometry(self, windowName):
         pos = self.getWindowPos(windowName)
@@ -174,77 +104,61 @@ class AppConfig:
         self.setWindowSize(windowName, geom[2], geom[3])
 
     def getDataDir(self, default):
-        if self.cp.has_option('dirs', 'data'):
-            return self.cp.get('dirs', 'data')
-        else:
+        try:
+            return self.get('dirs', 'data')
+        except (ConfigParser.NoSectionError, ConfigParser.NoOptionError):
             return default
 
     def setDataDir(self, dataDir):
-        if not self.cp.has_section('dirs'):
-            self.cp.add_section('dirs')
-        self.cp.set('dirs', 'data', dataDir)
+        if not self.has_section('dirs'):
+            self.add_section('dirs')
+        self.set('dirs', 'data', dataDir)
 
     def getImageDir(self, default):
-        if self.cp.has_option('dirs', 'images'):
-            return self.cp.get('dirs', 'images')
-        else:
+        try:
+            return self.get('dirs', 'images')
+        except (ConfigParser.NoSectionError, ConfigParser.NoOptionError):
             return default
         
     def setImageDir(self, imageDir):
-        if not self.cp.has_section('dirs'):
-            self.cp.add_section('dirs')
-        self.cp.set('dirs', 'images', imageDir)
+        if not self.has_section('dirs'):
+            self.add_section('dirs')
+        self.set('dirs', 'images', imageDir)
     
     def getDocDir(self, default):
-        if self.cp.has_option('dirs', 'doc'):
-            return self.cp.get('dirs', 'doc')
-        else:
+        try:
+            return self.get('dirs', 'doc')
+        except (ConfigParser.NoSectionError, ConfigParser.NoOptionError):
             return default
 
     def setDocDir(self, docDir):
-        if not self.cp.has_section('dirs'):
-            self.cp.add_section('dirs')
-        self.cp.set('dirs', 'doc', docDir)
-
-    def getCurrentProfileOption(self, name):
-        try:
-            return self.profiles[self.currentProfile][name]
-        except (KeyError, AttributeError):
-            # ignore any errors, we build new configuration
-            pass
-
-    def setCurrentProfileOption(self, name, value):
-        self.profiles[self.currentProfile][name] = value
+        if not self.has_section('dirs'):
+            self.add_section('dirs')
+        self.set('dirs', 'doc', docDir)
 
     def getJabberUser(self):
-        return self.getCurrentProfileOption('jabber username')
+        return self.getOption('jabber', 'username')
+    
+    def setJabberUser(self, userName):
+        self.setOption('jabber', 'username', userName)
    
     def getJabberPasswd(self):
-        return self.getCurrentProfileOption('jabber password')
+        return self.getOption('jabber', 'passwd')
     
     def setJabberPasswd(self, passwd):
-        self.setCurrentProfileOption('jabber password', passwd)
+        self.setOption('jabber',  'passwd', passwd)
     
     def getJabberServer(self):
-        return self.getCurrentProfileOption("jabber server")
-     
+        return self.getOption('jabber', 'server')
+
+    def setJabberServer(self, server):
+        self.setOption('jabber', 'server', server)
+
     def getJoggerAddress(self):
-        return self.getCurrentProfileOption("jogger address")
+        return self.getOption('jogger', 'address')
 
-    def useReplacements(self, text):
-        try:
-            rDict = eval(self.profiles[self.currentProfile]['replacements'])
-        except:
-            rDict = dict()
-        for regex, repl in rDict.iteritems():
-            text = text.replace(regex, repl)
-        return text
-
-    def setCurrentProfile(self, name):
-        self.currentProfile = name
-
-    def getCurrentProfile(self):
-        return self.currentProfile
+    def setJoggerAddress(self, address):
+        self.setOption('jogger', 'address', address)
 
 
 if __name__ == '__main__':

@@ -39,7 +39,7 @@ def msgNew(parent, config):
         'level': '0', \
         'content-type': 'textile', \
         'eid': ''}
-    pattern = config.getData('misc', 'xmms_pattern', '')
+    pattern = config.getOption('misc', 'xmms_pattern', '')
     if len(pattern) > 0:
         info = jt_xmmsinfo.getTrackInfo(pattern)
         if info is not None:

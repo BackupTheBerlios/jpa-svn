@@ -37,7 +37,6 @@ class OptionsDialog(OptionsDialogImpl):
 
     def __init__(self, config, parent=None, name=None, modal=0, fl=0):
         OptionsDialogImpl.__init__(self, parent, name, modal, fl)
-        self.curProfile = None
         qApp.setOverrideCursor(QCursor(Qt.WaitCursor))
         try:
             self.cfg = config
@@ -45,8 +44,8 @@ class OptionsDialog(OptionsDialogImpl):
             self.edJabberServer.setText(config.getJabberServer())
             self.edJID.setText(config.getJabberUser())
             self.edPasswd.setText(config.getJabberPasswd())
-            pattern = config.getData('misc', 'xmms_pattern',
-                'p. (NP: %s -- _%s_)')
+            pattern = config.getOption('misc', 'xmms_pattern',
+                'p. (NP: %s &mdash; _%s_)')
             self.edXmmsInfoFormat.setText(pattern)
             trackInfo = jt_xmmsinfo.getTrackInfo(pattern)
             if trackInfo is not None:
