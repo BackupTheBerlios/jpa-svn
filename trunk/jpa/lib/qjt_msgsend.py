@@ -18,7 +18,7 @@
 
 from qt import *
 
-import jt_transport2
+import jt_transport2 as jt_transport
 
 def sendMessage(message, cfg):
     sender = MessageSender(message, cfg)
@@ -64,7 +64,7 @@ class MessageSender(QThread):
                 'Already sending this message.', None)
             return
         if not self.stopped:
-            transport = jt_transport2.getTransport(self.cfg.getJoggerAddress(),
+            transport = jt_transport.getTransport(self.cfg.getJoggerAddress(),
                 self.cfg.getJabberServer(), self.cfg.getJabberUser(),
                 self.cfg.getJabberPasswd())
             event = QCustomEvent(10001)

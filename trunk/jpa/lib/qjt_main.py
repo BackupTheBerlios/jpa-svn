@@ -170,7 +170,6 @@ class MainForm(MainFormImpl):
     def msgSend(self):
         toSend = 1
         msg = self.data.getMessage(str(self.lbxMessages.currentText()))
-        msg['body'] = self.cfg.useReplacements(msg['body'])
         if msg.has_key('sent') and (len(msg['sent']) > 0):
             toSend = (QMessageBox.question(self, self.__tr('Confirm'),
                 self.__tr('This message already has been published.\n'
