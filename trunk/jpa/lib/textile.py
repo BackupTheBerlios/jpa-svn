@@ -264,7 +264,7 @@ def textile(text):
               #(r'''"''', r'''&#8220;'''), # double opening
               #(r'''\b( )?\.{3}''', r'''\1&#8230;'''), # ellipsis
               (r'''\b([A-Z][A-Z0-9]{2,})\b(\(([^\)]+)\))''', r'''<acronym title="\3">\1</acronym>'''), # 3+ uppercase acronym
-              (r'''(^|[^"][>\s])([A-Z][A-Z0-9 ]{2,})([^<a-z0-9]|$)''', r'''\1<span class="caps">\2</span>\3'''), # 3+ uppercase caps
+              #(r'''(^|[^"][>\s])([A-Z][A-Z0-9 ]{2,})([^<a-z0-9]|$)''', r'''\1<span class="caps">\2</span>\3'''), # 3+ uppercase caps
               #(r'''\s?--\s?''', r'''&#8212;'''), # em dash
               #(r'''\s-\s''', r''' &#8211; '''), # en dash
               #(r'''(\d+) ?x ?(\d+)''', r'''\1&#215;\2'''), # dimension sign
