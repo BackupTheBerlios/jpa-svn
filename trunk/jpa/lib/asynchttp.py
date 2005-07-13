@@ -128,4 +128,3 @@ class FileConsumer:
         if self.fp is not None:
             self.fp.close()
         self.fp = None
-
