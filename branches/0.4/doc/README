@@ -1,0 +1,27 @@
+Jogger Publishing Assistant
+
+Copyright: (C) 2003, 2004 Jarek Zgoda <jzgoda@gazeta.pl>
+
+Najpierw rzeczy najwa¿niejsze.
+
+Przeczytaj licencjê. Je¿eli Ci nie odpowiada, nie u¿ywaj mojego programu. 
+Licencja znajduje siê w pliku COPYING w podkatalogu doc.
+
+Wymagania programu.
+Na samym pocz±tku, bo bez tego program nie ruszy.
+ - Python 2.3 (http://www.python.org/);
+ - PyQt, wersja ze wsparciem dla wielow±tkowo¶ci (qt-mt);
+ - jabber.py (http://jabberpy.sourceforge.net/), wersja 0.4 lub nowsza;
+ - myspell-python (modu³ biblioteki do sprawdzania pisowni).
+
+Sk³adniki opcjonalne.
+Mo¿na siê pokusiæ o zainstalowanie, lecz niekoniecznie.
+ - psyco (kompilator JIT dla Pythona);
+ - python-newt (znakowy interfejs u¿ywtkownika dla terminala);
+ - XMMS-InfoPipe (plugin do XMMS, umo¿liwia odczyt informacji o odgrywanym 
+   utworze).
+
+Do pakietu do³±czony jest przyk³adowy plik konfiguracyjny. Nale¿y skopiowaæ go
+do ~/.jtrc (lub jt.ini w przypadku systemu Windows(R))i nastêpnie w programie
+wpisaæ odpowiednie ustawienia opcji (menu Narzêdzia -> Opcje). Oczywi¶cie,
+mo¿na wszystkie wpisy ustawiæ bezpo¶rednio w pliku u¿ywaj±c jedynie edytora.

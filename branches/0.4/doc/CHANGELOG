@@ -1,0 +1,77 @@
+2004-01-16
+Wersja 0.3.3
+ - Poprawione b³êdy ustawiania domy¶lnych katalogów w oknie opcji programu.
+ - Usuniêty modu³, w którym nie by³o nic u¿ytecznego.
+ - Uzupe³nienie informacji o prawach autorskich.
+
+2004-01-13
+Wersja 0.3.2
+ - Odczytywanie z XMMS informacji o bie¿±cym utworze (wymaga pluginu 
+   XMMS-InfoPipe).
+ - Usuniête zosta³y pozosta³o¶ci po tekstowych fragmentach JPA (cjpa.py 
+   i clijpa.py).
+ - Przeniesienie plików uruchamiaj±cych program do podkatalogu bin (program 
+   jest ju¿ przystosowany do instalowania w drzewie katalogowym /opt!), 
+   a README, CHANGELOG i przyk³adowego pliku konfiguracyjnego do podkatalogu 
+   doc.
+ - Instrukcja instalacji zosta³a uzupe³niona.
+ - Poprawiony b³±d, powoduj±cy tworzenie domy¶lnego katalogu danych jako 
+   podkatalogu w bin.
+ - Program nie wymaga ju¿ rêcznego kopiowania pliku konfiguracyjnego przed 
+   pierwszym uruchomieniem.
+
+2004-01-11
+Wersja 0.3.1
+ - Spolszczenie dla linuksa (pl_PL.ISO-8859-2) dzia³a! Odpowiednie pliki 
+   komunikatów do t³umaczenia (.po) znajduj± siê w katalogu src, wraz 
+   z programem mki18n.py (opis u¿ytkowania znajduje siê w Wiki wxPythona, 
+   m.in. na stronach http://wiki.wxpython.org/index.cgi/RecipesI18n oraz 
+   http://wiki.wxpython.org/index.cgi/Internationalization).
+
+2004-01-10
+Wersja 0.3.0
+ - Ca³y interfejs u¿ytkownika zosta³ przet³umaczony na angielski. Ma to 
+   umo¿liwiæ zastosowanie gettextu do t³umaczenia komunikatów.
+ - Kilka drobnych poprawek, zwi±zanych ze startem aplikacji (m. in. poprawiona
+   obs³uga katalogów programu).
+
+2003-12-30
+Wersja 0.2.4
+ - Poprawiony b³±d niezabezpieczonego importu myspella w module 
+   jt_spellcheck.py (PeTe).
+ - Dodany do pakietu przyk³adowy plik konfiguracyjny (PeTe).
+
+2003-12-26
+Wersja 0.2.3
+ - Dodana (wreszcie!) mo¿liwo¶æ ustawiania czcionki w podgl±dach dokumentów 
+   HTML (wiadomo¶ci, pomoc).
+
+2003-12-14
+Wersja 0.2.2
+ - Uporz±dkowanie kodu. Tam, gdzie to mo¿liwe polecenia importu zosta³y tak 
+   przekonstruowane, by brak bibliotek dodatkowych (np. myspell) nie powodowa³
+   za³amania ca³ego programu.
+ - Przymiarka do nowego klienta, uruchamianego z linii poleceñ (clijpa.py). Kod
+   zasadniczo dzia³a, lecz nie ma ¿adnej kontroli b³êdów wykonania procesu.
+
+2003-11-15
+Wersja 0.2.0
+ - W oknie edycji wiadomo¶ci mo¿na sprawdziæ poprawno¶æ wpisanego tekstu! Aby
+   u¿yæ tej w³a¶ciwo¶ci programu, konieczne jest zainstalowanie biblioteki 
+   myspell-python i polskiego s³ownika do OpenOffice.org (np. z 
+   http://www.kurnik.pl).
+
+2003-11-11
+Wersja 0.1.1
+ - Poprawiony b³±d podczas wysy³ania wiadomo¶ci, polegaj±cy na z¿eraniu 100% 
+   mocy procesora. Niestety, nadal kuleje odbieranie wiadomo¶ci od serwera 
+   Joggera.
+ - Reorganizacja kodu g³ównego okna.
+
+2003-08-09
+Wersja 0.0.2
+ - Okno edycji wiadomo¶ci zapisuje swój rozmiar.
+
+2003-08-03
+Wersja 0.0.1
+ - Pierwsze publiczne wydanie.

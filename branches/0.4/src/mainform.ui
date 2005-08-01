@@ -1,0 +1,584 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>MainFormImpl</class>
+<widget class="QMainWindow">
+    <property name="name">
+        <cstring>MainFormImpl</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>766</width>
+            <height>520</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>JPA</string>
+    </property>
+    <property name="icon">
+        <pixmap>image0</pixmap>
+    </property>
+    <hbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QFrame">
+            <property name="name">
+                <cstring>pnMain</cstring>
+            </property>
+            <property name="frameShape">
+                <enum>StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Raised</enum>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QSplitter">
+                    <property name="name">
+                        <cstring>splitter1</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <widget class="QListBox">
+                        <property name="name">
+                            <cstring>lbxMessages</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>3</hsizetype>
+                                <vsizetype>7</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                            <size>
+                                <width>120</width>
+                                <height>0</height>
+                            </size>
+                        </property>
+                        <property name="maximumSize">
+                            <size>
+                                <width>160</width>
+                                <height>32767</height>
+                            </size>
+                        </property>
+                    </widget>
+                    <widget class="QFrame">
+                        <property name="name">
+                            <cstring>pnRight</cstring>
+                        </property>
+                        <property name="frameShape">
+                            <enum>StyledPanel</enum>
+                        </property>
+                        <property name="frameShadow">
+                            <enum>Raised</enum>
+                        </property>
+                        <hbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QLayoutWidget">
+                                <property name="name">
+                                    <cstring>layout2</cstring>
+                                </property>
+                                <vbox>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <widget class="QFrame">
+                                        <property name="name">
+                                            <cstring>pnTop</cstring>
+                                        </property>
+                                        <property name="frameShape">
+                                            <enum>StyledPanel</enum>
+                                        </property>
+                                        <property name="frameShadow">
+                                            <enum>Sunken</enum>
+                                        </property>
+                                        <hbox>
+                                            <property name="name">
+                                                <cstring>unnamed</cstring>
+                                            </property>
+                                            <widget class="QLayoutWidget">
+                                                <property name="name">
+                                                    <cstring>layout1</cstring>
+                                                </property>
+                                                <grid>
+                                                    <property name="name">
+                                                        <cstring>unnamed</cstring>
+                                                    </property>
+                                                    <widget class="QLabel" row="0" column="1">
+                                                        <property name="name">
+                                                            <cstring>lbCreated</cstring>
+                                                        </property>
+                                                        <property name="sizePolicy">
+                                                            <sizepolicy>
+                                                                <hsizetype>7</hsizetype>
+                                                                <vsizetype>5</vsizetype>
+                                                                <horstretch>0</horstretch>
+                                                                <verstretch>0</verstretch>
+                                                            </sizepolicy>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string></string>
+                                                        </property>
+                                                    </widget>
+                                                    <widget class="QLabel" row="0" column="0">
+                                                        <property name="name">
+                                                            <cstring>textLabel1</cstring>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string>Created:</string>
+                                                        </property>
+                                                    </widget>
+                                                    <widget class="QLabel" row="1" column="0">
+                                                        <property name="name">
+                                                            <cstring>textLabel2</cstring>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string>Sent:</string>
+                                                        </property>
+                                                    </widget>
+                                                    <widget class="QLabel" row="1" column="1">
+                                                        <property name="name">
+                                                            <cstring>lbSent</cstring>
+                                                        </property>
+                                                        <property name="sizePolicy">
+                                                            <sizepolicy>
+                                                                <hsizetype>7</hsizetype>
+                                                                <vsizetype>5</vsizetype>
+                                                                <horstretch>0</horstretch>
+                                                                <verstretch>0</verstretch>
+                                                            </sizepolicy>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string></string>
+                                                        </property>
+                                                    </widget>
+                                                    <widget class="QLabel" row="2" column="1">
+                                                        <property name="name">
+                                                            <cstring>lbTitle</cstring>
+                                                        </property>
+                                                        <property name="sizePolicy">
+                                                            <sizepolicy>
+                                                                <hsizetype>7</hsizetype>
+                                                                <vsizetype>5</vsizetype>
+                                                                <horstretch>0</horstretch>
+                                                                <verstretch>0</verstretch>
+                                                            </sizepolicy>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string></string>
+                                                        </property>
+                                                    </widget>
+                                                    <widget class="QLabel" row="2" column="0">
+                                                        <property name="name">
+                                                            <cstring>textLabel3</cstring>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string>Title:</string>
+                                                        </property>
+                                                    </widget>
+                                                </grid>
+                                            </widget>
+                                        </hbox>
+                                    </widget>
+                                    <widget class="QTextBrowser">
+                                        <property name="name">
+                                            <cstring>tbMessage</cstring>
+                                        </property>
+                                        <property name="tabChangesFocus">
+                                            <bool>true</bool>
+                                        </property>
+                                    </widget>
+                                </vbox>
+                            </widget>
+                        </hbox>
+                    </widget>
+                </widget>
+            </hbox>
+        </widget>
+    </hbox>
+</widget>
+<menubar>
+    <property name="name">
+        <cstring>MenuBar</cstring>
+    </property>
+    <item text="&amp;File" name="fileMenu">
+        <action name="acFileNew"/>
+        <action name="acFileOpen"/>
+        <separator/>
+        <action name="acFileExit"/>
+    </item>
+    <item text="&amp;Messages" name="MessagesMenu">
+        <action name="acMsgNew"/>
+        <action name="acMsgEdit"/>
+        <action name="acMsgDelete"/>
+        <separator/>
+        <action name="acMsgViewHistory"/>
+        <action name="acMsgSave"/>
+        <separator/>
+        <action name="acMsgSend"/>
+    </item>
+    <item text="&amp;Tools" name="ToolsMenu">
+        <action name="acToolsImport"/>
+        <action name="acToolsExport"/>
+        <separator/>
+        <action name="acToolsOptions"/>
+    </item>
+    <item text="&amp;Help" name="helpMenu">
+        <action name="acHelpAbout"/>
+        <separator/>
+        <action name="acHelpAboutQt"/>
+    </item>
+</menubar>
+<toolbars>
+</toolbars>
+<actions>
+    <action>
+        <property name="name">
+            <cstring>acFileNew</cstring>
+        </property>
+        <property name="text">
+            <string>New</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;New</string>
+        </property>
+        <property name="toolTip">
+            <string>New file with messages</string>
+        </property>
+        <property name="accel">
+            <string>Ctrl+N</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>acFileOpen</cstring>
+        </property>
+        <property name="text">
+            <string>Open</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;Open...</string>
+        </property>
+        <property name="toolTip">
+            <string>Open file with messages</string>
+        </property>
+        <property name="accel">
+            <string>Ctrl+O</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>acFileExit</cstring>
+        </property>
+        <property name="text">
+            <string>Exit</string>
+        </property>
+        <property name="menuText">
+            <string>E&amp;xit</string>
+        </property>
+        <property name="accel">
+            <string>Ctrl+Q</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>acHelpAbout</cstring>
+        </property>
+        <property name="text">
+            <string>About</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;About</string>
+        </property>
+        <property name="toolTip">
+            <string>About program</string>
+        </property>
+        <property name="accel">
+            <string></string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>acHelpAboutQt</cstring>
+        </property>
+        <property name="iconSet">
+            <iconset>image1</iconset>
+        </property>
+        <property name="text">
+            <string>About Qt</string>
+        </property>
+        <property name="menuText">
+            <string>About &amp;Qt</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>acMsgNew</cstring>
+        </property>
+        <property name="text">
+            <string>&amp;New...</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;New...</string>
+        </property>
+        <property name="toolTip">
+            <string>New message</string>
+        </property>
+        <property name="statusTip">
+            <string>New message</string>
+        </property>
+        <property name="accel">
+            <string>Ins</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>acToolsOptions</cstring>
+        </property>
+        <property name="text">
+            <string>&amp;Options</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;Options</string>
+        </property>
+        <property name="toolTip">
+            <string>Application options</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>acMsgEdit</cstring>
+        </property>
+        <property name="text">
+            <string>Edi&amp;t...</string>
+        </property>
+        <property name="menuText">
+            <string>Edi&amp;t...</string>
+        </property>
+        <property name="toolTip">
+            <string>Edit message</string>
+        </property>
+        <property name="accel">
+            <string>F2</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>acToolsImport</cstring>
+        </property>
+        <property name="text">
+            <string>&amp;Import</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;Import</string>
+        </property>
+        <property name="toolTip">
+            <string>Import entries from file</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>acToolsExport</cstring>
+        </property>
+        <property name="text">
+            <string>&amp;Export</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;Export</string>
+        </property>
+        <property name="toolTip">
+            <string>Export entries to file</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>acMsgDelete</cstring>
+        </property>
+        <property name="text">
+            <string>&amp;Delete...</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;Delete...</string>
+        </property>
+        <property name="toolTip">
+            <string>Delete message</string>
+        </property>
+        <property name="accel">
+            <string>Del</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>acMsgSave</cstring>
+        </property>
+        <property name="text">
+            <string>&amp;Save...</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;Save...</string>
+        </property>
+        <property name="toolTip">
+            <string>Save message to file</string>
+        </property>
+        <property name="accel">
+            <string>Ctrl+S</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>acMsgSend</cstring>
+        </property>
+        <property name="text">
+            <string>S&amp;end</string>
+        </property>
+        <property name="menuText">
+            <string>S&amp;end</string>
+        </property>
+        <property name="toolTip">
+            <string>Send message</string>
+        </property>
+        <property name="accel">
+            <string>Ctrl+E</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>acMsgViewHistory</cstring>
+        </property>
+        <property name="text">
+            <string>&amp;History...</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;History...</string>
+        </property>
+        <property name="toolTip">
+            <string>View message history</string>
+        </property>
+    </action>
+</actions>
+<images>
+    <image name="image0">
+        <data format="PNG" length="667">89504e470d0a1a0a0000000d4948445200000020000000200806000000737a7af40000026249444154789ced573d6edb3014fe5ed103f808f598ada2d145423c648cb706e801ccc41d72842253839ea01eeac63940818ce998a186b418217b835ca31b3bf0479448510c5a64f2071894eda7f77d7c3f7a14d54d8d1c5465a5b20c01d44d4db9b6af7349957a34570c800020cd770e60ebad00517bdf98188a45c0122ba50c1900b9068a12904dbb5a1465c43537622829e4558c5c29a5c925d7c46eb706b281d84ba02821f61262b30e8835b6d0be1e0753d889802587e4dd9d5942006c7519f3d31381882d0711059118ae0113664bdc3a6c73ed3b67ab5090d8acc15697662da234410a00e176eeef9aad8471cc22bbb582b85bdbddf3c1a8450510cd7481f94566482c71e8903b9bbe6ddb19b3a88020054a2957b94a2c3b290861d3d1b6613f3a44e70080fa578d6a5e051e82367485080ea25b4fd84d4248cfa921d5f72dd1ec38aa79156dc520027553131199568c3b1d83524b779d228f0ae8c0445fec65c7e918c4c64bdb51da362ac08f827d2658a7ec5dbc9dac501f7f8ebe26770f44db308d74513e1fa30218bb1d3301100a9b7dcc139aae018373cfd9cdb7e114e492fa884e430bdb928cba292cde76ede4ef605cb9be1f1bc7cfae81ff8d8380838083805101cdae7f30c9c3c3ee0100b0385d24df275e24028bd3851a12f2a22988891815501e9710e664f2de7c62f86c3e807e0c9f1c9f64894a0e23ff5c505c147832bf4fbf779ffc53004f177a48d9634b35af30994cfe4d808fed461fcbf98a39b23ea66f86e2a371fff33e184cc96968d17d5704ce3e9cb9ffee7edc0100aebf5c0300ae3e5d014067f731628bac08d8914a444111516f54e7125bfc053a241d79548208730000000049454e44ae426082</data>
+    </image>
+    <image name="image1">
+        <data format="XPM.GZ" length="457">789c8d90c10ac2300c86ef7d8ab0dc866cd6b139101f41f0288887343de86117370f22bebb4d5bbb4d410c25fcdfd742da96391cf63bc84bd50f345c18f84c57c8edadebeec7d3f6a132dd805bae650b952130e0d297200bea56734012ac7415d108d6aba60e6805d7556b031682c44c113feaa7435f338738cae81029ee24677c262c262e2ad791a7ce291352721c268ce7c845b4efc169ae809db9743ffc7a87b133f7ef1f4cdd73a35ee2165424</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>acFileNew</sender>
+        <signal>activated()</signal>
+        <receiver>MainFormImpl</receiver>
+        <slot>fileNew()</slot>
+    </connection>
+    <connection>
+        <sender>acFileOpen</sender>
+        <signal>activated()</signal>
+        <receiver>MainFormImpl</receiver>
+        <slot>fileOpen()</slot>
+    </connection>
+    <connection>
+        <sender>acFileExit</sender>
+        <signal>activated()</signal>
+        <receiver>MainFormImpl</receiver>
+        <slot>close()</slot>
+    </connection>
+    <connection>
+        <sender>acHelpAbout</sender>
+        <signal>activated()</signal>
+        <receiver>MainFormImpl</receiver>
+        <slot>helpAbout()</slot>
+    </connection>
+    <connection>
+        <sender>acHelpAboutQt</sender>
+        <signal>activated()</signal>
+        <receiver>MainFormImpl</receiver>
+        <slot>helpAboutQt()</slot>
+    </connection>
+    <connection>
+        <sender>lbxMessages</sender>
+        <signal>selectionChanged()</signal>
+        <receiver>MainFormImpl</receiver>
+        <slot>msgItemSelected()</slot>
+    </connection>
+    <connection>
+        <sender>acMsgNew</sender>
+        <signal>activated()</signal>
+        <receiver>MainFormImpl</receiver>
+        <slot>msgNew()</slot>
+    </connection>
+    <connection>
+        <sender>acToolsOptions</sender>
+        <signal>activated()</signal>
+        <receiver>MainFormImpl</receiver>
+        <slot>toolsOptions()</slot>
+    </connection>
+    <connection>
+        <sender>acMsgEdit</sender>
+        <signal>activated()</signal>
+        <receiver>MainFormImpl</receiver>
+        <slot>msgEdit()</slot>
+    </connection>
+    <connection>
+        <sender>acToolsImport</sender>
+        <signal>activated()</signal>
+        <receiver>MainFormImpl</receiver>
+        <slot>toolsImport()</slot>
+    </connection>
+    <connection>
+        <sender>acToolsExport</sender>
+        <signal>activated()</signal>
+        <receiver>MainFormImpl</receiver>
+        <slot>toolsExport()</slot>
+    </connection>
+    <connection>
+        <sender>acMsgDelete</sender>
+        <signal>activated()</signal>
+        <receiver>MainFormImpl</receiver>
+        <slot>msgDelete()</slot>
+    </connection>
+    <connection>
+        <sender>acMsgSave</sender>
+        <signal>activated()</signal>
+        <receiver>MainFormImpl</receiver>
+        <slot>msgSave()</slot>
+    </connection>
+    <connection>
+        <sender>acMsgSend</sender>
+        <signal>activated()</signal>
+        <receiver>MainFormImpl</receiver>
+        <slot>msgSend()</slot>
+    </connection>
+    <connection>
+        <sender>acMsgViewHistory</sender>
+        <signal>activated()</signal>
+        <receiver>MainFormImpl</receiver>
+        <slot>msgHistory()</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>fileNew()</slot>
+    <slot>fileOpen()</slot>
+    <slot>helpAbout()</slot>
+    <slot>helpAboutQt()</slot>
+    <slot>msgItemSelected()</slot>
+    <slot>msgNew()</slot>
+    <slot>toolsOptions()</slot>
+    <slot>msgDelete()</slot>
+    <slot>toolsImport()</slot>
+    <slot>toolsExport()</slot>
+    <slot>msgEdit()</slot>
+    <slot>msgSave()</slot>
+    <slot>msgSend()</slot>
+    <slot>msgHistory()</slot>
+</slots>
+<layoutdefaults spacing="8" margin="8"/>
+</UI>

@@ -1,0 +1,13 @@
+[jogger]
+address = blog@jogger.pl
+
+[fonts]
+helpview = arial|9|10|12|13|14|16|18
+msgpreview = arial|9|10|12|13|14|16|18
+mainwindow = arial|9|10|12|13|14|16|18
+
+[jabber]
+username = yourjid@goes.here
+passwd = yourpassword
+server = jabber.server.name
+
