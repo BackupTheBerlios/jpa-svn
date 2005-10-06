@@ -17,9 +17,14 @@
 # along with JPA; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-import os, sys, locale
+"""Main program file, used to set up paths, import globals into app 
+namespace etc..."""
+
+__revision__ = '$Id'
+
+import sys, locale
 import os.path as op
-from qt import *
+import qt
 
 basepath = op.dirname(op.dirname(op.abspath(sys.argv[0])))
 __paths = {}
@@ -34,11 +39,10 @@ del __paths
 locale.setlocale(locale.LC_ALL, '')
 
 if __name__ == '__main__':
-    import qjt_main, qjt_main2
-    a = QApplication(sys.argv)
-    QObject.connect(a, SIGNAL('lastWindowClosed()'), a, SLOT('quit()'))
+    import qjt_main
+    a = qt.QApplication(sys.argv)
+    qt.QObject.connect(a, qt.SIGNAL('lastWindowClosed()'), a, qt.SLOT('quit()'))
     w = qjt_main.MainForm()
-    #w = qjt_main2.MainForm()
     a.setMainWidget(w)
     w.show()
     a.exec_loop()
