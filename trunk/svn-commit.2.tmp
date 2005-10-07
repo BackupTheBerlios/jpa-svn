@@ -1,0 +1,13 @@
+Development of 0.5 line has been started.
+--This line, and those below, will be ignored--
+
+A    share
+A    share/jpa2.glade
+A    share/jpa2.gladep
+A    doc
+A    doc/COPYING
+A    lib
+A    lib/usrprofile.py
+A    lib/config.py
+A    bin
+A    bin/jpa.py
