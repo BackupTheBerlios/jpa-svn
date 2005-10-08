@@ -25,12 +25,13 @@ __revision__ = '$Revision$'
 class UserProfile:
     """User profile maintenance."""
     
-    def __init__(self, name):
+    def __init__(self, name, default=False):
         self.name = name
+        self.default = default
         self.options = {}
 
     def readProfile(self, cfg):
-        """Read profile data fro ConfigParser object."""
+        """Read profile data from ConfigParser object."""
         for (key, value) in cfg.items(self.name):
             self.options[key] = value
 

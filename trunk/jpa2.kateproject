@@ -1,0 +1,19 @@
+[Dir bin]
+Dirs=
+Files=jpa.py
+
+[Dir doc]
+Dirs=
+Files=COPYING
+
+[Dir lib]
+Dirs=
+Files=config.py/usrprofile.py/version.py/storage.py
+
+[Project Dir]
+Dirs=bin/lib/doc
+Files=
+
+[Project File]
+Name=JPA2
+Type=Default
