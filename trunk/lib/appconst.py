@@ -1,4 +1,3 @@
-#! /usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 # This file is part of JPA.
@@ -19,23 +18,6 @@
 
 # $Id$
 
-"""Main program file, used to initialize stuff, import global modules and set
-standard paths."""
-
 __revision__ = '$Revision$'
 
-
-
-
-if __name__ == '__main__':
-    import sys
-    import pygtk
-    pygtk.require('2.0')
-    import gtk
-    try:
-        import gnome
-        import gnome.ui
-    except ImportError:
-        pass
-    import gettext
-    _ = gettext.gettext
+PATHS = {}

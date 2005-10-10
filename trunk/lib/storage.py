@@ -31,7 +31,7 @@ class Storage:
     """Main storage of application data."""
 
     def __init__(self):
-        fileName = op.expanduser('~/.jpa2/entries')
+        fileName = op.join(op.expanduser('~'), '.jpa2', 'entries')
         if op.isfile(fileName):
             self.storage = metakit.storage(fileName, 1)
             self.entries = self.storage.view('entries')
