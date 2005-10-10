@@ -24,9 +24,6 @@ standard paths."""
 
 __revision__ = '$Revision$'
 
-
-
-
 if __name__ == '__main__':
     import sys
     import pygtk
@@ -36,6 +33,7 @@ if __name__ == '__main__':
         import gnome
         import gnome.ui
     except ImportError:
+        # gnome Python support not installed, or we are on Windows
         pass
     import gettext
     _ = gettext.gettext

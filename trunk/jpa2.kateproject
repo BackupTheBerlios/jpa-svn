@@ -7,8 +7,12 @@ Dirs=
 Files=COPYING
 
 [Dir lib]
+Dirs=transport
+Files=config.py/usrprofile.py/version.py/storage.py/appconst.py/__init__.py
+
+[Dir lib/transport]
 Dirs=
-Files=config.py/usrprofile.py/version.py/storage.py
+Files=api.py/blogger.py/__init__.py/jogger.py
 
 [Project Dir]
 Dirs=bin/lib/doc

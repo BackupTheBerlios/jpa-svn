@@ -18,6 +18,8 @@
 
 # $Id$
 
+"""Application-wide constants"""
+
 __revision__ = '$Revision$'
 
 PATHS = {}

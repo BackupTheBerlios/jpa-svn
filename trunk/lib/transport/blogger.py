@@ -18,7 +18,7 @@
 
 # $Id$
 
-"""Blogger specific transport, using Blogger Atom API and REST.
+"""Blogger.com specific transport, using Blogger Atom API and REST.
 
 The API of Blogger is different that many other weblogging systems, as it uses
 REST approach. Very nice, indeed!"""
@@ -36,4 +36,4 @@ class BloggerTransport(api.WeblogTransport):
         self.userName = userName
         self.passwd = passwd
         self.path = 'http://www.blogger.com/atom/%s'
-        self.cookie = binascii.b2a_base64('%s:%s' % (userName, passwd))
+        self.cookie = binascii.b2a_base64('%s:%s' % (userName, passwd)).strip()
