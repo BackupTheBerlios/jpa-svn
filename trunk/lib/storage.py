@@ -16,16 +16,14 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-# $Id$
-
 """Data storage."""
+
+__revision__ = '$Id$'
 
 import time
 import os, os.path as op
 import cPickle as pickle
 import metakit
-
-__revision__ = '$Revision$'
 
 class Storage:
     """Main storage of application data."""

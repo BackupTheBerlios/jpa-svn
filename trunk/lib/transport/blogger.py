@@ -16,14 +16,12 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-# $Id$
-
 """Blogger.com specific transport, using Blogger Atom API and REST.
 
 The API of Blogger is different that many other weblogging systems, as it uses
 REST approach. Very nice, indeed!"""
 
-__revision__ = '$Revision$'
+__revision__ = '$Id$'
 
 import binascii
 

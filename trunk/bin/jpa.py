@@ -17,12 +17,10 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-# $Id$
-
 """Main program file, used to initialize stuff, import global modules and set
 standard paths."""
 
-__revision__ = '$Revision$'
+__revision__ = '$Id$'
 
 if __name__ == '__main__':
     import sys
