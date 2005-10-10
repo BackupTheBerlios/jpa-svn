@@ -18,12 +18,22 @@
 
 # $Id$
 
-"""Blogger specific transport, using Blogger Atom API and REST"""
+"""Blogger specific transport, using Blogger Atom API and REST.
+
+The API of Blogger is different that many other weblogging systems, as it uses
+REST approach. Very nice, indeed!"""
 
 __revision__ = '$Revision$'
+
+import binascii
 
 import api
 
 class BloggerTransport(api.WeblogTransport):
+    """Weblog transport that uses Blogger Atom API."""
     
-    pass
+    def __init__(self, userName, passwd):
+        self.userName = userName
+        self.passwd = passwd
+        self.path = 'http://www.blogger.com/atom/%s'
+        self.cookie = binascii.b2a_base64('%s:%s' % (userName, passwd))
