@@ -18,4 +18,4 @@
 
 # $Id$
 
-__revision__ = '$'
+__revision__ = '$Revision$'

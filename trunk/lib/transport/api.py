@@ -18,4 +18,20 @@
 
 # $Id$
 
+"""Definition of generic weblog transport interface."""
+
 __revision__ = '$Revision$'
+
+class WeblogTransport:
+
+    def getBlogList(self): raise NotImplementedError
+
+    def getEntries(self, numEntries=10): raise NotImplementedError
+
+    def postNew(self, entry, saveAsDraft=False): raise NotImplementedError
+
+    def postModified(self, entryId, entry): raise NotImplementedError
+
+    def getEntry(self, entryId): raise NotImplementedError
+
+    def deleteEntry(self, entryId): raise NotImplementedError

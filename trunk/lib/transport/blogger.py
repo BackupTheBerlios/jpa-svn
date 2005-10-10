@@ -18,4 +18,12 @@
 
 # $Id$
 
+"""Blogger specific transport, using Blogger Atom API and REST"""
+
 __revision__ = '$Revision$'
+
+import api
+
+class BloggerTransport(api.WeblogTransport):
+    
+    pass

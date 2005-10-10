@@ -18,4 +18,12 @@
 
 # $Id$
 
+"""Jogger specific transport, using XMPP/Jabber"""
+
 __revision__ = '$Revision$'
+
+import api
+
+class JoggerTransport(api.WeblogTransport):
+    
+    pass
