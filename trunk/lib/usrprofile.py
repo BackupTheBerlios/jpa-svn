@@ -26,21 +26,23 @@ class UserProfile:
     def __init__(self, name, default=False):
         self.name = name
         self.default = default
-        self.options = {}
+        self.weblog = {}
+        self.user = {}
 
     def readProfile(self, cfg):
         """Read profile data from ConfigParser object."""
+        #FIXME: implement real profile system based on subsections
         for (key, value) in cfg.items(self.name):
-            self.options[key] = value
+            if key[:4] == 'log.':
+                self.weblog[key] = value
+            elif key[:4] == 'usr.':
+                self.user[key] = value
 
     def writeProfile(self, cfg):
         """Write profile data into ConfigParser object."""
-        for option in self.options.keys():
-            cfg.set(option, self.options[option])
-
-    def getOption(self, option, default=None):
-        """Get specified option value, or default if not exists."""
-        try:
-            return self.options[option]
-        except KeyError:
-            return default
+        for (option, value) in self.weblog.items():
+            cfg.set(self.name, option, value)
+        for (option, value) in self.user.items():
+            cfg.set(self.name, option, value)
+        if self.default:
+            cfg.set('weblogs', 'default', self.name)
