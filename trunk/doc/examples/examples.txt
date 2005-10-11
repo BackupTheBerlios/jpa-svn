@@ -1,0 +1,5 @@
+List of examples
+
+blogger_atom.py
+===============
+An example on how to send post to blogger and how to use proxy with httplib's HTTPConnection object.
