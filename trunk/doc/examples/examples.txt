@@ -1,5 +1,9 @@
+$Id$
+
 List of examples
 
 blogger_atom.py
 ===============
-An example on how to send post to blogger and how to use proxy with httplib's HTTPConnection object.
+An example on how to send post to blogger and how to use proxy with httplib's HTTPConnection object. Other valuable resources on this topic:
+    http://code.blogger.com/archives/atom-docs.html (Blogger Atom API specification)
+    http://groups.google.com/group/bloggerDev?lnk=lr (Google Group for BDN)

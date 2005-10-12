@@ -23,15 +23,74 @@ REST approach. Very nice, indeed!"""
 
 __revision__ = '$Id$'
 
+import httplib, urlparse
 import binascii
+try:
+    import cElementTree as ElementTree
+except ImportError:
+    from elementtree import ElementTree
 
+# import lib.version
 import api
+
+# namespaces
+NS_ATOM = '{http://purl.org/atom/ns#}'
+NS_BLOGGER = '{http://www.blogger.com/atom/ns#}'
+NS_HTML = '{http://www.w3.org/1999/xhtml}'
 
 class BloggerTransport(api.WeblogTransport):
     """Weblog transport that uses Blogger Atom API."""
     
-    def __init__(self, userName, passwd):
+    def __init__(self, userName, passwd, proxyConfig=None):
         self.userName = userName
         self.passwd = passwd
-        self.path = 'http://www.blogger.com/atom/%s'
-        self.cookie = binascii.b2a_base64('%s:%s' % (userName, passwd)).strip()
+        self.authCookie = binascii.b2a_base64('%s:%s' % (userName, passwd))
+        self.authCookie = self.authCookie.strip() # strip final newline
+        self.headers = {
+            'Content-type': 'application/atom+xml',
+            'Authorization': 'BASIC %s' % self.authCookie,
+            #'UserAgent': '%s-%s' % (lib.version.AGENT),
+            'UserAgent': 'JPA-1.0', # temporary
+            }
+        if proxyConfig:
+            # we do not support proxies with authentication at this time
+            self.path = 'http://www.blogger.com/atom%s'
+            self.host = '%s:%s' % (proxyConfig['host'], proxyConfig['port'])
+        else:
+            self.path = '/atom%s'
+            self.host = 'http://www.blogger.com'
+
+    def getBlogList(self):
+        """This method returns dictionary of user's blog names (keys) and
+        their identifiers (values), suitable for use in blog inquiries and
+        operations."""
+        path = self.path % ''
+        connection = httplib.HTTPConnection(self.host)
+        try:
+            connection.request('GET', path, headers=self.headers)
+            response = connection.getresponse()
+            document = response.read()
+        finally:
+            connection.close()
+        return self._parseBlogListDoc(document)
+
+    def _parseBlogListDoc(self, doc):
+        tree = ElementTree.fromstring(doc)
+        links = tree.findall(NS_ATOM + 'link')
+        blogs = {}
+        for link in links:
+            href = link.get('href')
+            (scheme, loc, path, query, frag) = urlparse.urlsplit(href)
+            blogs[link.get('title')] = path.split('/')[-1]
+        return blogs
+
+    def getLastEntries(self, blogId):
+        path = self.path % ('/' + blogId)
+        connection = httplib.HTTPConnection(self.host)
+        try:
+            connection.request('GET', path, headers=self.headers)
+            response = connection.getresponse()
+            document = response.read()
+        finally:
+            connection.close()
+        print document
