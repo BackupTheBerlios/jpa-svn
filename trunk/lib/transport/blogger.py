@@ -75,6 +75,8 @@ class BloggerTransport(api.WeblogTransport):
         return self._parseBlogListDoc(document)
 
     def _parseBlogListDoc(self, doc):
+        """Internal method to parse list of blogs into title -> blogId
+        dictionary entries."""
         tree = ElementTree.fromstring(doc)
         links = tree.findall(NS_ATOM + 'link')
         blogs = {}
@@ -83,14 +85,3 @@ class BloggerTransport(api.WeblogTransport):
             (scheme, loc, path, query, frag) = urlparse.urlsplit(href)
             blogs[link.get('title')] = path.split('/')[-1]
         return blogs
-
-    def getLastEntries(self, blogId):
-        path = self.path % ('/' + blogId)
-        connection = httplib.HTTPConnection(self.host)
-        try:
-            connection.request('GET', path, headers=self.headers)
-            response = connection.getresponse()
-            document = response.read()
-        finally:
-            connection.close()
-        print document
