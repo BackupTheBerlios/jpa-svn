@@ -22,7 +22,7 @@ __revision__ = '$Id$'
 
 import time
 import os, os.path as op
-import cPickle as pickle
+import pickle # cann't use cPickle, we'll store unicode objects
 import metakit
 
 class Storage:

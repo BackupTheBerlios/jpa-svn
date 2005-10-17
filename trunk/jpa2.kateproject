@@ -3,8 +3,12 @@ Dirs=
 Files=jpa.py
 
 [Dir doc]
-Dirs=
+Dirs=examples
 Files=COPYING
+
+[Dir doc/examples]
+Dirs=
+Files=blogger_atom.py/examples.txt/gtk_threading.py
 
 [Dir lib]
 Dirs=transport

@@ -22,16 +22,22 @@ standard paths."""
 
 __revision__ = '$Id$'
 
+class JPAApplication:
+    """Main application class (bit dummy docstring)."""
+
+    def __init__(self):
+        self.gladeFile = 'jpa2.glade'
+
+
 if __name__ == '__main__':
     import sys
     import pygtk
     pygtk.require('2.0')
     import gtk
-    try:
-        import gnome
-        import gnome.ui
-    except ImportError:
-        # gnome Python support not installed, or we are on Windows
-        pass
     import gettext
     _ = gettext.gettext
+    gtk.threads_init()
+    gtk.threads_enter()
+    app = JPAApplication()
+    gtk.main()
+    gtk.threads_leave()
