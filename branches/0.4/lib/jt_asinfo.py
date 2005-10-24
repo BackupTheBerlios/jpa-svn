@@ -1,4 +1,4 @@
-# -*- coding: ISO8859-2 -*-
+# -*- coding: utf-8 -*-
 
 # This file is part of JPA.
 # Copyright: (C) 2003, 2004 Jarek Zgoda <jzgoda@gazeta.pl>
@@ -16,39 +16,14 @@
 # along with JPA; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
+"""Get tracks information from Audioscrobbler."""
+
 __revision__ = '$Id$'
 
-import locale
+import jt_const
 
-PARENT = None
-
-PATHS = {}
-
-enc = locale.getdefaultlocale()[1]
-
-MSGTEMPLATE = '<html><head>'\
-    '<meta http-equiv="Content-Type" content="text/html; '\
-    'charset=' + enc + '">'\
-    '<title>%s</title>'\
-    '</head>'\
-    '<body>%s</body>'\
-    '</html>'
-
-PATHS = {}
-
-APP_OBJECT = None
-
-EMPTY_MSG = {'msgid': '', \
-    'created': '', \
-    'edited': [], \
-    'sent': [], \
-    'title': '', \
-    'body': '', \
-    'level': '0', \
-    'content-type': 'textile', \
-    'eid': ''}
-
-TRUE_VALUES = (True, 'True', 1, '1', 'Yes', 'On', 'yes', 'true', 'on')
-
-AS_URL = 'http://ws.audioscrobbler.com/1.0/user/%s/recenttracks.xml'
-
+class AudioscrobblerInfo:
+    """AS webservices interface."""
+    
+    def __init__(self, userName):
+        self.userName = userName
