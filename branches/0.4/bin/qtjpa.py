@@ -20,7 +20,7 @@
 """Main program file, used to set up paths, import globals into app 
 namespace etc..."""
 
-__revision__ = '$Id'
+__revision__ = '$Id$'
 
 import sys, locale
 import os.path as op
