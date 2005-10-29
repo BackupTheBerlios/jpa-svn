@@ -26,10 +26,35 @@ import pickle # cann't use cPickle, we'll store unicode objects
 import metakit
 
 class Storage:
+    """Abstract base class for all storage implementations."""
+    
+    def getEntriesList(self, entryYear, entryMonth):
+        """Get list of Id's for entries in year and month."""
+        raise NotImplementedError
+    
+    def getEntries(self, entryYear, entryMonth):
+        """Get list of all entries in year and month."""
+        raise NotImplementedError
+    
+    def getEntry(self, entryId):
+        """Get single entry by its Id."""
+        raise NotImplementedError
+    
+    def setEntry(self, entry, entryId=None):
+        """Insert or delete entry.
+        If Id is not specified, the entry will be inserted."""
+        raise NotImplementedError
+    
+    def close(self):
+        """Close storage engine. A good place to clean up."""
+        raise NotImplementedError
+
+
+class MetakitStorage(Storage):
     """Main storage of application data."""
 
     def __init__(self):
-        fileName = op.join(op.expanduser('~'), '.jpa2', 'entries')
+        fileName = op.join(os.environ['HOME'], '.jpa2', 'entries')
         if op.isfile(fileName):
             self.storage = metakit.storage(fileName, 1)
             self.entries = self.storage.view('entries')
@@ -66,10 +91,9 @@ class Storage:
     def setEntry(self, entry, entryId=None):
         if entryId:
             row = self.entries.find(eid=entryId)
-            row.created = pickle.dumps(entry['created'], 
-                pickle.HIGHEST_PROTOCOL)
-            row.sent = pickle.dumps(entry['sent'], pickle.HIGHEST_PROTOCOL)
-            row.edited = pickle.dumps(entry['edited'], pickle.HIGHEST_PROTOCOL)
+            row.created = pickle.dumps(entry['created'], 2)
+            row.sent = pickle.dumps(entry['sent'], 2)
+            row.edited = pickle.dumps(entry['edited'], 2)
             row.title = entry['title']
             row.body = entry['body']
         else:
