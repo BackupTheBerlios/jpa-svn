@@ -23,7 +23,44 @@ __revision__ = '$Id$'
 import time
 import os, os.path as op
 import pickle # cann't use cPickle, we'll store unicode objects
-import metakit
+
+
+def checkAvailableStorage():
+    """Check what storage engines are available, return tuple of what is
+    installed."""
+    engines = []
+    try:
+        # try metakit
+        import metakit
+        engines.append('metakit')
+    except ImportError:
+        pass
+    try:
+        # try new pysqlite (pysqlite2)
+        import pysqlite2
+        engines.append('sqlite2')
+    except ImportError:
+        pass
+    try:
+        # try old pysqlite (pysqlite1)
+        import sqlite
+        engines.append('sqlite1')
+    except ImportError:
+        pass
+    # the next two should be always available
+    engines.append('bsddb')
+    engines.append('shelve')
+    return tuple(engines)
+        
+
+
+def getStorage(config):
+    """Factory method to get instance of storage, based on configuration
+    option."""
+    if config.getOption('internal', 'storage', 'metakit') == 'metakit':
+        import metakit
+        return MetakitStorage()
+
 
 class Storage:
     """Abstract base class for all storage implementations."""
@@ -51,7 +88,7 @@ class Storage:
 
 
 class MetakitStorage(Storage):
-    """Main storage of application data."""
+    """Main storage of application data, based on metakit."""
 
     def __init__(self):
         fileName = op.join(os.environ['HOME'], '.jpa2', 'entries')
