@@ -1,4 +1,3 @@
-#! /usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 # This file is part of JPA.
@@ -17,30 +16,27 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-"""Main program file, used to initialize stuff, import global modules and set
-standard paths."""
+"""Main window of application."""
 
 __revision__ = '$Id$'
 
-# path setup
-import os, sys
-import os.path as op
-basePath = op.dirname(op.dirname(op.abspath(sys.argv[0])))
-sys.path.insert(0, basePath)
-paths = {}
-for dirName in ('bin', 'doc', 'lib', 'share'):
-    paths[dirName] = op.join(basePath, dirName)
-paths['img'] = op.join(paths['share'], 'pixmaps')
-import lib.appconst
-lib.appconst.PATHS = paths
+import gtk
+import gtk.glade
 
-if __name__ == '__main__':
-    import pygtk
-    pygtk.require('2.0')
-    import gtk
-    gtk.threads_init()
-    gtk.threads_enter()
-    from lib.jpa import JPAApplication
-    app = JPAApplication()
-    gtk.main()
-    gtk.threads_leave()
+class MainWindow:
+    
+    def __init__(self, gladeFile):
+        self.modified = False
+        self.wTree = gtk.glade.XML(gladeFile, 'frmMain')
+        callbacks = {
+            'on_frmMain_destroy': self.onFormDestroy,
+            'on_miFileQuit_activate': self.onFormDestroy,
+            }
+        self.wTree.signal_autoconnect(callbacks)
+
+    def onFormDestroy(self, *args):
+        if self.modified:
+            print 'modified!'
+            gtk.main_quit()
+        else:
+            gtk.main_quit()

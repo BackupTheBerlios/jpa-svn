@@ -1,4 +1,3 @@
-#! /usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 # This file is part of JPA.
@@ -17,30 +16,16 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-"""Main program file, used to initialize stuff, import global modules and set
-standard paths."""
+"""Main application class module."""
 
 __revision__ = '$Id$'
 
-# path setup
-import os, sys
 import os.path as op
-basePath = op.dirname(op.dirname(op.abspath(sys.argv[0])))
-sys.path.insert(0, basePath)
-paths = {}
-for dirName in ('bin', 'doc', 'lib', 'share'):
-    paths[dirName] = op.join(basePath, dirName)
-paths['img'] = op.join(paths['share'], 'pixmaps')
-import lib.appconst
-lib.appconst.PATHS = paths
+import appconst
+from main_window import MainWindow
 
-if __name__ == '__main__':
-    import pygtk
-    pygtk.require('2.0')
-    import gtk
-    gtk.threads_init()
-    gtk.threads_enter()
-    from lib.jpa import JPAApplication
-    app = JPAApplication()
-    gtk.main()
-    gtk.threads_leave()
+class JPAApplication:
+    
+    def __init__(self):
+        self.gladeFile = op.join(appconst.PATHS['share'], appconst.GLADE_FILE)
+        self.mainWindow = MainWindow(self.gladeFile)

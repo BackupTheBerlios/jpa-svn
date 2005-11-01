@@ -12,7 +12,7 @@ Files=blogger_atom.py/examples.txt/gtk_threading.py
 
 [Dir lib]
 Dirs=transport
-Files=config.py/usrprofile.py/version.py/storage.py/appconst.py/__init__.py
+Files=config.py/usrprofile.py/version.py/storage.py/appconst.py/__init__.py/jpa.py/main_window.py
 
 [Dir lib/transport]
 Dirs=

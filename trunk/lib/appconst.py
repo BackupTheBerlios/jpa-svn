@@ -21,3 +21,4 @@
 __revision__ = '$Id$'
 
 PATHS = {}
+GLADE_FILE = 'jpa2.glade'
