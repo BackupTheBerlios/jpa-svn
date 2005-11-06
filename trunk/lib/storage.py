@@ -86,6 +86,21 @@ class SQLiteStorage(Storage):
     
     fileName = op.join(op.expanduser('~'), '.jpa2', 'entries')
     
+    def initDB(self):
+        cr = self.conn.cursor()
+        cr.execute('''create table entries (
+                eid unicode not null primary key,
+                level integer not null,
+                content_type unicode not null,
+                title unicode not null,
+                body unicode, 
+                created integer not null, 
+                edited varchar,
+                sent varchar, 
+                year integer not null,
+                month integer not null)''')
+        self.conn.commit()
+    
     def getEntriesList(self, entryYear, entryMonth):
         self.cur.execute('select eid from entries where year = %d and month = %d')
         rows = self.cur.fetchall()
@@ -94,12 +109,28 @@ class SQLiteStorage(Storage):
 
 class SQLite1Storage(SQLiteStorage):
     """Main storage with SQLite1 backend"""
-    pass
+    
+    def __init__(self):
+        import sqlite
+        if not os.access(self.fileName, os.F_OK):
+            self.conn = sqlite.connect(self.fileName)
+            self.initDB()
+        else:
+            self.conn = sqlite.connect(self.fileName)
+        self.cur = self.conn.cursor()
 
 
 class SQLite2Storage(SQLiteStorage):
     """Main storage with SQLite2 backend"""
-    pass
+    
+    def __init__(self):
+        from pysqlite2 import dbapi2 as sqlite
+        if not os.access(self.fileName, os.F_OK):
+            self.conn = sqlite.connect(self.fileName)
+            self.initDB()
+        else:
+            self.conn = sqlite.connect(self.fileName)
+        self.cur = self.conn.cursor()
 
 
 class DBStorage(Storage):
