@@ -13,7 +13,7 @@
         </rect>
     </property>
     <property name="caption">
-        <string>Editing Message</string>
+        <string>Editing Entry</string>
     </property>
     <property name="sizeGripEnabled">
         <bool>true</bool>
@@ -60,7 +60,7 @@
                                         <cstring>lbTitle</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>Message t&amp;itle:</string>
+                                        <string>Entry t&amp;itle:</string>
                                     </property>
                                     <property name="buddy" stdset="0">
                                         <cstring>edTitle</cstring>
@@ -76,7 +76,7 @@
                                         <cstring>lbBody</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>Message t&amp;ext:</string>
+                                        <string>Entry t&amp;ext:</string>
                                     </property>
                                     <property name="buddy" stdset="0">
                                         <cstring>teBody</cstring>
@@ -109,7 +109,7 @@
                                                 <cstring>lbMsgType</cstring>
                                             </property>
                                             <property name="text">
-                                                <string>Message te&amp;xt type:</string>
+                                                <string>Entry te&amp;xt type:</string>
                                             </property>
                                             <property name="buddy" stdset="0">
                                                 <cstring>cbxMsgType</cstring>
@@ -140,7 +140,7 @@
                                                 <cstring>lbLevel</cstring>
                                             </property>
                                             <property name="text">
-                                                <string>Message &amp;level:</string>
+                                                <string>Entry &amp;level:</string>
                                             </property>
                                             <property name="buddy" stdset="0">
                                                 <cstring>sbxLevel</cstring>
