@@ -20,23 +20,28 @@
 
 __revision__ = '$Id$'
 
-import time
-import os, os.path as op
+import os
 
-
-def checkAvailableStorage():
-    """Check what storage engines are available, return tuple of what is
-    installed.
-    As this function tries to import any of interesting modules, it should't be
-    run too often."""
-    engines = []
-    for storage in ('pysqlite2', 'sqlite', 'bsddb', 'shelve'):
-        try:
-            __import__(storage)
-            engines.append(storage)
-        except ImportError:
-            pass
-    return tuple(engines)
+# Check storage availability
+engines = []
+try:
+    import pysqlite2
+    from pysqlite2 import dbapi2 as sqlite
+    engines.append('sqlite')
+except ImportError:
+    # not available, we'll try older one
+    try:
+        import sqlite
+        engines.append('sqlite')
+    except ImportError:
+        # not available, we'll move on
+        pass
+import bsddb
+engines.append('bsddb')
+import shelve
+engines.append('shelve')
+# for the sake of code cleanliness
+engines = tuple(engines)
 
 
 def getStorage(config):
@@ -46,9 +51,7 @@ def getStorage(config):
     shelve module."""
     storageType = config.getOption('internal', 'storage', 'shelve')
     if storageType == 'sqlite':
-        return SQLite1Storage()
-    elif storageType == 'pysqlite2':
-        return SQLite2Storage()
+        return SQLiteStorage()
     elif storageType == 'bsddb':
         return DBStorage()
     else:
@@ -71,9 +74,12 @@ class Storage:
         """Get single entry by its Id."""
         raise NotImplementedError
     
-    def setEntry(self, entry, entryId=None):
-        """Insert or delete entry. If Id is not specified, the entry will be
-        inserted."""
+    def setEntry(self, entry, isNew):
+        """Insert or update entry. If isNew, the entry will be inserted."""
+        raise NotImplementedError
+    
+    def deleteEntry(self, entryId):
+        """Permanently remove entry from storage."""
         raise NotImplementedError
 
     def close(self):
@@ -84,53 +90,82 @@ class Storage:
 class SQLiteStorage(Storage):
     """Base for storages with SQLite (1 and 2) backends"""
     
-    fileName = op.join(op.expanduser('~'), '.jpa2', 'entries')
+    fileName = os.path.join(os.path.expanduser('~'), '.jpa2', 'entries')
+    columnNames = ('eid', 'level', 'content_type', 'category', 'title', 'body', 
+        'created', 'edited', 'sent', 'year', 'month')
+    
+    def __init__(self):
+        self.engineLevel = sqlite.version_info[0]
+        runInit = not os.access(self.fileName, os.F_OK)
+        self.conn = sqlite.connect(self.fileName, client_encoding='utf-8')
+        self.cur = self.conn.cursor()
+        if runInit:
+            self.initDB()
     
     def initDB(self):
-        cr = self.conn.cursor()
-        cr.execute('''create table entries (
+        self.cur.execute('''create table entries (
                 eid unicode not null primary key,
                 level integer not null,
                 content_type unicode not null,
+                category unicode,
                 title unicode not null,
                 body unicode, 
                 created integer not null, 
-                edited varchar,
-                sent varchar, 
+                edited unicode,
+                sent unicode, 
                 year integer not null,
                 month integer not null)''')
         self.conn.commit()
     
     def getEntriesList(self, entryYear, entryMonth):
-        self.cur.execute('select eid from entries where year = %d and month = %d')
-        rows = self.cur.fetchall()
-        return [row[0] for row in rows]
-
-
-class SQLite1Storage(SQLiteStorage):
-    """Main storage with SQLite1 backend"""
-    
-    def __init__(self):
-        import sqlite
-        if not os.access(self.fileName, os.F_OK):
-            self.conn = sqlite.connect(self.fileName)
-            self.initDB()
+        if self.engineLevel == 1:
+            qry = 'select eid from entries where year = %d and month = %d'
         else:
-            self.conn = sqlite.connect(self.fileName)
-        self.cur = self.conn.cursor()
+            qry = 'select eid from entries where year = ? and month = ?'
+        self.cur.execute(qry, (entryYear, entryMonth))
+        rows = []
+        row = self.cur.fetchone()
+        while row:
+            rows.append(row[0])
+        return rows
 
-
-class SQLite2Storage(SQLiteStorage):
-    """Main storage with SQLite2 backend"""
-    
-    def __init__(self):
-        from pysqlite2 import dbapi2 as sqlite
-        if not os.access(self.fileName, os.F_OK):
-            self.conn = sqlite.connect(self.fileName)
-            self.initDB()
+    def getEntry(self, entryId):
+        if self.engineLevel == 1:
+            qry = 'select * from entries where eid = %s'
         else:
-            self.conn = sqlite.connect(self.fileName)
-        self.cur = self.conn.cursor()
+            qry = 'select * from entries where eid = ?'
+        self.cur.execute(qry, entryId)
+        row = self.cur.fetchone()
+        if row:
+            return dict(zip(self.columnNames, row))
+
+    def getEntries(self, entryYear, entryMonth):
+        if self.engineLevel == 1:
+            qry = 'select * from entries where year = %d and month = %d \
+                order by 0 desc'
+        else:
+            qry = 'select * from entries where year = ? and month = ? \
+                order by 0 desc'
+        self.cur.execute(qry, (entryYear, entryMonth))
+        rows = []
+        row = self.cur.fetchone()
+        while row:
+            rows.append(dict(zip(self.columnNames, row)))
+        return rows
+
+    def setEntry(self, entry, isNew):
+        if isNew:
+            if self.engineLevel == 1:
+                qry = 'insert into entries values \
+                    (%s, %d, %s, %s, %s, %s, %d, %s, %s, %d, %d)'
+            else:
+                qry = 'insert into entries values \
+                    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        else:
+            if self.engineLevel == 1:
+                pass
+            else:
+                pass
 
 
 class DBStorage(Storage):

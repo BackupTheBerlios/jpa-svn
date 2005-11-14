@@ -11,3 +11,7 @@ An example on how to send post to blogger and how to use proxy with httplib's HT
 gtk_threading.py
 ================
 Example og use of threading with PyGTK.
+
+bloxerAPI.txt
+=============
+An API for blox.pl (blogging service on Polish gazeta.pl portal). Based on old blogger.com XML-RPC API.
