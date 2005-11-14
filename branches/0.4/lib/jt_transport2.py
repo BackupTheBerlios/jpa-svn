@@ -16,6 +16,10 @@
 # along with JPA; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
+"""Message transport support."""
+
+__revision__ = '$Id$'
+
 import locale, time
 
 try:
@@ -119,12 +123,12 @@ class JabberTransport(Transport):
         msg = jabber.Message(to=self.address)
         msg.setSubject(message['title'].strip())
         if message['content-type'] == 'textile':
-            body = textile.textile(message['body'].strip())
+            body = textile.textile(message['body'])
         else:
-            body = message['body'].strip()
+            body = message['body']
         if message.has_key('level') and (message['level'] != '0'):
-            body = '<LEVEL%s>%s' % (message['level'], body.strip())
-        msg.setBody(body)
+            body = '<LEVEL%s>%s' % (message['level'], body)
+        msg.setBody(body.strip())
         return msg
 
     def setTimeout(self, value):
