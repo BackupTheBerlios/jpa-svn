@@ -1,4 +1,4 @@
-# -*- coding: ISO8859-2 -*-
+# -*- coding: utf-8 -*-
 
 # This file is part of JPA.
 # Copyright: (C) 2003 - 2005 Jarek Zgoda <jzgoda@gazeta.pl>
@@ -16,5 +16,9 @@
 # along with JPA; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-VERSION = '0.4.10'
+"""Application version information."""
+
+__revision__ = '$Id$'
+
+VERSION = '0.4.11'
 
