@@ -16,10 +16,31 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-"""Application-wide constants"""
+"""Application data model"""
 
 __revision__ = '$Id$'
 
-PATHS = {}
-GLADE_FILE = 'jpa2.glade'
-DB_URI = ''
+import datetime
+
+from sqlobject import *
+
+import appconst
+
+connection = connectionForURI(appconst.DB_URI)
+sqlhub.processConnection = connection
+
+class Entry(SQLObject):
+    created = DateTimeCol(default=datetime.datetime.now)
+    sent = DateTimeCol()
+    title = UnicodeCol()
+    body = UnicodeCol()
+    bodyType = EnumCol(enumValues=('plain', 'textile', 'ReST', 'HTML'), 
+            default='plain', notNone=True)
+    visibilityLevel = IntCol(default=0, notNone=True)
+    categories = RelatedJoin('Category')
+
+
+class Category(SQLObject):
+    name = UnicodeCol(alternateID=True, notNone=True)
+    description = UnicodeCol()
+    entries = RelatedJoin('Entry')

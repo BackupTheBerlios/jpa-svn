@@ -31,8 +31,15 @@ paths = {}
 for dirName in ('bin', 'doc', 'lib', 'share'):
     paths[dirName] = op.join(basePath, dirName)
 paths['img'] = op.join(paths['share'], 'pixmaps')
+userPath = op.join(op.expanduser('~'), '.jpa')
+path['user'] = userPath
+dbPath = op.join(userPath, 'data', 'jpa.db')
+if os.name == 'nt':
+    dbPath = dbPath.replace(':', '|').replace('\\', '/')
 import lib.appconst
 lib.appconst.PATHS = paths
+lib.appconst.DB_URI = 'sqlite://%s' % dbPath
+
 
 if __name__ == '__main__':
     import pygtk
