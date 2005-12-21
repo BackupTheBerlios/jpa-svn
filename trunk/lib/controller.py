@@ -27,10 +27,6 @@ import license_dialog
 
 class Controller:
     
-    def __init__(self, gladeFile):
-        self.gladeFile = gladeFile
-    
     def showLicense(self):
-        wTree = gtk.glade.XML(self.gladeFile, 'frmLicense')
-        dialog = license_dialog.LicenseDialog(wTree)
+        dialog = license_dialog.LicenseDialog()
         dialog.show()

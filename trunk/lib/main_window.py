@@ -27,10 +27,10 @@ import appconst
 
 class MainWindow:
     
-    def __init__(self, gladeFile, controller):
+    def __init__(self, controller):
         self.controller = controller
         self.cfg = appconst.CFG
-        self.wTree = gtk.glade.XML(gladeFile, 'frmMain')
+        self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmMain')
         callbacks = {
             'on_frmMain_destroy': self.onFormDestroy,
             'on_miFileQuit_activate': self.onFileQuit,
@@ -42,6 +42,7 @@ class MainWindow:
         window = self.wTree.get_widget('frmMain')
         rect = window.get_size()
         self.cfg.setWindowSize('main', rect)
+        gtk.main_quit()
 
     def onFormDestroy(self, *args):
         gtk.main_quit()

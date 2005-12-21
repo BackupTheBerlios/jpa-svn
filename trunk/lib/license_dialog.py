@@ -22,14 +22,16 @@ __revision__ = '$Id$'
 
 import os.path as op
 
-import gtk
+import gtk, gtk.glade, pango
 
 import appconst
 
 class LicenseDialog:
     
-    def __init__(self, widgetTree):
-        self.wTree = widgetTree
+    def __init__(self):
+        self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmLicense')
+        view = self.wTree.get_widget('tvLicense')
+        view.modify_font(pango.FontDescription('Monospace 9'))
 
     def show(self):
         self.loadLicenseText()
