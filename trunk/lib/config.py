@@ -65,3 +65,19 @@ class AppConfig(SafeConfigParser):
         if not self.has_section(section):
             self.add_section(section)
         self.set(section, option, value)
+    
+    def setWindowSize(self, windowName, size):
+        """Convenience method to save window geometry."""
+        if not self.has_section(windowName):
+            self.add_section(windowName)
+        width, height = size
+        self.set(windowName, 'width', str(width))
+        self.set(windowName, 'height', str(height))
+    
+    def getWindowSize(self, windowName, default=(640, 480)):
+        """Convenience method to retrieve window geometry"""
+        try:
+            width = int(self.get(windowName, 'width'))
+            height = int(self.get(windowName, 'height'))
+        except (NoSectionError, NoOptionError):
+            return default

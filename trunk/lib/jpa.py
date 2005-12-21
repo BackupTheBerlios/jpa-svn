@@ -21,13 +21,15 @@
 __revision__ = '$Id$'
 
 import os.path as op
-import appconst, datamodel, controller
+import appconst, datamodel, controller, config
 from main_window import MainWindow
 
 class JPAApplication:
     
     def __init__(self):
         datamodel.initModel()
+        appconst.CFG = config.AppConfig(op.join(appconst.PATHS['user'],
+            'jpa.cfg'))
         self.gladeFile = op.join(appconst.PATHS['share'], appconst.GLADE_FILE)
         self.controller = controller.Controller(self.gladeFile)
         self.mainWindow = MainWindow(self.gladeFile, self.controller)

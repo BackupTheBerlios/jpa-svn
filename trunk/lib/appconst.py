@@ -23,3 +23,4 @@ __revision__ = '$Id$'
 PATHS = {}
 GLADE_FILE = 'jpa2.glade'
 DB_URI = ''
+CFG = None

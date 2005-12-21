@@ -23,17 +23,25 @@ __revision__ = '$Id$'
 import gtk
 import gtk.glade
 
+import appconst
+
 class MainWindow:
     
     def __init__(self, gladeFile, controller):
         self.controller = controller
+        self.cfg = appconst.CFG
         self.wTree = gtk.glade.XML(gladeFile, 'frmMain')
         callbacks = {
             'on_frmMain_destroy': self.onFormDestroy,
-            'on_miFileQuit_activate': self.onFormDestroy,
+            'on_miFileQuit_activate': self.onFileQuit,
             'on_miLicense_activate': self.onLicenseActivate, 
             }
         self.wTree.signal_autoconnect(callbacks)
+    
+    def onFileQuit(self, *args):
+        window = self.wTree.get_widget('frmMain')
+        rect = window.get_size()
+        self.cfg.setWindowSize('main', rect)
 
     def onFormDestroy(self, *args):
         gtk.main_quit()
