@@ -33,9 +33,7 @@ class Entry(SQLObject):
     """
     Object that represents single entry.
     """
-    
     created = DateTimeCol(default=datetime.datetime.now)
-    sent = DateTimeCol()
     title = UnicodeCol()
     body = UnicodeCol()
     bodyType = EnumCol(enumValues=('plain', 'textile', 'ReST', 'HTML'), 
@@ -57,3 +55,23 @@ class Category(SQLObject):
     name = UnicodeCol(alternateID=True, notNone=True)
     description = UnicodeCol()
     entries = RelatedJoin('Entry')
+
+
+class Publication(SQLObject):
+    """
+    Object that holds information on entry publication.
+    """
+    published = DateTimeCol(notNone=True)
+    entry = ForeignKey('Entry')
+    weblog = ForeignKey('Weblog')
+
+
+class Weblog(SQLObject):
+    """
+    Object that contains weblog configuration data
+    """
+    name = UnicodeCol(alternateID=True)
+    transportType = UnicodeCol()
+    userName = UnicodeCol()
+    password = UnicodeCol()
+    isActive = BoolCol(default='t', notNone=True)
