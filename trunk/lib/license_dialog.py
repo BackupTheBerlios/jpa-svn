@@ -16,27 +16,34 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-"""Main window of application."""
+"""Dialog with license information"""
 
 __revision__ = '$Id$'
 
+import os.path as op
+
 import gtk
-import gtk.glade
 
-class MainWindow:
+import appconst
+
+class LicenseDialog:
     
-    def __init__(self, gladeFile, controller):
-        self.controller = controller
-        self.wTree = gtk.glade.XML(gladeFile, 'frmMain')
-        callbacks = {
-            'on_frmMain_destroy': self.onFormDestroy,
-            'on_miFileQuit_activate': self.onFormDestroy,
-            'on_miLicense_activate': self.onLicenseActivate, 
-            }
-        self.wTree.signal_autoconnect(callbacks)
+    def __init__(self, widgetTree):
+        self.wTree = widgetTree
 
-    def onFormDestroy(self, *args):
-        gtk.main_quit()
-
-    def onLicenseActivate(self, *args):
-        self.controller.showLicense()
+    def show(self):
+        self.loadLicenseText()
+        window = self.wTree.get_widget('frmLicense')
+        window.show()
+    
+    def loadLicenseText(self):
+        licFile = op.join(appconst.PATHS['doc'], 'COPYING')
+        fp = open(licFile)
+        try:
+            data = fp.read()
+        finally:
+            fp.close()
+        bf = gtk.TextBuffer(None)
+        view = self.wTree.get_widget('tvLicense')
+        view.set_buffer(bf)
+        bf.insert_at_cursor(data, len(data))

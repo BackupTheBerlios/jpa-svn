@@ -16,27 +16,21 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-"""Main window of application."""
+"""GUI controller/signal dispatcher"""
 
 __revision__ = '$Id$'
 
 import gtk
 import gtk.glade
 
-class MainWindow:
+import license_dialog
+
+class Controller:
     
-    def __init__(self, gladeFile, controller):
-        self.controller = controller
-        self.wTree = gtk.glade.XML(gladeFile, 'frmMain')
-        callbacks = {
-            'on_frmMain_destroy': self.onFormDestroy,
-            'on_miFileQuit_activate': self.onFormDestroy,
-            'on_miLicense_activate': self.onLicenseActivate, 
-            }
-        self.wTree.signal_autoconnect(callbacks)
-
-    def onFormDestroy(self, *args):
-        gtk.main_quit()
-
-    def onLicenseActivate(self, *args):
-        self.controller.showLicense()
+    def __init__(self, gladeFile):
+        self.gladeFile = gladeFile
+    
+    def showLicense(self):
+        wTree = gtk.glade.XML(self.gladeFile, 'frmLicense')
+        dialog = license_dialog.LicenseDialog(wTree)
+        dialog.show()
