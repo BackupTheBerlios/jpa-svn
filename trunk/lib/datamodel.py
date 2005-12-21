@@ -30,17 +30,30 @@ connection = connectionForURI(appconst.DB_URI)
 sqlhub.processConnection = connection
 
 class Entry(SQLObject):
+    """
+    Object that represents single entry.
+    """
+    
     created = DateTimeCol(default=datetime.datetime.now)
     sent = DateTimeCol()
     title = UnicodeCol()
     body = UnicodeCol()
     bodyType = EnumCol(enumValues=('plain', 'textile', 'ReST', 'HTML'), 
-            default='plain', notNone=True)
+        default='plain', notNone=True)
     visibilityLevel = IntCol(default=0, notNone=True)
     categories = RelatedJoin('Category')
+    
+    def publish(self, transport):
+        """
+        Send an entry to weblog.
+        """
+        pass
 
 
 class Category(SQLObject):
+    """
+    Object that represents entry category.
+    """
     name = UnicodeCol(alternateID=True, notNone=True)
     description = UnicodeCol()
     entries = RelatedJoin('Entry')
