@@ -20,14 +20,24 @@
 
 __revision__ = '$Id$'
 
-import datetime
+import datetime, os
 
 from sqlobject import *
 
 import appconst
 
-connection = connectionForURI(appconst.DB_URI)
-sqlhub.processConnection = connection
+def initModel():
+    if not os.access(appconst.PATHS['data'], os.F_OK):
+        root, tail = os.path.split(appconst.PATHS['data'])
+        if not os.path.isdir(root):
+            os.makedirs(root)
+    connection = connectionForURI(appconst.DB_URI)
+    sqlhub.processConnection = connection
+    Entry.createTable(ifNotExists=True)
+    Category.createTable(ifNotExists=True)
+    Publication.createTable(ifNotExists=True)
+    Weblog.createTable(ifNotExists=True)
+
 
 class Entry(SQLObject):
     """
@@ -40,6 +50,9 @@ class Entry(SQLObject):
         default='plain', notNone=True)
     visibilityLevel = IntCol(default=0, notNone=True)
     categories = RelatedJoin('Category')
+    # indexes
+    createdIdx = DatabaseIndex(created)
+    titleIdx = DatabaseIndex(title)
     
     def publish(self, transport):
         """
@@ -64,6 +77,8 @@ class Publication(SQLObject):
     published = DateTimeCol(notNone=True)
     entry = ForeignKey('Entry')
     weblog = ForeignKey('Weblog')
+    # indexes
+    pubIdx = DatabaseIndex(published)
 
 
 class Weblog(SQLObject):
@@ -75,3 +90,5 @@ class Weblog(SQLObject):
     userName = UnicodeCol()
     password = UnicodeCol()
     isActive = BoolCol(default='t', notNone=True)
+    # indexes
+    activeIdx = DatabaseIndex(isActive)

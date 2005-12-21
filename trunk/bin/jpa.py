@@ -34,6 +34,7 @@ paths['img'] = op.join(paths['share'], 'pixmaps')
 userPath = op.join(op.expanduser('~'), '.jpa')
 paths['user'] = userPath
 dbPath = op.join(userPath, 'data', 'jpa.db')
+paths['data'] = dbPath
 if os.name == 'nt':
     uri = dbPath.replace(':', '|').replace('\\', '/')
     uri = 'sqlite:///%s' % uri
