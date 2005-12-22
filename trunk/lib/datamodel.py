@@ -54,11 +54,12 @@ class Entry(SQLObject):
     createdIdx = DatabaseIndex(created)
     titleIdx = DatabaseIndex(title)
     
-    def publish(self, transport):
+    def publish(self, transports):
         """
         Send an entry to weblog.
         """
-        pass
+        for transport in transports:
+            transport.send(self)
 
 
 class Category(SQLObject):
@@ -77,6 +78,7 @@ class Publication(SQLObject):
     published = DateTimeCol(notNone=True)
     entry = ForeignKey('Entry')
     weblog = ForeignKey('Weblog')
+    assignedId = UnicodeCol()
     # indexes
     pubIdx = DatabaseIndex(published)
 
