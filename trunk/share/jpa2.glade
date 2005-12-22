@@ -19,8 +19,8 @@
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
-  <property name="urgency_hint">False</property>
   <signal name="destroy" handler="on_frmMain_destroy" last_modification_time="Tue, 01 Nov 2005 21:13:44 GMT"/>
+  <signal name="delete_event" handler="on_frmMain_delete" last_modification_time="Thu, 22 Dec 2005 08:45:13 GMT"/>
 
   <child>
     <widget class="GtkVBox" id="vbox1">
@@ -31,8 +31,6 @@
       <child>
 	<widget class="GtkMenuBar" id="mbMain">
 	  <property name="visible">True</property>
-	  <property name="pack_direction">GTK_PACK_DIRECTION_LTR</property>
-	  <property name="child_pack_direction">GTK_PACK_DIRECTION_LTR</property>
 
 	  <child>
 	    <widget class="GtkMenuItem" id="menuitem4">
@@ -677,10 +675,9 @@
   <property name="decorated">True</property>
   <property name="skip_taskbar_hint">True</property>
   <property name="skip_pager_hint">False</property>
-  <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+  <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
-  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox3">
@@ -752,7 +749,7 @@
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
-	      <signal name="activate" handler="gtk_widget_destroy" last_modification_time="Wed, 21 Dec 2005 20:39:06 GMT"/>
+	      <signal name="clicked" handler="on_btnClose_clicked" last_modification_time="Thu, 22 Dec 2005 08:16:21 GMT"/>
 	    </widget>
 	  </child>
 	</widget>
@@ -780,7 +777,6 @@
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
-  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox4">
@@ -1095,7 +1091,6 @@
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
-  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox5">

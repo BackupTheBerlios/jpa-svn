@@ -27,9 +27,14 @@ import gtk, gtk.glade, pango
 import appconst
 
 class LicenseDialog:
+    """
+    Window with license text.
+    """
     
     def __init__(self):
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmLicense')
+        self.wTree.signal_autoconnect(self)
+        self.window = self.wTree.get_widget('frmLicense')
         view = self.wTree.get_widget('tvLicense')
         view.modify_font(pango.FontDescription('Monospace 9'))
 
@@ -49,3 +54,6 @@ class LicenseDialog:
         view = self.wTree.get_widget('tvLicense')
         view.set_buffer(bf)
         bf.insert_at_cursor(data, len(data))
+    
+    def on_btnClose_clicked(self, *args):
+        self.window.destroy()

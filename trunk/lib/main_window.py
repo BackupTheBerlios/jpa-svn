@@ -31,21 +31,19 @@ class MainWindow:
         self.controller = controller
         self.cfg = appconst.CFG
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmMain')
-        callbacks = {
-            'on_frmMain_destroy': self.onFormDestroy,
-            'on_miFileQuit_activate': self.onFileQuit,
-            'on_miLicense_activate': self.onLicenseActivate, 
-            }
-        self.wTree.signal_autoconnect(callbacks)
+        self.wTree.signal_autoconnect(self)
     
-    def onFileQuit(self, *args):
+    def on_miFileQuit_activate(self, *args):
+        self.on_frmMain_delete(args)
+    
+    def on_frmMain_delete(self, *args):
         window = self.wTree.get_widget('frmMain')
         rect = window.get_size()
         self.cfg.setWindowSize('main', rect)
+        self.on_frmMain_destroy(args)
+
+    def on_frmMain_destroy(self, *args):
         gtk.main_quit()
 
-    def onFormDestroy(self, *args):
-        gtk.main_quit()
-
-    def onLicenseActivate(self, *args):
+    def on_miLicense_activate(self, *args):
         self.controller.showLicense()
