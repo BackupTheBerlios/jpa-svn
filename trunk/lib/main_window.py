@@ -48,6 +48,9 @@ class MainWindow:
     def on_frmMain_destroy(self, *args):
         gtk.main_quit()
     
+    def on_miFileNew_activate(self, *args):
+        self.controller.newEntry()
+    
     def on_miViewLog_activate(self, *args):
         logWindow = self.wTree.get_widget('pnLog')
         if logWindow.get_property('visible'):

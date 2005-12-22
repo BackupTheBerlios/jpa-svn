@@ -16,44 +16,32 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-"""Dialog with license information"""
+"""Dialog for entry editing"""
 
 __revision__ = '$Id$'
 
-import os.path as op
-
-import gtk, pango
+import gtk
 import gtk.glade
 
 import appconst
 
-class LicenseDialog:
-    """
-    Window with license text.
-    """
+class EntryDialog:
     
-    def __init__(self):
-        self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmLicense')
+    def __init__(self, entryId):
+        self.entryId = entryId
+        self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmEntry')
+        self.window = self.wTree.get_widget('frmEntry')
         self.wTree.signal_autoconnect(self)
-        self.window = self.wTree.get_widget('frmLicense')
-        view = self.wTree.get_widget('tvLicense')
-        view.modify_font(pango.FontDescription('Monospace 9'))
-
+        self.menuTree = gtk.glade.XML(appconst.GLADE_PATH, 'pmListEdit')
+        self.catListPopup = self.menuTree.get_widget('pmListEdit')
+    
     def show(self):
-        self.loadLicenseText()
+        if self.entryId:
+            # load entry data
+            pass
         self.window.show()
     
-    def loadLicenseText(self):
-        licFile = op.join(appconst.PATHS['doc'], 'COPYING')
-        fp = open(licFile)
-        try:
-            data = fp.read()
-        finally:
-            fp.close()
-        bf = gtk.TextBuffer(None)
-        view = self.wTree.get_widget('tvLicense')
-        view.set_buffer(bf)
-        bf.insert_at_cursor(data, len(data))
-    
-    def on_btnClose_clicked(self, *args):
-        self.window.destroy()
+    def on_lvCategory_button_press(self, *args):
+        widget, event = args
+        if event.button == 3:
+            self.catListPopup.popup(None, None, None, event.button, event.time)
