@@ -49,6 +49,8 @@ class Entry(SQLObject):
     bodyType = EnumCol(enumValues=('plain', 'textile', 'ReST', 'HTML'), 
         default='plain', notNone=True)
     visibilityLevel = IntCol(default=0, notNone=True)
+    month = IntCol(default=datetime.datetime.now().month)
+    year = IntCol(default=datetime.datetime.now().year)
     categories = RelatedJoin('Category')
     # indexes
     createdIdx = DatabaseIndex(created)
