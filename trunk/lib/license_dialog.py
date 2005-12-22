@@ -22,7 +22,8 @@ __revision__ = '$Id$'
 
 import os.path as op
 
-import gtk, gtk.glade, pango
+import gtk, pango
+import gtk.glade
 
 import appconst
 

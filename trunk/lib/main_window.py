@@ -20,7 +20,7 @@
 
 __revision__ = '$Id$'
 
-import gtk
+import gtk, pango
 import gtk.glade
 
 import appconst
@@ -32,6 +32,8 @@ class MainWindow:
         self.cfg = appconst.CFG
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmMain')
         self.wTree.signal_autoconnect(self)
+        log = self.wTree.get_widget('txLog')
+        log.modify_font(pango.FontDescription('Monospace 9'))
     
     def on_miFileQuit_activate(self, *args):
         self.on_frmMain_delete(args)
@@ -44,6 +46,13 @@ class MainWindow:
 
     def on_frmMain_destroy(self, *args):
         gtk.main_quit()
+    
+    def on_miViewLog_activate(self, *args):
+        logWindow = self.wTree.get_widget('pnLog')
+        if logWindow.get_property('visible'):
+            logWindow.hide()
+        else:
+            logWindow.show()
 
     def on_miLicense_activate(self, *args):
         self.controller.showLicense()
