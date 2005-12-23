@@ -37,7 +37,7 @@
 	  <child>
 	    <widget class="GtkMenuItem" id="menuitem4">
 	      <property name="visible">True</property>
-	      <property name="label" translatable="yes">_File</property>
+	      <property name="label" translatable="yes">_Entry</property>
 	      <property name="use_underline">True</property>
 
 	      <child>
@@ -53,29 +53,30 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkImageMenuItem" id="otwórz1">
+		    <widget class="GtkImageMenuItem" id="miFileOpen">
 		      <property name="visible">True</property>
 		      <property name="label">gtk-open</property>
 		      <property name="use_stock">True</property>
-		      <signal name="activate" handler="on_otwórz1_activate" last_modification_time="Tue, 16 Aug 2005 19:14:41 GMT"/>
+		      <signal name="activate" handler="on_miFileOpen_activate" last_modification_time="Fri, 23 Dec 2005 21:00:45 GMT"/>
 		    </widget>
 		  </child>
 
 		  <child>
-		    <widget class="GtkImageMenuItem" id="zapisz1">
-		      <property name="visible">True</property>
-		      <property name="label">gtk-save</property>
-		      <property name="use_stock">True</property>
-		      <signal name="activate" handler="on_zapisz1_activate" last_modification_time="Tue, 16 Aug 2005 19:14:41 GMT"/>
-		    </widget>
-		  </child>
-
-		  <child>
-		    <widget class="GtkImageMenuItem" id="zapisz_jako1">
+		    <widget class="GtkImageMenuItem" id="miFileSaveAs">
 		      <property name="visible">True</property>
 		      <property name="label">gtk-save-as</property>
 		      <property name="use_stock">True</property>
-		      <signal name="activate" handler="on_zapisz_jako1_activate" last_modification_time="Tue, 16 Aug 2005 19:14:41 GMT"/>
+		      <signal name="activate" handler="on_miFileSaveAs_activate" last_modification_time="Fri, 23 Dec 2005 21:01:12 GMT"/>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkMenuItem" id="miFileSend">
+		      <property name="visible">True</property>
+		      <property name="tooltip" translatable="yes">Publish entry to weblog(s)</property>
+		      <property name="label" translatable="yes">S_end</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_miFileSend_activate" last_modification_time="Fri, 23 Dec 2005 21:04:03 GMT"/>
 		    </widget>
 		  </child>
 
@@ -106,48 +107,6 @@
 
 	      <child>
 		<widget class="GtkMenu" id="menuitem5_menu">
-
-		  <child>
-		    <widget class="GtkImageMenuItem" id="wytnij1">
-		      <property name="visible">True</property>
-		      <property name="label">gtk-cut</property>
-		      <property name="use_stock">True</property>
-		      <signal name="activate" handler="on_wytnij1_activate" last_modification_time="Tue, 16 Aug 2005 19:14:41 GMT"/>
-		    </widget>
-		  </child>
-
-		  <child>
-		    <widget class="GtkImageMenuItem" id="skopiuj1">
-		      <property name="visible">True</property>
-		      <property name="label">gtk-copy</property>
-		      <property name="use_stock">True</property>
-		      <signal name="activate" handler="on_skopiuj1_activate" last_modification_time="Tue, 16 Aug 2005 19:14:41 GMT"/>
-		    </widget>
-		  </child>
-
-		  <child>
-		    <widget class="GtkImageMenuItem" id="wklej1">
-		      <property name="visible">True</property>
-		      <property name="label">gtk-paste</property>
-		      <property name="use_stock">True</property>
-		      <signal name="activate" handler="on_wklej1_activate" last_modification_time="Tue, 16 Aug 2005 19:14:41 GMT"/>
-		    </widget>
-		  </child>
-
-		  <child>
-		    <widget class="GtkImageMenuItem" id="usuń1">
-		      <property name="visible">True</property>
-		      <property name="label">gtk-remove</property>
-		      <property name="use_stock">True</property>
-		      <signal name="activate" handler="on_usuń1_activate" last_modification_time="Tue, 16 Aug 2005 19:14:41 GMT"/>
-		    </widget>
-		  </child>
-
-		  <child>
-		    <widget class="GtkSeparatorMenuItem" id="separator3">
-		      <property name="visible">True</property>
-		    </widget>
-		  </child>
 
 		  <child>
 		    <widget class="GtkImageMenuItem" id="miEditPrefs">
@@ -195,6 +154,40 @@
 		      <property name="label" translatable="yes">_Preview</property>
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_miViewPreview_activate" last_modification_time="Tue, 01 Nov 2005 20:03:51 GMT"/>
+		      <accelerator key="P" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+	    </widget>
+	  </child>
+
+	  <child>
+	    <widget class="GtkMenuItem" id="tools1">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">_Tools</property>
+	      <property name="use_underline">True</property>
+
+	      <child>
+		<widget class="GtkMenu" id="tools1_menu">
+
+		  <child>
+		    <widget class="GtkMenuItem" id="miToolsCategories">
+		      <property name="visible">True</property>
+		      <property name="tooltip" translatable="yes">Show list of entry categories</property>
+		      <property name="label" translatable="yes">_Categories</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_miToolsCategories_activate" last_modification_time="Fri, 23 Dec 2005 20:55:53 GMT"/>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkMenuItem" id="miToolsWeblogs">
+		      <property name="visible">True</property>
+		      <property name="tooltip" translatable="yes">Show list of user weblogs</property>
+		      <property name="label" translatable="yes">_Weblogs</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_miToolsWeblogs_activate" last_modification_time="Fri, 23 Dec 2005 20:59:22 GMT"/>
 		    </widget>
 		  </child>
 		</widget>
@@ -264,19 +257,41 @@
 	  <property name="snap_edge">GTK_POS_TOP</property>
 
 	  <child>
-	    <widget class="GtkToolbar" id="toolbar1">
+	    <widget class="GtkToolbar" id="tbrMain">
 	      <property name="visible">True</property>
 	      <property name="orientation">GTK_ORIENTATION_HORIZONTAL</property>
-	      <property name="toolbar_style">GTK_TOOLBAR_BOTH</property>
+	      <property name="toolbar_style">GTK_TOOLBAR_ICONS</property>
 	      <property name="tooltips">True</property>
 	      <property name="show_arrow">True</property>
 
 	      <child>
-		<placeholder/>
+		<widget class="GtkToolButton" id="toolbutton1">
+		  <property name="visible">True</property>
+		  <property name="stock_id">gtk-new</property>
+		  <property name="visible_horizontal">True</property>
+		  <property name="visible_vertical">True</property>
+		  <property name="is_important">False</property>
+		  <signal name="clicked" handler="on_miFileNew_activate" last_modification_time="Fri, 23 Dec 2005 21:05:43 GMT"/>
+		</widget>
+		<packing>
+		  <property name="expand">False</property>
+		  <property name="homogeneous">True</property>
+		</packing>
 	      </child>
 
 	      <child>
-		<placeholder/>
+		<widget class="GtkToolButton" id="toolbutton2">
+		  <property name="visible">True</property>
+		  <property name="stock_id">gtk-open</property>
+		  <property name="visible_horizontal">True</property>
+		  <property name="visible_vertical">True</property>
+		  <property name="is_important">False</property>
+		  <signal name="clicked" handler="on_miFileOpen_activate" last_modification_time="Fri, 23 Dec 2005 21:08:08 GMT"/>
+		</widget>
+		<packing>
+		  <property name="expand">False</property>
+		  <property name="homogeneous">True</property>
+		</packing>
 	      </child>
 
 	      <child>
@@ -438,7 +453,7 @@
 		      <child>
 			<widget class="GtkLabel" id="lbTitle">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Title</property>
+			  <property name="label" translatable="yes">%s</property>
 			  <property name="use_underline">False</property>
 			  <property name="use_markup">False</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -465,7 +480,7 @@
 		      <child>
 			<widget class="GtkLabel" id="lbSent">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Sent</property>
+			  <property name="label" translatable="yes">%s</property>
 			  <property name="use_underline">False</property>
 			  <property name="use_markup">False</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -492,7 +507,7 @@
 		      <child>
 			<widget class="GtkLabel" id="lbCreated">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Created</property>
+			  <property name="label" translatable="yes">%s</property>
 			  <property name="use_underline">False</property>
 			  <property name="use_markup">False</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>

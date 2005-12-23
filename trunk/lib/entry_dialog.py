@@ -29,7 +29,7 @@ class EntryDialog:
     
     def __init__(self, entryId):
         self.entryId = entryId
-        self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmEntry')
+        self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmEntry', 'jpa')
         self.window = self.wTree.get_widget('frmEntry')
         self.wTree.signal_autoconnect(self)
     

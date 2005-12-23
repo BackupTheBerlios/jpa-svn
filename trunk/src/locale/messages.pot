@@ -1,0 +1,158 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-12-23 22:16+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: share/jpa2.glade.h:2
+#, no-c-format
+msgid "%s"
+msgstr ""
+
+#: share/jpa2.glade.h:3
+msgid "<b>Category:</b>"
+msgstr ""
+
+#: share/jpa2.glade.h:4
+msgid "<b>Visibility level:</b>"
+msgstr ""
+
+#: share/jpa2.glade.h:5
+msgid "Accounts"
+msgstr ""
+
+#: share/jpa2.glade.h:6
+msgid "Active"
+msgstr ""
+
+#: share/jpa2.glade.h:7
+msgid "Created:"
+msgstr ""
+
+#: share/jpa2.glade.h:8
+msgid "Entry"
+msgstr ""
+
+#: share/jpa2.glade.h:9
+msgid "JPA"
+msgstr ""
+
+#: share/jpa2.glade.h:10
+msgid "License"
+msgstr ""
+
+#: share/jpa2.glade.h:11
+msgid "Name:"
+msgstr ""
+
+#: share/jpa2.glade.h:12
+msgid "Password:"
+msgstr ""
+
+#: share/jpa2.glade.h:13
+msgid "Preferences"
+msgstr ""
+
+#: share/jpa2.glade.h:14
+msgid "Preview entry in web browser"
+msgstr ""
+
+#: share/jpa2.glade.h:15
+msgid "Publish entry to weblog(s)"
+msgstr ""
+
+#: share/jpa2.glade.h:16
+msgid "S_end"
+msgstr ""
+
+#: share/jpa2.glade.h:17
+msgid "Sent:"
+msgstr ""
+
+#: share/jpa2.glade.h:18
+msgid "Settings"
+msgstr ""
+
+#: share/jpa2.glade.h:19
+msgid "Show list of entry categories"
+msgstr ""
+
+#: share/jpa2.glade.h:20
+msgid "Show list of user weblogs"
+msgstr ""
+
+#: share/jpa2.glade.h:21
+msgid "Show/hide log window"
+msgstr ""
+
+#: share/jpa2.glade.h:22
+msgid "Title:"
+msgstr ""
+
+#: share/jpa2.glade.h:23
+msgid "Type:"
+msgstr ""
+
+#: share/jpa2.glade.h:24
+msgid "User name:"
+msgstr ""
+
+#: share/jpa2.glade.h:25
+msgid "View program license"
+msgstr ""
+
+#: share/jpa2.glade.h:26
+msgid "Weblog"
+msgstr ""
+
+#: share/jpa2.glade.h:27
+msgid "_Categories"
+msgstr ""
+
+#: share/jpa2.glade.h:28
+msgid "_Edit"
+msgstr ""
+
+#: share/jpa2.glade.h:29
+msgid "_Entry"
+msgstr ""
+
+#: share/jpa2.glade.h:30
+msgid "_Help"
+msgstr ""
+
+#: share/jpa2.glade.h:31
+msgid "_License"
+msgstr ""
+
+#: share/jpa2.glade.h:32
+msgid "_Log window"
+msgstr ""
+
+#: share/jpa2.glade.h:33
+msgid "_Preview"
+msgstr ""
+
+#: share/jpa2.glade.h:34
+msgid "_Tools"
+msgstr ""
+
+#: share/jpa2.glade.h:35
+msgid "_View"
+msgstr ""
+
+#: share/jpa2.glade.h:36
+msgid "_Weblogs"
+msgstr ""

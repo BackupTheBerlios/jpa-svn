@@ -20,13 +20,20 @@
 
 __revision__ = '$Id$'
 
+import gettext, locale
 import os.path as op
+import gtk
+import gtk.glade
 import appconst, datamodel, controller, config
 from main_window import MainWindow
 
 class JPAApplication:
     
     def __init__(self):
+        locale.setlocale(locale.LC_ALL, '')
+        gtk.glade.bindtextdomain('jpa', appconst.PATHS['i18n'])
+        gtk.glade.textdomain('jpa')
+        gettext.install('jpa', appconst.PATHS['i18n'], unicode=True)
         datamodel.initModel()
         appconst.CFG = config.AppConfig(op.join(appconst.PATHS['user'],
             'jpa.cfg'))

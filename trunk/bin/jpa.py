@@ -31,6 +31,7 @@ paths = {}
 for dirName in ('bin', 'doc', 'lib', 'share'):
     paths[dirName] = op.join(basePath, dirName)
 paths['img'] = op.join(paths['share'], 'pixmaps')
+paths['i18n'] = op.join(paths['share'], 'locale')
 userPath = op.join(op.expanduser('~'), '.jpa')
 paths['user'] = userPath
 dbPath = op.join(userPath, 'data', 'jpa.db')

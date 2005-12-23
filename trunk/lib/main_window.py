@@ -30,7 +30,7 @@ class MainWindow:
     def __init__(self, controller):
         self.controller = controller
         self.cfg = appconst.CFG
-        self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmMain')
+        self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmMain', 'jpa')
         self.wTree.signal_autoconnect(self)
         self.window = self.wTree.get_widget('frmMain')
         log = self.wTree.get_widget('txLog')

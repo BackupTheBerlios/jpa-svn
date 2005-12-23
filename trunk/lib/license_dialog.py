@@ -33,7 +33,7 @@ class LicenseDialog:
     """
     
     def __init__(self):
-        self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmLicense')
+        self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmLicense', 'jpa')
         self.wTree.signal_autoconnect(self)
         self.window = self.wTree.get_widget('frmLicense')
         view = self.wTree.get_widget('tvLicense')
