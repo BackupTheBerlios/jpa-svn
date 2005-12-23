@@ -20,7 +20,7 @@
 
 __revision__ = '$Id$'
 
-import gtk
+import gtk, gobject
 import gtk.glade
 
 import appconst
@@ -32,16 +32,28 @@ class EntryDialog:
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmEntry')
         self.window = self.wTree.get_widget('frmEntry')
         self.wTree.signal_autoconnect(self)
-        self.menuTree = gtk.glade.XML(appconst.GLADE_PATH, 'pmListEdit')
-        self.catListPopup = self.menuTree.get_widget('pmListEdit')
     
     def show(self):
+        categoryList = self.wTree.get_widget('lvCategory')
+        model = gtk.ListStore(bool, str)
         if self.entryId:
             # load entry data
             pass
+        cell0 = gtk.CellRendererToggle()
+        cell0.set_property('radio', False)
+        cell0.set_property('activatable', True)
+        cell0.connect('toggled', self.on_lvCategory_toggle, model)
+        column0 = gtk.TreeViewColumn('use', cell0, active=0)
+        cell1 = gtk.CellRendererText()
+        column1 = gtk.TreeViewColumn('name', cell1, text=1)
+        categoryList.append_column(column0)
+        categoryList.append_column(column1)
+        categoryList.set_model(model)
         self.window.show()
     
-    def on_lvCategory_button_press(self, *args):
-        widget, event = args
-        if event.button == 3:
-            self.catListPopup.popup(None, None, None, event.button, event.time)
+    def on_lvCategory_key_press(self, *args):
+        print 'Key pressed'
+    
+    def on_lvCategory_toggle(self, cell, path, model=None):
+        iter = model.get_iter(path)
+        model.set_value(iter, 0, not cell.get_active())
