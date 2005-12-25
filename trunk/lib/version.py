@@ -20,7 +20,8 @@
 
 __revision__ = '$Id$'
 
-VER = '0.5.0'
+PROGVER = '0.5.0'
 AGENTNAME = 'JPA'
+PROGRAM = '%s - %s' % (AGENTNAME, PROGVER)
 AGENTVER = '1.0'
 AGENT = '%s-%s' % (AGENTNAME, AGENTVER)

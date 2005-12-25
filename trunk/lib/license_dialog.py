@@ -36,6 +36,8 @@ class LicenseDialog:
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmLicense', 'jpa')
         self.wTree.signal_autoconnect(self)
         self.window = self.wTree.get_widget('frmLicense')
+        self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
+            'darkbeer.xpm'))
         view = self.wTree.get_widget('tvLicense')
         view.modify_font(pango.FontDescription('Monospace 9'))
 

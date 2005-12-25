@@ -16,25 +16,23 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-"""GUI controller/signal dispatcher"""
+"""Miscellaneous utility functions"""
 
 __revision__ = '$Id$'
 
-import gtk
-import gtk.glade
+import gtk, gtk.gdk
 
-import license_dialog, entry_dialog, categories_dialog
+def startWait(window):
+    """
+    Show nice wait notification cursor.
+    window must be a gtk.window descendant or must have gdk.window attribute
+    """
+    cursor = gtk.gdk.Cursor(gtk.gdk.WATCH)
+    window.window.set_cursor(cursor)
 
-class Controller:
-    
-    def showLicense(self):
-        dialog = license_dialog.LicenseDialog()
-        dialog.show()
-    
-    def newEntry(self):
-        dialog = entry_dialog.EntryDialog(None)
-        dialog.show()
-
-    def showCategories(self):
-        dialog = categories_dialog.CategoriesDialog()
-        dialog.show()
+def endWait(window):
+    """
+    Restore default application cursor after wait period.
+    window must be a gtk.window descendant or must have gdk.window attribute
+    """
+    window.window.set_cursor(None)

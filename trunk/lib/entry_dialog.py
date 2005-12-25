@@ -20,10 +20,12 @@
 
 __revision__ = '$Id$'
 
+import os.path as op
+
 import gtk, gobject
 import gtk.glade
 
-import appconst
+import appconst, datamodel
 
 class EntryDialog:
     
@@ -31,14 +33,16 @@ class EntryDialog:
         self.entryId = entryId
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmEntry', 'jpa')
         self.window = self.wTree.get_widget('frmEntry')
+        self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
+            'darkbeer.xpm'))
         self.wTree.signal_autoconnect(self)
     
     def show(self):
         categoryList = self.wTree.get_widget('lvCategory')
         model = gtk.ListStore(bool, str)
-        if self.entryId:
-            # load entry data
-            pass
+        categories = datamodel.Category.select(orderBy='name')
+        for category in categories:
+            model.append((False, category.name.encode('utf-8')))
         cell0 = gtk.CellRendererToggle()
         cell0.set_property('radio', False)
         cell0.set_property('activatable', True)
@@ -49,6 +53,9 @@ class EntryDialog:
         categoryList.append_column(column0)
         categoryList.append_column(column1)
         categoryList.set_model(model)
+        if self.entryId:
+            # load entry data
+            pass
         self.window.show()
     
     def on_lvCategory_key_press(self, *args):

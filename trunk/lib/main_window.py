@@ -20,10 +20,12 @@
 
 __revision__ = '$Id$'
 
+import os.path as op
+
 import gtk, pango
 import gtk.glade
 
-import appconst
+import appconst, version
 
 class MainWindow:
     
@@ -33,6 +35,9 @@ class MainWindow:
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmMain', 'jpa')
         self.wTree.signal_autoconnect(self)
         self.window = self.wTree.get_widget('frmMain')
+        self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
+            'darkbeer.xpm'))
+        self.window.set_title(version.PROGRAM)
         log = self.wTree.get_widget('txLog')
         log.modify_font(pango.FontDescription('Monospace 9'))
         self.window.show()
@@ -60,3 +65,6 @@ class MainWindow:
 
     def on_miLicense_activate(self, *args):
         self.controller.showLicense()
+
+    def on_miToolsCategories_activate(self, *args):
+        self.controller.showCategories()

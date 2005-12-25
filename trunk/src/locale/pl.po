@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JPA-0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-23 22:16+0100\n"
+"POT-Creation-Date: 2005-12-25 13:13+0100\n"
 "PO-Revision-Date: 2005-12-23 21:39+0100\n"
 "Last-Translator: Jarek Zgoda <jzgoda@o2.pl>\n"
 "Language-Team: Polish\n"
@@ -17,6 +17,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+
+#: lib/categories_dialog.py:48
+msgid "Name"
+msgstr "Nazwa"
+
+#: lib/categories_dialog.py:49
+msgid "Description"
+msgstr "Opis"
+
+#: lib/datamodel.py:46
+msgid "Miscellaneous"
+msgstr "Ogólna"
+
+#: lib/datamodel.py:47
+msgid "Miscellaneous category"
+msgstr "Ogólna kategoria"
 
 #: share/jpa2.glade.h:2
 #, no-c-format
@@ -48,113 +64,117 @@ msgid "Entry"
 msgstr "Wpis"
 
 #: share/jpa2.glade.h:9
+msgid "Entry categories"
+msgstr "Kategorie wpisów"
+
+#: share/jpa2.glade.h:10
 msgid "JPA"
 msgstr "JPA"
 
-#: share/jpa2.glade.h:10
+#: share/jpa2.glade.h:11
 msgid "License"
 msgstr "Licencja"
 
-#: share/jpa2.glade.h:11
+#: share/jpa2.glade.h:12
 msgid "Name:"
 msgstr "Nazwa:"
 
-#: share/jpa2.glade.h:12
+#: share/jpa2.glade.h:13
 msgid "Password:"
 msgstr "Hasło:"
 
-#: share/jpa2.glade.h:13
+#: share/jpa2.glade.h:14
 msgid "Preferences"
 msgstr "Ustawienia"
 
-#: share/jpa2.glade.h:14
+#: share/jpa2.glade.h:15
 msgid "Preview entry in web browser"
 msgstr "Podgląd wpisu w przeglądarce WWW"
 
-#: share/jpa2.glade.h:15
+#: share/jpa2.glade.h:16
 msgid "Publish entry to weblog(s)"
 msgstr "Opublikuj wpis w weblogu"
 
-#: share/jpa2.glade.h:16
+#: share/jpa2.glade.h:17
 msgid "S_end"
 msgstr "W_yślij"
 
-#: share/jpa2.glade.h:17
+#: share/jpa2.glade.h:18
 msgid "Sent:"
 msgstr "Wysłany:"
 
-#: share/jpa2.glade.h:18
+#: share/jpa2.glade.h:19
 msgid "Settings"
 msgstr "Ustawienia"
 
-#: share/jpa2.glade.h:19
+#: share/jpa2.glade.h:20
 msgid "Show list of entry categories"
 msgstr "Pokaż listę kategorii wpisów"
 
-#: share/jpa2.glade.h:20
+#: share/jpa2.glade.h:21
 msgid "Show list of user weblogs"
 msgstr "Pokaż listę weblogów użytkownika"
 
-#: share/jpa2.glade.h:21
+#: share/jpa2.glade.h:22
 msgid "Show/hide log window"
 msgstr "Pokaż/ukryj okno logu"
 
-#: share/jpa2.glade.h:22
+#: share/jpa2.glade.h:23
 msgid "Title:"
 msgstr "Tytuł:"
 
-#: share/jpa2.glade.h:23
+#: share/jpa2.glade.h:24
 msgid "Type:"
 msgstr "Typ:"
 
-#: share/jpa2.glade.h:24
+#: share/jpa2.glade.h:25
 msgid "User name:"
 msgstr "Nazwa użytkownika:"
 
-#: share/jpa2.glade.h:25
+#: share/jpa2.glade.h:26
 msgid "View program license"
 msgstr "Przeczytaj licencję programu"
 
-#: share/jpa2.glade.h:26
+#: share/jpa2.glade.h:27
 msgid "Weblog"
 msgstr "Weblog"
 
-#: share/jpa2.glade.h:27
+#: share/jpa2.glade.h:28
 msgid "_Categories"
 msgstr "_Kategorie"
 
-#: share/jpa2.glade.h:28
+#: share/jpa2.glade.h:29
 msgid "_Edit"
 msgstr "_Edycja"
 
-#: share/jpa2.glade.h:29
+#: share/jpa2.glade.h:30
 msgid "_Entry"
 msgstr "_Wpis"
 
-#: share/jpa2.glade.h:30
+#: share/jpa2.glade.h:31
 msgid "_Help"
 msgstr "P_omoc"
 
-#: share/jpa2.glade.h:31
+#: share/jpa2.glade.h:32
 msgid "_License"
 msgstr "_Licencja"
 
-#: share/jpa2.glade.h:32
+#: share/jpa2.glade.h:33
 msgid "_Log window"
 msgstr "Okno _logu"
 
-#: share/jpa2.glade.h:33
+#: share/jpa2.glade.h:34
 msgid "_Preview"
 msgstr "_Podgląd"
 
-#: share/jpa2.glade.h:34
+#: share/jpa2.glade.h:35
 msgid "_Tools"
 msgstr "_Narzędzia"
 
-#: share/jpa2.glade.h:35
+#: share/jpa2.glade.h:36
 msgid "_View"
 msgstr "_Widok"
 
-#: share/jpa2.glade.h:36
+#: share/jpa2.glade.h:37
 msgid "_Weblogs"
 msgstr "_Weblogi"

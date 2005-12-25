@@ -30,7 +30,7 @@ sys.path.insert(0, basePath)
 paths = {}
 for dirName in ('bin', 'doc', 'lib', 'share'):
     paths[dirName] = op.join(basePath, dirName)
-paths['img'] = op.join(paths['share'], 'pixmaps')
+paths['img'] = op.join(paths['share'], 'images')
 paths['i18n'] = op.join(paths['share'], 'locale')
 userPath = op.join(op.expanduser('~'), '.jpa')
 paths['user'] = userPath
@@ -49,9 +49,14 @@ lib.appconst.DB_URI = uri
 if __name__ == '__main__':
     import pygtk
     pygtk.require('2.0')
-    import gtk
+    import gtk, gtk.glade
     gtk.threads_init()
     gtk.threads_enter()
+    import gettext, locale
+    locale.setlocale(locale.LC_ALL, '')
+    gtk.glade.bindtextdomain('jpa', lib.appconst.PATHS['i18n'])
+    gtk.glade.textdomain('jpa')
+    gettext.install('jpa', lib.appconst.PATHS['i18n'], unicode=True)
     from lib.jpa import JPAApplication
     app = JPAApplication()
     gtk.main()

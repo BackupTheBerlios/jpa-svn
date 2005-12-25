@@ -27,7 +27,9 @@ from sqlobject import *
 import appconst
 
 def initModel():
+    isSchemaEmpty = False
     if not os.access(appconst.PATHS['data'], os.F_OK):
+        isSchemaEmpty = True
         root, tail = os.path.split(appconst.PATHS['data'])
         if not os.path.isdir(root):
             os.makedirs(root)
@@ -37,6 +39,12 @@ def initModel():
     Category.createTable(ifNotExists=True)
     Publication.createTable(ifNotExists=True)
     Weblog.createTable(ifNotExists=True)
+    if isSchemaEmpty:
+        fillTables()
+
+def fillTables():
+    Category(name=_('Miscellaneous'), 
+        description=_('Miscellaneous category'))
 
 
 class Entry(SQLObject):
