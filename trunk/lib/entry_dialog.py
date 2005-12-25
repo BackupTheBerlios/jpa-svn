@@ -25,11 +25,15 @@ import os.path as op
 import gtk, gobject
 import gtk.glade
 
-import appconst, datamodel
+import appconst, datamodel, apputils
 
 class EntryDialog:
     
     def __init__(self, entryId):
+        self.modified = False
+        self.entry = None
+        if entryId:
+            self.entry = datamodel.Entry.get(entryId)
         self.entryId = entryId
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmEntry', 'jpa')
         self.window = self.wTree.get_widget('frmEntry')
@@ -53,14 +57,18 @@ class EntryDialog:
         categoryList.append_column(column0)
         categoryList.append_column(column1)
         categoryList.set_model(model)
-        if self.entryId:
-            # load entry data
-            pass
         self.window.show()
-    
-    def on_lvCategory_key_press(self, *args):
-        print 'Key pressed'
     
     def on_lvCategory_toggle(self, cell, path, model=None):
         iter = model.get_iter(path)
         model.set_value(iter, 0, not cell.get_active())
+
+    def on_btnCancel_clicked(self, *args):
+        if self.modified:
+            if apputils.question(_('Entry has been modified, do you want to save it?')):
+                self.window.destroy()
+        else:
+            self.window.destroy()
+    
+    def on_btnOk_clicked(self, *args):
+        pass

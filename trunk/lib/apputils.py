@@ -36,3 +36,15 @@ def endWait(window):
     window must be a gtk.window descendant or must have gdk.window attribute
     """
     window.window.set_cursor(None)
+
+def question(text, parent=None):
+    """
+    Dialog with question. Returns true if response was "Yes".
+    """
+    msg = gtk.MessageDialog(parent, gtk.DIALOG_MODAL, gtk.MESSAGE_QUESTION,
+        gtk.BUTTONS_YES_NO, text)
+    try:
+        resp = msg.run()
+    finally:
+        msg.destroy()
+    return resp == gtk.RESPONSE_OK

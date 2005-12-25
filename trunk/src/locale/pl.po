@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JPA-0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-25 13:13+0100\n"
+"POT-Creation-Date: 2005-12-25 21:40+0100\n"
 "PO-Revision-Date: 2005-12-23 21:39+0100\n"
 "Last-Translator: Jarek Zgoda <jzgoda@o2.pl>\n"
 "Language-Team: Polish\n"
@@ -33,6 +33,10 @@ msgstr "Ogólna"
 #: lib/datamodel.py:47
 msgid "Miscellaneous category"
 msgstr "Ogólna kategoria"
+
+#: lib/entry_dialog.py:68
+msgid "Entry has been modified, do you want to save it?"
+msgstr "Wpis został zmieniony, czy chcesz go zapisać?"
 
 #: share/jpa2.glade.h:2
 #, no-c-format

@@ -1513,6 +1513,7 @@
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
+	      <signal name="clicked" handler="on_btnCancel_clicked" last_modification_time="Sun, 25 Dec 2005 20:36:58 GMT"/>
 	    </widget>
 	  </child>
 
@@ -1525,6 +1526,7 @@
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
+	      <signal name="clicked" handler="on_btnOk_clicked" last_modification_time="Sun, 25 Dec 2005 20:37:14 GMT"/>
 	    </widget>
 	  </child>
 	</widget>
