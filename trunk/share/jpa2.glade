@@ -1213,12 +1213,13 @@
   <property name="resizable">True</property>
   <property name="destroy_with_parent">False</property>
   <property name="decorated">True</property>
-  <property name="skip_taskbar_hint">True</property>
+  <property name="skip_taskbar_hint">False</property>
   <property name="skip_pager_hint">False</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
   <property name="urgency_hint">False</property>
+  <signal name="delete_event" handler="on_frmEntry_delete_event" last_modification_time="Mon, 26 Dec 2005 12:07:17 GMT"/>
 
   <child>
     <widget class="GtkVBox" id="vbox6">
@@ -1534,18 +1535,6 @@
 	  <property name="padding">4</property>
 	  <property name="expand">False</property>
 	  <property name="fill">True</property>
-	</packing>
-      </child>
-
-      <child>
-	<widget class="GtkStatusbar" id="statusbar1">
-	  <property name="visible">True</property>
-	  <property name="has_resize_grip">True</property>
-	</widget>
-	<packing>
-	  <property name="padding">0</property>
-	  <property name="expand">False</property>
-	  <property name="fill">False</property>
 	</packing>
       </child>
     </widget>

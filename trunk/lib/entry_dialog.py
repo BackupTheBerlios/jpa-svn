@@ -57,18 +57,28 @@ class EntryDialog:
         categoryList.append_column(column0)
         categoryList.append_column(column1)
         categoryList.set_model(model)
-        self.window.show()
+        self.window.present()
     
     def on_lvCategory_toggle(self, cell, path, model=None):
         iter = model.get_iter(path)
         model.set_value(iter, 0, not cell.get_active())
 
     def on_btnCancel_clicked(self, *args):
+        """
         if self.modified:
             if apputils.question(_('Entry has been modified, do you want to save it?')):
                 self.window.destroy()
         else:
             self.window.destroy()
+        """
+        print 'btnCancel_clicked'
+        self.window.destroy()
+        return False
     
     def on_btnOk_clicked(self, *args):
-        pass
+        print 'btnOk_clicked'
+        self.window.destroy()
+        return False
+
+    def on_frmEntry_delete_event(self, *args):
+        print 'delete_event'
