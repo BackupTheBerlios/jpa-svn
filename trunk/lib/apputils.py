@@ -48,3 +48,12 @@ def question(text, parent=None):
     finally:
         msg.destroy()
     return resp == gtk.RESPONSE_OK
+
+def ellipsize(text, maxLength=30):
+    """
+    Return text shortened to maxLength - 3 characters with added
+    ellipsis ('...').
+    """
+    if len(text) <= maxLength:
+        return text
+    return text[:maxLength - 3] + '...'

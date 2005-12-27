@@ -28,31 +28,59 @@ import appconst, datamodel, apputils
 
 class CategoriesDialog:
     
-    def __init__(self):
+    def __init__(self, controller):
+        self.controller = controller
+        self.cfg = appconst.CFG
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmCategories', 'jpa')
         self.window = self.wTree.get_widget('frmCategories')
+        self.categoryList = self.wTree.get_widget('lvCategory')
         self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
             'darkbeer.xpm'))
         self.wTree.signal_autoconnect(self)
+        self.listMenuTree = gtk.glade.XML(appconst.GLADE_PATH, 'pmListEdit',
+            'jpa')
+        self.listMenu = self.listMenuTree.get_widget('pmListEdit')
+        self.listMenuTree.signal_autoconnect(self)
 
     def show(self):
         apputils.startWait(self.window)
         try:
-            categoryList = self.wTree.get_widget('lvCategory')
             model = gtk.ListStore(str, str, gobject.TYPE_PYOBJECT)
             categories = datamodel.Category.select(orderBy='name')
             for category in categories:
-                model.append((category.name.encode('utf-8'),
-                    category.description.encode('utf-8'), category))
+                name = category.name
+                desc = apputils.ellipsize(category.description, 80)
+                model.append((name.encode('utf-8'), desc.encode('utf-8'),
+                    category))
             cells = (gtk.CellRendererText(), gtk.CellRendererText())
             column0 = gtk.TreeViewColumn(_('Name'), cells[0], text=0)
             column1 = gtk.TreeViewColumn(_('Description'), cells[1], text=1)
-            categoryList.append_column(column0)
-            categoryList.append_column(column1)
-            categoryList.set_model(model)
+            self.categoryList.append_column(column0)
+            self.categoryList.append_column(column1)
+            self.categoryList.set_model(model)
         finally:
             apputils.endWait(self.window)
         self.window.present()
+    
+    ### signal handlers ###
+    def on_lvCategory_button_press_event(self, *args):
+        widget, event = args
+        if event.button == 3:
+            self.listMenu.popup(None, None, None, event.button, event.time)
+    
+    # popup menu signals #
+    def on_miEdit_activate(self, *args):
+        self.on_btnEdit_clicked(*args)
+    
+    def on_miClose_activate(self, *args):
+        self.on_btnClose_clicked(*args)
+    
+    # action button signals #
+    def on_btnEdit_clicked(self, *args):
+        selection = self.categoryList.get_selection()
+        model, selected = selection.get_selected()
+        category = model.get_value(selected, 2)
+        self.controller.editCategory(category)
     
     def on_btnClose_clicked(self, *args):
         self.window.destroy()

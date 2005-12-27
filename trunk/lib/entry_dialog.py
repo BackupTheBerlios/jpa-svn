@@ -29,13 +29,10 @@ import appconst, datamodel, apputils
 
 class EntryDialog:
     
-    def __init__(self, entryId=None):
+    def __init__(self, entry=None):
         self.cfg = appconst.CFG
         self.modified = False
-        self.entry = None
-        if entryId:
-            self.entry = datamodel.Entry.get(entryId)
-        self.entryId = entryId
+        self.entry = entry
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmEntry', 'jpa')
         self.window = self.wTree.get_widget('frmEntry')
         self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
@@ -48,7 +45,7 @@ class EntryDialog:
     def show(self):
         self._setWidgetProperties()
         self._loadCategories()
-        if not self.entryId:
+        if not self.entry:
             self.lbVisLevelDesc.set_label(_('public'))
         self.window.present()
     
@@ -56,6 +53,10 @@ class EntryDialog:
     def _setWidgetProperties(self):
         editorFontName = self.cfg.getOption('fonts', 'editor', 'Monospace 10')
         self.txBody.modify_font(pango.FontDescription(editorFontName))
+        if self.entry:
+            self.window.set_title(_('Editing entry %d') % self.entry.id)
+        else:
+            self.window.set_title(_('Editing new entry'))
 
     def _loadCategories(self):
         categoryList = self.wTree.get_widget('lvCategory')
