@@ -22,14 +22,15 @@ __revision__ = '$Id$'
 
 import os.path as op
 
-import gtk, gobject
+import gtk, gobject, pango
 import gtk.glade
 
 import appconst, datamodel, apputils
 
 class EntryDialog:
     
-    def __init__(self, entryId):
+    def __init__(self, entryId=None):
+        self.cfg = appconst.CFG
         self.modified = False
         self.entry = None
         if entryId:
@@ -39,9 +40,24 @@ class EntryDialog:
         self.window = self.wTree.get_widget('frmEntry')
         self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
             'darkbeer.xpm'))
+        self.spnVisLevel = self.wTree.get_widget('spnVisLevel')
+        self.lbVisLevelDesc = self.wTree.get_widget('lbVisLevelDesc')
+        self.txBody = self.wTree.get_widget('txBody')
         self.wTree.signal_autoconnect(self)
     
     def show(self):
+        self._setWidgetProperties()
+        self._loadCategories()
+        if not self.entryId:
+            self.lbVisLevelDesc.set_label(_('public'))
+        self.window.present()
+    
+    ### "private" methods ###
+    def _setWidgetProperties(self):
+        editorFontName = self.cfg.getOption('fonts', 'editor', 'Monospace 10')
+        self.txBody.modify_font(pango.FontDescription(editorFontName))
+
+    def _loadCategories(self):
         categoryList = self.wTree.get_widget('lvCategory')
         model = gtk.ListStore(bool, str)
         categories = datamodel.Category.select(orderBy='name')
@@ -56,29 +72,34 @@ class EntryDialog:
         column1 = gtk.TreeViewColumn('name', cell1, text=1)
         categoryList.append_column(column0)
         categoryList.append_column(column1)
-        categoryList.set_model(model)
-        self.window.present()
+        categoryList.set_model(model)        
     
+    ### signal handlers ###
     def on_lvCategory_toggle(self, cell, path, model=None):
         iter = model.get_iter(path)
         model.set_value(iter, 0, not cell.get_active())
+    
+    def on_spnVisLevel_value_changed(self, *args):
+        visLevel = self.spnVisLevel.get_value_as_int()
+        if visLevel > 0:
+            self.lbVisLevelDesc.set_label(_('private level %d') % visLevel)
+        else:
+            self.lbVisLevelDesc.set_label(_('public'))
 
     def on_btnCancel_clicked(self, *args):
-        """
         if self.modified:
             if apputils.question(_('Entry has been modified, do you want to save it?')):
-                self.window.destroy()
+                #TODO: perform saving the entry
+                pass
+            self.window.destroy()
         else:
             self.window.destroy()
-        """
-        print 'btnCancel_clicked'
-        self.window.destroy()
-        return False
     
     def on_btnOk_clicked(self, *args):
-        print 'btnOk_clicked'
+        if self.modified:
+            #TODO: perform saving the entry
+            pass
         self.window.destroy()
-        return False
 
     def on_frmEntry_delete_event(self, *args):
-        print 'delete_event'
+        pass

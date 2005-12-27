@@ -38,12 +38,11 @@ class LicenseDialog:
         self.window = self.wTree.get_widget('frmLicense')
         self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
             'darkbeer.xpm'))
-        view = self.wTree.get_widget('tvLicense')
-        view.modify_font(pango.FontDescription('Monospace 9'))
+        self.licenseView = self.wTree.get_widget('tvLicense')
 
     def show(self):
         self.loadLicenseText()
-        self.window.show()
+        self.window.present()
     
     def loadLicenseText(self):
         licFile = op.join(appconst.PATHS['doc'], 'COPYING')
@@ -53,8 +52,7 @@ class LicenseDialog:
         finally:
             fp.close()
         bf = gtk.TextBuffer(None)
-        view = self.wTree.get_widget('tvLicense')
-        view.set_buffer(bf)
+        self.licenseView.set_buffer(bf)
         bf.insert_at_cursor(data, len(data))
     
     def on_btnClose_clicked(self, *args):

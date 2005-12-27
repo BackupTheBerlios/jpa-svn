@@ -39,8 +39,9 @@ class MainWindow:
             'darkbeer.xpm'))
         self.window.set_title(version.PROGRAM)
         log = self.wTree.get_widget('txLog')
-        log.modify_font(pango.FontDescription('Monospace 9'))
-        self.window.show()
+        logFontName = self.cfg.getOption('fonts', 'log', 'Monospace 10')
+        log.modify_font(pango.FontDescription(logFontName))
+        self.window.present()
     
     def on_miFileQuit_activate(self, *args):
         self.on_frmMain_delete(args)
@@ -51,10 +52,14 @@ class MainWindow:
         self.on_frmMain_destroy(args)
 
     def on_frmMain_destroy(self, *args):
+        self.cfg.saveConfig()
         gtk.main_quit()
     
     def on_miFileNew_activate(self, *args):
         self.controller.newEntry()
+    
+    def on_miEditPrefs_activate(self, *args):
+        self.controller.showPreferences()
     
     def on_miViewLog_activate(self, *args):
         logWindow = self.wTree.get_widget('pnLog')

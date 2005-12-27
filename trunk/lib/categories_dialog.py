@@ -52,7 +52,7 @@ class CategoriesDialog:
             categoryList.set_model(model)
         finally:
             apputils.endWait(self.window)
-        self.window.show()
+        self.window.present()
     
     def on_btnClose_clicked(self, *args):
         self.window.destroy()
