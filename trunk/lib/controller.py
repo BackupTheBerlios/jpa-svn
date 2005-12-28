@@ -28,16 +28,16 @@ import license_dialog, entry_dialog, categories_dialog, prefs_dialog, \
 
 class Controller:
     
-    def showLicense(self):
-        dialog = license_dialog.LicenseDialog()
+    def showLicense(self, parent=None):
+        dialog = license_dialog.LicenseDialog(parent)
         dialog.show()
     
-    def newEntry(self):
-        dialog = entry_dialog.EntryDialog()
+    def newEntry(self, parent=None):
+        dialog = entry_dialog.EntryDialog(parent)
         dialog.show()
     
-    def editEntry(self, entry):
-        dialog = entry_dialog.EntryDialog(entry)
+    def editEntry(self, entry, parent=None):
+        dialog = entry_dialog.EntryDialog(parent, entry)
         dialog.show()
 
     def showCategories(self):
@@ -48,6 +48,10 @@ class Controller:
         dialog = prefs_dialog.PreferencesDialog()
         dialog.show()
     
-    def editCategory(self, category):
-        dialog = category_dialog.CategoryDialog(category)
+    def editCategory(self, category, parent=None):
+        dialog = category_dialog.CategoryDialog(parent, category)
+        dialog.show()
+    
+    def newCategory(self, parent=None):
+        dialog = category_dialog.CategoryDialog(parent)
         dialog.show()

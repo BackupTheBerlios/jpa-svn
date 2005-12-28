@@ -56,7 +56,7 @@ class MainWindow:
         gtk.main_quit()
     
     def on_miFileNew_activate(self, *args):
-        self.controller.newEntry()
+        self.controller.newEntry(self)
     
     def on_miEditPrefs_activate(self, *args):
         self.controller.showPreferences()

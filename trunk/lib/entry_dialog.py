@@ -29,10 +29,11 @@ import appconst, datamodel, apputils
 
 class EntryDialog:
     
-    def __init__(self, entry=None):
+    def __init__(self, parent, entry=None):
         self.cfg = appconst.CFG
         self.modified = False
         self.entry = entry
+        self.parent = parent
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmEntry', 'jpa')
         self.window = self.wTree.get_widget('frmEntry')
         self.window.set_icon_from_file(op.join(appconst.PATHS['img'],

@@ -32,12 +32,14 @@ class LicenseDialog:
     Window with license text.
     """
     
-    def __init__(self):
+    def __init__(self, parent):
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmLicense', 'jpa')
         self.wTree.signal_autoconnect(self)
         self.window = self.wTree.get_widget('frmLicense')
         self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
             'darkbeer.xpm'))
+        if parent:
+            self.window.set_transient_for(parent.window)
         self.licenseView = self.wTree.get_widget('tvLicense')
 
     def show(self):

@@ -23,14 +23,19 @@ __revision__ = '$Id$'
 import gtk
 import gtk.glade
 
-import appconst
+import appconst, datamodel
+from categories_dialog import CategoriesDialog
 
 class CategoryDialog:
     
-    def __init__(self, category=None):
+    def __init__(self, parent, category=None):
         self.category = category
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmCategory', 'jpa')
         self.window = self.wTree.get_widget('frmCategory')
+        self.parent = parent
+        self.window.set_transient_for(parent.window)
+        self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
+            'darkbeer.xpm'))        
         self.edName = self.wTree.get_widget('edName')
         self.edDescription = self.wTree.get_widget('edDescription')
         self.wTree.signal_autoconnect(self)
@@ -51,7 +56,8 @@ class CategoryDialog:
             self.category.name = name
             self.category.description = description
         else:
-            datamodel.EntryCategory(name, description)
+            datamodel.Category(name=name, description=description)
+        self.parent.notify('data-changed')
         self.window.destroy()
     
     def on_btnCancel_clicked(self, *args):

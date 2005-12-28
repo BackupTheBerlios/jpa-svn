@@ -24,9 +24,9 @@ import os.path as op
 
 import gobject, gtk, gtk.glade, gtk.gdk
 
-import appconst, datamodel, apputils
+import appconst, datamodel, apputils, notifiable
 
-class CategoriesDialog:
+class CategoriesDialog(notifiable.Notifiable):
     
     def __init__(self, controller):
         self.controller = controller
@@ -45,22 +45,34 @@ class CategoriesDialog:
     def show(self):
         apputils.startWait(self.window)
         try:
-            model = gtk.ListStore(str, str, gobject.TYPE_PYOBJECT)
-            categories = datamodel.Category.select(orderBy='name')
-            for category in categories:
-                name = category.name
-                desc = apputils.ellipsize(category.description, 80)
-                model.append((name.encode('utf-8'), desc.encode('utf-8'),
-                    category))
+            self.model = gtk.ListStore(str, str, gobject.TYPE_PYOBJECT)
             cells = (gtk.CellRendererText(), gtk.CellRendererText())
             column0 = gtk.TreeViewColumn(_('Name'), cells[0], text=0)
             column1 = gtk.TreeViewColumn(_('Description'), cells[1], text=1)
             self.categoryList.append_column(column0)
             self.categoryList.append_column(column1)
-            self.categoryList.set_model(model)
+            self.categoryList.set_model(self.model)
+            self._loadData()
         finally:
             apputils.endWait(self.window)
         self.window.present()
+    
+    def notify(self, event):
+        if event == 'data-changed':
+            apputils.startWait(self.window)
+            try:
+                self.model.clear()
+                self._loadData()
+            finally:
+                apputils.endWait(self.window)
+    
+    def _loadData(self):
+        categories = datamodel.Category.select(orderBy='name')
+        for category in categories:
+            name = category.name
+            desc = apputils.ellipsize(category.description, 80)
+            self.model.append((name.encode('utf-8'), desc.encode('utf-8'),
+                category))
     
     ### signal handlers ###
     def on_lvCategory_button_press_event(self, *args):
@@ -69,6 +81,9 @@ class CategoriesDialog:
             self.listMenu.popup(None, None, None, event.button, event.time)
     
     # popup menu signals #
+    def on_miAdd_activate(self, *args):
+        self.on_btnAdd_clicked(*args)
+    
     def on_miEdit_activate(self, *args):
         self.on_btnEdit_clicked(*args)
     
@@ -76,11 +91,14 @@ class CategoriesDialog:
         self.on_btnClose_clicked(*args)
     
     # action button signals #
+    def on_btnAdd_clicked(self, *args):
+        self.controller.newCategory(self)
+    
     def on_btnEdit_clicked(self, *args):
         selection = self.categoryList.get_selection()
         model, selected = selection.get_selected()
         category = model.get_value(selected, 2)
-        self.controller.editCategory(category)
+        self.controller.editCategory(category, self)
     
     def on_btnClose_clicked(self, *args):
         self.window.destroy()
