@@ -49,26 +49,27 @@ class BloggerTransport(api.WeblogTransport):
         self.headers = {
             'Content-type': 'application/atom+xml',
             'Authorization': 'BASIC %s' % self.authCookie,
-            #'UserAgent': '%s-%s' % (lib.version.AGENT),
-            'UserAgent': 'JPA-1.0', # temporary
+            #'UserAgent': '%s' % lib.version.AGENT,
+            'UserAgent': 'JPA-1.0', # temporary for tests
             }
         if proxyConfig:
             # we do not support proxies with authentication at this time
-            self.path = 'http://www.blogger.com/atom%s'
+            self.path = 'https://www.blogger.com/atom%s'
             self.host = '%s:%s' % (proxyConfig['host'], proxyConfig['port'])
         else:
             self.path = '/atom%s'
-            self.host = 'http://www.blogger.com'
+            self.host = 'https://www.blogger.com'
 
     def getBlogList(self):
         """This method returns dictionary of user's blog names (keys) and
         their identifiers (values), suitable for use in blog inquiries and
         operations."""
         path = self.path % ''
-        connection = httplib.HTTPConnection(self.host)
+        connection = httplib.HTTPSConnection(self.host)
         try:
             connection.request('GET', path, headers=self.headers)
             response = connection.getresponse()
+            print response
             document = response.read()
         finally:
             connection.close()

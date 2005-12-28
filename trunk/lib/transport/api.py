@@ -24,7 +24,7 @@ class WeblogTransport:
 
     def getBlogList(self): raise NotImplementedError
 
-    def postNew(self, entry): raise NotImplementedError
+    def postNew(self, blogId, entry): raise NotImplementedError
 
     def postModified(self, entryId, entry): raise NotImplementedError
 
