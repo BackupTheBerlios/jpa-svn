@@ -44,8 +44,8 @@ class Controller:
         dialog = categories_dialog.CategoriesDialog(self)
         dialog.show()
     
-    def showPreferences(self):
-        dialog = prefs_dialog.PreferencesDialog()
+    def showPreferences(self, parent=None):
+        dialog = prefs_dialog.PreferencesDialog(parent)
         dialog.show()
     
     def editCategory(self, category, parent=None):

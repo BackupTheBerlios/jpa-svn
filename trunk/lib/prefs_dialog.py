@@ -20,6 +20,8 @@
 
 __revision__ = '$Id$'
 
+import os.path as op
+
 import gtk
 import gtk.glade
 
@@ -27,10 +29,14 @@ import appconst
 
 class PreferencesDialog:
     
-    def __init__(self):
+    def __init__(self, parent):
         self.cfg = appconst.CFG
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmPrefs', 'jpa')
         self.window = self.wTree.get_widget('frmPrefs')
+        if parent:
+            self.window.set_transient_for(parent.window)
+        self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
+            'darkbeer.xpm'))
         self.fbEditorFont = self.wTree.get_widget('fbEditorFont')
         self.fbPreviewFont = self.wTree.get_widget('fbPreviewFont')
         self.fbLogFont = self.wTree.get_widget('fbLogFont')

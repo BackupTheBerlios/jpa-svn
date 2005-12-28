@@ -74,7 +74,10 @@ class EntryDialog:
         column1 = gtk.TreeViewColumn('name', cell1, text=1)
         categoryList.append_column(column0)
         categoryList.append_column(column1)
-        categoryList.set_model(model)        
+        categoryList.set_model(model)
+
+    def _saveEntry(self):
+        pass        
     
     ### signal handlers ###
     def on_lvCategory_toggle(self, cell, path, model=None):
@@ -91,17 +94,12 @@ class EntryDialog:
     def on_btnCancel_clicked(self, *args):
         if self.modified:
             if apputils.question(_('Entry has been modified, do you want to save it?')):
-                #TODO: perform saving the entry
-                pass
+                self._saveEntry()
             self.window.destroy()
         else:
             self.window.destroy()
     
     def on_btnOk_clicked(self, *args):
         if self.modified:
-            #TODO: perform saving the entry
-            pass
+            self._saveEntry()
         self.window.destroy()
-
-    def on_frmEntry_delete_event(self, *args):
-        pass

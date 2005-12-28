@@ -59,7 +59,7 @@ class MainWindow:
         self.controller.newEntry(self)
     
     def on_miEditPrefs_activate(self, *args):
-        self.controller.showPreferences()
+        self.controller.showPreferences(self)
     
     def on_miViewLog_activate(self, *args):
         logWindow = self.wTree.get_widget('pnLog')

@@ -55,7 +55,7 @@ class LicenseDialog:
             fp.close()
         bf = gtk.TextBuffer(None)
         self.licenseView.set_buffer(bf)
-        bf.insert_at_cursor(data, len(data))
+        bf.set_text(data)
     
     def on_btnClose_clicked(self, *args):
         self.window.destroy()

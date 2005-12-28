@@ -20,6 +20,8 @@
 
 __revision__ = '$Id$'
 
+import os.path as op
+
 import gtk
 import gtk.glade
 
@@ -37,7 +39,7 @@ class CategoryDialog:
         self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
             'darkbeer.xpm'))        
         self.edName = self.wTree.get_widget('edName')
-        self.edDescription = self.wTree.get_widget('edDescription')
+        self.tvDescription = self.wTree.get_widget('tvDescription')
         self.wTree.signal_autoconnect(self)
     
     def show(self):
@@ -45,13 +47,17 @@ class CategoryDialog:
             name = self.category.name.encode('utf-8')
             description = self.category.description.encode('utf-8')
             self.edName.set_text(name)
-            self.edDescription.set_text(description)
+            bf = gtk.TextBuffer()
+            bf.set_text(description)
+            self.tvDescription.set_buffer(bf)
         self.window.present()
     
     ### signal handlers ###
     def on_btnOk_clicked(self, *args):
         name = self.edName.get_text().decode('utf-8')
-        description = self.edDescription.get_text().decode('utf-8')
+        bf = self.tvDescription.get_buffer()
+        description = bf.get_text(bf.get_start_iter(), 
+            bf.get_end_iter()).decode('utf-8')
         if self.category:
             self.category.name = name
             self.category.description = description
