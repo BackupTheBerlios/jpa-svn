@@ -25,9 +25,15 @@ import os.path as op
 import gtk, pango
 import gtk.glade
 
-import appconst, version
+import appconst, version, notifiable
 
-class MainWindow:
+class MainWindow(notifiable.Notifiable):
+    
+    registeredEvents = (
+        'entry-changed',
+        'entry-added',
+        'entry-deleted',
+        )
     
     def __init__(self, controller):
         self.controller = controller
@@ -43,6 +49,21 @@ class MainWindow:
         log.modify_font(pango.FontDescription(logFontName))
         self.window.present()
     
+    def notify(self, event):
+        """
+        Inherited from Notifiable.
+        Any not registered event is silently ignored.
+        """
+        if not (event in self.registeredEvents):
+            return
+        if event == 'entry-changed':
+            pass
+        elif event == 'entry-added':
+            pass
+        elif event == 'entry-deleted':
+            pass
+    
+    ### signal handlers ###
     def on_miFileQuit_activate(self, *args):
         self.on_frmMain_delete(args)
     
@@ -68,8 +89,8 @@ class MainWindow:
         else:
             logWindow.show()
 
-    def on_miLicense_activate(self, *args):
-        self.controller.showLicense()
+    def on_miAbout_activate(self, *args):
+        self.controller.showAbout()
 
     def on_miToolsCategories_activate(self, *args):
         self.controller.showCategories()

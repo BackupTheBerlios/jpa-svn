@@ -22,4 +22,9 @@ __revision__ = '$Id$'
 
 class Notifiable:
     
-    def notify(self, event): raise NotImplementedError
+    def notify(self, event):
+        """
+        Handler for received notification events. Must be reimplemented
+        in implementing classes.
+        """
+        raise NotImplementedError

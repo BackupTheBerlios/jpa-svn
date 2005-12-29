@@ -16,7 +16,7 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-"""Dialog with license information"""
+"""Informations about program"""
 
 __revision__ = '$Id$'
 
@@ -27,26 +27,22 @@ import gtk.glade
 
 import appconst
 
-class LicenseDialog:
-    """
-    Window with license text.
-    """
+class AboutDialog:
     
     def __init__(self, parent):
-        self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmLicense', 'jpa')
-        self.wTree.signal_autoconnect(self)
-        self.window = self.wTree.get_widget('frmLicense')
+        self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmAbout', 'jpa')
+        self.window = self.wTree.get_widget('frmAbout')
         self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
-            'darkbeer.xpm'))
+            'darkbeer.xpm'))        
         if parent:
             self.window.set_transient_for(parent.window)
+        self.wTree.signal_autoconnect(self)
         self.licenseView = self.wTree.get_widget('tvLicense')
-
-    def show(self):
-        self.loadLicenseText()
-        self.window.present()
     
-    def loadLicenseText(self):
+    def show(self):
+        imgLogo = self.wTree.get_widget('imgLogo')
+        imgLogo.set_from_file(op.join(appconst.PATHS['img'], 
+            'jogger-logo.png'))
         licFile = op.join(appconst.PATHS['doc'], 'COPYING')
         fp = open(licFile)
         try:
@@ -56,6 +52,7 @@ class LicenseDialog:
         bf = gtk.TextBuffer(None)
         self.licenseView.set_buffer(bf)
         bf.set_text(data)
+        self.window.present()
     
     def on_btnClose_clicked(self, *args):
         self.window.destroy()

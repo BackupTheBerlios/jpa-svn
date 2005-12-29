@@ -23,13 +23,13 @@ __revision__ = '$Id$'
 import gtk
 import gtk.glade
 
-import license_dialog, entry_dialog, categories_dialog, prefs_dialog, \
-    category_dialog
+import entry_dialog, categories_dialog, prefs_dialog, category_dialog, \
+    about_dialog
 
 class Controller:
     
-    def showLicense(self, parent=None):
-        dialog = license_dialog.LicenseDialog(parent)
+    def showAbout(self, parent=None):
+        dialog = about_dialog.AboutDialog(parent)
         dialog.show()
     
     def newEntry(self, parent=None):
