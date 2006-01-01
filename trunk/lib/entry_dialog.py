@@ -40,7 +40,9 @@ class EntryDialog:
             'darkbeer.xpm'))
         self.spnVisLevel = self.wTree.get_widget('spnVisLevel')
         self.lbVisLevelDesc = self.wTree.get_widget('lbVisLevelDesc')
+        self.edTitle = self.wTree.get_widget('edTitle')
         self.txBody = self.wTree.get_widget('txBody')
+        self.cbxContentType = self.wTree.get_widget('cbxContentType')
         self.wTree.signal_autoconnect(self)
     
     def show(self):
@@ -58,6 +60,9 @@ class EntryDialog:
             self.window.set_title(_('Editing entry %d') % self.entry.id)
         else:
             self.window.set_title(_('Editing new entry'))
+        expAdvanced = self.wTree.get_widget('expAdvanced')
+        expAdvanced.set_expanded(False)
+        self.cbxContentType.set_active(0)
 
     def _loadCategories(self):
         categoryList = self.wTree.get_widget('lvCategory')
@@ -77,7 +82,16 @@ class EntryDialog:
         categoryList.set_model(model)
 
     def _saveEntry(self):
-        pass        
+        print 'Hello, saving entry'
+        title = self.edTitle.get_text().decode('utf-8')
+        bf = self.txBody.get_buffer()
+        body = bf.get_text(bf.get_start_iter(), 
+            bf.get_end_iter()).decode('utf-8')
+        bodyType =self.cbxContentType.get_active()
+        if self.entry:
+            pass
+        else:
+            pass
     
     ### signal handlers ###
     def on_lvCategory_toggle(self, cell, path, model=None):

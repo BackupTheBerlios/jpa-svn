@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-25 21:40+0100\n"
+"POT-Creation-Date: 2006-01-01 12:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lib/categories_dialog.py:48
+#: lib/categories_dialog.py:50
 msgid "Name"
 msgstr ""
 
-#: lib/categories_dialog.py:49
+#: lib/categories_dialog.py:51
 msgid "Description"
 msgstr ""
 
@@ -32,7 +32,25 @@ msgstr ""
 msgid "Miscellaneous category"
 msgstr ""
 
-#: lib/entry_dialog.py:68
+#: lib/entry_dialog.py:50 lib/entry_dialog.py:96
+msgid "public"
+msgstr ""
+
+#: lib/entry_dialog.py:58
+#, python-format
+msgid "Editing entry %d"
+msgstr ""
+
+#: lib/entry_dialog.py:60
+msgid "Editing new entry"
+msgstr ""
+
+#: lib/entry_dialog.py:94
+#, python-format
+msgid "private level %d"
+msgstr ""
+
+#: lib/entry_dialog.py:100
 msgid "Entry has been modified, do you want to save it?"
 msgstr ""
 
@@ -42,141 +60,218 @@ msgid "%s"
 msgstr ""
 
 #: share/jpa2.glade.h:3
-msgid "<b>Category:</b>"
+msgid "About program"
 msgstr ""
 
 #: share/jpa2.glade.h:4
-msgid "<b>Visibility level:</b>"
-msgstr ""
-
-#: share/jpa2.glade.h:5
 msgid "Accounts"
 msgstr ""
 
-#: share/jpa2.glade.h:6
+#: share/jpa2.glade.h:5
 msgid "Active"
 msgstr ""
 
+#: share/jpa2.glade.h:6
+msgid "Adva_nced"
+msgstr ""
+
 #: share/jpa2.glade.h:7
-msgid "Created:"
+msgid "Application windows"
 msgstr ""
 
 #: share/jpa2.glade.h:8
-msgid "Entry"
+msgid "Bo_dy text type:"
 msgstr ""
 
 #: share/jpa2.glade.h:9
-msgid "Entry categories"
+msgid "Category"
 msgstr ""
 
 #: share/jpa2.glade.h:10
-msgid "JPA"
+msgid "Created:"
 msgstr ""
 
 #: share/jpa2.glade.h:11
-msgid "License"
+msgid "Editor font:"
 msgstr ""
 
 #: share/jpa2.glade.h:12
-msgid "Name:"
+msgid "Entry"
 msgstr ""
 
 #: share/jpa2.glade.h:13
-msgid "Password:"
+msgid "Entry categories"
 msgstr ""
 
 #: share/jpa2.glade.h:14
-msgid "Preferences"
+msgid "Entry preview font:"
 msgstr ""
 
 #: share/jpa2.glade.h:15
-msgid "Preview entry in web browser"
+msgid "Fonts"
 msgstr ""
 
 #: share/jpa2.glade.h:16
-msgid "Publish entry to weblog(s)"
+msgid "Informations"
 msgstr ""
 
 #: share/jpa2.glade.h:17
-msgid "S_end"
+msgid "Is dra_ft"
 msgstr ""
 
 #: share/jpa2.glade.h:18
-msgid "Sent:"
+msgid "JPA"
 msgstr ""
 
 #: share/jpa2.glade.h:19
-msgid "Settings"
+msgid "License"
 msgstr ""
 
 #: share/jpa2.glade.h:20
-msgid "Show list of entry categories"
+msgid "List of defined entry categories:"
 msgstr ""
 
 #: share/jpa2.glade.h:21
-msgid "Show list of user weblogs"
+msgid "List of your accounts:"
 msgstr ""
 
 #: share/jpa2.glade.h:22
-msgid "Show/hide log window"
+msgid "Log font:"
 msgstr ""
 
 #: share/jpa2.glade.h:23
-msgid "Title:"
+msgid "Name:"
 msgstr ""
 
 #: share/jpa2.glade.h:24
-msgid "Type:"
+msgid "Password:"
 msgstr ""
 
 #: share/jpa2.glade.h:25
-msgid "User name:"
+msgid "Preferences"
 msgstr ""
 
 #: share/jpa2.glade.h:26
-msgid "View program license"
+msgid "Preview entry in web browser"
 msgstr ""
 
 #: share/jpa2.glade.h:27
-msgid "Weblog"
+msgid "Publish entry to weblog(s)"
 msgstr ""
 
 #: share/jpa2.glade.h:28
-msgid "_Categories"
+msgid "S_end"
 msgstr ""
 
 #: share/jpa2.glade.h:29
-msgid "_Edit"
+msgid "Sent:"
 msgstr ""
 
 #: share/jpa2.glade.h:30
-msgid "_Entry"
+msgid "Settings"
 msgstr ""
 
 #: share/jpa2.glade.h:31
-msgid "_Help"
+msgid "Show list of entry categories"
 msgstr ""
 
 #: share/jpa2.glade.h:32
-msgid "_License"
+msgid "Show/hide log window"
 msgstr ""
 
 #: share/jpa2.glade.h:33
-msgid "_Log window"
+msgid ""
+"This program is free software, you may freely use and distribute it under "
+"provision of GNU Public License (\"The GPL\"). See license page for details."
 msgstr ""
 
 #: share/jpa2.glade.h:34
+msgid ""
+"This program uses code written by other people:\n"
+"   - Python interpreter, http://www.python.org/\n"
+"   - PyGTK GUI toolkit, http://www.pygtk.org/\n"
+"   - PySQLite embedded database wrapper, http://pysqlite.org/\n"
+"   - SQLObject Object-Relational Mapping, http://www.sqlite.org/\n"
+"   - PyXMPP XMPP/Jabber library, http://pyxmpp.jabberstudio.org/"
+msgstr ""
+
+#: share/jpa2.glade.h:40
+msgid "Title:"
+msgstr ""
+
+#: share/jpa2.glade.h:41
+msgid "Type:"
+msgstr ""
+
+#: share/jpa2.glade.h:42
+msgid "User name:"
+msgstr ""
+
+#: share/jpa2.glade.h:43
+msgid "Weblog account"
+msgstr ""
+
+#: share/jpa2.glade.h:44
+msgid "_Body:"
+msgstr ""
+
+#: share/jpa2.glade.h:45
+msgid "_Categories"
+msgstr ""
+
+#: share/jpa2.glade.h:46
+msgid "_Categories:"
+msgstr ""
+
+#: share/jpa2.glade.h:47
+msgid "_Description:"
+msgstr ""
+
+#: share/jpa2.glade.h:48
+msgid "_Edit"
+msgstr ""
+
+#: share/jpa2.glade.h:49
+msgid "_Entry"
+msgstr ""
+
+#: share/jpa2.glade.h:50
+msgid "_Help"
+msgstr ""
+
+#: share/jpa2.glade.h:51
+msgid "_Log window"
+msgstr ""
+
+#: share/jpa2.glade.h:52
+msgid "_Name:"
+msgstr ""
+
+#: share/jpa2.glade.h:53
 msgid "_Preview"
 msgstr ""
 
-#: share/jpa2.glade.h:35
+#: share/jpa2.glade.h:54
+msgid "_Remember window sizes"
+msgstr ""
+
+#: share/jpa2.glade.h:55
+msgid "_Title:"
+msgstr ""
+
+#: share/jpa2.glade.h:56
 msgid "_Tools"
 msgstr ""
 
-#: share/jpa2.glade.h:36
+#: share/jpa2.glade.h:57
 msgid "_View"
 msgstr ""
 
-#: share/jpa2.glade.h:37
-msgid "_Weblogs"
+#: share/jpa2.glade.h:58
+msgid "_Visibility level:"
+msgstr ""
+
+#: share/jpa2.glade.h:60
+#, no-c-format
+msgid "version: %s"
 msgstr ""

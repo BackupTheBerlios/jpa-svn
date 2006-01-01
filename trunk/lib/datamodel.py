@@ -43,7 +43,7 @@ def initModel():
         fillTables()
 
 def fillTables():
-    Category(name=_('Miscellaneous'), 
+    Category(name=_('Miscellaneous'),
         description=_('Miscellaneous category'))
 
 
@@ -54,12 +54,13 @@ class Entry(SQLObject):
     created = DateTimeCol(default=datetime.datetime.now)
     title = UnicodeCol()
     body = UnicodeCol()
-    bodyType = EnumCol(enumValues=('plain', 'textile', 'ReST', 'HTML'), 
+    bodyType = EnumCol(enumValues=('plain', 'textile', 'ReST', 'HTML'),
         default='plain', notNone=True)
     visibilityLevel = IntCol(default=0, notNone=True)
     month = IntCol(default=datetime.datetime.now().month)
     year = IntCol(default=datetime.datetime.now().year)
     categories = RelatedJoin('Category')
+    isDraft = BoolCol(default='f', notNone=True)
     # indexes
     createdIdx = DatabaseIndex(created)
     titleIdx = DatabaseIndex(title)

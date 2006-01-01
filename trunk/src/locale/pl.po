@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JPA-0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-25 21:40+0100\n"
+"POT-Creation-Date: 2006-01-01 12:39+0100\n"
 "PO-Revision-Date: 2005-12-23 21:39+0100\n"
 "Last-Translator: Jarek Zgoda <jzgoda@o2.pl>\n"
 "Language-Team: Polish\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: lib/categories_dialog.py:48
+#: lib/categories_dialog.py:50
 msgid "Name"
 msgstr "Nazwa"
 
-#: lib/categories_dialog.py:49
+#: lib/categories_dialog.py:51
 msgid "Description"
 msgstr "Opis"
 
@@ -34,7 +34,25 @@ msgstr "Ogólna"
 msgid "Miscellaneous category"
 msgstr "Ogólna kategoria"
 
-#: lib/entry_dialog.py:68
+#: lib/entry_dialog.py:50 lib/entry_dialog.py:96
+msgid "public"
+msgstr "publiczny"
+
+#: lib/entry_dialog.py:58
+#, python-format
+msgid "Editing entry %d"
+msgstr "Edycja wpisu %d"
+
+#: lib/entry_dialog.py:60
+msgid "Editing new entry"
+msgstr "Edycja nowego wpisu"
+
+#: lib/entry_dialog.py:94
+#, python-format
+msgid "private level %d"
+msgstr "prywatny poziom %d"
+
+#: lib/entry_dialog.py:100
 msgid "Entry has been modified, do you want to save it?"
 msgstr "Wpis został zmieniony, czy chcesz go zapisać?"
 
@@ -44,141 +62,227 @@ msgid "%s"
 msgstr "%s"
 
 #: share/jpa2.glade.h:3
-msgid "<b>Category:</b>"
-msgstr "<b>Kategoria:</b>"
+msgid "About program"
+msgstr "O programie"
 
 #: share/jpa2.glade.h:4
-msgid "<b>Visibility level:</b>"
-msgstr "<b>Poziom widoczności:</b>"
-
-#: share/jpa2.glade.h:5
 msgid "Accounts"
 msgstr "Konta"
 
-#: share/jpa2.glade.h:6
+#: share/jpa2.glade.h:5
 msgid "Active"
 msgstr "Aktywny"
 
+#: share/jpa2.glade.h:6
+msgid "Adva_nced"
+msgstr "Zaawa_nsowane"
+
 #: share/jpa2.glade.h:7
+msgid "Application windows"
+msgstr "Okna programu"
+
+#: share/jpa2.glade.h:8
+msgid "Bo_dy text type:"
+msgstr "T_yp zawartości:"
+
+#: share/jpa2.glade.h:9
+msgid "Category"
+msgstr "Kategorie"
+
+#: share/jpa2.glade.h:10
 msgid "Created:"
 msgstr "Utworzono:"
 
-#: share/jpa2.glade.h:8
+#: share/jpa2.glade.h:11
+msgid "Editor font:"
+msgstr "Czcionka edytora:"
+
+#: share/jpa2.glade.h:12
 msgid "Entry"
 msgstr "Wpis"
 
-#: share/jpa2.glade.h:9
+#: share/jpa2.glade.h:13
 msgid "Entry categories"
 msgstr "Kategorie wpisów"
 
-#: share/jpa2.glade.h:10
+#: share/jpa2.glade.h:14
+msgid "Entry preview font:"
+msgstr "Czcionka podglądu:"
+
+#: share/jpa2.glade.h:15
+msgid "Fonts"
+msgstr "Czcionki"
+
+#: share/jpa2.glade.h:16
+msgid "Informations"
+msgstr "Informacje"
+
+#: share/jpa2.glade.h:17
+msgid "Is dra_ft"
+msgstr "Jest _szkicem"
+
+#: share/jpa2.glade.h:18
 msgid "JPA"
 msgstr "JPA"
 
-#: share/jpa2.glade.h:11
+#: share/jpa2.glade.h:19
 msgid "License"
 msgstr "Licencja"
 
-#: share/jpa2.glade.h:12
+#: share/jpa2.glade.h:20
+msgid "List of defined entry categories:"
+msgstr "Lista zdefiniowanych kategorii:"
+
+#: share/jpa2.glade.h:21
+msgid "List of your accounts:"
+msgstr "Lista kont:"
+
+#: share/jpa2.glade.h:22
+msgid "Log font:"
+msgstr "Czcionka logu:"
+
+#: share/jpa2.glade.h:23
 msgid "Name:"
 msgstr "Nazwa:"
 
-#: share/jpa2.glade.h:13
+#: share/jpa2.glade.h:24
 msgid "Password:"
 msgstr "Hasło:"
 
-#: share/jpa2.glade.h:14
+#: share/jpa2.glade.h:25
 msgid "Preferences"
 msgstr "Ustawienia"
 
-#: share/jpa2.glade.h:15
+#: share/jpa2.glade.h:26
 msgid "Preview entry in web browser"
 msgstr "Podgląd wpisu w przeglądarce WWW"
 
-#: share/jpa2.glade.h:16
+#: share/jpa2.glade.h:27
 msgid "Publish entry to weblog(s)"
 msgstr "Opublikuj wpis w weblogu"
 
-#: share/jpa2.glade.h:17
+#: share/jpa2.glade.h:28
 msgid "S_end"
 msgstr "W_yślij"
 
-#: share/jpa2.glade.h:18
+#: share/jpa2.glade.h:29
 msgid "Sent:"
 msgstr "Wysłany:"
 
-#: share/jpa2.glade.h:19
+#: share/jpa2.glade.h:30
 msgid "Settings"
 msgstr "Ustawienia"
 
-#: share/jpa2.glade.h:20
+#: share/jpa2.glade.h:31
 msgid "Show list of entry categories"
 msgstr "Pokaż listę kategorii wpisów"
 
-#: share/jpa2.glade.h:21
-msgid "Show list of user weblogs"
-msgstr "Pokaż listę weblogów użytkownika"
-
-#: share/jpa2.glade.h:22
+#: share/jpa2.glade.h:32
 msgid "Show/hide log window"
 msgstr "Pokaż/ukryj okno logu"
 
-#: share/jpa2.glade.h:23
+#: share/jpa2.glade.h:33
+msgid ""
+"This program is free software, you may freely use and distribute it under "
+"provision of GNU Public License (\"The GPL\"). See license page for details."
+msgstr ""
+"Ten program jest wolnym oprogramowaniem, rozprowadzanym zgodnie "
+"zpostanowieniami Licencji Publicznej GNU (znanmej także jako \"GPL\").Więcej "
+"informacji znajdziesz na karcie z informacjami licencyjnymi."
+
+#: share/jpa2.glade.h:34
+msgid ""
+"This program uses code written by other people:\n"
+"   - Python interpreter, http://www.python.org/\n"
+"   - PyGTK GUI toolkit, http://www.pygtk.org/\n"
+"   - PySQLite embedded database wrapper, http://pysqlite.org/\n"
+"   - SQLObject Object-Relational Mapping, http://www.sqlite.org/\n"
+"   - PyXMPP XMPP/Jabber library, http://pyxmpp.jabberstudio.org/"
+msgstr ""
+"W tym programie używany jest kod, napisany przez inne osoby:\n"
+"   - Interpreter języka Python, http://www.python.org/\n"
+"   - Biblioteka GUI PyGTK, http://www.pygtk.org/\n"
+"   - Biblioteka wbudowanej bazy danych PySQLite, http://pysqlite.org/\n"
+"   - Biblioteka ORM SQLObject, http://www.sqlobject.org/\n"
+"   - Biblioteka protokołu XMPP/Jabber PyXMPP, http://pyxmpp.jabberstudio.org/"
+
+#: share/jpa2.glade.h:40
 msgid "Title:"
 msgstr "Tytuł:"
 
-#: share/jpa2.glade.h:24
+#: share/jpa2.glade.h:41
 msgid "Type:"
 msgstr "Typ:"
 
-#: share/jpa2.glade.h:25
+#: share/jpa2.glade.h:42
 msgid "User name:"
 msgstr "Nazwa użytkownika:"
 
-#: share/jpa2.glade.h:26
-msgid "View program license"
-msgstr "Przeczytaj licencję programu"
+#: share/jpa2.glade.h:43
+msgid "Weblog account"
+msgstr "Konto blogowe"
 
-#: share/jpa2.glade.h:27
-msgid "Weblog"
-msgstr "Weblog"
+#: share/jpa2.glade.h:44
+msgid "_Body:"
+msgstr "_Zawartość:"
 
-#: share/jpa2.glade.h:28
+#: share/jpa2.glade.h:45
 msgid "_Categories"
 msgstr "_Kategorie"
 
-#: share/jpa2.glade.h:29
+#: share/jpa2.glade.h:46
+msgid "_Categories:"
+msgstr "_Kategorie:"
+
+#: share/jpa2.glade.h:47
+msgid "_Description:"
+msgstr "Op_is:"
+
+#: share/jpa2.glade.h:48
 msgid "_Edit"
 msgstr "_Edycja"
 
-#: share/jpa2.glade.h:30
+#: share/jpa2.glade.h:49
 msgid "_Entry"
 msgstr "_Wpis"
 
-#: share/jpa2.glade.h:31
+#: share/jpa2.glade.h:50
 msgid "_Help"
 msgstr "P_omoc"
 
-#: share/jpa2.glade.h:32
-msgid "_License"
-msgstr "_Licencja"
-
-#: share/jpa2.glade.h:33
+#: share/jpa2.glade.h:51
 msgid "_Log window"
 msgstr "Okno _logu"
 
-#: share/jpa2.glade.h:34
+#: share/jpa2.glade.h:52
+msgid "_Name:"
+msgstr "_Nazwa:"
+
+#: share/jpa2.glade.h:53
 msgid "_Preview"
 msgstr "_Podgląd"
 
-#: share/jpa2.glade.h:35
+#: share/jpa2.glade.h:54
+msgid "_Remember window sizes"
+msgstr "Za_pamiętaj rozmiary okien"
+
+#: share/jpa2.glade.h:55
+msgid "_Title:"
+msgstr "_Tytuł:"
+
+#: share/jpa2.glade.h:56
 msgid "_Tools"
 msgstr "_Narzędzia"
 
-#: share/jpa2.glade.h:36
+#: share/jpa2.glade.h:57
 msgid "_View"
 msgstr "_Widok"
 
-#: share/jpa2.glade.h:37
-msgid "_Weblogs"
-msgstr "_Weblogi"
+#: share/jpa2.glade.h:58
+msgid "_Visibility level:"
+msgstr "Poziom _widoczności:"
+
+#: share/jpa2.glade.h:60
+#, no-c-format
+msgid "version: %s"
+msgstr "wersja: %s"

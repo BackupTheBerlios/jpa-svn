@@ -44,9 +44,9 @@ class MainWindow(notifiable.Notifiable):
         self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
             'darkbeer.xpm'))
         self.window.set_title(version.PROGRAM)
-        log = self.wTree.get_widget('txLog')
+        self.log = self.wTree.get_widget('txLog')
         logFontName = self.cfg.getOption('fonts', 'log', 'Monospace 10')
-        log.modify_font(pango.FontDescription(logFontName))
+        self.log.modify_font(pango.FontDescription(logFontName))
         self.window.present()
     
     def notify(self, event):
@@ -83,11 +83,10 @@ class MainWindow(notifiable.Notifiable):
         self.controller.showPreferences(self)
     
     def on_miViewLog_activate(self, *args):
-        logWindow = self.wTree.get_widget('pnLog')
-        if logWindow.get_property('visible'):
-            logWindow.hide()
+        if self.log.get_property('visible'):
+            self.log.hide()
         else:
-            logWindow.show()
+            self.log.show()
 
     def on_miAbout_activate(self, *args):
         self.controller.showAbout()
