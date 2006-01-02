@@ -22,7 +22,7 @@ __revision__ = '$Id$'
 
 class Notifiable:
     
-    def notify(self, event):
+    def notify(self, event, *args, **kwargs):
         """
         Handler for received notification events. Must be reimplemented
         in implementing classes.

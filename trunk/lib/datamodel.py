@@ -23,8 +23,11 @@ __revision__ = '$Id$'
 import datetime, os
 
 from sqlobject import *
+from sqlobject.sqlbuilder import *
 
 import appconst
+
+BODY_TYPES = ('plain', 'textile', 'ReST', 'HTML')
 
 def initModel():
     isSchemaEmpty = False
@@ -46,6 +49,11 @@ def fillTables():
     Category(name=_('Miscellaneous'),
         description=_('Miscellaneous category'))
 
+def getEntriesList(year, month):
+    return Entry.select(
+        AND(Entry.q.year==year, Entry.q.month==month), 
+        orderBy='created'
+    ).reversed()
 
 class Entry(SQLObject):
     """
@@ -54,23 +62,15 @@ class Entry(SQLObject):
     created = DateTimeCol(default=datetime.datetime.now)
     title = UnicodeCol()
     body = UnicodeCol()
-    bodyType = EnumCol(enumValues=('plain', 'textile', 'ReST', 'HTML'),
-        default='plain', notNone=True)
-    visibilityLevel = IntCol(default=0, notNone=True)
+    bodyType = EnumCol(enumValues=BODY_TYPES, default='plain')
+    visibilityLevel = IntCol(default=0)
     month = IntCol(default=datetime.datetime.now().month)
     year = IntCol(default=datetime.datetime.now().year)
     categories = RelatedJoin('Category')
-    isDraft = BoolCol(default='f', notNone=True)
+    isDraft = BoolCol(default='f')
     # indexes
     createdIdx = DatabaseIndex(created)
     titleIdx = DatabaseIndex(title)
-    
-    def publish(self, transports):
-        """
-        Send an entry to weblog.
-        """
-        for transport in transports:
-            transport.send(self)
 
 
 class Category(SQLObject):

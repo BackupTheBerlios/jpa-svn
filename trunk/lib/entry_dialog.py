@@ -43,6 +43,7 @@ class EntryDialog:
         self.edTitle = self.wTree.get_widget('edTitle')
         self.txBody = self.wTree.get_widget('txBody')
         self.cbxContentType = self.wTree.get_widget('cbxContentType')
+        self.ckbIsDraft = self.wTree.get_widget('ckbIsDraft')
         self.wTree.signal_autoconnect(self)
     
     def show(self):
@@ -67,8 +68,8 @@ class EntryDialog:
     def _loadCategories(self):
         categoryList = self.wTree.get_widget('lvCategory')
         model = gtk.ListStore(bool, str)
-        categories = datamodel.Category.select(orderBy='name')
-        for category in categories:
+        self.categories = datamodel.Category.select(orderBy='name')
+        for category in self.categories:
             model.append((False, category.name.encode('utf-8')))
         cell0 = gtk.CellRendererToggle()
         cell0.set_property('radio', False)
@@ -82,17 +83,35 @@ class EntryDialog:
         categoryList.set_model(model)
 
     def _saveEntry(self):
-        print 'Hello, saving entry'
         title = self.edTitle.get_text().decode('utf-8')
         bf = self.txBody.get_buffer()
         body = bf.get_text(bf.get_start_iter(), 
             bf.get_end_iter()).decode('utf-8')
-        bodyType =self.cbxContentType.get_active()
+        bodyType = datamodel.BODY_TYPES[self.cbxContentType.get_active()]
+        isDraft = self.ckbIsDraft.get_active()
+        visibilityLevel = self.spnVisLevel.get_value_as_int()
+        categories = []
+        categoryList = self.wTree.get_widget('lvCategory')
+        model = categoryList.get_model()
+        for category in model:
+            categories.append((category[0], datamodel.Category.byName(category[1].decode('utf-8'))))
         if self.entry:
-            pass
+            entry = self.entry
+            entry.title = title
+            entry.body = body
         else:
-            pass
-    
+            entry = datamodel.Entry(title=title, body=body)
+        entry.bodyType = bodyType
+        entry.visibilityLevel = visibilityLevel
+        entry.isDraft = isDraft
+        if self.parent:
+            if self.entry:
+                event = 'entry-changed'
+            else:
+                event = 'entry-added'
+            self.parent.notify(event, self.entry)
+
+
     ### signal handlers ###
     def on_lvCategory_toggle(self, cell, path, model=None):
         iter = model.get_iter(path)
@@ -114,6 +133,5 @@ class EntryDialog:
             self.window.destroy()
     
     def on_btnOk_clicked(self, *args):
-        if self.modified:
-            self._saveEntry()
+        self._saveEntry()
         self.window.destroy()
