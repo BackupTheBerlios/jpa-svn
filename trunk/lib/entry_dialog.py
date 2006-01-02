@@ -94,13 +94,23 @@ class EntryDialog:
         categoryList = self.wTree.get_widget('lvCategory')
         model = categoryList.get_model()
         for category in model:
-            categories.append((category[0], datamodel.Category.byName(category[1].decode('utf-8'))))
+            categories.append((
+                category[0], 
+                datamodel.Category.byName(category[1].decode('utf-8'))
+            ))
         if self.entry:
             entry = self.entry
             entry.title = title
             entry.body = body
         else:
             entry = datamodel.Entry(title=title, body=body)
+        for category in categories:
+            if category[1] in entry.categories:
+                if not category[0]:
+                    entry.removeCategory(category[1])
+            else:
+                if category[0] and not category[1] in entry.categories:
+                    entry.addCategory(category[1])
         entry.bodyType = bodyType
         entry.visibilityLevel = visibilityLevel
         entry.isDraft = isDraft
@@ -110,7 +120,6 @@ class EntryDialog:
             else:
                 event = 'entry-added'
             self.parent.notify(event, self.entry)
-
 
     ### signal handlers ###
     def on_lvCategory_toggle(self, cell, path, model=None):
