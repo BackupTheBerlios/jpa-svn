@@ -34,7 +34,6 @@ try:
 except ImportError:
     # no docutils installed, sorry
     pass
-BODY_TYPES = tuple(BODY_TYPES)
 
 def initModel():
     isSchemaEmpty = False

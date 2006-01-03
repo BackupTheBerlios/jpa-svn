@@ -44,13 +44,12 @@ class EntryDialog:
         self.txBody = self.wTree.get_widget('txBody')
         self.cbxContentType = self.wTree.get_widget('cbxContentType')
         self.ckbIsDraft = self.wTree.get_widget('ckbIsDraft')
+        self.lvCategory = self.wTree.get_widget('lvCategory')
         self.wTree.signal_autoconnect(self)
     
     def show(self):
-        self._setWidgetProperties()
         self._loadCategories()
-        if not self.entry:
-            self.lbVisLevelDesc.set_label(_('public'))
+        self._setWidgetProperties()
         self.window.present()
     
     ### "private" methods ###
@@ -63,14 +62,23 @@ class EntryDialog:
             self.edTitle.set_text(title)
             bf = self.txBody.get_buffer()
             bf.set_text(self.entry.body.encode('utf-8'))
+            self.spnVisLevel.set_value(self.entry.visibilityLevel)
+            self.ckbIsDraft.set_active(self.entry.isDraft)
+            self.cbxContentType.set_active(datamodel.BODY_TYPES.index(self.entry.bodyType))
+            model = self.lvCategory.get_model()
+            for categoryItem in model:
+                active, name = categoryItem
+                for entryCategory in self.entry.categories:
+                    if entryCategory.name == name:
+                        categoryItem[0] = True
         else:
             self.window.set_title(_('Editing new entry'))
+            self.lbVisLevelDesc.set_label(_('public'))
+            self.cbxContentType.set_active(0)
         expAdvanced = self.wTree.get_widget('expAdvanced')
         expAdvanced.set_expanded(False)
-        self.cbxContentType.set_active(0)
 
     def _loadCategories(self):
-        categoryList = self.wTree.get_widget('lvCategory')
         model = gtk.ListStore(bool, str)
         self.categories = datamodel.Category.select(orderBy='name')
         for category in self.categories:
@@ -82,9 +90,9 @@ class EntryDialog:
         column0 = gtk.TreeViewColumn('use', cell0, active=0)
         cell1 = gtk.CellRendererText()
         column1 = gtk.TreeViewColumn('name', cell1, text=1)
-        categoryList.append_column(column0)
-        categoryList.append_column(column1)
-        categoryList.set_model(model)
+        self.lvCategory.append_column(column0)
+        self.lvCategory.append_column(column1)
+        self.lvCategory.set_model(model)
 
     def _saveEntry(self):
         title = self.edTitle.get_text().decode('utf-8')

@@ -67,6 +67,10 @@ class MainWindow(notifiable.Notifiable):
         self.lvEntries.set_model(self.entriesModel)
         self.entryFilter={'year': today.year, 'month': today.month}
         self.loadEntriesList(today.year, today.month)
+        if len(self.entriesModel) > 0:
+            sel = self.lvEntries.get_selection()
+            sel.select_path(0)
+            self.displayEntry(self.getEntryFromSelection())
         self.window.present()
     
     def notify(self, event, *args, **kwargs):
