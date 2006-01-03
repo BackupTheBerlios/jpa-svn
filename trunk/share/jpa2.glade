@@ -18,6 +18,7 @@
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
   <signal name="destroy" handler="on_frmMain_destroy" last_modification_time="Tue, 01 Nov 2005 21:13:44 GMT"/>
   <signal name="delete_event" handler="on_frmMain_delete" last_modification_time="Thu, 22 Dec 2005 08:45:13 GMT"/>
 
@@ -30,6 +31,8 @@
       <child>
 	<widget class="GtkMenuBar" id="mbMain">
 	  <property name="visible">True</property>
+	  <property name="pack_direction">GTK_PACK_DIRECTION_LTR</property>
+	  <property name="child_pack_direction">GTK_PACK_DIRECTION_LTR</property>
 
 	  <child>
 	    <widget class="GtkMenuItem" id="menuitem4">
@@ -707,6 +710,7 @@
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox4">
@@ -1012,6 +1016,7 @@
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox5">
@@ -1084,8 +1089,9 @@
 		      <child>
 			<widget class="GtkFontButton" id="fbEditorFont">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Click to select font for editor window</property>
 			  <property name="can_focus">True</property>
-			  <property name="title" translatable="yes">Wybór czcionki</property>
+			  <property name="title" translatable="yes">Select font</property>
 			  <property name="show_style">True</property>
 			  <property name="show_size">True</property>
 			  <property name="use_font">True</property>
@@ -1133,8 +1139,9 @@
 		      <child>
 			<widget class="GtkFontButton" id="fbPreviewFont">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Click to select font for preview window</property>
 			  <property name="can_focus">True</property>
-			  <property name="title" translatable="yes">Wybór czcionki</property>
+			  <property name="title" translatable="yes">Select font</property>
 			  <property name="show_style">True</property>
 			  <property name="show_size">True</property>
 			  <property name="use_font">True</property>
@@ -1182,8 +1189,9 @@
 		      <child>
 			<widget class="GtkFontButton" id="fbLogFont">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Click to select font for log window</property>
 			  <property name="can_focus">True</property>
-			  <property name="title" translatable="yes">Wybór czcionki</property>
+			  <property name="title" translatable="yes">Select font</property>
 			  <property name="show_style">True</property>
 			  <property name="show_size">True</property>
 			  <property name="use_font">True</property>
@@ -1763,6 +1771,7 @@
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
   <signal name="delete_event" handler="on_frmEntry_delete_event" last_modification_time="Mon, 26 Dec 2005 12:07:17 GMT"/>
 
   <child>
@@ -2265,6 +2274,7 @@ HTML</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox7">
@@ -2426,6 +2436,7 @@ HTML</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox10">
@@ -2635,6 +2646,7 @@ HTML</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox12">
@@ -3033,6 +3045,7 @@ HTML</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox16">
