@@ -32,6 +32,7 @@ class EntryDialog:
     def __init__(self, parent, entry=None):
         self.cfg = appconst.CFG
         self.modified = False
+        self.isNew = (entry is None)
         self.entry = entry
         self.parent = parent
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmEntry', 'jpa')
@@ -50,6 +51,10 @@ class EntryDialog:
     def show(self):
         self._loadCategories()
         self._setWidgetProperties()
+        if self.cfg.getOption('features', 'enable_autosave', '1') == '1':
+            interval = int(self.cfg.getOption('features', 
+                'autosave_interval', '5')) * 60 * 1000
+            self.autosaveTimer = gobject.timeout_add(interval, self.autosave)
         self.window.present()
     
     ### "private" methods ###
@@ -126,14 +131,13 @@ class EntryDialog:
         entry.bodyType = bodyType
         entry.visibilityLevel = visibilityLevel
         entry.isDraft = isDraft
-        if self.parent:
-            if self.entry:
-                event = 'entry-changed'
-            else:
-                event = 'entry-added'
-            self.parent.notify(event, self.entry)
+        self.entry = entry
 
     ### signal handlers ###
+    def autosave(self):
+        self._saveEntry()
+        return True
+    
     def on_lvCategory_toggle(self, cell, path, model=None):
         iter = model.get_iter(path)
         model.set_value(iter, 0, not cell.get_active())
@@ -146,13 +150,18 @@ class EntryDialog:
             self.lbVisLevelDesc.set_label(_('public'))
 
     def on_btnCancel_clicked(self, *args):
-        if self.modified:
-            if apputils.question(_('Entry has been modified, do you want to save it?')):
-                self._saveEntry()
-            self.window.destroy()
-        else:
-            self.window.destroy()
+        gobject.source_remove(self.autosaveTimer)
+        if self.isNew and self.entry:
+            self.entry.destroySelf()
+        self.window.destroy()
     
     def on_btnOk_clicked(self, *args):
+        gobject.source_remove(self.autosaveTimer)
         self._saveEntry()
+        if self.parent:
+            if self.isNew:
+                event = 'entry-added'
+            else:
+                event = 'entry-changed'
+            self.parent.notify(event, self.entry)
         self.window.destroy()

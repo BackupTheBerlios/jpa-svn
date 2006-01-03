@@ -40,6 +40,9 @@ class PreferencesDialog:
         self.fbEditorFont = self.wTree.get_widget('fbEditorFont')
         self.fbPreviewFont = self.wTree.get_widget('fbPreviewFont')
         self.fbLogFont = self.wTree.get_widget('fbLogFont')
+        self.ckbSaveWinSizes = self.wTree.get_widget('ckbSaveWindowSizes')
+        self.ckbEnableAutosave = self.wTree.get_widget('ckbEnableAutosave')
+        self.spnAutosaveInterval = self.wTree.get_widget('spnAutosaveInterval')
         self.wTree.signal_autoconnect(self)
     
     def show(self):
@@ -49,9 +52,21 @@ class PreferencesDialog:
             'Sans 12'))
         self.fbLogFont.set_font_name(self.cfg.getOption('fonts', 'log',
             'Monospace 10'))
+        self.ckbSaveWinSizes.set_active(self.cfg.getOption('windows',
+            'save_sizes', '1') == '1')
+        enableAutosave = (self.cfg.getOption('features',
+            'enable_autosave', '1') == '1')
+        self.ckbEnableAutosave.set_active(enableAutosave)
+        self.spnAutosaveInterval.set_sensitive(enableAutosave)
+        self.spnAutosaveInterval.set_value(int(self.cfg.getOption('features',
+            'autosave_interval', '5')))
         self.window.present()
     
     ### signal handlers ###
+    def on_ckbEnableAutosave_toggled(self, *args):
+        isActive = self.ckbEnableAutosave.get_active()
+        self.spnAutosaveInterval.set_sensitive(isActive)
+
     def on_btnCancel_clicked(self, *args):
         self.window.destroy()
     
@@ -62,4 +77,16 @@ class PreferencesDialog:
             self.fbPreviewFont.get_font_name())
         self.cfg.setOption('fonts', 'log',
             self.fbLogFont.get_font_name())
+        if self.ckbSaveWinSizes.get_active():
+            value = '1'
+        else:
+            value = '0'
+        self.cfg.setOption('windows', 'save_sizes', value)
+        if self.ckbEnableAutosave.get_active():
+            value = '1'
+        else:
+            value = '0'
+        self.cfg.setOption('features', 'enable_autosave', value)
+        value = str(self.spnAutosaveInterval.get_value_as_int())
+        self.cfg.setOption('features', 'autosave_interval', value)
         self.window.destroy()
