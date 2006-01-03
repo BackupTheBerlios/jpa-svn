@@ -24,7 +24,7 @@ import os.path as op
 import datetime
 
 import gtk, pango, gobject
-import gtk.glade
+import gtk.glade, gtk.gdk
 
 import appconst, version, notifiable, datamodel
 
@@ -39,6 +39,7 @@ class MainWindow(notifiable.Notifiable):
     
     def __init__(self, controller):
         self.controller = controller
+        self.curEntry = None
         self.cfg = appconst.CFG
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmMain', 'jpa')
         self.wTree.signal_autoconnect(self)
@@ -48,6 +49,10 @@ class MainWindow(notifiable.Notifiable):
         self.window.set_title(version.PROGRAM)
         self.logPanel = self.wTree.get_widget('pnLog')
         self.logView = self.wTree.get_widget('txLog')
+        self.lbCreated = self.wTree.get_widget('lbCreated')
+        self.lbSent = self.wTree.get_widget('lbSent')
+        self.lbTitle = self.wTree.get_widget('lbTitle')
+        self.txEntry = self.wTree.get_widget('txEntry')
         logFontName = self.cfg.getOption('fonts', 'log', 'Monospace 10')
         self.logView.modify_font(pango.FontDescription(logFontName))
         self.lvEntries = self.wTree.get_widget('lvEntries')
@@ -55,8 +60,8 @@ class MainWindow(notifiable.Notifiable):
         today = datetime.date.today()
         cell0 = gtk.CellRendererText()
         cell1 = gtk.CellRendererText()
-        col0 = gtk.TreeViewColumn('date', cell0, text=0)
-        col1 = gtk.TreeViewColumn('title', cell1, text=1)
+        col0 = gtk.TreeViewColumn(_('Date'), cell0, text=0)
+        col1 = gtk.TreeViewColumn(_('Title'), cell1, text=1)
         self.lvEntries.append_column(col0)
         self.lvEntries.append_column(col1)
         self.lvEntries.set_model(self.entriesModel)
@@ -79,7 +84,8 @@ class MainWindow(notifiable.Notifiable):
         elif event == 'entry-deleted':
             pass
         elif event == 'filter-changed':
-            pass
+            self.loadEntriesList(self.entryFilter['year'],
+                self.entryFilter['month'])
 
     def loadEntriesList(self, year, month):
         self.entriesModel.clear()
@@ -90,6 +96,17 @@ class MainWindow(notifiable.Notifiable):
                 entry.title.encode('utf-8'),
                 entry
             ))
+    
+    def getEntryFromSelection(self):
+        store, iterator = self.lvEntries.get_selection().get_selected()
+        return store.get_value(iterator, 2)
+
+    def displayEntry(self, entry):
+        self.lbCreated.set_label(entry.created.strftime('%Y-%m-%d %H:%M'))
+        self.lbSent.set_label('')
+        self.lbTitle.set_label(entry.title.encode('utf-8'))
+        bf = self.txEntry.get_buffer()
+        bf.set_text(entry.body.encode('utf-8'))
     
     ### signal handlers ###
     def on_miFileQuit_activate(self, *args):
@@ -121,3 +138,15 @@ class MainWindow(notifiable.Notifiable):
 
     def on_miToolsCategories_activate(self, *args):
         self.controller.showCategories()
+    
+    def on_lvEntries_button_press_event(self, *args):
+        widget, event = args
+        if event.button == 1 and event.type == gtk.gdk._2BUTTON_PRESS:
+            entry = self.getEntryFromSelection()
+            self.controller.editEntry(entry)
+
+    def on_lvEntries_cursor_changed(self, *args):
+        entry = self.getEntryFromSelection()
+        if entry != self.curEntry:
+            self.curEntry = entry
+            self.displayEntry(entry)

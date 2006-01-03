@@ -58,7 +58,11 @@ class EntryDialog:
         editorFontName = self.cfg.getOption('fonts', 'editor', 'Monospace 10')
         self.txBody.modify_font(pango.FontDescription(editorFontName))
         if self.entry:
-            self.window.set_title(_('Editing entry %d') % self.entry.id)
+            title = self.entry.title.encode('utf-8')
+            self.window.set_title(_('Editing entry "%s"') % title)
+            self.edTitle.set_text(title)
+            bf = self.txBody.get_buffer()
+            bf.set_text(self.entry.body.encode('utf-8'))
         else:
             self.window.set_title(_('Editing new entry'))
         expAdvanced = self.wTree.get_widget('expAdvanced')
@@ -109,7 +113,7 @@ class EntryDialog:
                 if not category[0]:
                     entry.removeCategory(category[1])
             else:
-                if category[0] and not category[1] in entry.categories:
+                if category[0] and (not category[1] in entry.categories):
                     entry.addCategory(category[1])
         entry.bodyType = bodyType
         entry.visibilityLevel = visibilityLevel

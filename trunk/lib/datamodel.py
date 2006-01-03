@@ -27,7 +27,14 @@ from sqlobject.sqlbuilder import *
 
 import appconst
 
-BODY_TYPES = ('plain', 'textile', 'ReST', 'HTML')
+BODY_TYPES = ['plain', 'textile', 'markdown', 'HTML']
+try:
+    import docutils.core
+    BODY_TYPES.insert(3, 'ReST')
+except ImportError:
+    # no docutils installed, sorry
+    pass
+BODY_TYPES = tuple(BODY_TYPES)
 
 def initModel():
     isSchemaEmpty = False
