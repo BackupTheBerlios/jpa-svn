@@ -131,6 +131,10 @@ class MainWindow(notifiable.Notifiable):
     def on_miEditPrefs_activate(self, *args):
         self.controller.showPreferences(self)
     
+    def on_miViewPreview_activate(self, *args):
+        entry = self.getEntryFromSelection()
+        self.controller.previewEntry(entry, self)
+    
     def on_miViewLog_activate(self, *args):
         if self.logPanel.get_property('visible'):
             self.logPanel.hide()

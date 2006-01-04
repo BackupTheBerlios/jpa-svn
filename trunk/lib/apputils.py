@@ -49,6 +49,17 @@ def question(text, parent=None):
         msg.destroy()
     return resp == gtk.RESPONSE_OK
 
+def error(text, parent=None):
+    """
+    Error message dialog.
+    """
+    msg = gtk.MessageDialog(parent, gtk.DIALOG_MODAL, gtk.MESSAGE_ERROR,
+        gtk.BUTTONS_OK, text)
+    try:
+        msg.run()
+    finally:
+        msg.destroy()
+
 def ellipsize(text, maxLength=30):
     """
     Return text shortened to maxLength - 3 characters with added

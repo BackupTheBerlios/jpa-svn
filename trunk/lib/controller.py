@@ -20,13 +20,21 @@
 
 __revision__ = '$Id$'
 
+import os, tempfile
+import webbrowser
+
 import gtk
 import gtk.glade
 
+import appconst, apputils, renderer
 import entry_dialog, categories_dialog, prefs_dialog, category_dialog, \
     about_dialog
 
 class Controller:
+    
+    def __init__(self):
+        self.__tempFiles = []
+        self.cfg = appconst.CFG
     
     def showAbout(self, parent=None):
         dialog = about_dialog.AboutDialog(parent)
@@ -55,3 +63,28 @@ class Controller:
     def newCategory(self, parent=None):
         dialog = category_dialog.CategoryDialog(parent)
         dialog.show()
+    
+    def previewEntry(self, entry, parent=None):
+        fd, fileName = tempfile.mkstemp('.html')
+        os.close(fd)
+        self.__tempFiles.append(fileName)
+        title = entry.title.encode('utf-8')
+        text = entry.body.encode('utf-8')
+        bodyType = entry.bodyType.encode('utf-8')
+        html = renderer.render(title, text, bodyType)
+        fp = open(fileName, 'w')
+        try:
+            fp.write(html)
+        finally:
+            fp.close()
+        if self.cfg.getOption('features', 'browser', 'system') == 'system':
+            webbrowser.open_new(fileName)
+        else:
+            browserCmd = self.cfg.getOption('features', 'browser_cmd', '')
+            if len(browserCmd.strip()) == 0:
+                apputils.error(_('Specified custom web browser is invalid.'),
+                    parent.window)
+    
+    def __del__(self):
+        for fileName in self.__tempFiles:
+            os.unlink(fileName)
