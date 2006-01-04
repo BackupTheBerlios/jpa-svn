@@ -44,6 +44,7 @@ class PreferencesDialog:
         self.ckbEnableAutosave = self.wTree.get_widget('ckbEnableAutosave')
         self.spnAutosaveInterval = self.wTree.get_widget('spnAutosaveInterval')
         self.rbnUseSysDefBrowser = self.wTree.get_widget('rbnUseSysDef')
+        self.rbnUseKdeDefBrowser = self.wTree.get_widget('rbnUseKdeDef')
         self.rbnUseCustomBrowser = self.wTree.get_widget('rbnUseCustom')
         self.edBrowserCmd = self.wTree.get_widget('edBrowserCmd')
         self.btnCheckBrowser = self.wTree.get_widget('btnCheckBrowser')
@@ -65,13 +66,17 @@ class PreferencesDialog:
         self.spnAutosaveInterval.set_value(int(self.cfg.getOption('features',
             'autosave_interval', '5')))
         browser = self.cfg.getOption('features', 'browser', 'system')
-        self.rbnUseSysDefBrowser.set_active(browser == 'system')
-        self.rbnUseCustomBrowser.set_active(browser == 'custom')
+        if browser == 'system':
+            self.rbnUseSysDefBrowser.set_active(True)
+        elif browser == 'kde':
+            self.rbnUseKdeDefBrowser.set_active(True)
+        else:
+            self.rbnUseCustomBrowser.set_active(True)
         if browser == 'custom':
             browserCmd = self.cfg.getOption('features', 'browser_cmd', '')
             self.edBrowserCmd.set_text(browserCmd)
             self._enableCustomBrowserSelection(True)
-        elif browser == 'system':
+        else:
             self._enableCustomBrowserSelection(False)
         self.window.present()
     
@@ -86,6 +91,9 @@ class PreferencesDialog:
         self.spnAutosaveInterval.set_sensitive(isActive)
     
     def on_rbnUseSysDef_toggled(self, *args):
+        self._enableCustomBrowserSelection(False)
+    
+    def on_rbnUseKdeDef_toggled(self, *args):
         self._enableCustomBrowserSelection(False)
     
     def on_rbnUseCustom_toggled(self, *args):
@@ -115,6 +123,8 @@ class PreferencesDialog:
         self.cfg.setOption('features', 'autosave_interval', value)
         if self.rbnUseSysDefBrowser.get_active():
             browser = 'system'
+        elif self.rbnUseKdeDefBrowser.get_active():
+            browser = 'kde'
         else:
             browser = 'custom'
         self.cfg.setOption('features', 'browser', browser)

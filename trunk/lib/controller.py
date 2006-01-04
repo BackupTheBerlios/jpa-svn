@@ -20,7 +20,7 @@
 
 __revision__ = '$Id$'
 
-import os, tempfile
+import os, tempfile, subprocess
 import webbrowser
 
 import gtk
@@ -77,13 +77,21 @@ class Controller:
             fp.write(html)
         finally:
             fp.close()
-        if self.cfg.getOption('features', 'browser', 'system') == 'system':
-            webbrowser.open_new(fileName)
+        browserType = self.cfg.getOption('features', 'browser', 'system')
+        if browserType == 'system':
+            browser = webbrowser.get()
+            browser.open(fileName, 2)
+        elif browserType == 'kde':
+            browser = webbrowser.get('kfm')
+            browser.open(fileName, 2)
         else:
             browserCmd = self.cfg.getOption('features', 'browser_cmd', '')
             if len(browserCmd.strip()) == 0:
                 apputils.error(_('Specified custom web browser is invalid.'),
                     parent.window)
+            else:
+                url = 'file://%s' % fileName
+                subprocess.call([browserCmd, url])
     
     def __del__(self):
         for fileName in self.__tempFiles:
