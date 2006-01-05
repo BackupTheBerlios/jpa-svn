@@ -1630,7 +1630,7 @@
 					<widget class="GtkEntry" id="edBrowserCmd">
 					  <property name="visible">True</property>
 					  <property name="sensitive">False</property>
-					  <property name="tooltip" translatable="yes">Command to start web browser (%s is a name of temporary file with previewed document)</property>
+					  <property name="tooltip" translatable="yes">Command to start web browser</property>
 					  <property name="can_focus">True</property>
 					  <property name="editable">True</property>
 					  <property name="visibility">True</property>

@@ -23,7 +23,7 @@ REST approach. Very nice, indeed!"""
 
 __revision__ = '$Id$'
 
-import httplib, urlparse
+import httplib, urlparse, proxytools
 import binascii
 try:
     import cElementTree as ElementTree
@@ -42,6 +42,7 @@ class BloggerTransport(api.WeblogTransport):
     """Weblog transport that uses Blogger Atom API."""
     
     def __init__(self, userName, passwd, proxyConfig=None):
+        self.proxy = proxyConfig
         self.userName = userName
         self.passwd = passwd
         self.authCookie = binascii.b2a_base64('%s:%s' % (userName, passwd))
@@ -64,12 +65,14 @@ class BloggerTransport(api.WeblogTransport):
         """This method returns dictionary of user's blog names (keys) and
         their identifiers (values), suitable for use in blog inquiries and
         operations."""
+        if self.proxy:
+            connection = proxytools.ProxyHTTPSConnection(self.proxy['host'], self.proxy['port'])
+        else:
+            connection = httplib.HTTPSConnection(self.host)
         path = self.path % ''
-        connection = httplib.HTTPSConnection(self.host)
         try:
             connection.request('GET', path, headers=self.headers)
             response = connection.getresponse()
-            print response
             document = response.read()
         finally:
             connection.close()
