@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JPA-0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-04 21:11+0100\n"
+"POT-Creation-Date: 2006-01-05 20:47+0100\n"
 "PO-Revision-Date: 2005-12-23 21:39+0100\n"
 "Last-Translator: Jarek Zgoda <jzgoda@o2.pl>\n"
 "Language-Team: Polish\n"
@@ -25,10 +25,6 @@ msgstr "Nazwa"
 #: lib/categories_dialog.py:51
 msgid "Description"
 msgstr "Opis"
-
-#: lib/controller.py:85
-msgid "Specified custom web browser is invalid."
-msgstr "Wybrana ścieżka nie wskazuje przeglądarki WWW"
 
 #: lib/datamodel.py:55
 msgid "Miscellaneous"
@@ -110,134 +106,150 @@ msgid "Category"
 msgstr "Kategorie"
 
 #: share/jpa2.glade.h:13
-msgid "Check"
-msgstr "Sprawdź"
+msgid "Choose file"
+msgstr "Wybierz plik"
 
 #: share/jpa2.glade.h:14
-msgid "Check if browser command is valid"
-msgstr "Sprawdź, czy polecenie jest poprawne"
-
-#: share/jpa2.glade.h:15
 msgid "Click to select font for editor window"
 msgstr "Wybór czcionki okna edytora"
 
-#: share/jpa2.glade.h:16
+#: share/jpa2.glade.h:15
 msgid "Click to select font for log window"
 msgstr "Wybór czcionki okna logu"
 
-#: share/jpa2.glade.h:17
+#: share/jpa2.glade.h:16
 msgid "Click to select font for preview window"
 msgstr "Wybór czcionki okna podglądu"
 
-#: share/jpa2.glade.h:18
+#: share/jpa2.glade.h:17
 msgid "Command:"
 msgstr "Polecenie:"
 
-#: share/jpa2.glade.h:19
+#: share/jpa2.glade.h:18
 msgid "Created:"
 msgstr "Utworzono:"
 
-#: share/jpa2.glade.h:20
+#: share/jpa2.glade.h:19
 msgid "Editor font:"
 msgstr "Czcionka edytora:"
 
-#: share/jpa2.glade.h:21
+#: share/jpa2.glade.h:20
 msgid "Enable a_utosave feature"
 msgstr "Włącz zapis a_utomatyczny"
 
-#: share/jpa2.glade.h:22
+#: share/jpa2.glade.h:21
 msgid "Entry"
 msgstr "Wpis"
 
-#: share/jpa2.glade.h:23
+#: share/jpa2.glade.h:22
 msgid "Entry categories"
 msgstr "Kategorie wpisów"
 
-#: share/jpa2.glade.h:24
+#: share/jpa2.glade.h:23
 msgid "Entry preview font:"
 msgstr "Czcionka podglądu:"
 
-#: share/jpa2.glade.h:25
+#: share/jpa2.glade.h:24
 msgid "Filter"
 msgstr "Filtr"
 
-#: share/jpa2.glade.h:26
+#: share/jpa2.glade.h:25
 msgid "Filter entries display"
 msgstr "Filtrowanie widoku wpisów"
 
-#: share/jpa2.glade.h:27
+#: share/jpa2.glade.h:26
 msgid "Informations"
 msgstr "Informacje"
 
-#: share/jpa2.glade.h:28
+#: share/jpa2.glade.h:27
 msgid "Is dra_ft"
 msgstr "Jest _szkicem"
 
-#: share/jpa2.glade.h:29
+#: share/jpa2.glade.h:28
 msgid "JPA"
 msgstr "JPA"
 
+#: share/jpa2.glade.h:29
+msgid "Launch preview in Gnome default web browser"
+msgstr "Wyświetl podgląd w domyślnej przeglądarce Gnome"
+
 #: share/jpa2.glade.h:30
+msgid "Launch preview in KDE default web browser"
+msgstr "Wyświetl podgląd w domyślnej przeglądarce KDE"
+
+#: share/jpa2.glade.h:31
+msgid "Launch preview in custom-defined web browser"
+msgstr "Wyświetl podgląd we własnej przeglądarce"
+
+#: share/jpa2.glade.h:32
+msgid "Launch preview in system default web browser (not recommended on Linux)"
+msgstr "Użyj domyślnej przeglądarki WWW (nie zalecane w linuksie)"
+
+#: share/jpa2.glade.h:33
 msgid "License"
 msgstr "Licencja"
 
-#: share/jpa2.glade.h:31
+#: share/jpa2.glade.h:34
 msgid "List of defined entry categories:"
 msgstr "Lista zdefiniowanych kategorii:"
 
-#: share/jpa2.glade.h:32
+#: share/jpa2.glade.h:35
 msgid "List of your accounts:"
 msgstr "Lista kont:"
 
-#: share/jpa2.glade.h:33
+#: share/jpa2.glade.h:36
 msgid "Log font:"
 msgstr "Czcionka logu:"
 
-#: share/jpa2.glade.h:34
+#: share/jpa2.glade.h:37
 msgid "Name:"
 msgstr "Nazwa:"
 
-#: share/jpa2.glade.h:35
+#: share/jpa2.glade.h:38
 msgid "Password:"
 msgstr "Hasło:"
 
-#: share/jpa2.glade.h:36
+#: share/jpa2.glade.h:39
 msgid "Preferences"
 msgstr "Ustawienia"
 
-#: share/jpa2.glade.h:37
+#: share/jpa2.glade.h:40
 msgid "Preview entry in web browser"
 msgstr "Podgląd wpisu w przeglądarce WWW"
 
-#: share/jpa2.glade.h:38
+#: share/jpa2.glade.h:41
 msgid "Publish entry to weblog(s)"
 msgstr "Opublikuj wpis w weblogu"
 
-#: share/jpa2.glade.h:39
+#: share/jpa2.glade.h:42
 msgid "S_end"
 msgstr "W_yślij"
 
-#: share/jpa2.glade.h:40
+#: share/jpa2.glade.h:43
 msgid "Select font"
 msgstr "Wybierz czcionkę"
 
-#: share/jpa2.glade.h:41
+#: share/jpa2.glade.h:44
 msgid "Sent:"
 msgstr "Wysłany:"
 
-#: share/jpa2.glade.h:42
+#: share/jpa2.glade.h:45
 msgid "Settings"
 msgstr "Ustawienia"
 
-#: share/jpa2.glade.h:43
+#: share/jpa2.glade.h:46
 msgid "Show list of entry categories"
 msgstr "Pokaż listę kategorii wpisów"
 
-#: share/jpa2.glade.h:44
+#: share/jpa2.glade.h:47
 msgid "Show/hide log window"
 msgstr "Pokaż/ukryj okno logu"
 
-#: share/jpa2.glade.h:45
+#: share/jpa2.glade.h:48
+msgid "System command to start web browser"
+msgstr "Polecenie uruchamiające przeglądarkę WWW"
+
+#: share/jpa2.glade.h:49
 msgid ""
 "This program is free software, you may freely use and distribute it under "
 "provision of GNU Public License (\"The GPL\"). See license page for details."
@@ -246,7 +258,7 @@ msgstr ""
 "postanowieniami Licencji Publicznej GNU (znanmej także jako \"GPL\"). Więcej "
 "informacji znajdziesz na karcie z informacjami licencyjnymi."
 
-#: share/jpa2.glade.h:46
+#: share/jpa2.glade.h:50
 msgid ""
 "This program uses code written by other people:\n"
 "   - Python interpreter, http://www.python.org/\n"
@@ -262,111 +274,115 @@ msgstr ""
 "   - Biblioteka ORM SQLObject, http://www.sqlobject.org/\n"
 "   - Biblioteka protokołu XMPP/Jabber PyXMPP, http://pyxmpp.jabberstudio.org/"
 
-#: share/jpa2.glade.h:52
+#: share/jpa2.glade.h:56
 msgid "Title:"
 msgstr "Tytuł:"
 
-#: share/jpa2.glade.h:53
+#: share/jpa2.glade.h:57
 msgid "Type:"
 msgstr "Typ:"
 
-#: share/jpa2.glade.h:54
+#: share/jpa2.glade.h:58
+msgid "Use Gnome default web browser"
+msgstr "Użyj przeglądarki WWW Gnome"
+
+#: share/jpa2.glade.h:59
 msgid "Use KDE default web browser"
 msgstr "Użyj przeglądarki WWW KDE"
 
-#: share/jpa2.glade.h:55
+#: share/jpa2.glade.h:60
 msgid "Use custom web browser:"
 msgstr "Użyj własnej przeglądarki WWW:"
 
-#: share/jpa2.glade.h:56
-msgid "Use system default web browser (might not work properly on KDE)"
-msgstr "Użyj domyślnej przeglądarki WWW (może nie działać poprawnie w KDE)"
+#: share/jpa2.glade.h:61
+msgid "Use system default web browser"
+msgstr "Użyj domyślnej przeglądarki WWW"
 
-#: share/jpa2.glade.h:57
+#: share/jpa2.glade.h:62
 msgid "User name:"
 msgstr "Nazwa użytkownika:"
 
-#: share/jpa2.glade.h:58
+#: share/jpa2.glade.h:63
 msgid "Weblog account"
 msgstr "Konto blogowe"
 
-#: share/jpa2.glade.h:59
+#: share/jpa2.glade.h:64
 msgid "_Behaviour"
 msgstr "_Zachowanie"
 
-#: share/jpa2.glade.h:60
+#: share/jpa2.glade.h:65
 msgid "_Body:"
 msgstr "_Zawartość:"
 
-#: share/jpa2.glade.h:61
+#: share/jpa2.glade.h:66
 msgid "_Categories"
 msgstr "_Kategorie"
 
-#: share/jpa2.glade.h:62
+#: share/jpa2.glade.h:67
 msgid "_Categories:"
 msgstr "_Kategorie:"
 
-#: share/jpa2.glade.h:63
+#: share/jpa2.glade.h:68
 msgid "_Description:"
 msgstr "Op_is:"
 
-#: share/jpa2.glade.h:64
+#: share/jpa2.glade.h:69
 msgid "_Edit"
 msgstr "_Edycja"
 
-#: share/jpa2.glade.h:65
+#: share/jpa2.glade.h:70
 msgid "_Entry"
 msgstr "_Wpis"
 
-#: share/jpa2.glade.h:66
+#: share/jpa2.glade.h:71
 msgid "_Filter"
 msgstr "_Filtr"
 
-#: share/jpa2.glade.h:67
+#: share/jpa2.glade.h:72
 msgid "_Fonts"
 msgstr "_Czcionki"
 
-#: share/jpa2.glade.h:68
+#: share/jpa2.glade.h:73
 msgid "_Help"
 msgstr "P_omoc"
 
-#: share/jpa2.glade.h:69
+#: share/jpa2.glade.h:74
 msgid "_Log window"
 msgstr "Okno _logu"
 
-#: share/jpa2.glade.h:70
+#: share/jpa2.glade.h:75
 msgid "_Name:"
 msgstr "_Nazwa:"
 
-#: share/jpa2.glade.h:71
+#: share/jpa2.glade.h:76
 msgid "_Preview entry"
 msgstr "_Podgląd wpisu"
 
-#: share/jpa2.glade.h:72
+#: share/jpa2.glade.h:77
 msgid "_Remember window sizes"
 msgstr "Za_pamiętaj rozmiary okien"
 
-#: share/jpa2.glade.h:73
+#: share/jpa2.glade.h:78
 msgid "_Title:"
 msgstr "_Tytuł:"
 
-#: share/jpa2.glade.h:74
+#: share/jpa2.glade.h:79
 msgid "_Tools"
 msgstr "_Narzędzia"
 
-#: share/jpa2.glade.h:75
+#: share/jpa2.glade.h:80
 msgid "_View"
 msgstr "_Widok"
 
-#: share/jpa2.glade.h:76
+#: share/jpa2.glade.h:81
 msgid "_Visibility level:"
 msgstr "Poziom _widoczności:"
 
-#: share/jpa2.glade.h:77
+#: share/jpa2.glade.h:82
 msgid "minutes"
 msgstr "minut"
 
-#: share/jpa2.glade.h:79
+#: share/jpa2.glade.h:84
 #, no-c-format
 msgid "version: %s"
 msgstr "wersja: %s"

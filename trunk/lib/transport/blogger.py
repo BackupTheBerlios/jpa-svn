@@ -59,7 +59,7 @@ class BloggerTransport(api.WeblogTransport):
             self.host = '%s:%s' % (proxyConfig['host'], proxyConfig['port'])
         else:
             self.path = '/atom%s'
-            self.host = 'https://www.blogger.com'
+            self.host = 'www.blogger.com'
 
     def getBlogList(self):
         """This method returns dictionary of user's blog names (keys) and
