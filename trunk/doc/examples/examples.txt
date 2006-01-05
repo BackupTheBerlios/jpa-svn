@@ -7,11 +7,13 @@ blogger_atom.py
 An example on how to send post to blogger and how to use proxy with httplib's HTTPConnection object. Other valuable resources on this topic:
     http://code.blogger.com/archives/atom-docs.html (Blogger Atom API specification)
     http://groups.google.com/group/bloggerDev?lnk=lr (Google Group for BDN)
+Warning!
+This example is bit outdated, as blogger.com does not accept non-ssl connections and redorects to HTTPS address.
 
 gtk_threading.py
 ================
-Example og use of threading with PyGTK.
+Example of use for threading with PyGTK.
 
 bloxerAPI.txt
 =============
-An API for blox.pl (blogging service on Polish gazeta.pl portal). Based on old blogger.com XML-RPC API.
+An API for blox.pl (blogging service on Polish gazeta.pl portal). Based on old blogger.com XML-RPC API. This is the only official document available for blox.pl.
