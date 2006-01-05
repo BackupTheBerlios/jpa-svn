@@ -18,7 +18,6 @@
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
-  <property name="urgency_hint">False</property>
   <signal name="destroy" handler="on_frmMain_destroy" last_modification_time="Tue, 01 Nov 2005 21:13:44 GMT"/>
   <signal name="delete_event" handler="on_frmMain_delete" last_modification_time="Thu, 22 Dec 2005 08:45:13 GMT"/>
 
@@ -31,8 +30,6 @@
       <child>
 	<widget class="GtkMenuBar" id="mbMain">
 	  <property name="visible">True</property>
-	  <property name="pack_direction">GTK_PACK_DIRECTION_LTR</property>
-	  <property name="child_pack_direction">GTK_PACK_DIRECTION_LTR</property>
 
 	  <child>
 	    <widget class="GtkMenuItem" id="menuitem4">
@@ -710,7 +707,6 @@
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
-  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox4">
@@ -1016,7 +1012,6 @@
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
-  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox5">
@@ -1517,8 +1512,9 @@
 				  <child>
 				    <widget class="GtkRadioButton" id="rbnUseSysDef">
 				      <property name="visible">True</property>
+				      <property name="tooltip" translatable="yes">Launch preview in system default web browser (not recommended on Linux)</property>
 				      <property name="can_focus">True</property>
-				      <property name="label" translatable="yes">Use system default web browser (might not work properly on KDE)</property>
+				      <property name="label" translatable="yes">Use system default web browser</property>
 				      <property name="use_underline">True</property>
 				      <property name="relief">GTK_RELIEF_NORMAL</property>
 				      <property name="focus_on_click">True</property>
@@ -1535,8 +1531,30 @@
 				  </child>
 
 				  <child>
+				    <widget class="GtkRadioButton" id="rbnUseGnomeDef">
+				      <property name="visible">True</property>
+				      <property name="tooltip" translatable="yes">Launch preview in Gnome default web browser</property>
+				      <property name="can_focus">True</property>
+				      <property name="label" translatable="yes">Use Gnome default web browser</property>
+				      <property name="use_underline">True</property>
+				      <property name="relief">GTK_RELIEF_NORMAL</property>
+				      <property name="focus_on_click">True</property>
+				      <property name="active">False</property>
+				      <property name="inconsistent">False</property>
+				      <property name="draw_indicator">True</property>
+				      <property name="group">rbnUseSysDef</property>
+				    </widget>
+				    <packing>
+				      <property name="padding">0</property>
+				      <property name="expand">False</property>
+				      <property name="fill">False</property>
+				    </packing>
+				  </child>
+
+				  <child>
 				    <widget class="GtkRadioButton" id="rbnUseKdeDef">
 				      <property name="visible">True</property>
+				      <property name="tooltip" translatable="yes">Launch preview in KDE default web browser</property>
 				      <property name="can_focus">True</property>
 				      <property name="label" translatable="yes">Use KDE default web browser</property>
 				      <property name="use_underline">True</property>
@@ -1558,6 +1576,7 @@
 				  <child>
 				    <widget class="GtkRadioButton" id="rbnUseCustom">
 				      <property name="visible">True</property>
+				      <property name="tooltip" translatable="yes">Launch preview in custom-defined web browser</property>
 				      <property name="can_focus">True</property>
 				      <property name="label" translatable="yes">Use custom web browser:</property>
 				      <property name="use_underline">True</property>
@@ -1611,6 +1630,7 @@
 					<widget class="GtkEntry" id="edBrowserCmd">
 					  <property name="visible">True</property>
 					  <property name="sensitive">False</property>
+					  <property name="tooltip" translatable="yes">Command to start web browser (%s is a name of temporary file with previewed document)</property>
 					  <property name="can_focus">True</property>
 					  <property name="editable">True</property>
 					  <property name="visibility">True</property>
@@ -1628,15 +1648,14 @@
 				      </child>
 
 				      <child>
-					<widget class="GtkButton" id="btnCheckBrowser">
+					<widget class="GtkFileChooserButton" id="fcbSelectBrowser">
 					  <property name="visible">True</property>
-					  <property name="sensitive">False</property>
-					  <property name="tooltip" translatable="yes">Check if browser command is valid</property>
-					  <property name="can_focus">True</property>
-					  <property name="label" translatable="yes">Check</property>
-					  <property name="use_underline">True</property>
-					  <property name="relief">GTK_RELIEF_NORMAL</property>
-					  <property name="focus_on_click">True</property>
+					  <property name="title" translatable="yes">Wybór pliku</property>
+					  <property name="action">GTK_FILE_CHOOSER_ACTION_OPEN</property>
+					  <property name="local_only">True</property>
+					  <property name="show_hidden">False</property>
+					  <property name="width_chars">-1</property>
+					  <signal name="selection_changed" handler="on_fcbSelectBrowser_selection_changed" last_modification_time="Thu, 05 Jan 2006 10:17:11 GMT"/>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -1964,7 +1983,6 @@
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
-  <property name="urgency_hint">False</property>
   <signal name="delete_event" handler="on_frmEntry_delete_event" last_modification_time="Mon, 26 Dec 2005 12:07:17 GMT"/>
 
   <child>
@@ -2467,7 +2485,6 @@ HTML</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
-  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox7">
@@ -2629,7 +2646,6 @@ HTML</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
-  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox10">
@@ -2839,7 +2855,6 @@ HTML</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
-  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox12">
@@ -3238,7 +3253,6 @@ HTML</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
-  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox16">

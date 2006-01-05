@@ -20,7 +20,7 @@
 
 __revision__ = '$Id$'
 
-import os.path as op
+import os, os.path as op
 
 import gtk
 import gtk.glade
@@ -44,10 +44,11 @@ class PreferencesDialog:
         self.ckbEnableAutosave = self.wTree.get_widget('ckbEnableAutosave')
         self.spnAutosaveInterval = self.wTree.get_widget('spnAutosaveInterval')
         self.rbnUseSysDefBrowser = self.wTree.get_widget('rbnUseSysDef')
+        self.rbnUseGnomeDefBrowser = self.wTree.get_widget('rbnUseGnomeDef')
         self.rbnUseKdeDefBrowser = self.wTree.get_widget('rbnUseKdeDef')
         self.rbnUseCustomBrowser = self.wTree.get_widget('rbnUseCustom')
         self.edBrowserCmd = self.wTree.get_widget('edBrowserCmd')
-        self.btnCheckBrowser = self.wTree.get_widget('btnCheckBrowser')
+        self.fcbSelectBrowser = self.wTree.get_widget('fcbSelectBrowser')
         self.wTree.signal_autoconnect(self)
     
     def show(self):
@@ -68,6 +69,8 @@ class PreferencesDialog:
         browser = self.cfg.getOption('features', 'browser', 'system')
         if browser == 'system':
             self.rbnUseSysDefBrowser.set_active(True)
+        elif browser == 'gnome':
+            self.rbnUseGnomeDefBrowser.set_active(True)
         elif browser == 'kde':
             self.rbnUseKdeDefBrowser.set_active(True)
         else:
@@ -78,12 +81,16 @@ class PreferencesDialog:
             self._enableCustomBrowserSelection(True)
         else:
             self._enableCustomBrowserSelection(False)
+        if os.name == 'nt':
+            # disable linux-specific buttons
+            self.rbnUseGnomeDefBrowser.set_sensitive(False)
+            self.rbnUseKdeDefBrowser.set_sensitive(False)
         self.window.present()
     
     ### "private" methods ###
     def _enableCustomBrowserSelection(self, enable):
         self.edBrowserCmd.set_sensitive(enable)
-        self.btnCheckBrowser.set_sensitive(enable)
+        self.fcbSelectBrowser.set_sensitive(enable)
     
     ### signal handlers ###
     def on_ckbEnableAutosave_toggled(self, *args):
@@ -93,11 +100,17 @@ class PreferencesDialog:
     def on_rbnUseSysDef_toggled(self, *args):
         self._enableCustomBrowserSelection(False)
     
+    def on_rbnUseGnomeDef_toggled(self, *args):
+        self._enableCustomBrowserSelection(False)
+    
     def on_rbnUseKdeDef_toggled(self, *args):
         self._enableCustomBrowserSelection(False)
     
     def on_rbnUseCustom_toggled(self, *args):
         self._enableCustomBrowserSelection(True)
+        
+    def on_fcbSelectBrowser_selection_changed(self, *args):
+        self.edBrowserCmd.set_text(self.fcbSelectBrowser.get_filename())
 
     def on_btnCancel_clicked(self, *args):
         self.window.destroy()
@@ -125,6 +138,8 @@ class PreferencesDialog:
             browser = 'system'
         elif self.rbnUseKdeDefBrowser.get_active():
             browser = 'kde'
+        elif self.rbnUseGnomeDefBrowser.get_active():
+            browser = 'gnome'
         else:
             browser = 'custom'
         self.cfg.setOption('features', 'browser', browser)

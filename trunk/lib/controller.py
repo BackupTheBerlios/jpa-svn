@@ -77,21 +77,26 @@ class Controller:
             fp.write(html)
         finally:
             fp.close()
+        # the following code is inspired by Gajim
+        uri = 'file://%s' % fileName
         browserType = self.cfg.getOption('features', 'browser', 'system')
         if browserType == 'system':
             browser = webbrowser.get()
-            browser.open(fileName, 2)
+            browser.open(uri, 1)
+            return
         elif browserType == 'kde':
-            browser = webbrowser.get('kfm')
-            browser.open(fileName, 2)
+            command = 'kfmclient exec'
+        elif browserType == 'gnome':
+            command = 'gnome-open'
         else:
-            browserCmd = self.cfg.getOption('features', 'browser_cmd', '')
-            if len(browserCmd.strip()) == 0:
-                apputils.error(_('Specified custom web browser is invalid.'),
-                    parent.window)
-            else:
-                url = 'file://%s' % fileName
-                subprocess.call([browserCmd, url])
+            command = self.cfg.getOption('features', 'browser_cmd', '')
+        if os.name != 'nt':
+            uri = uri.replace('"', '\\"') # escape " for shell happiness
+        command = command + ' "' + uri + '"'
+        try: #FIXME: dirty hack
+            os.system(command)
+        except:
+            pass
     
     def __del__(self):
         for fileName in self.__tempFiles:
