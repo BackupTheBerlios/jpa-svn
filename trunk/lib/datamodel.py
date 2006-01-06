@@ -47,6 +47,7 @@ def initModel():
     Entry.createTable(ifNotExists=True)
     Category.createTable(ifNotExists=True)
     Publication.createTable(ifNotExists=True)
+    Identity.createTable(ifNotExists=True)
     Weblog.createTable(ifNotExists=True)
     if isSchemaEmpty:
         fillTables()
@@ -100,14 +101,26 @@ class Publication(SQLObject):
     pubIdx = DatabaseIndex(published)
 
 
+class Identity(SQLObject):
+    """
+    Object that holds user identity (service account data)
+    """
+    name = UnicodeCol(alternateID=True)
+    transportType = UnicodeCol()
+    login = UnicodeCol()
+    password = UnicodeCol()
+    serviceProtocol = UnicodeCol(default='xmpp')
+    serviceURI = UnicodeCol()
+    servicePort = IntCol(default=0)
+
+
 class Weblog(SQLObject):
     """
     Object that contains weblog configuration data
     """
     name = UnicodeCol(alternateID=True)
-    transportType = UnicodeCol()
-    userName = UnicodeCol()
-    password = UnicodeCol()
+    identity = ForeignKey('Identity')
+    weblogID = UnicodeCol()
     isActive = BoolCol(default='t', notNone=True)
     # indexes
     activeIdx = DatabaseIndex(isActive)
