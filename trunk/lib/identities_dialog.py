@@ -20,22 +20,69 @@
 
 __revision__ = '$Id$'
 
-import gtk
+import gtk, gobject
 import gtk.glade
 
-import appconst
-from appwindow import JPAWindow
-from notifiable import Notifiable
+import appconst, apputils, datamodel
+from appwindow import ListWindow
 
-class IdentitiesDialog(JPAWindow, Notifiable):
+class IdentitiesDialog(ListWindow):
     
     def __init__(self, controller):
-        JPAWindow.__init__(self, 'frmIdentities')
-        self.controller = controller
-        self.cfg = appconst.CFG
+        ListWindow.__init__(self, 'frmIdentities', controller)
+        self.lvIdentities = self.wTree.get_widget('lvIdentities')
+        self.btnAdd = self.wTree.get_widget('btnAdd')
+        self.btnEdit = self.wTree.get_widget('btnEdit')
+        self.btnDel = self.wTree.get_widget('btnDel')
     
     def show(self):
+        apputils.startWait(self.window)
+        try:
+            self.model = gtk.ListStore(str, str, gobject.TYPE_PYOBJECT)
+            cells = (gtk.CellRendererText(), gtk.CellRendererText())
+            columns = (
+                gtk.TreeViewColumn(_('Name'), cells[0], text=0),
+                gtk.TreeViewColumn(_('Type'), cells[1], text=1)
+            )
+            for column in columns:
+                self.lvIdentities.append_column(column)
+            self.lvIdentities.set_model(self.model)
+            self._loadData()
+            if len(self.model) > 0:
+                sel = self.lvIdentities.get_selection()
+                sel.select_path(0)
+            self._enableActions()
+        finally:
+            apputils.endWait(self.window)
         self.window.present()
     
     def notify(self, event, *args, **kwargs):
         pass
+    
+    def _loadData(self):
+        identities = datamodel.Identity.select(orderBy='name')
+        for identity in identities:
+            self.model.append((
+                identity.name.encode('utf-8'),
+                identity.transportType.encode('utf-8'),
+                identity
+            ))
+    
+    def _enableActions(self):
+        enableAction = (len(self.model) > 0)
+        self.miEdit.set_sensitive(enableAction)
+        self.btnEdit.set_sensitive(enableAction)
+        self.miDel.set_sensitive(enableAction)
+        self.btnDel.set_sensitive(enableAction)
+    
+    def _add(self, *args):
+        self.controller.newIdentity(self)
+
+    ### signal handlers ###
+    def on_lvIdentities_button_press_event(self, *args):
+        widget, event = args
+        if event.button == 3:
+            self.listMenu.popup(None, None, None, event.button, event.time)
+
+    def on_lvIdentities_cursor_changed(self, *args):
+        self._enableActions()

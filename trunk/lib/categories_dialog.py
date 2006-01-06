@@ -25,23 +25,15 @@ import os.path as op
 import gobject, gtk, gtk.glade, gtk.gdk
 
 import appconst, datamodel, apputils, notifiable
-from appwindow import JPAWindow
-from notifiable import Notifiable
+from appwindow import ListWindow
 
-class CategoriesDialog(JPAWindow, Notifiable):
+class CategoriesDialog(ListWindow):
     
     def __init__(self, controller):
-        JPAWindow.__init__(self, 'frmCategories')
-        self.controller = controller
-        self.cfg = appconst.CFG
+        ListWindow.__init__(self, 'frmCategories', controller)
         self.categoryList = self.wTree.get_widget('lvCategory')
         self.listMenuTree = gtk.glade.XML(appconst.GLADE_PATH, 'pmListEdit',
             'jpa')
-        self.listMenu = self.listMenuTree.get_widget('pmListEdit')
-        self.listMenuTree.signal_autoconnect(self)
-        self.miAdd = self.listMenuTree.get_widget('miAdd')
-        self.miEdit = self.listMenuTree.get_widget('miEdit')
-        self.miDel = self.listMenuTree.get_widget('miDel')
         self.btnAdd = self.wTree.get_widget('btnAdd')
         self.btnEdit = self.wTree.get_widget('btnEdit')
         self.btnDel = self.wTree.get_widget('btnDel')
@@ -57,8 +49,9 @@ class CategoriesDialog(JPAWindow, Notifiable):
             self.categoryList.append_column(column1)
             self.categoryList.set_model(self.model)
             self._loadData()
-            sel = self.categoryList.get_selection()
-            sel.select_path(0)
+            if len(self.model) > 0:
+                sel = self.categoryList.get_selection()
+                sel.select_path(0)
             self._enableActions()
         finally:
             apputils.endWait(self.window)
@@ -88,8 +81,11 @@ class CategoriesDialog(JPAWindow, Notifiable):
         return model.get_value(selected, 2)
     
     def _enableActions(self):
-        category = self._getCategoryFromSelection()
-        enableAction = (category.id > 1)
+        if len(self.model) == 0:
+            enableAction = False
+        else:
+            category = self._getCategoryFromSelection()
+            enableAction = (category.id > 1)
         self.miEdit.set_sensitive(enableAction)
         self.btnEdit.set_sensitive(enableAction)
         self.miDel.set_sensitive(enableAction)
@@ -105,9 +101,6 @@ class CategoriesDialog(JPAWindow, Notifiable):
     def _del(self, *args):
         category = self._getCategoryFromSelection()
     
-    def _close(self, *args):
-        self.window.destroy()
-    
     ### signal handlers ###
     def on_lvCategory_button_press_event(self, *args):
         widget, event = args
@@ -116,16 +109,3 @@ class CategoriesDialog(JPAWindow, Notifiable):
     
     def on_lvCategory_cursor_changed(self, *args):
         self._enableActions()
-        
-    # popup menu signals #
-    def on_miAdd_activate(self, *args):
-        self._add(*args)
-    
-    def on_miEdit_activate(self, *args):
-        self._edit(*args)
-    
-    def on_miDel_activate(self, *args):
-        self._del(*args)
-    
-    def on_miClose_activate(self, *args):
-        self._close(*args)

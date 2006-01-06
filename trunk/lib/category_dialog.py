@@ -20,21 +20,16 @@
 
 __revision__ = '$Id$'
 
-import os.path as op
-
 import gtk
-import gtk.glade
 
-import appconst, datamodel
-from appwindow import JPAWindow
+import datamodel
+from appwindow import EditWindow
 
-class CategoryDialog(JPAWindow):
+class CategoryDialog(EditWindow):
     
     def __init__(self, parent, category=None):
-        JPAWindow.__init__(self, 'frmCategory')
+        EditWindow.__init__(self, 'frmCategory', parent)
         self.category = category
-        self.parent = parent
-        self.window.set_transient_for(parent.window)
         self.edName = self.wTree.get_widget('edName')
         self.tvDescription = self.wTree.get_widget('tvDescription')
     
@@ -60,7 +55,4 @@ class CategoryDialog(JPAWindow):
         else:
             datamodel.Category(name=name, description=description)
         self.parent.notify('data-changed')
-        self.window.destroy()
-    
-    def on_btnCancel_clicked(self, *args):
         self.window.destroy()
