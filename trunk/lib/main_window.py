@@ -146,6 +146,9 @@ class MainWindow(notifiable.Notifiable):
 
     def on_miToolsCategories_activate(self, *args):
         self.controller.showCategories()
+        
+    def on_miToolsIdentities_activate(self, *args):
+        self.controller.showIdentities()
     
     def on_lvEntries_button_press_event(self, *args):
         widget, event = args

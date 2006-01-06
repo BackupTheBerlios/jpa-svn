@@ -28,7 +28,7 @@ import gtk.glade
 
 import appconst, apputils, renderer
 import entry_dialog, categories_dialog, prefs_dialog, category_dialog, \
-    about_dialog
+    about_dialog, identities_dialog
 
 class Controller:
     
@@ -46,6 +46,10 @@ class Controller:
     
     def editEntry(self, entry, parent=None):
         dialog = entry_dialog.EntryDialog(parent, entry)
+        dialog.show()
+    
+    def showIdentities(self):
+        dialog = identities_dialog.IdentitiesDialog(self)
         dialog.show()
 
     def showCategories(self):
