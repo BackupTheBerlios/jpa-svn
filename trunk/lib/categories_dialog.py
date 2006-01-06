@@ -25,22 +25,26 @@ import os.path as op
 import gobject, gtk, gtk.glade, gtk.gdk
 
 import appconst, datamodel, apputils, notifiable
+from appwindow import JPAWindow
+from notifiable import Notifiable
 
-class CategoriesDialog(notifiable.Notifiable):
+class CategoriesDialog(JPAWindow, Notifiable):
     
     def __init__(self, controller):
+        JPAWindow.__init__(self, 'frmCategories')
         self.controller = controller
         self.cfg = appconst.CFG
-        self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmCategories', 'jpa')
-        self.window = self.wTree.get_widget('frmCategories')
         self.categoryList = self.wTree.get_widget('lvCategory')
-        self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
-            'darkbeer.xpm'))
-        self.wTree.signal_autoconnect(self)
         self.listMenuTree = gtk.glade.XML(appconst.GLADE_PATH, 'pmListEdit',
             'jpa')
         self.listMenu = self.listMenuTree.get_widget('pmListEdit')
         self.listMenuTree.signal_autoconnect(self)
+        self.miAdd = self.listMenuTree.get_widget('miAdd')
+        self.miEdit = self.listMenuTree.get_widget('miEdit')
+        self.miDel = self.listMenuTree.get_widget('miDel')
+        self.btnAdd = self.wTree.get_widget('btnAdd')
+        self.btnEdit = self.wTree.get_widget('btnEdit')
+        self.btnDel = self.wTree.get_widget('btnDel')
 
     def show(self):
         apputils.startWait(self.window)
@@ -53,6 +57,9 @@ class CategoriesDialog(notifiable.Notifiable):
             self.categoryList.append_column(column1)
             self.categoryList.set_model(self.model)
             self._loadData()
+            sel = self.categoryList.get_selection()
+            sel.select_path(0)
+            self._enableActions()
         finally:
             apputils.endWait(self.window)
         self.window.present()
@@ -66,6 +73,7 @@ class CategoriesDialog(notifiable.Notifiable):
             finally:
                 apputils.endWait(self.window)
     
+    ### "private" methods ###
     def _loadData(self):
         categories = datamodel.Category.select(orderBy='name')
         for category in categories:
@@ -74,31 +82,50 @@ class CategoriesDialog(notifiable.Notifiable):
             self.model.append((name.encode('utf-8'), desc.encode('utf-8'),
                 category))
     
+    def _getCategoryFromSelection(self):
+        selection = self.categoryList.get_selection()
+        model, selected = selection.get_selected()
+        return model.get_value(selected, 2)
+    
+    def _enableActions(self):
+        category = self._getCategoryFromSelection()
+        enableAction = (category.id > 1)
+        self.miEdit.set_sensitive(enableAction)
+        self.btnEdit.set_sensitive(enableAction)
+        self.miDel.set_sensitive(enableAction)
+        self.btnDel.set_sensitive(enableAction)
+    
+    def _add(self, *args):
+        self.controller.newCategory(self)
+    
+    def _edit(self, *args):
+        category = self._getCategoryFromSelection()
+        self.controller.editCategory(category, self)
+    
+    def _del(self, *args):
+        category = self._getCategoryFromSelection()
+    
+    def _close(self, *args):
+        self.window.destroy()
+    
     ### signal handlers ###
     def on_lvCategory_button_press_event(self, *args):
         widget, event = args
         if event.button == 3:
             self.listMenu.popup(None, None, None, event.button, event.time)
     
+    def on_lvCategory_cursor_changed(self, *args):
+        self._enableActions()
+        
     # popup menu signals #
     def on_miAdd_activate(self, *args):
-        self.on_btnAdd_clicked(*args)
+        self._add(*args)
     
     def on_miEdit_activate(self, *args):
-        self.on_btnEdit_clicked(*args)
+        self._edit(*args)
+    
+    def on_miDel_activate(self, *args):
+        self._del(*args)
     
     def on_miClose_activate(self, *args):
-        self.on_btnClose_clicked(*args)
-    
-    # action button signals #
-    def on_btnAdd_clicked(self, *args):
-        self.controller.newCategory(self)
-    
-    def on_btnEdit_clicked(self, *args):
-        selection = self.categoryList.get_selection()
-        model, selected = selection.get_selected()
-        category = model.get_value(selected, 2)
-        self.controller.editCategory(category, self)
-    
-    def on_btnClose_clicked(self, *args):
-        self.window.destroy()
+        self._close(*args)

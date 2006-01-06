@@ -305,6 +305,7 @@
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
 	      <property name="is_important">False</property>
+	      <signal name="clicked" handler="on_miFileSend_activated" last_modification_time="Fri, 06 Jan 2006 10:58:31 GMT"/>
 	    </widget>
 	    <packing>
 	      <property name="expand">False</property>
@@ -2652,6 +2653,7 @@ HTML</property>
 	      <property name="hover_selection">False</property>
 	      <property name="hover_expand">False</property>
 	      <signal name="button_press_event" handler="on_lvCategory_button_press_event" last_modification_time="Tue, 27 Dec 2005 14:00:38 GMT"/>
+	      <signal name="cursor_changed" handler="on_lvCategory_cursor_changed" last_modification_time="Fri, 06 Jan 2006 12:57:31 GMT"/>
 	    </widget>
 	  </child>
 	</widget>
@@ -2688,7 +2690,7 @@ HTML</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
-	      <signal name="clicked" handler="on_btnAdd_clicked" last_modification_time="Sat, 24 Dec 2005 12:36:31 GMT"/>
+	      <signal name="clicked" handler="_add" last_modification_time="Fri, 06 Jan 2006 13:31:55 GMT"/>
 	    </widget>
 	  </child>
 
@@ -2701,7 +2703,7 @@ HTML</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
-	      <signal name="clicked" handler="on_btnEdit_clicked" last_modification_time="Sat, 24 Dec 2005 12:36:38 GMT"/>
+	      <signal name="clicked" handler="_edit" last_modification_time="Fri, 06 Jan 2006 13:33:12 GMT"/>
 	    </widget>
 	  </child>
 
@@ -2714,7 +2716,7 @@ HTML</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
-	      <signal name="clicked" handler="on_btnDel_clicked" last_modification_time="Sat, 24 Dec 2005 12:36:46 GMT"/>
+	      <signal name="clicked" handler="_del" last_modification_time="Fri, 06 Jan 2006 13:35:37 GMT"/>
 	    </widget>
 	  </child>
 
@@ -2727,7 +2729,7 @@ HTML</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
-	      <signal name="clicked" handler="on_btnClose_clicked" last_modification_time="Sat, 24 Dec 2005 12:35:35 GMT"/>
+	      <signal name="clicked" handler="_close" last_modification_time="Fri, 06 Jan 2006 13:34:59 GMT"/>
 	      <accelerator key="W" modifiers="GDK_CONTROL_MASK" signal="clicked"/>
 	    </widget>
 	  </child>
@@ -3337,7 +3339,7 @@ HTML</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
-	      <signal name="clicked" handler="on_btnClose_clicked" last_modification_time="Thu, 29 Dec 2005 11:09:31 GMT"/>
+	      <signal name="clicked" handler="on_btnClose_clicked" last_modification_time="Fri, 06 Jan 2006 13:06:48 GMT"/>
 	    </widget>
 	  </child>
 	</widget>

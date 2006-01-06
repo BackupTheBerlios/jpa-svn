@@ -26,17 +26,14 @@ import gtk, pango
 import gtk.glade
 
 import appconst
+from appwindow import JPAWindow
 
-class AboutDialog:
+class AboutDialog(JPAWindow):
     
     def __init__(self, parent):
-        self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmAbout', 'jpa')
-        self.window = self.wTree.get_widget('frmAbout')
-        self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
-            'darkbeer.xpm'))        
+        JPAWindow.__init__(self, 'frmAbout')
         if parent:
             self.window.set_transient_for(parent.window)
-        self.wTree.signal_autoconnect(self)
         self.licenseView = self.wTree.get_widget('tvLicense')
     
     def show(self):

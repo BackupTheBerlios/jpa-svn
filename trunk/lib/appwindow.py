@@ -16,26 +16,22 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-"""List of user identities"""
+"""Generic application window class prototype"""
 
 __revision__ = '$Id$'
+
+import os.path as op
 
 import gtk
 import gtk.glade
 
 import appconst
-from appwindow import JPAWindow
-from notifiable import Notifiable
 
-class IdentitiesDialog(JPAWindow, Notifiable):
+class JPAWindow:
     
-    def __init__(self, controller):
-        JPAWindow.__init__(self, 'frmIdentities')
-        self.controller = controller
-        self.cfg = appconst.CFG
-    
-    def show(self):
-        self.window.present()
-    
-    def notify(self, event, *args, **kwargs):
-        pass
+    def __init__(self, windowName):
+        self.wTree = gtk.glade.XML(appconst.GLADE_PATH, windowName, 'jpa')
+        self.window = self.wTree.get_widget(windowName)
+        self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
+            'darkbeer.xpm'))        
+        self.wTree.signal_autoconnect(self)

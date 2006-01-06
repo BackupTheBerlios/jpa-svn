@@ -26,21 +26,17 @@ import gtk
 import gtk.glade
 
 import appconst, datamodel
-from categories_dialog import CategoriesDialog
+from appwindow import JPAWindow
 
-class CategoryDialog:
+class CategoryDialog(JPAWindow):
     
     def __init__(self, parent, category=None):
+        JPAWindow.__init__(self, 'frmCategory')
         self.category = category
-        self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmCategory', 'jpa')
-        self.window = self.wTree.get_widget('frmCategory')
         self.parent = parent
         self.window.set_transient_for(parent.window)
-        self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
-            'darkbeer.xpm'))        
         self.edName = self.wTree.get_widget('edName')
         self.tvDescription = self.wTree.get_widget('tvDescription')
-        self.wTree.signal_autoconnect(self)
     
     def show(self):
         if self.category:
