@@ -49,6 +49,9 @@ class PreferencesDialog:
         self.rbnUseCustomBrowser = self.wTree.get_widget('rbnUseCustom')
         self.edBrowserCmd = self.wTree.get_widget('edBrowserCmd')
         self.fcbSelectBrowser = self.wTree.get_widget('fcbSelectBrowser')
+        self.ckbUseProxy = self.wTree.get_widget('ckbUseProxy')
+        self.edProxyHost = self.wTree.get_widget('edProxyHost')
+        self.edProxyPort = self.wTree.get_widget('edProxyPort')
         self.wTree.signal_autoconnect(self)
     
     def show(self):
@@ -85,6 +88,12 @@ class PreferencesDialog:
             # disable linux-specific buttons
             self.rbnUseGnomeDefBrowser.set_sensitive(False)
             self.rbnUseKdeDefBrowser.set_sensitive(False)
+        useProxy = (self.cfg.getOption('network', 'use_proxy', '0') == '1')
+        proxyHost = self.cfg.getOption('network', 'proxy_host', '')
+        proxyPort = self.cfg.getOption('network', 'proxy_port', '0')
+        self.ckbUseProxy.set_active(useProxy)
+        self.edProxyHost.set_text(proxyHost)
+        self.edProxyPort.set_text(proxyPort)
         self.window.present()
     
     ### "private" methods ###
@@ -92,30 +101,7 @@ class PreferencesDialog:
         self.edBrowserCmd.set_sensitive(enable)
         self.fcbSelectBrowser.set_sensitive(enable)
     
-    ### signal handlers ###
-    def on_ckbEnableAutosave_toggled(self, *args):
-        isActive = self.ckbEnableAutosave.get_active()
-        self.spnAutosaveInterval.set_sensitive(isActive)
-    
-    def on_rbnUseSysDef_toggled(self, *args):
-        self._enableCustomBrowserSelection(False)
-    
-    def on_rbnUseGnomeDef_toggled(self, *args):
-        self._enableCustomBrowserSelection(False)
-    
-    def on_rbnUseKdeDef_toggled(self, *args):
-        self._enableCustomBrowserSelection(False)
-    
-    def on_rbnUseCustom_toggled(self, *args):
-        self._enableCustomBrowserSelection(True)
-        
-    def on_fcbSelectBrowser_selection_changed(self, *args):
-        self.edBrowserCmd.set_text(self.fcbSelectBrowser.get_filename())
-
-    def on_btnCancel_clicked(self, *args):
-        self.window.destroy()
-    
-    def on_btnOk_clicked(self, *args):
+    def _savePrefs(self):
         self.cfg.setOption('fonts', 'editor',
             self.fbEditorFont.get_font_name())
         self.cfg.setOption('fonts', 'preview',
@@ -145,4 +131,44 @@ class PreferencesDialog:
         self.cfg.setOption('features', 'browser', browser)
         self.cfg.setOption('features', 'browser_cmd',
             self.edBrowserCmd.get_text())
+        if self.ckbUseProxy.get_active():
+            value = '1'
+        else:
+            value = '0'
+        self.cfg.setOption('network', 'use_proxy', value)
+        self.cfg.setOption('network', 'proxy_host',
+            self.edProxyHost.get_text())
+        self.cfg.setOption('network', 'proxy_port',
+            self.edProxyPort.get_text())
+
+    ### signal handlers ###
+    def on_ckbEnableAutosave_toggled(self, *args):
+        isActive = self.ckbEnableAutosave.get_active()
+        self.spnAutosaveInterval.set_sensitive(isActive)
+    
+    def on_ckbUseProxy_toggled(self, *args):
+        isActive = self.ckbUseProxy.get_active()
+        self.edProxyPort.set_sensitive(isActive)
+        self.edProxyHost.set_sensitive(isActive)
+    
+    def on_rbnUseSysDef_toggled(self, *args):
+        self._enableCustomBrowserSelection(False)
+    
+    def on_rbnUseGnomeDef_toggled(self, *args):
+        self._enableCustomBrowserSelection(False)
+    
+    def on_rbnUseKdeDef_toggled(self, *args):
+        self._enableCustomBrowserSelection(False)
+    
+    def on_rbnUseCustom_toggled(self, *args):
+        self._enableCustomBrowserSelection(True)
+        
+    def on_fcbSelectBrowser_selection_changed(self, *args):
+        self.edBrowserCmd.set_text(self.fcbSelectBrowser.get_filename())
+
+    def on_btnCancel_clicked(self, *args):
+        self.window.destroy()
+    
+    def on_btnOk_clicked(self, *args):
+        self._savePrefs()
         self.window.destroy()
