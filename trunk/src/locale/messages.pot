@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-05 20:47+0100\n"
+"POT-Creation-Date: 2006-01-07 12:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,19 +16,19 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lib/categories_dialog.py:50
+#: lib/categories_dialog.py:46 lib/identities_dialog.py:44
 msgid "Name"
 msgstr ""
 
-#: lib/categories_dialog.py:51
+#: lib/categories_dialog.py:47
 msgid "Description"
 msgstr ""
 
-#: lib/datamodel.py:55
+#: lib/datamodel.py:56
 msgid "Miscellaneous"
 msgstr ""
 
-#: lib/datamodel.py:56
+#: lib/datamodel.py:57
 msgid "Miscellaneous category"
 msgstr ""
 
@@ -48,6 +48,10 @@ msgstr ""
 #: lib/entry_dialog.py:148
 #, python-format
 msgid "private level %d"
+msgstr ""
+
+#: lib/identities_dialog.py:45
+msgid "Type"
 msgstr ""
 
 #: lib/main_window.py:63
@@ -72,11 +76,11 @@ msgid "<b>Preview</b>"
 msgstr ""
 
 #: share/jpa2.glade.h:5
-msgid "About program"
+msgid "<b>Proxy settings</b>"
 msgstr ""
 
 #: share/jpa2.glade.h:6
-msgid "Accounts"
+msgid "About program"
 msgstr ""
 
 #: share/jpa2.glade.h:7
@@ -156,104 +160,144 @@ msgid "Filter entries display"
 msgstr ""
 
 #: share/jpa2.glade.h:26
-msgid "Informations"
+msgid "Host name (or IP address) of proxy server"
 msgstr ""
 
 #: share/jpa2.glade.h:27
-msgid "Is dra_ft"
+msgid "Identity"
 msgstr ""
 
 #: share/jpa2.glade.h:28
-msgid "JPA"
+msgid "Identity name"
 msgstr ""
 
 #: share/jpa2.glade.h:29
-msgid "Launch preview in Gnome default web browser"
+msgid "Informations"
 msgstr ""
 
 #: share/jpa2.glade.h:30
-msgid "Launch preview in KDE default web browser"
+msgid "Is dra_ft"
 msgstr ""
 
 #: share/jpa2.glade.h:31
-msgid "Launch preview in custom-defined web browser"
+msgid "JPA"
 msgstr ""
 
 #: share/jpa2.glade.h:32
-msgid "Launch preview in system default web browser (not recommended on Linux)"
+msgid "Launch preview in Gnome default web browser"
 msgstr ""
 
 #: share/jpa2.glade.h:33
-msgid "License"
+msgid "Launch preview in KDE default web browser"
 msgstr ""
 
 #: share/jpa2.glade.h:34
-msgid "List of defined entry categories:"
+msgid "Launch preview in custom-defined web browser"
 msgstr ""
 
 #: share/jpa2.glade.h:35
-msgid "List of your accounts:"
+msgid "Launch preview in system default web browser (not recommended on Linux)"
 msgstr ""
 
 #: share/jpa2.glade.h:36
-msgid "Log font:"
+msgid "License"
 msgstr ""
 
 #: share/jpa2.glade.h:37
-msgid "Name:"
+msgid "List of defined entry categories:"
 msgstr ""
 
 #: share/jpa2.glade.h:38
-msgid "Password:"
+msgid "List of my identities:"
 msgstr ""
 
 #: share/jpa2.glade.h:39
-msgid "Preferences"
+msgid "Log font:"
 msgstr ""
 
 #: share/jpa2.glade.h:40
-msgid "Preview entry in web browser"
+msgid "My identities"
 msgstr ""
 
 #: share/jpa2.glade.h:41
-msgid "Publish entry to weblog(s)"
+msgid "Name:"
 msgstr ""
 
 #: share/jpa2.glade.h:42
-msgid "S_end"
+msgid "P_rotocol:"
 msgstr ""
 
 #: share/jpa2.glade.h:43
-msgid "Select font"
+msgid "Pa_ssword:"
 msgstr ""
 
 #: share/jpa2.glade.h:44
-msgid "Sent:"
+msgid "Password:"
 msgstr ""
 
 #: share/jpa2.glade.h:45
-msgid "Settings"
+msgid "Preferences"
 msgstr ""
 
 #: share/jpa2.glade.h:46
-msgid "Show list of entry categories"
+msgid "Preview entry in web browser"
 msgstr ""
 
 #: share/jpa2.glade.h:47
-msgid "Show/hide log window"
+msgid "Proxy _host name:"
 msgstr ""
 
 #: share/jpa2.glade.h:48
-msgid "System command to start web browser"
+msgid "Proxy _port:"
 msgstr ""
 
 #: share/jpa2.glade.h:49
+msgid "Publish entry to weblog(s)"
+msgstr ""
+
+#: share/jpa2.glade.h:50
+msgid "S_end"
+msgstr ""
+
+#: share/jpa2.glade.h:51
+msgid "Select font"
+msgstr ""
+
+#: share/jpa2.glade.h:52
+msgid "Sent:"
+msgstr ""
+
+#: share/jpa2.glade.h:53
+msgid "Service _URI:"
+msgstr ""
+
+#: share/jpa2.glade.h:54
+msgid "Service port number, leave empty to use protocol default (recommended)"
+msgstr ""
+
+#: share/jpa2.glade.h:55
+msgid "Show list of entry categories"
+msgstr ""
+
+#: share/jpa2.glade.h:56
+msgid "Show list of my identities"
+msgstr ""
+
+#: share/jpa2.glade.h:57
+msgid "Show/hide log window"
+msgstr ""
+
+#: share/jpa2.glade.h:58
+msgid "System command to start web browser"
+msgstr ""
+
+#: share/jpa2.glade.h:59
 msgid ""
 "This program is free software, you may freely use and distribute it under "
 "provision of GNU Public License (\"The GPL\"). See license page for details."
 msgstr ""
 
-#: share/jpa2.glade.h:50
+#: share/jpa2.glade.h:60
 msgid ""
 "This program uses code written by other people:\n"
 "   - Python interpreter, http://www.python.org/\n"
@@ -263,115 +307,155 @@ msgid ""
 "   - PyXMPP XMPP/Jabber library, http://pyxmpp.jabberstudio.org/"
 msgstr ""
 
-#: share/jpa2.glade.h:56
+#: share/jpa2.glade.h:66
 msgid "Title:"
 msgstr ""
 
-#: share/jpa2.glade.h:57
+#: share/jpa2.glade.h:67
 msgid "Type:"
 msgstr ""
 
-#: share/jpa2.glade.h:58
-msgid "Use Gnome default web browser"
-msgstr ""
-
-#: share/jpa2.glade.h:59
-msgid "Use KDE default web browser"
-msgstr ""
-
-#: share/jpa2.glade.h:60
-msgid "Use custom web browser:"
-msgstr ""
-
-#: share/jpa2.glade.h:61
-msgid "Use system default web browser"
-msgstr ""
-
-#: share/jpa2.glade.h:62
-msgid "User name:"
-msgstr ""
-
-#: share/jpa2.glade.h:63
-msgid "Weblog account"
-msgstr ""
-
-#: share/jpa2.glade.h:64
-msgid "_Behaviour"
-msgstr ""
-
-#: share/jpa2.glade.h:65
-msgid "_Body:"
-msgstr ""
-
-#: share/jpa2.glade.h:66
-msgid "_Categories"
-msgstr ""
-
-#: share/jpa2.glade.h:67
-msgid "_Categories:"
-msgstr ""
-
 #: share/jpa2.glade.h:68
-msgid "_Description:"
+msgid "URI of remote blogging service"
 msgstr ""
 
 #: share/jpa2.glade.h:69
-msgid "_Edit"
+msgid "Use Gnome default web browser"
 msgstr ""
 
 #: share/jpa2.glade.h:70
-msgid "_Entry"
+msgid "Use KDE default web browser"
 msgstr ""
 
 #: share/jpa2.glade.h:71
-msgid "_Filter"
+msgid "Use custom web browser:"
 msgstr ""
 
 #: share/jpa2.glade.h:72
-msgid "_Fonts"
+msgid "Use system default web browser"
 msgstr ""
 
 #: share/jpa2.glade.h:73
-msgid "_Help"
+msgid "User name:"
 msgstr ""
 
 #: share/jpa2.glade.h:74
-msgid "_Log window"
+msgid "Weblog account"
 msgstr ""
 
 #: share/jpa2.glade.h:75
-msgid "_Name:"
+msgid "Your password to this service"
 msgstr ""
 
 #: share/jpa2.glade.h:76
-msgid "_Preview entry"
+msgid "Your service login (aka \"user name\")"
 msgstr ""
 
 #: share/jpa2.glade.h:77
-msgid "_Remember window sizes"
+msgid "_Behaviour"
 msgstr ""
 
 #: share/jpa2.glade.h:78
-msgid "_Title:"
+msgid "_Body:"
 msgstr ""
 
 #: share/jpa2.glade.h:79
-msgid "_Tools"
+msgid "_Categories"
 msgstr ""
 
 #: share/jpa2.glade.h:80
-msgid "_View"
+msgid "_Categories:"
 msgstr ""
 
 #: share/jpa2.glade.h:81
-msgid "_Visibility level:"
+msgid "_Description:"
 msgstr ""
 
 #: share/jpa2.glade.h:82
-msgid "minutes"
+msgid "_Edit"
+msgstr ""
+
+#: share/jpa2.glade.h:83
+msgid "_Entry"
 msgstr ""
 
 #: share/jpa2.glade.h:84
+msgid "_Filter"
+msgstr ""
+
+#: share/jpa2.glade.h:85
+msgid "_Fonts"
+msgstr ""
+
+#: share/jpa2.glade.h:86
+msgid "_Help"
+msgstr ""
+
+#: share/jpa2.glade.h:87
+msgid "_Identities"
+msgstr ""
+
+#: share/jpa2.glade.h:88
+msgid "_Log window"
+msgstr ""
+
+#: share/jpa2.glade.h:89
+msgid "_Login:"
+msgstr ""
+
+#: share/jpa2.glade.h:90
+msgid "_Name:"
+msgstr ""
+
+#: share/jpa2.glade.h:91
+msgid "_Network"
+msgstr ""
+
+#: share/jpa2.glade.h:92
+msgid "_Port:"
+msgstr ""
+
+#: share/jpa2.glade.h:93
+msgid "_Preview entry"
+msgstr ""
+
+#: share/jpa2.glade.h:94
+msgid "_Remember window sizes"
+msgstr ""
+
+#: share/jpa2.glade.h:95
+msgid "_Settings"
+msgstr ""
+
+#: share/jpa2.glade.h:96
+msgid "_Title:"
+msgstr ""
+
+#: share/jpa2.glade.h:97
+msgid "_Tools"
+msgstr ""
+
+#: share/jpa2.glade.h:98
+msgid "_Type:"
+msgstr ""
+
+#: share/jpa2.glade.h:99
+msgid "_Use proxy server"
+msgstr ""
+
+#: share/jpa2.glade.h:100
+msgid "_View"
+msgstr ""
+
+#: share/jpa2.glade.h:101
+msgid "_Visibility level:"
+msgstr ""
+
+#: share/jpa2.glade.h:102
+msgid "minutes"
+msgstr ""
+
+#: share/jpa2.glade.h:104
 #, no-c-format
 msgid "version: %s"
 msgstr ""

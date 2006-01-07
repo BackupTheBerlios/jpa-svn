@@ -57,7 +57,13 @@ class IdentitiesDialog(ListWindow):
         self.window.present()
     
     def notify(self, event, *args, **kwargs):
-        pass
+        if event == 'data-changed':
+            apputils.startWait(self.window)
+            try:
+                self.model.clear()
+                self._loadData()
+            finally:
+                apputils.endWait(self.window)
     
     def _loadData(self):
         identities = datamodel.Identity.select(orderBy='name')

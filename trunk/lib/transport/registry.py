@@ -16,6 +16,10 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
+"""Transport registry"""
+
 __revision__ = '$Id$'
 
-from registry import AVAILABLE_TRANSPORTS
+AVAILABLE_TRANSPORTS = {
+    'blogger (Atom)': 'blogger.py',
+}

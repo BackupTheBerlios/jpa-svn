@@ -33,6 +33,12 @@ except ImportError:
 # import lib.version
 import api
 
+# transport metadata for registry support
+META = {
+    'name': 'blogger (Atom)',
+    'description': _('New blogger.com API (using Atom feeds)'),
+}
+
 # namespaces
 NS_ATOM = '{http://purl.org/atom/ns#}'
 NS_BLOGGER = '{http://www.blogger.com/atom/ns#}'

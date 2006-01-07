@@ -22,7 +22,7 @@ __revision__ = '$Id$'
 
 import gtk
 
-import datamodel
+import datamodel, transport
 from appwindow import EditWindow
 
 class IdentityDialog(EditWindow):
@@ -40,5 +40,5 @@ class IdentityDialog(EditWindow):
     
     def show(self):
         if self.identity:
-            pass
+            self.edName.set_text(self.identity.name)
         self.window.present()
