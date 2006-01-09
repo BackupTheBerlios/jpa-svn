@@ -33,7 +33,10 @@ PAGE_TEMPLATE = """ \
 </body>
 </html>"""
 
-def render(title, text, renderer):
+def renderPage(title, text, renderer):
+    return PAGE_TEMPLATE % (title, renderBody(text, renderer))
+
+def renderBody(text, renderer):
     if renderer.lower() in ('plain', 'html'):
         body = text
     elif renderer == 'textile':
@@ -46,4 +49,4 @@ def render(title, text, renderer):
     elif renderer == 'markdown':
         import markdown
         body = markdown.markdown(text)
-    return PAGE_TEMPLATE % (title, body.strip())
+    return body.strip()

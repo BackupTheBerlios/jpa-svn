@@ -24,4 +24,12 @@ import api
 
 class JoggerTransport(api.WeblogTransport):
     
-    pass
+    @classmethod
+    def getMetadata(self):
+        """Return transport's metadata for use in service definitions."""
+        meta = {}
+        meta['name'] = 'Jogger.pl'
+        meta['description'] = _('Jogger.pl transport')
+        meta['proto'] = 'XMPP/Jabber'
+        meta['uri'] = 'blog@jogger.pl'
+        return meta

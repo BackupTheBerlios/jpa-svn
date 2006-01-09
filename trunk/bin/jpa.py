@@ -34,6 +34,24 @@ paths['img'] = op.join(paths['share'], 'images')
 paths['i18n'] = op.join(paths['share'], 'locale')
 userPath = op.join(op.expanduser('~'), '.jpa')
 paths['user'] = userPath
+userTransports = op.join(userPath, 'plugins', 'transport')
+if not op.isdir(userTransports):
+    os.makedirs(userTransports)
+    fp = open(op.join(userTransports, '__init__.py'), 'w')
+    try:
+        fp.write('# transport plugins go here\n')
+    finally:
+        fp.close()
+paths['transport plugins'] = userTransports
+userRenderers = op.join(userPath, 'plugins', 'renderer')
+if not op.isdir(userRenderers):
+    os.makedirs(userRenderers)
+    fp = open(op.join(userRenderers, '__init__.py'), 'w')
+    try:
+        fp.write('# simplified markup renderer plugins go here\n')
+    finally:
+        fp.close()
+paths['renderer plugins'] = userRenderers
 dbPath = op.join(userPath, 'data', 'jpa.db')
 paths['data'] = dbPath
 if os.name == 'nt':

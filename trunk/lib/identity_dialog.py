@@ -20,10 +20,17 @@
 
 __revision__ = '$Id$'
 
-import gtk
+import gtk, gobject
 
 import datamodel, transport
 from appwindow import EditWindow
+
+PROTOCOLS = [
+    'HTTP',
+    'HTTPS',
+    'XML-RPC',
+    'XMPP/Jabber',
+]
 
 class IdentityDialog(EditWindow):
     
@@ -35,10 +42,72 @@ class IdentityDialog(EditWindow):
         self.cbxProtocol = self.wTree.get_widget('cbxProtocol')
         self.edUri = self.wTree.get_widget('edUri')
         self.edPort = self.wTree.get_widget('edPort')
+        self.ckbUseDefPort = self.wTree.get_widget('ckbUseDefPort')
         self.edLogin = self.wTree.get_widget('edLogin')
         self.edPassword = self.wTree.get_widget('edPassword')
     
     def show(self):
+        typeModel = gtk.ListStore(gobject.TYPE_STRING)
+        for transportName in transport.AVAILABLE:
+            typeModel.append([transportName])
+        self.cbxType.set_model(typeModel)
+        cell = gtk.CellRendererText()
+        self.cbxType.pack_start(cell, True)
+        self.cbxType.add_attribute(cell, 'text', 0)
         if self.identity:
             self.edName.set_text(self.identity.name)
+            self.cbxType.set_active(transport.AVAILABLE.index(self.identity.transportType))
+            self.cbxProtocol.set_active(PROTOCOLS.index(self.identity.serviceProtocol))
+            self.edUri.set_text(self.identity.serviceURI)
+            port = self.identity.servicePort
+            self.ckbUseDefPort.set_active(port == 0)
+            self.edPort.set_text(str(port))
+            self.edLogin.set_text(self.identity.login)
+            self.edPassword.set_text(self.identity.password)
         self.window.present()
+    
+    ### signal handlers ###
+    def on_cbxType_changed(self, *args):
+        model = self.cbxType.get_model()
+        it = self.cbxType.get_active_iter()
+        transportName = model.get_value(it, 0)
+        if transportName in transport.AVAILABLE:
+            transportClass = transport.TRANSPORTS[transportName]
+            meta = transportClass.getMetadata()
+            self.cbxProtocol.set_active(PROTOCOLS.index(meta['proto']))
+            self.edUri.set_text(meta['uri'])
+    
+    def on_ckbUseDefPort_toggled(self, *args):
+        self.edPort.set_sensitive(not self.ckbUseDefPort.get_active())
+    
+    def on_btnOk_clicked(self, *args):
+        name = self.edName.get_text().decode('utf-8')
+        model = self.cbxType.get_model()
+        it = self.cbxType.get_active_iter()
+        transportType = model.get_value(it, 0)
+        model = self.cbxProtocol.get_model()
+        it = self.cbxProtocol.get_active_iter()
+        proto = model.get_value(it, 0)
+        uri = self.edUri.get_text().decode('utf-8')
+        useDefPort = self.ckbUseDefPort.get_active()
+        if useDefPort:
+            port = 0
+        else:
+            port = int(self.edPort.get_text())
+        login = self.edLogin.get_text().decode('utf-8')
+        password = self.edPassword.get_text().decode('utf-8')
+        if self.identity:
+            identity = self.identity
+            identity.name = name
+            identity.transportType = transportType
+            identity.login = login
+            identity.password = password
+            identity.serviceProtocol = proto
+            identity.serviceURI = uri
+            identity.servicePort = port
+        else:
+            identity = datamodel.Identity(name=name,
+                transportType=transportType, login=login, password=password,
+                serviceURI = uri, serviceProtocol=proto, servicePort=port)
+        self.parent.notify('data-changed')
+        self.window.destroy()

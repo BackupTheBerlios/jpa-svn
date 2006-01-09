@@ -16,39 +16,38 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-"""Informations about program"""
+"""Display HTML source of entry"""
 
 __revision__ = '$Id$'
 
-import os.path as op
+import gtk, pango
+import gtk.glade
 
-import gtk
-
-import appconst
+import renderer
 from appwindow import JPAWindow
 
-class AboutDialog(JPAWindow):
+class HtmlViewDialog(JPAWindow):
     
-    def __init__(self, parent):
-        JPAWindow.__init__(self, 'frmAbout')
+    def __init__(self, parent, entry):
+        JPAWindow.__init__(self, 'frmHtmlView')
+        self.entry = entry
         if parent:
             self.window.set_transient_for(parent.window)
-        self.licenseView = self.wTree.get_widget('tvLicense')
+        self.edTitle = self.wTree.get_widget('edTitle')
+        self.txBody = self.wTree.get_widget('txBody')
     
     def show(self):
-        imgLogo = self.wTree.get_widget('imgLogo')
-        imgLogo.set_from_file(op.join(appconst.PATHS['img'], 
-            'jogger-logo.png'))
-        licFile = op.join(appconst.PATHS['doc'], 'COPYING')
-        fp = open(licFile)
-        try:
-            data = fp.read()
-        finally:
-            fp.close()
-        bf = gtk.TextBuffer(None)
-        self.licenseView.set_buffer(bf)
-        bf.set_text(data)
-        self.window.present()
+        editorFontName = self.cfg.getOption('fonts', 'editor', 'Monospace 10')
+        self.txBody.modify_font(pango.FontDescription(editorFontName))
+        title = self.entry.title.encode('utf-8')
+        self.window.set_title(_('Viewing entry: "%s"') % title)
+        self.edTitle.set_text(title)
+        body = self.entry.body.encode('utf-8')
+        bodyType = self.entry.bodyType.encode('utf-8')
+        body = renderer.renderBody(body, bodyType)
+        bf = self.txBody.get_buffer()
+        bf.set_text(body)
     
+    ### signal handlers ###
     def on_btnClose_clicked(self, *args):
         self.window.destroy()

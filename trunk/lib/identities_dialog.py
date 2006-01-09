@@ -81,8 +81,17 @@ class IdentitiesDialog(ListWindow):
         self.miDel.set_sensitive(enableAction)
         self.btnDel.set_sensitive(enableAction)
     
+    def _getIdentityFromSelection(self):
+        selection = self.lvIdentities.get_selection()
+        model, selected = selection.get_selected()
+        return model.get_value(selected, 2)
+    
     def _add(self, *args):
         self.controller.newIdentity(self)
+    
+    def _edit(self, *args):
+        identity = self._getIdentityFromSelection()
+        self.controller.editIdentity(identity, self)
 
     ### signal handlers ###
     def on_lvIdentities_button_press_event(self, *args):

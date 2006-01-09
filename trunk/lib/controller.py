@@ -28,7 +28,7 @@ import gtk.glade
 
 import appconst, apputils, renderer
 import entry_dialog, categories_dialog, prefs_dialog, category_dialog, \
-    about_dialog, identities_dialog, identity_dialog
+    about_dialog, identities_dialog, identity_dialog, htmlview_dialog
 
 class Controller:
     
@@ -72,6 +72,10 @@ class Controller:
         dialog = identity_dialog.IdentityDialog(parent)
         dialog.show()
     
+    def editIdentity(self, identity, parent=None):
+        dialog = identity_dialog.IdentityDialog(parent, identity)
+        dialog.show()
+    
     def previewEntry(self, entry, parent=None):
         fd, fileName = tempfile.mkstemp('.html')
         os.close(fd)
@@ -79,7 +83,7 @@ class Controller:
         title = entry.title.encode('utf-8')
         text = entry.body.encode('utf-8')
         bodyType = entry.bodyType.encode('utf-8')
-        html = renderer.render(title, text, bodyType)
+        html = renderer.renderPage(title, text, bodyType)
         fp = open(fileName, 'w')
         try:
             fp.write(html)
@@ -105,6 +109,10 @@ class Controller:
             os.system(command)
         except:
             pass
+    
+    def showHtml(self, entry, parent=None):
+        dialog = htmlview_dialog.HtmlViewDialog(parent, entry)
+        dialog.show()
     
     def __del__(self):
         for fileName in self.__tempFiles:

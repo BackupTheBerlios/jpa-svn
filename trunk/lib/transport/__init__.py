@@ -16,6 +16,18 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
+"""Transport initialization routines"""
+
 __revision__ = '$Id$'
 
-from registry import AVAILABLE_TRANSPORTS
+import blogger, jogger
+
+AVAILABLE = [
+    'blogger (Atom)',
+    'jogger.pl',
+]
+
+TRANSPORTS = {
+    'blogger (Atom)': blogger.BloggerTransport,
+    'jogger.pl': jogger.JoggerTransport,
+}

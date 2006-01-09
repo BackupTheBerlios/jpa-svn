@@ -85,6 +85,10 @@ class MainWindow(notifiable.Notifiable):
         elif event == 'entry-added':
             self.loadEntriesList(self.entryFilter['year'],
                 self.entryFilter['month'])
+            if len(self.entriesModel) > 0:
+                sel = self.lvEntries.get_selection()
+                sel.select_path(0)
+                self.displayEntry(self.getEntryFromSelection())
         elif event == 'entry-deleted':
             pass
         elif event == 'filter-changed':
@@ -134,6 +138,10 @@ class MainWindow(notifiable.Notifiable):
     def on_miViewPreview_activate(self, *args):
         entry = self.getEntryFromSelection()
         self.controller.previewEntry(entry, self)
+    
+    def on_miViewHtml_activate(self, *args):
+        entry = self.getEntryFromSelection()
+        self.controller.showHtml(entry, self)
     
     def on_miViewLog_activate(self, *args):
         if self.logPanel.get_property('visible'):

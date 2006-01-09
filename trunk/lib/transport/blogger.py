@@ -33,12 +33,6 @@ except ImportError:
 # import lib.version
 import api
 
-# transport metadata for registry support
-META = {
-    'name': 'blogger (Atom)',
-    'description': _('New blogger.com API (using Atom feeds)'),
-}
-
 # namespaces
 NS_ATOM = '{http://purl.org/atom/ns#}'
 NS_BLOGGER = '{http://www.blogger.com/atom/ns#}'
@@ -66,6 +60,16 @@ class BloggerTransport(api.WeblogTransport):
         else:
             self.path = '/atom%s'
             self.host = 'www.blogger.com'
+    
+    @classmethod
+    def getMetadata(self):
+        """Return transport's metadata for use in service definitions."""
+        meta = {}
+        meta['name'] = 'Blogger (Atom)'
+        meta['description'] = _('Blogger.com transport using new Atom API')
+        meta['proto'] = 'HTTPS'
+        meta['uri'] = 'https://www.blogger.com/atom'
+        return meta
 
     def getBlogList(self):
         """This method returns dictionary of user's blog names (keys) and
