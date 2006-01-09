@@ -20,6 +20,9 @@
 
 __revision__ = '$Id$'
 
+# service errors
+class ServiceUnavailableError(Exception): pass
+
 class WeblogTransport:
 
     def getBlogList(self): raise NotImplementedError

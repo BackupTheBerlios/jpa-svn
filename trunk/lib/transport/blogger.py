@@ -76,22 +76,20 @@ class BloggerTransport(api.WeblogTransport):
         their identifiers (values), suitable for use in blog inquiries and
         operations."""
         if self.proxy:
-            connection = proxytools.ProxyHTTPSConnection(self.proxy['host'], self.proxy['port'])
+            connection = proxytools.ProxyHTTPSConnection(self.proxy['host'],
+                self.proxy['port'])
         else:
             connection = httplib.HTTPSConnection(self.host)
         path = self.path % ''
         try:
             connection.request('GET', path, headers=self.headers)
             response = connection.getresponse()
+            if response.status  >= 500:
+                raise api.ServiceUnavailabeError('Blogger server error')
             document = response.read()
         finally:
             connection.close()
-        return self._parseBlogListDoc(document)
-
-    def _parseBlogListDoc(self, doc):
-        """Internal method to parse list of blogs into title -> blogId
-        dictionary entries."""
-        tree = ElementTree.fromstring(doc)
+        tree = ElementTree.fromstring(document)
         links = tree.findall(NS_ATOM + 'link')
         blogs = {}
         for link in links:
