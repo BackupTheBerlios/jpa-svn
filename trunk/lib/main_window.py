@@ -50,11 +50,20 @@ class MainWindow(notifiable.Notifiable):
         self.logPanel = self.wTree.get_widget('pnLog')
         self.logView = self.wTree.get_widget('txLog')
         self.lbCreated = self.wTree.get_widget('lbCreated')
+        self.lbCreated.set_text('')
         self.lbSent = self.wTree.get_widget('lbSent')
+        self.lbSent.set_text('')
         self.lbTitle = self.wTree.get_widget('lbTitle')
+        self.lbTitle.set_text('')
         self.txEntry = self.wTree.get_widget('txEntry')
         logFontName = self.cfg.getOption('fonts', 'log', 'Monospace 10')
         self.logView.modify_font(pango.FontDescription(logFontName))
+        self.miFileOpen = self.wTree.get_widget('miFileOpen')
+        self.miFileOpen.set_sensitive(False)
+        self.miFileSend = self.wTree.get_widget('miFileSend')
+        self.miFileSend.set_sensitive(False)
+        self.tbnOpen = self.wTree.get_widget('tbnOpen')
+        self.tbnSend = self.wTree.get_widget('tbnSend')
         self.lvEntries = self.wTree.get_widget('lvEntries')
         self.entriesModel = gtk.ListStore(str, str, gobject.TYPE_PYOBJECT)
         today = datetime.date.today()
@@ -104,6 +113,7 @@ class MainWindow(notifiable.Notifiable):
                 entry.title.encode('utf-8'),
                 entry
             ))
+        self.activateActions(len(self.entriesModel) > 0)
     
     def getEntryFromSelection(self):
         store, iterator = self.lvEntries.get_selection().get_selected()
@@ -115,6 +125,12 @@ class MainWindow(notifiable.Notifiable):
         self.lbTitle.set_label(entry.title.encode('utf-8'))
         bf = self.txEntry.get_buffer()
         bf.set_text(entry.body.encode('utf-8'))
+    
+    def activateActions(self, activate):
+        self.miFileOpen.set_sensitive(activate)
+        self.miFileSend.set_sensitive(activate)
+        self.tbnOpen.set_sensitive(activate)
+        self.tbnSend.set_sensitive(activate)
     
     ### signal handlers ###
     def on_miFileQuit_activate(self, *args):
@@ -131,6 +147,10 @@ class MainWindow(notifiable.Notifiable):
     
     def on_miFileNew_activate(self, *args):
         self.controller.newEntry(self)
+    
+    def on_miFileOpen_activate(self, *args):
+        entry = self.getEntryFromSelection()
+        self.controller.editEntry(entry)
     
     def on_miEditPrefs_activate(self, *args):
         self.controller.showPreferences(self)

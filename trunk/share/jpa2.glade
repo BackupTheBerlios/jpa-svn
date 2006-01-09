@@ -282,8 +282,9 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkToolButton" id="toolbutton6">
+	    <widget class="GtkToolButton" id="tbnOpen">
 	      <property name="visible">True</property>
+	      <property name="sensitive">False</property>
 	      <property name="stock_id">gtk-open</property>
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
@@ -310,8 +311,9 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkToolButton" id="toolbutton7">
+	    <widget class="GtkToolButton" id="tbnSend">
 	      <property name="visible">True</property>
+	      <property name="sensitive">False</property>
 	      <property name="stock_id">gtk-execute</property>
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
