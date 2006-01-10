@@ -109,8 +109,8 @@ class MainWindow(notifiable.Notifiable):
         entries = datamodel.getEntriesList(year, month)
         for entry in entries:
             self.entriesModel.append((
-                entry.created.strftime('%Y-%m-%d').encode('utf-8'),
-                entry.title.encode('utf-8'),
+                entry.created.strftime('%Y-%m-%d'),
+                entry.title,
                 entry
             ))
         self.activateActions(len(self.entriesModel) > 0)
@@ -122,9 +122,9 @@ class MainWindow(notifiable.Notifiable):
     def displayEntry(self, entry):
         self.lbCreated.set_label(entry.created.strftime('%Y-%m-%d %H:%M'))
         self.lbSent.set_label('')
-        self.lbTitle.set_label(entry.title.encode('utf-8'))
+        self.lbTitle.set_label(entry.title)
         bf = self.txEntry.get_buffer()
-        bf.set_text(entry.body.encode('utf-8'))
+        bf.set_text(entry.body)
     
     def activateActions(self, activate):
         self.miFileOpen.set_sensitive(activate)

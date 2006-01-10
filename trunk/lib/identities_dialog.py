@@ -69,8 +69,8 @@ class IdentitiesDialog(ListWindow):
         identities = datamodel.Identity.select(orderBy='name')
         for identity in identities:
             self.model.append((
-                identity.name.encode('utf-8'),
-                identity.transportType.encode('utf-8'),
+                identity.name,
+                identity.transportType,
                 identity
             ))
     

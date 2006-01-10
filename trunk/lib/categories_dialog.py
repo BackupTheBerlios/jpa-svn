@@ -72,8 +72,7 @@ class CategoriesDialog(ListWindow):
         for category in categories:
             name = category.name
             desc = apputils.ellipsize(category.description, 80)
-            self.model.append((name.encode('utf-8'), desc.encode('utf-8'),
-                category))
+            self.model.append((name, desc, category))
     
     def _getCategoryFromSelection(self):
         selection = self.categoryList.get_selection()

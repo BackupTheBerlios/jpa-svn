@@ -47,7 +47,7 @@ class AboutDialog(JPAWindow):
             fp.close()
         bf = gtk.TextBuffer(None)
         self.licenseView.set_buffer(bf)
-        bf.set_text(data)
+        bf.set_text(data.decode('utf-8'))
         self.window.present()
     
     def on_btnClose_clicked(self, *args):

@@ -39,11 +39,11 @@ class HtmlViewDialog(JPAWindow):
     def show(self):
         editorFontName = self.cfg.getOption('fonts', 'editor', 'Monospace 10')
         self.txBody.modify_font(pango.FontDescription(editorFontName))
-        title = self.entry.title.encode('utf-8')
+        title = self.entry.title
         self.window.set_title(_('Viewing entry: "%s"') % title)
         self.edTitle.set_text(title)
-        body = self.entry.body.encode('utf-8')
-        bodyType = self.entry.bodyType.encode('utf-8')
+        body = self.entry.body
+        bodyType = self.entry.bodyType
         body = renderer.renderBody(body, bodyType)
         bf = self.txBody.get_buffer()
         bf.set_text(body)

@@ -35,8 +35,8 @@ class CategoryDialog(EditWindow):
     
     def show(self):
         if self.category:
-            name = self.category.name.encode('utf-8')
-            description = self.category.description.encode('utf-8')
+            name = self.category.name
+            description = self.category.description
             self.edName.set_text(name)
             bf = gtk.TextBuffer()
             bf.set_text(description)

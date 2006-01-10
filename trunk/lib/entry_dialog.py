@@ -62,11 +62,11 @@ class EntryDialog:
         editorFontName = self.cfg.getOption('fonts', 'editor', 'Monospace 10')
         self.txBody.modify_font(pango.FontDescription(editorFontName))
         if self.entry:
-            title = self.entry.title.encode('utf-8')
+            title = self.entry.title
             self.window.set_title(_('Editing entry "%s"') % title)
             self.edTitle.set_text(title)
             bf = self.txBody.get_buffer()
-            bf.set_text(self.entry.body.encode('utf-8'))
+            bf.set_text(self.entry.body)
             self.spnVisLevel.set_value(self.entry.visibilityLevel)
             self.ckbIsDraft.set_active(self.entry.isDraft)
             self.cbxContentType.set_active(datamodel.BODY_TYPES.index(self.entry.bodyType))
@@ -87,7 +87,7 @@ class EntryDialog:
         model = gtk.ListStore(bool, str)
         self.categories = datamodel.Category.select(orderBy='name')
         for category in self.categories:
-            model.append((False, category.name.encode('utf-8')))
+            model.append((False, category.name))
         cell0 = gtk.CellRendererToggle()
         cell0.set_property('radio', False)
         cell0.set_property('activatable', True)
