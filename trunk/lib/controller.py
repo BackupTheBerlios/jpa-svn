@@ -28,7 +28,8 @@ import gtk.glade
 
 import appconst, apputils, renderer
 import entry_dialog, categories_dialog, prefs_dialog, category_dialog, \
-    about_dialog, identities_dialog, identity_dialog, htmlview_dialog
+    about_dialog, identities_dialog, identity_dialog, htmlview_dialog, \
+    weblogs_dialog
 
 class Controller:
     
@@ -54,6 +55,10 @@ class Controller:
 
     def showCategories(self):
         dialog = categories_dialog.CategoriesDialog(self)
+        dialog.show()
+    
+    def showWeblogs(self):
+        dialog = weblogs_dialog.WeblogsDialog(self)
         dialog.show()
     
     def showPreferences(self, parent=None):

@@ -16,21 +16,22 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-"""List of user identities"""
+"""List of user weblogs"""
 
 __revision__ = '$Id$'
 
 import gtk, gobject
 
 import apputils, datamodel
-from datamodel import Identity
+from datamodel import Weblog
 from appwindow import ListWindow
 
-class IdentitiesDialog(ListWindow):
+class WeblogsDialog(ListWindow):
     
     def __init__(self, controller):
-        ListWindow.__init__(self, 'frmIdentities', controller)
-        self.lvIdentities = self.wTree.get_widget('lvIdentities')
+        ListWindow.__init__(self, 'frmWeblogs', controller)
+        self.lvBlogs = self.wTree.get_widget('lvBlogs')
+        self.ckbOnlyActive = self.wTree.get_widget('ckbOnlyActive')
         self.btnAdd = self.wTree.get_widget('btnAdd')
         self.btnEdit = self.wTree.get_widget('btnEdit')
         self.btnDel = self.wTree.get_widget('btnDel')
@@ -38,40 +39,39 @@ class IdentitiesDialog(ListWindow):
     def show(self):
         apputils.startWait(self.window)
         try:
-            self.model = gtk.ListStore(str, str, gobject.TYPE_PYOBJECT)
-            cells = (gtk.CellRendererText(), gtk.CellRendererText())
+            self.model = gtk.ListStore(str, str, str, gobject.TYPE_PYOBJECT)
+            cells = (gtk.CellRendererText(), 
+                gtk.CellRendererText(), 
+                gtk.CellRendererText())
             columns = (
                 gtk.TreeViewColumn(_('Name'), cells[0], text=0),
-                gtk.TreeViewColumn(_('Type'), cells[1], text=1)
+                gtk.TreeViewColumn(_('BlogID'), cells[1], text=1),
+                gtk.TreeViewColumn(_('Active'), cells[2], text=2),
             )
             for column in columns:
-                self.lvIdentities.append_column(column)
-            self.lvIdentities.set_model(self.model)
-            self._loadData()
+                self.lvBlogs.append_column(column)
+            self.lvBlogs.set_model(self.model)
+            self._loadData(onlyActive=True)
             if len(self.model) > 0:
-                sel = self.lvIdentities.get_selection()
+                sel = self.lvBlogs.get_selection()
                 sel.select_path(0)
             self._enableActions()
         finally:
             apputils.endWait(self.window)
         self.window.present()
     
-    def notify(self, event, *args, **kwargs):
-        if event == 'data-changed':
-            apputils.startWait(self.window)
-            try:
-                self.model.clear()
-                self._loadData()
-            finally:
-                apputils.endWait(self.window)
-    
-    def _loadData(self):
-        identities = Identity.select(orderBy='name')
-        for identity in identities:
+    def _loadData(self, onlyActive=True):
+        if onlyActive:
+            blogs = Weblog.select(Weblog.q.isActive==True, 
+                orderBy='name')
+        else:
+            blogs = Weblog.select(orderBy='name')
+        for blog in blogs:
             self.model.append((
-                identity.name,
-                identity.transportType,
-                identity
+                blog.name,
+                blog.weblogId,
+                str(blog.isActive),
+                blog
             ))
     
     def _enableActions(self):
@@ -80,24 +80,30 @@ class IdentitiesDialog(ListWindow):
         self.btnEdit.set_sensitive(enableAction)
         self.miDel.set_sensitive(enableAction)
         self.btnDel.set_sensitive(enableAction)
-    
-    def _getIdentityFromSelection(self):
-        selection = self.lvIdentities.get_selection()
+
+    def _getBlogFromSelection(self):
+        selection = self.lvBlogs.get_selection()
         model, selected = selection.get_selected()
-        return model.get_value(selected, 2)
+        return model.get_value(selected, 3)
     
     def _add(self, *args):
-        self.controller.newIdentity(self)
+        pass
     
     def _edit(self, *args):
-        identity = self._getIdentityFromSelection()
-        self.controller.editIdentity(identity, self)
+        blog = self._getBlogFromSelection()
+    
+    def _del(self, *args):
+        blog = self._getBlogFromSelection()
 
     ### signal handlers ###
-    def on_lvIdentities_button_press_event(self, *args):
+    def on_lvBlogs_button_press_event(self, *args):
         widget, event = args
         if event.button == 3:
             self.listMenu.popup(None, None, None, event.button, event.time)
-
-    def on_lvIdentities_cursor_changed(self, *args):
-        self._enableActions()
+    
+    def on_ckbOnlyActive_toggled(self, *args):
+        apputils.startWait(self.window)
+        try:
+            self._loadData(self.ckbOnlyActive.get_active())
+        finally:
+            apputils.endWait(self.window)

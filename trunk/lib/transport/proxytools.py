@@ -8,6 +8,7 @@
 import urllib
 import httplib
 import socket
+import xmlrpclib
 
 
 class ProxyHTTPConnection(httplib.HTTPConnection):
@@ -68,3 +69,16 @@ class ProxyHTTPSConnection(ProxyHTTPConnection):
         ssl = socket.ssl(self.sock, self.key_file, self.cert_file)
         self.sock = httplib.FakeSocket(self.sock, ssl)
 
+
+class ProxyTransport(xmlrpclib.Transport):
+    
+    def __init__(self, host, port):
+        self.proxyHost = host
+        self.proxyPort = port
+
+    def request(self, host, handler, request_body, verbose=0):
+        return Transport.request(self, host, "http://" + host + handler, 
+            request_body, verbose)
+
+    def make_connection(self, host):
+        return httplib.HTTP(self.proxyHost, self.proxyPort)

@@ -120,7 +120,7 @@ class Weblog(SQLObject):
     """
     name = UnicodeCol(alternateID=True)
     identity = ForeignKey('Identity')
-    weblogID = UnicodeCol()
+    weblogID = UnicodeCol(default=None)
     isActive = BoolCol(default='t', notNone=True)
     # indexes
     activeIdx = DatabaseIndex(isActive)

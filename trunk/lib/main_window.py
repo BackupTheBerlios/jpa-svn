@@ -178,6 +178,9 @@ class MainWindow(notifiable.Notifiable):
     def on_miToolsIdentities_activate(self, *args):
         self.controller.showIdentities()
     
+    def on_miToolsWeblogs_activate(self, *args):
+        self.controller.showWeblogs()
+    
     def on_lvEntries_button_press_event(self, *args):
         widget, event = args
         if event.button == 1 and event.type == gtk.gdk._2BUTTON_PRESS:
