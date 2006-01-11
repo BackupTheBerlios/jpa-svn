@@ -45,16 +45,16 @@
 		      <property name="visible">True</property>
 		      <property name="label">gtk-new</property>
 		      <property name="use_stock">True</property>
-		      <signal name="activate" handler="on_miFileNew_activate" last_modification_time="Thu, 22 Dec 2005 12:56:41 GMT"/>
+		      <signal name="activate" handler="_addEntry" last_modification_time="Wed, 11 Jan 2006 11:47:18 GMT"/>
 		    </widget>
 		  </child>
 
 		  <child>
-		    <widget class="GtkImageMenuItem" id="miFileOpen">
+		    <widget class="GtkImageMenuItem" id="miFileEdit">
 		      <property name="visible">True</property>
-		      <property name="label">gtk-open</property>
+		      <property name="label">gtk-edit</property>
 		      <property name="use_stock">True</property>
-		      <signal name="activate" handler="on_miFileOpen_activate" last_modification_time="Fri, 23 Dec 2005 21:00:45 GMT"/>
+		      <signal name="activate" handler="_editEntry" last_modification_time="Wed, 11 Jan 2006 11:38:13 GMT"/>
 		    </widget>
 		  </child>
 
@@ -279,11 +279,12 @@
 	  <child>
 	    <widget class="GtkToolButton" id="toolbutton5">
 	      <property name="visible">True</property>
+	      <property name="tooltip" translatable="yes">Create new entry</property>
 	      <property name="stock_id">gtk-new</property>
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
 	      <property name="is_important">False</property>
-	      <signal name="clicked" handler="on_miFileNew_activate" last_modification_time="Fri, 23 Dec 2005 21:05:43 GMT"/>
+	      <signal name="clicked" handler="_addEntry" last_modification_time="Wed, 11 Jan 2006 11:47:04 GMT"/>
 	    </widget>
 	    <packing>
 	      <property name="expand">False</property>
@@ -292,14 +293,15 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkToolButton" id="tbnOpen">
+	    <widget class="GtkToolButton" id="tbnEdit">
 	      <property name="visible">True</property>
 	      <property name="sensitive">False</property>
-	      <property name="stock_id">gtk-open</property>
+	      <property name="tooltip" translatable="yes">Edit selected entry</property>
+	      <property name="stock_id">gtk-edit</property>
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
 	      <property name="is_important">False</property>
-	      <signal name="clicked" handler="on_miFileOpen_activate" last_modification_time="Fri, 23 Dec 2005 21:08:08 GMT"/>
+	      <signal name="clicked" handler="_editEntry" last_modification_time="Wed, 11 Jan 2006 11:38:00 GMT"/>
 	    </widget>
 	    <packing>
 	      <property name="expand">False</property>
@@ -324,6 +326,7 @@
 	    <widget class="GtkToolButton" id="tbnSend">
 	      <property name="visible">True</property>
 	      <property name="sensitive">False</property>
+	      <property name="tooltip" translatable="yes">Publish selected entry</property>
 	      <property name="stock_id">gtk-execute</property>
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
@@ -352,6 +355,7 @@
 	  <child>
 	    <widget class="GtkToolButton" id="toolbutton8">
 	      <property name="visible">True</property>
+	      <property name="tooltip" translatable="yes">Modify program preferences</property>
 	      <property name="stock_id">gtk-preferences</property>
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
@@ -1777,6 +1781,112 @@
 		      <property name="homogeneous">False</property>
 		      <property name="row_spacing">4</property>
 		      <property name="column_spacing">4</property>
+
+		      <child>
+			<widget class="GtkLabel" id="label63">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">Default entry body type:</property>
+			  <property name="use_underline">False</property>
+			  <property name="use_markup">False</property>
+			  <property name="justify">GTK_JUSTIFY_LEFT</property>
+			  <property name="wrap">False</property>
+			  <property name="selectable">False</property>
+			  <property name="xalign">0</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			  <property name="width_chars">-1</property>
+			  <property name="single_line_mode">False</property>
+			  <property name="angle">0</property>
+			</widget>
+			<packing>
+			  <property name="left_attach">0</property>
+			  <property name="right_attach">1</property>
+			  <property name="top_attach">0</property>
+			  <property name="bottom_attach">1</property>
+			  <property name="x_options">fill</property>
+			  <property name="y_options"></property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkComboBox" id="cbxDefBodyType">
+			  <property name="visible">True</property>
+			  <property name="items">plain
+textile
+markdown
+ReST
+HTML</property>
+			  <property name="add_tearoffs">False</property>
+			  <property name="focus_on_click">True</property>
+			</widget>
+			<packing>
+			  <property name="left_attach">1</property>
+			  <property name="right_attach">2</property>
+			  <property name="top_attach">0</property>
+			  <property name="bottom_attach">1</property>
+			  <property name="y_options">fill</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkScrolledWindow" id="scrolledwindow16">
+			  <property name="visible">True</property>
+			  <property name="can_focus">True</property>
+			  <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+			  <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+			  <property name="shadow_type">GTK_SHADOW_IN</property>
+			  <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
+
+			  <child>
+			    <widget class="GtkTreeView" id="treeview1">
+			      <property name="visible">True</property>
+			      <property name="can_focus">True</property>
+			      <property name="headers_visible">True</property>
+			      <property name="rules_hint">False</property>
+			      <property name="reorderable">False</property>
+			      <property name="enable_search">True</property>
+			      <property name="fixed_height_mode">False</property>
+			      <property name="hover_selection">False</property>
+			      <property name="hover_expand">False</property>
+			    </widget>
+			  </child>
+			</widget>
+			<packing>
+			  <property name="left_attach">1</property>
+			  <property name="right_attach">2</property>
+			  <property name="top_attach">1</property>
+			  <property name="bottom_attach">2</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkLabel" id="label64">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">Default entry categories:</property>
+			  <property name="use_underline">False</property>
+			  <property name="use_markup">False</property>
+			  <property name="justify">GTK_JUSTIFY_LEFT</property>
+			  <property name="wrap">False</property>
+			  <property name="selectable">False</property>
+			  <property name="xalign">0</property>
+			  <property name="yalign">0</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			  <property name="width_chars">-1</property>
+			  <property name="single_line_mode">False</property>
+			  <property name="angle">0</property>
+			</widget>
+			<packing>
+			  <property name="left_attach">0</property>
+			  <property name="right_attach">1</property>
+			  <property name="top_attach">1</property>
+			  <property name="bottom_attach">2</property>
+			  <property name="x_options">fill</property>
+			</packing>
+		      </child>
 		    </widget>
 		  </child>
 
@@ -2447,6 +2557,7 @@
 		  <property name="visible">True</property>
 		  <property name="items">plain
 textile
+markdown
 ReST
 HTML</property>
 		  <property name="add_tearoffs">False</property>
@@ -4572,6 +4683,66 @@ XMPP/Jabber</property>
 	  <property name="fill">True</property>
 	</packing>
       </child>
+    </widget>
+  </child>
+</widget>
+
+<widget class="GtkMenu" id="pmEntryList">
+
+  <child>
+    <widget class="GtkImageMenuItem" id="miRefresh">
+      <property name="visible">True</property>
+      <property name="label">gtk-refresh</property>
+      <property name="use_stock">True</property>
+      <signal name="activate" handler="_refreshEntriesList" last_modification_time="Wed, 11 Jan 2006 11:46:49 GMT"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkSeparatorMenuItem" id="separator5">
+      <property name="visible">True</property>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkImageMenuItem" id="miAdd">
+      <property name="visible">True</property>
+      <property name="label">gtk-add</property>
+      <property name="use_stock">True</property>
+      <signal name="activate" handler="_addEntry" last_modification_time="Wed, 11 Jan 2006 11:46:49 GMT"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkImageMenuItem" id="miEdit">
+      <property name="visible">True</property>
+      <property name="label">gtk-edit</property>
+      <property name="use_stock">True</property>
+      <signal name="activate" handler="_editEntry" last_modification_time="Wed, 11 Jan 2006 11:46:49 GMT"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkImageMenuItem" id="miDel">
+      <property name="visible">True</property>
+      <property name="label">gtk-remove</property>
+      <property name="use_stock">True</property>
+      <signal name="activate" handler="_deleteEntry" last_modification_time="Wed, 11 Jan 2006 11:46:49 GMT"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkSeparatorMenuItem" id="separator6">
+      <property name="visible">True</property>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkMenuItem" id="miPublish">
+      <property name="visible">True</property>
+      <property name="label" translatable="yes">_Publish</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="_publishEntry" last_modification_time="Wed, 11 Jan 2006 11:46:49 GMT"/>
     </widget>
   </child>
 </widget>

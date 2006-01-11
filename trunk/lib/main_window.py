@@ -56,13 +56,15 @@ class MainWindow(notifiable.Notifiable):
         self.lbTitle = self.wTree.get_widget('lbTitle')
         self.lbTitle.set_text('')
         self.txEntry = self.wTree.get_widget('txEntry')
+        viewFontName = self.cfg.getOption('fonts', 'preview', 'Sans 10')
+        self.txEntry.modify_font(pango.FontDescription(viewFontName))
         logFontName = self.cfg.getOption('fonts', 'log', 'Monospace 10')
         self.logView.modify_font(pango.FontDescription(logFontName))
-        self.miFileOpen = self.wTree.get_widget('miFileOpen')
-        self.miFileOpen.set_sensitive(False)
+        self.miFileEdit = self.wTree.get_widget('miFileEdit')
+        self.miFileEdit.set_sensitive(False)
         self.miFileSend = self.wTree.get_widget('miFileSend')
         self.miFileSend.set_sensitive(False)
-        self.tbnOpen = self.wTree.get_widget('tbnOpen')
+        self.tbnEdit = self.wTree.get_widget('tbnEdit')
         self.tbnSend = self.wTree.get_widget('tbnSend')
         self.lvEntries = self.wTree.get_widget('lvEntries')
         self.entriesModel = gtk.ListStore(str, str, gobject.TYPE_PYOBJECT)
@@ -127,9 +129,9 @@ class MainWindow(notifiable.Notifiable):
         bf.set_text(entry.body)
     
     def activateActions(self, activate):
-        self.miFileOpen.set_sensitive(activate)
+        self.miFileEdit.set_sensitive(activate)
         self.miFileSend.set_sensitive(activate)
-        self.tbnOpen.set_sensitive(activate)
+        self.tbnEdit.set_sensitive(activate)
         self.tbnSend.set_sensitive(activate)
     
     ### signal handlers ###
@@ -145,10 +147,10 @@ class MainWindow(notifiable.Notifiable):
         self.cfg.saveConfig()
         gtk.main_quit()
     
-    def on_miFileNew_activate(self, *args):
+    def _addEntry(self, *args):
         self.controller.newEntry(self)
     
-    def on_miFileOpen_activate(self, *args):
+    def _editEntry(self, *args):
         entry = self.getEntryFromSelection()
         self.controller.editEntry(entry)
     

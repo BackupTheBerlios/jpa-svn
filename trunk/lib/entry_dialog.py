@@ -80,6 +80,8 @@ class EntryDialog:
             self.window.set_title(_('Editing new entry'))
             self.lbVisLevelDesc.set_label(_('public'))
             self.cbxContentType.set_active(0)
+            bodyType = self.cfg.getOption('editing', 'def_body_type', 'textile')
+            self.cbxContentType.set_active(datamodel.BODY_TYPES.index(bodyType))
         expAdvanced = self.wTree.get_widget('expAdvanced')
         expAdvanced.set_expanded(False)
 

@@ -25,7 +25,7 @@ import os, os.path as op
 import gtk
 import gtk.glade
 
-import appconst
+import appconst, datamodel
 
 class PreferencesDialog:
     
@@ -52,6 +52,7 @@ class PreferencesDialog:
         self.ckbUseProxy = self.wTree.get_widget('ckbUseProxy')
         self.edProxyHost = self.wTree.get_widget('edProxyHost')
         self.edProxyPort = self.wTree.get_widget('edProxyPort')
+        self.cbxDefBodyType = self.wTree.get_widget('cbxDefBodyType')
         self.wTree.signal_autoconnect(self)
     
     def show(self):
@@ -94,6 +95,10 @@ class PreferencesDialog:
         self.ckbUseProxy.set_active(useProxy)
         self.edProxyHost.set_text(proxyHost)
         self.edProxyPort.set_text(proxyPort)
+        bodyType = self.cfg.getOption('editing', 'def_body_type', 'textile')
+        self.cbxDefBodyType.set_active(
+            datamodel.BODY_TYPES.index(bodyType)
+        )
         self.window.present()
     
     ### "private" methods ###
@@ -140,6 +145,8 @@ class PreferencesDialog:
             self.edProxyHost.get_text())
         self.cfg.setOption('network', 'proxy_port',
             self.edProxyPort.get_text())
+        bodyType = datamodel.BODY_TYPES[self.cbxDefBodyType.get_active()]
+        self.cfg.setOption('editing', 'def_body_type', bodyType)
 
     ### signal handlers ###
     def on_ckbEnableAutosave_toggled(self, *args):
