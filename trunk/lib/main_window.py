@@ -61,11 +61,10 @@ class MainWindow(notifiable.Notifiable):
         logFontName = self.cfg.getOption('fonts', 'log', 'Monospace 10')
         self.logView.modify_font(pango.FontDescription(logFontName))
         self.miFileEdit = self.wTree.get_widget('miFileEdit')
-        self.miFileEdit.set_sensitive(False)
-        self.miFileSend = self.wTree.get_widget('miFileSend')
-        self.miFileSend.set_sensitive(False)
+        self.miFilePublish = self.wTree.get_widget('miFilePublish')
         self.tbnEdit = self.wTree.get_widget('tbnEdit')
         self.tbnSend = self.wTree.get_widget('tbnSend')
+        self.activateActions(False)
         self.lvEntries = self.wTree.get_widget('lvEntries')
         self.entriesModel = gtk.ListStore(str, str, gobject.TYPE_PYOBJECT)
         today = datetime.date.today()
@@ -133,7 +132,7 @@ class MainWindow(notifiable.Notifiable):
     
     def activateActions(self, activate):
         self.miFileEdit.set_sensitive(activate)
-        self.miFileSend.set_sensitive(activate)
+        self.miFilePublish.set_sensitive(activate)
         self.tbnEdit.set_sensitive(activate)
         self.tbnSend.set_sensitive(activate)
     
