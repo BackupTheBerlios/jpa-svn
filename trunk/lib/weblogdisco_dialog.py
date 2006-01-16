@@ -23,8 +23,10 @@ __revision__ = '$Id$'
 import threading, Queue
 
 import gtk, gobject
+from sqlobject import SQLObjectNotFound
 
 import transport
+from datamodel import Weblog
 from appwindow import EditWindow
 
 class DiscovererThread(threading.Thread):
@@ -96,6 +98,14 @@ class WeblogDiscoveryDialog(EditWindow):
         self.model.clear()
         for (name, blogID) in self.weblogs.iteritems():
             self.model.append((True, name, blogID))
+    
+    def _updateBlogData(self, blogName, blogID):
+        try:
+            blog = Weblog.byName(blogName)
+            blog.weblogID = blogID
+        except SQLObjectNotFound:
+            blog = Weblog(name=blogName, identity=self.identity,
+                weblogID=blogID)
 
     def on_lvBlogs_toggle(self, cell, path, model=None):
         iter = model.get_iter(path)
@@ -107,4 +117,7 @@ class WeblogDiscoveryDialog(EditWindow):
     
     def on_btnOk_clicked(self, *args):
         gobject.source_remove(self.idleTimer)
+        for (update, blogName, blogID) in self.model:
+            if update:
+                self._updateBlogData(blogName, blogID)
         self.window.destroy()
