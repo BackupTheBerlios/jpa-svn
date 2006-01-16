@@ -24,6 +24,7 @@ import gtk, gobject
 
 import datamodel, transport
 from appwindow import EditWindow
+from weblogdisco_dialog import WeblogDiscoveryDialog
 
 class WeblogDialog(EditWindow):
     
@@ -69,7 +70,8 @@ class WeblogDialog(EditWindow):
         self._activateFeatures()
     
     def on_btnDiscoverBlogID_clicked(self, *args):
-        pass
+        dialog = WeblogDiscoveryDialog(self)
+        dialog.show()
     
     def on_btnOk_clicked(self, *args):
         name = self.edWeblogName.get_text().decode('utf-8')
