@@ -37,7 +37,7 @@ class Controller:
         self.__tempFiles = []
         self.cfg = appconst.CFG
     
-    def showAbout(self, parent=None):
+    def showAbout(self, parent):
         dialog = about_dialog.AboutDialog(parent)
         dialog.show()
     
@@ -61,11 +61,11 @@ class Controller:
         dialog = weblogs_dialog.WeblogsDialog(self)
         dialog.show()
     
-    def showPreferences(self, parent=None):
+    def showPreferences(self, parent):
         dialog = prefs_dialog.PreferencesDialog(parent)
         dialog.show()
     
-    def editCategory(self, category, parent=None):
+    def editCategory(self, category, parent):
         dialog = category_dialog.CategoryDialog(parent, category)
         dialog.show()
     
@@ -77,12 +77,16 @@ class Controller:
         dialog = identity_dialog.IdentityDialog(parent)
         dialog.show()
     
+    def editIdentity(self, identity, parent):
+        dialog = identity_dialog.IdentityDialog(parent, identity)
+        dialog.show()
+
     def newWeblog(self, parent):
         dialog = weblog_dialog.WeblogDialog(parent)
         dialog.show()
-    
-    def editIdentity(self, identity, parent=None):
-        dialog = identity_dialog.IdentityDialog(parent, identity)
+
+    def editWeblog(self, weblog, parent):
+        dialog = weblog_dialog.WeblogDialog(parent, weblog)
         dialog.show()
     
     def previewEntry(self, entry, parent=None):

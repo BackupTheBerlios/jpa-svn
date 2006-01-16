@@ -61,7 +61,13 @@ class WeblogsDialog(ListWindow):
         self.window.present()
     
     def notify(self, event, *args, **kwargs):
-        pass
+        if event == 'data-changed':
+            apputils.startWait(self.window)
+            try:
+                self.model.clear()
+                self._loadData()
+            finally:
+                apputils.endWait(self.window)
     
     def _loadData(self, onlyActive=True):
         if onlyActive:
@@ -72,7 +78,7 @@ class WeblogsDialog(ListWindow):
         for blog in blogs:
             self.model.append((
                 blog.name,
-                blog.weblogId,
+                blog.weblogID,
                 str(blog.isActive),
                 blog
             ))
@@ -94,6 +100,7 @@ class WeblogsDialog(ListWindow):
     
     def _edit(self, *args):
         blog = self._getBlogFromSelection()
+        self.controller.editWeblog(blog, self)
     
     def _del(self, *args):
         blog = self._getBlogFromSelection()
@@ -101,7 +108,10 @@ class WeblogsDialog(ListWindow):
     ### signal handlers ###
     def on_lvBlogs_button_press_event(self, *args):
         widget, event = args
-        if event.button == 3:
+        if event.button == 1 and event.type == gtk.gdk._2BUTTON_PRESS:
+            blog = self._getBlogFromSelection()
+            self.controller.editWeblog(blog, self)
+        elif event.button == 3:
             self.listMenu.popup(None, None, None, event.button, event.time)
     
     def on_ckbOnlyActive_toggled(self, *args):

@@ -96,7 +96,10 @@ class IdentitiesDialog(ListWindow):
     ### signal handlers ###
     def on_lvIdentities_button_press_event(self, *args):
         widget, event = args
-        if event.button == 3:
+        if event.button == 1 and event.type == gtk.gdk._2BUTTON_PRESS:
+            identity = self._getIdentityFromSelection()
+            self.controller.editIdentity(identity, self)
+        elif event.button == 3:
             self.listMenu.popup(None, None, None, event.button, event.time)
 
     def on_lvIdentities_cursor_changed(self, *args):

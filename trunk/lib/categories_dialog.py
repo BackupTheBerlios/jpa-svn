@@ -103,7 +103,10 @@ class CategoriesDialog(ListWindow):
     ### signal handlers ###
     def on_lvCategory_button_press_event(self, *args):
         widget, event = args
-        if event.button == 3:
+        if event.button == 1 and event.type == gtk.gdk._2BUTTON_PRESS:
+            category = self._getCategoryFromSelection()
+            self.controller.editCategory(category, self)
+        elif event.button == 3:
             self.listMenu.popup(None, None, None, event.button, event.time)
     
     def on_lvCategory_cursor_changed(self, *args):
