@@ -411,7 +411,7 @@
 
 		      <child>
 			<widget class="GtkTreeView" id="lvEntries">
-			  <property name="width_request">200</property>
+			  <property name="width_request">240</property>
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
 			  <property name="headers_visible">True</property>
@@ -908,63 +908,23 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkHBox" id="hbox16">
+	    <widget class="GtkEntry" id="edWeblogID">
 	      <property name="visible">True</property>
-	      <property name="homogeneous">False</property>
-	      <property name="spacing">4</property>
-
-	      <child>
-		<widget class="GtkEntry" id="edWeblogID">
-		  <property name="visible">True</property>
-		  <property name="can_focus">True</property>
-		  <property name="editable">True</property>
-		  <property name="visibility">True</property>
-		  <property name="max_length">0</property>
-		  <property name="text" translatable="yes"></property>
-		  <property name="has_frame">True</property>
-		  <property name="invisible_char">*</property>
-		  <property name="activates_default">False</property>
-		</widget>
-		<packing>
-		  <property name="padding">0</property>
-		  <property name="expand">True</property>
-		  <property name="fill">True</property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkHButtonBox" id="hbuttonbox15">
-		  <property name="visible">True</property>
-		  <property name="layout_style">GTK_BUTTONBOX_DEFAULT_STYLE</property>
-		  <property name="spacing">0</property>
-
-		  <child>
-		    <widget class="GtkButton" id="btnDiscoverBlogID">
-		      <property name="visible">True</property>
-		      <property name="can_default">True</property>
-		      <property name="can_focus">True</property>
-		      <property name="label" translatable="yes">_Discover</property>
-		      <property name="use_underline">True</property>
-		      <property name="relief">GTK_RELIEF_NORMAL</property>
-		      <property name="focus_on_click">True</property>
-		      <signal name="clicked" handler="on_btnDiscoverBlogID_clicked" last_modification_time="Mon, 16 Jan 2006 12:36:33 GMT"/>
-		    </widget>
-		  </child>
-		</widget>
-		<packing>
-		  <property name="padding">0</property>
-		  <property name="expand">True</property>
-		  <property name="fill">True</property>
-		</packing>
-	      </child>
+	      <property name="can_focus">True</property>
+	      <property name="editable">True</property>
+	      <property name="visibility">True</property>
+	      <property name="max_length">0</property>
+	      <property name="text" translatable="yes"></property>
+	      <property name="has_frame">True</property>
+	      <property name="invisible_char">*</property>
+	      <property name="activates_default">False</property>
 	    </widget>
 	    <packing>
 	      <property name="left_attach">1</property>
 	      <property name="right_attach">2</property>
 	      <property name="top_attach">2</property>
 	      <property name="bottom_attach">3</property>
-	      <property name="x_options">fill</property>
-	      <property name="y_options">fill</property>
+	      <property name="y_options"></property>
 	    </packing>
 	  </child>
 	</widget>
@@ -4850,7 +4810,7 @@ XMPP/Jabber</property>
 	  <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
 	  <child>
-	    <widget class="GtkTreeView" id="lvWeblogs">
+	    <widget class="GtkTreeView" id="lvBlogs">
 	      <property name="visible">True</property>
 	      <property name="can_focus">True</property>
 	      <property name="headers_visible">True</property>
@@ -4919,6 +4879,67 @@ XMPP/Jabber</property>
 	  <property name="fill">True</property>
 	</packing>
       </child>
+    </widget>
+  </child>
+</widget>
+
+<widget class="GtkMenu" id="pmIdentListEdit">
+
+  <child>
+    <widget class="GtkImageMenuItem" id="imagemenuitem1">
+      <property name="visible">True</property>
+      <property name="label">gtk-add</property>
+      <property name="use_stock">True</property>
+      <signal name="activate" handler="on_miAdd_activate" last_modification_time="Tue, 27 Dec 2005 13:31:40 GMT"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkImageMenuItem" id="imagemenuitem2">
+      <property name="visible">True</property>
+      <property name="label">gtk-edit</property>
+      <property name="use_stock">True</property>
+      <signal name="activate" handler="on_miEdit_activate" last_modification_time="Thu, 22 Dec 2005 12:30:05 GMT"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkImageMenuItem" id="imagemenuitem3">
+      <property name="visible">True</property>
+      <property name="label">gtk-remove</property>
+      <property name="use_stock">True</property>
+      <signal name="activate" handler="on_miDel_activate" last_modification_time="Thu, 22 Dec 2005 12:30:05 GMT"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkSeparatorMenuItem" id="separator7">
+      <property name="visible">True</property>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkMenuItem" id="miDiscover">
+      <property name="visible">True</property>
+      <property name="tooltip" translatable="yes">Discover weblogs</property>
+      <property name="label" translatable="yes">_Discover</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_miDiscover_activate" last_modification_time="Mon, 16 Jan 2006 13:04:00 GMT"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkSeparatorMenuItem" id="separatormenuitem2">
+      <property name="visible">True</property>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkImageMenuItem" id="imagemenuitem4">
+      <property name="visible">True</property>
+      <property name="label">gtk-close</property>
+      <property name="use_stock">True</property>
+      <signal name="activate" handler="on_miClose_activate" last_modification_time="Tue, 27 Dec 2005 13:11:15 GMT"/>
     </widget>
   </child>
 </widget>

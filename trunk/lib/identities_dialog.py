@@ -22,7 +22,7 @@ __revision__ = '$Id$'
 
 import gtk, gobject
 
-import apputils, datamodel
+import apputils, appconst, datamodel, transport
 from datamodel import Identity
 from appwindow import ListWindow
 
@@ -30,6 +30,10 @@ class IdentitiesDialog(ListWindow):
     
     def __init__(self, controller):
         ListWindow.__init__(self, 'frmIdentities', controller)
+        self.menuTree = gtk.glade.XML(appconst.GLADE_PATH, 'pmIdentListEdit', 'jpa')
+        self.menuTree.signal_autoconnect(self)
+        self.listMenu = self.menuTree.get_widget('pmIdentListEdit')
+        self.miDiscover = self.menuTree.get_widget('miDiscover')
         self.lvIdentities = self.wTree.get_widget('lvIdentities')
         self.btnAdd = self.wTree.get_widget('btnAdd')
         self.btnEdit = self.wTree.get_widget('btnEdit')
@@ -80,6 +84,9 @@ class IdentitiesDialog(ListWindow):
         self.btnEdit.set_sensitive(enableAction)
         self.miDel.set_sensitive(enableAction)
         self.btnDel.set_sensitive(enableAction)
+        identity = self._getIdentityFromSelection()
+        features = transport.FEATURES[identity.transportType]
+        self.miDiscover.set_sensitive('discovery' in features)
     
     def _getIdentityFromSelection(self):
         selection = self.lvIdentities.get_selection()
@@ -104,3 +111,7 @@ class IdentitiesDialog(ListWindow):
 
     def on_lvIdentities_cursor_changed(self, *args):
         self._enableActions()
+    
+    def on_miDiscover_activate(self, *args):
+        identity = self._getIdentityFromSelection()
+        self.controller.discoverWeblogs(identity, self)

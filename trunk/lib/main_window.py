@@ -26,7 +26,7 @@ import datetime
 import gtk, pango, gobject
 import gtk.glade, gtk.gdk
 
-import appconst, version, notifiable, datamodel
+import appconst, version, notifiable, datamodel, apputils
 
 class MainWindow(notifiable.Notifiable):
     
@@ -112,7 +112,7 @@ class MainWindow(notifiable.Notifiable):
         for entry in entries:
             self.entriesModel.append((
                 entry.created.strftime('%Y-%m-%d'),
-                entry.title,
+                apputils.ellipsize(entry.title, 30),
                 entry
             ))
         self.activateActions(len(self.entriesModel) > 0)
@@ -172,7 +172,7 @@ class MainWindow(notifiable.Notifiable):
             self.logPanel.show_all()
 
     def on_miAbout_activate(self, *args):
-        self.controller.showAbout()
+        self.controller.showAbout(self)
 
     def on_miToolsCategories_activate(self, *args):
         self.controller.showCategories()

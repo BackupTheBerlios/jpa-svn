@@ -24,7 +24,6 @@ import gtk, gobject
 
 import datamodel, transport
 from appwindow import EditWindow
-from weblogdisco_dialog import WeblogDiscoveryDialog
 
 class WeblogDialog(EditWindow):
     
@@ -34,7 +33,6 @@ class WeblogDialog(EditWindow):
         self.edWeblogName = self.wTree.get_widget('edWeblogName')
         self.cbxIdentity = self.wTree.get_widget('cbxIdentity')
         self.edWeblogID = self.wTree.get_widget('edWeblogID')
-        self.btnDiscoverBlogID = self.wTree.get_widget('btnDiscoverBlogID')
         self.ckbActive = self.wTree.get_widget('ckbActive')
     
     def show(self):
@@ -62,16 +60,11 @@ class WeblogDialog(EditWindow):
         model = self.cbxIdentity.get_model()
         identity = model.get_value(self.cbxIdentity.get_active_iter(), 1)
         features = transport.FEATURES[identity.transportType]
-        self.btnDiscoverBlogID.set_sensitive('discovery' in features)
         self.edWeblogID.set_sensitive('blogID' in features)
     
     ### signal handlers ###
     def on_cbxIdentity_changed(self, *args):
         self._activateFeatures()
-    
-    def on_btnDiscoverBlogID_clicked(self, *args):
-        dialog = WeblogDiscoveryDialog(self)
-        dialog.show()
     
     def on_btnOk_clicked(self, *args):
         name = self.edWeblogName.get_text().decode('utf-8')

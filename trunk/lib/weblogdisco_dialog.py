@@ -20,14 +20,91 @@
 
 __revision__ = '$Id$'
 
-import gtk
+import threading, Queue
 
+import gtk, gobject
+
+import transport
 from appwindow import EditWindow
+
+class DiscovererThread(threading.Thread):
+    
+    def __init__(self, transportObject, evtQueue):
+        self.transport = transportObject
+        self.queue = evtQueue
+        threading.Thread.__init__(self)
+    
+    def run(self):
+        blogs = self.transport.getBlogList()
+        self.queue.put_nowait(blogs)
+
 
 class WeblogDiscoveryDialog(EditWindow):
     
-    def __init__(self, parent):
+    def __init__(self, parent, identity):
         EditWindow.__init__(self, 'frmBlogDiscoDialog', parent)
+        self.lvBlogs = self.wTree.get_widget('lvBlogs')
+        self.identity = identity
+        self.weblogs = {}
+        self.queue = Queue.Queue()
+        self.pbDisco = self.wTree.get_widget('pbDisco')
+        self.idleTimer = gobject.idle_add(self._pulse)
     
     def show(self):
+        self.model = gtk.ListStore(bool, str, str)
+        cell0 = gtk.CellRendererToggle()
+        cell0.set_property('radio', False)
+        cell0.set_property('activatable', True)
+        cell0.connect('toggled', self.on_lvBlogs_toggle, self.model)
+        cells = (cell0, gtk.CellRendererText(), gtk.CellRendererText())
+        columns = (
+            gtk.TreeViewColumn(_('Update'), cells[0], active=0),
+            gtk.TreeViewColumn(_('Name'), cells[1], text=1),
+            gtk.TreeViewColumn(_('BlogID'), cells[2], text=2),
+        )
+        for column in columns:
+            self.lvBlogs.append_column(column)
+        self.lvBlogs.set_model(self.model)
         self.window.present()
+        transClass = transport.TRANSPORTS[self.identity.transportType]
+        login = self.identity.login
+        passwd = self.identity.password
+        if self.cfg.getOption('network', 'use_proxy', '0') == '1':
+            proxy = {}
+            proxy['host'] = self.cfg.getOption('network', 'proxy_host', '')
+            proxy['port'] = int(self.cfg.getOption('network', 
+                'proxy_port', '0'))
+        else:
+            proxy = None
+        transObj = transClass(login, passwd, proxy)
+        self.discoverer = DiscovererThread(transObj, self.queue)
+        self.discoverer.start()
+    
+    def _pulse(self):
+        try:
+            self.weblogs = self.queue.get_nowait()
+            self.pbDisco.set_fraction(0.0)
+            self._fillList()
+        except Queue.Empty:
+            pass
+        if len(self.weblogs) == 0:
+            self.pbDisco.pulse()
+            return True
+        return False
+    
+    def _fillList(self):
+        self.model.clear()
+        for (name, blogID) in self.weblogs.iteritems():
+            self.model.append((True, name, blogID))
+
+    def on_lvBlogs_toggle(self, cell, path, model=None):
+        iter = model.get_iter(path)
+        model.set_value(iter, 0, not cell.get_active())
+    
+    def on_btnCancel_clicked(self, *args):
+        gobject.source_remove(self.idleTimer)
+        EditWindow.on_btnCancel_clicked(self, *args)
+    
+    def on_btnOk_clicked(self, *args):
+        gobject.source_remove(self.idleTimer)
+        self.window.destroy()
