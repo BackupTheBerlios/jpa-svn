@@ -20,7 +20,7 @@
 
 __revision__ = '$Id$'
 
-import gtk, gobject
+import gtk
 
 import datamodel, transport
 from appwindow import EditWindow
@@ -47,7 +47,7 @@ class IdentityDialog(EditWindow):
         self.edPassword = self.wTree.get_widget('edPassword')
     
     def show(self):
-        typeModel = gtk.ListStore(gobject.TYPE_STRING)
+        typeModel = gtk.ListStore(str)
         for transportName in transport.AVAILABLE:
             typeModel.append([transportName])
         self.cbxType.set_model(typeModel)
@@ -69,13 +69,15 @@ class IdentityDialog(EditWindow):
     ### signal handlers ###
     def on_cbxType_changed(self, *args):
         model = self.cbxType.get_model()
-        it = self.cbxType.get_active_iter()
-        transportName = model.get_value(it, 0)
+        transportName = model.get_value(self.cbxType.get_active_iter(), 0)
         if transportName in transport.AVAILABLE:
             transportClass = transport.TRANSPORTS[transportName]
             meta = transportClass.getMetadata()
             self.cbxProtocol.set_active(PROTOCOLS.index(meta['proto']))
             self.edUri.set_text(meta['uri'])
+        features = transport.FEATURES[transportName]
+        self.edLogin.set_sensitive('auth' in features)
+        self.edPassword.set_sensitive('auth' in features)
     
     def on_ckbUseDefPort_toggled(self, *args):
         self.edPort.set_sensitive(not self.ckbUseDefPort.get_active())

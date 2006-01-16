@@ -29,7 +29,7 @@ import gtk.glade
 import appconst, apputils, renderer
 import entry_dialog, categories_dialog, prefs_dialog, category_dialog, \
     about_dialog, identities_dialog, identity_dialog, htmlview_dialog, \
-    weblogs_dialog
+    weblogs_dialog, weblog_dialog
 
 class Controller:
     
@@ -75,6 +75,10 @@ class Controller:
     
     def newIdentity(self, parent):
         dialog = identity_dialog.IdentityDialog(parent)
+        dialog.show()
+    
+    def newWeblog(self, parent):
+        dialog = weblog_dialog.WeblogDialog(parent)
         dialog.show()
     
     def editIdentity(self, identity, parent=None):

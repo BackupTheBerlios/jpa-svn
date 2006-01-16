@@ -31,3 +31,8 @@ TRANSPORTS = {
     'blogger (Atom)': blogger.BloggerTransport,
     'jogger.pl': jogger.JoggerTransport,
 }
+
+FEATURES = {
+    'blogger (Atom)': ('discovery', 'blogID', 'auth'),
+    'jogger.pl': (),
+}

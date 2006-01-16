@@ -60,6 +60,9 @@ class WeblogsDialog(ListWindow):
             apputils.endWait(self.window)
         self.window.present()
     
+    def notify(self, event, *args, **kwargs):
+        pass
+    
     def _loadData(self, onlyActive=True):
         if onlyActive:
             blogs = Weblog.select(Weblog.q.isActive==True, 
@@ -87,7 +90,7 @@ class WeblogsDialog(ListWindow):
         return model.get_value(selected, 3)
     
     def _add(self, *args):
-        pass
+        self.controller.newWeblog(self)
     
     def _edit(self, *args):
         blog = self._getBlogFromSelection()
