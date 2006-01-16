@@ -68,6 +68,7 @@ class WeblogsDialog(ListWindow):
                 self._loadData()
             finally:
                 apputils.endWait(self.window)
+        self._enableActions()
     
     def _loadData(self, onlyActive=True):
         if onlyActive:
