@@ -82,6 +82,9 @@ class MainWindow(notifiable.Notifiable):
             sel = self.lvEntries.get_selection()
             sel.select_path(0)
             self.displayEntry(self.getEntryFromSelection())
+        listMenuTree = gtk.glade.XML(appconst.GLADE_PATH, 'pmEntryList', 'jpa')
+        listMenuTree.signal_autoconnect(self)
+        self.pmEntryList = listMenuTree.get_widget('pmEntryList')
         self.window.present()
     
     def notify(self, event, *args, **kwargs):
@@ -188,6 +191,8 @@ class MainWindow(notifiable.Notifiable):
         if event.button == 1 and event.type == gtk.gdk._2BUTTON_PRESS:
             entry = self.getEntryFromSelection()
             self.controller.editEntry(entry)
+        elif event.button == 3:
+            self.pmEntryList.popup(None, None, None, event.button, event.time)
 
     def on_lvEntries_cursor_changed(self, *args):
         entry = self.getEntryFromSelection()

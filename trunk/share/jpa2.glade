@@ -68,12 +68,12 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkMenuItem" id="miFileSend">
+		    <widget class="GtkMenuItem" id="miFilePublish">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Publish entry to weblog(s)</property>
-		      <property name="label" translatable="yes">S_end</property>
+		      <property name="label" translatable="yes">_Publish</property>
 		      <property name="use_underline">True</property>
-		      <signal name="activate" handler="on_miFileSend_activate" last_modification_time="Fri, 23 Dec 2005 21:04:03 GMT"/>
+		      <signal name="activate" handler="_publishEntry" last_modification_time="Mon, 16 Jan 2006 15:38:11 GMT"/>
 		    </widget>
 		  </child>
 
@@ -331,7 +331,7 @@
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
 	      <property name="is_important">False</property>
-	      <signal name="clicked" handler="on_miFileSend_activated" last_modification_time="Fri, 06 Jan 2006 10:58:31 GMT"/>
+	      <signal name="clicked" handler="_publishEntry" last_modification_time="Mon, 16 Jan 2006 15:37:53 GMT"/>
 	    </widget>
 	    <packing>
 	      <property name="expand">False</property>
