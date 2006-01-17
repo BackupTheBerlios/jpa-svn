@@ -110,6 +110,9 @@ class WeblogDiscoveryDialog(EditWindow):
         iter = model.get_iter(path)
         model.set_value(iter, 0, not cell.get_active())
     
+    def on_frmBlogDiscoDialog_delete_event(self, *args):
+        gobject.source_remove(self.idleTimer)
+    
     def on_btnCancel_clicked(self, *args):
         gobject.source_remove(self.idleTimer)
         EditWindow.on_btnCancel_clicked(self, *args)
