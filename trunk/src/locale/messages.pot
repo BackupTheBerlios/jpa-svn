@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-17 20:34+0100\n"
+"POT-Creation-Date: 2006-01-17 21:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,6 +105,18 @@ msgstr ""
 
 #: lib/weblogs_dialog.py:49 share/jpa2.glade.h:11
 msgid "Active"
+msgstr ""
+
+#: lib/transport/blogger.py:69
+msgid "Blogger.com transport using new Atom API"
+msgstr ""
+
+#: lib/transport/jogger.py:32
+msgid "Jogger.pl transport"
+msgstr ""
+
+#: lib/transport/xmlrpcblogger.py:42
+msgid "Old Blogger.com transport using XML-RPC API"
 msgstr ""
 
 #: share/jpa2.glade.h:2
