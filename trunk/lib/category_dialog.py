@@ -41,6 +41,10 @@ class CategoryDialog(EditWindow):
             bf = gtk.TextBuffer()
             bf.set_text(description)
             self.tvDescription.set_buffer(bf)
+            windowTitle = _('Editing category "%s"') % self.category.name
+        else:
+            windowTitle = _('Editing new category')
+        self.window.set_title(windowTitle)
         self.window.present()
     
     ### signal handlers ###

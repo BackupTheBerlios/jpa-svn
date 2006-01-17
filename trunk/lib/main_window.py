@@ -70,7 +70,7 @@ class MainWindow(notifiable.Notifiable):
         today = datetime.date.today()
         cell0 = gtk.CellRendererText()
         cell1 = gtk.CellRendererText()
-        col0 = gtk.TreeViewColumn(_('Date'), cell0, text=0)
+        col0 = gtk.TreeViewColumn(_('Created'), cell0, text=0)
         col1 = gtk.TreeViewColumn(_('Title'), cell1, text=1)
         self.lvEntries.append_column(col0)
         self.lvEntries.append_column(col1)
@@ -94,7 +94,10 @@ class MainWindow(notifiable.Notifiable):
         if not (event in self.registeredEvents):
             return
         if event == 'entry-changed':
-            pass
+            entry = self.getEntryFromSelection()
+            self.displayEntry(entry)
+            store, iterator = self.lvEntries.get_selection().get_selected()
+            store.set_value(iterator, 1, apputils.ellipsize(entry.title, 30))
         elif event == 'entry-added':
             self.loadEntriesList(self.entryFilter['year'],
                 self.entryFilter['month'])
@@ -154,7 +157,7 @@ class MainWindow(notifiable.Notifiable):
     
     def _editEntry(self, *args):
         entry = self.getEntryFromSelection()
-        self.controller.editEntry(entry)
+        self.controller.editEntry(entry, self)
     
     def on_miEditPrefs_activate(self, *args):
         self.controller.showPreferences(self)
@@ -189,7 +192,7 @@ class MainWindow(notifiable.Notifiable):
         widget, event = args
         if event.button == 1 and event.type == gtk.gdk._2BUTTON_PRESS:
             entry = self.getEntryFromSelection()
-            self.controller.editEntry(entry)
+            self.controller.editEntry(entry, self)
         elif event.button == 3:
             self.pmEntryList.popup(None, None, None, event.button, event.time)
 

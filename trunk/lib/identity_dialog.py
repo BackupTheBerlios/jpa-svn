@@ -64,6 +64,10 @@ class IdentityDialog(EditWindow):
             self.edPort.set_text(str(port))
             self.edLogin.set_text(self.identity.login)
             self.edPassword.set_text(self.identity.password)
+            windowTitle = _('Editing identity "%s"') % self.identity.name
+        else:
+            windowTitle = _('Editing new identity')
+        self.window.set_title(windowTitle)
         self.window.present()
     
     ### signal handlers ###

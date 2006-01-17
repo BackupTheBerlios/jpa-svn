@@ -53,6 +53,10 @@ class WeblogDialog(EditWindow):
             self.cbxIdentity.set_active(self.identities.index(self.weblog.identity.name))
             self.edWeblogID.set_text(self.weblog.weblogID)
             self.ckbActive.set_active(self.weblog.isActive)
+            windowTitle = _('Editing weblog "%s"') % self.weblog.name
+        else:
+            windowTitle = _('Editing new weblog')
+        self.window.set_title(windowTitle)
         self._activateFeatures()
         self.window.present()
     
