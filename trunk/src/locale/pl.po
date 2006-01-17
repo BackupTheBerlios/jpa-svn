@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JPA-0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-17 20:58+0100\n"
+"POT-Creation-Date: 2006-01-17 21:24+0100\n"
 "PO-Revision-Date: 2005-12-23 21:39+0100\n"
 "Last-Translator: Jarek Zgoda <jzgoda@o2.pl>\n"
 "Language-Team: Polish\n"
@@ -371,54 +371,62 @@ msgid "Publish entry to weblog(s)"
 msgstr "Opublikuj wpis w weblogu"
 
 #: share/jpa2.glade.h:65
+msgid "Publish entry to weblogs:"
+msgstr "Opublikuj wpis w dziennikach:"
+
+#: share/jpa2.glade.h:66
 msgid "Publish selected entry"
 msgstr "Opublikuj wskazany wpis"
 
-#: share/jpa2.glade.h:66
+#: share/jpa2.glade.h:67
 msgid "Published:"
 msgstr "Opublikowany:"
 
-#: share/jpa2.glade.h:67
+#: share/jpa2.glade.h:68
 msgid "Select font"
 msgstr "Wybierz czcionkę"
 
-#: share/jpa2.glade.h:68
+#: share/jpa2.glade.h:69
+msgid "Select weblogs"
+msgstr "Wybierz dzienniki"
+
+#: share/jpa2.glade.h:70
 msgid "Service _URI:"
 msgstr "_URI usługi"
 
-#: share/jpa2.glade.h:69
+#: share/jpa2.glade.h:71
 msgid "Service port"
 msgstr "_Port usługi"
 
-#: share/jpa2.glade.h:70
+#: share/jpa2.glade.h:72
 msgid "Show HTML that will be sent and published"
 msgstr "Pokaż HTML, który zostanie opublikowany"
 
-#: share/jpa2.glade.h:71
+#: share/jpa2.glade.h:73
 msgid "Show _HTML"
 msgstr "Pokaż _HTML"
 
-#: share/jpa2.glade.h:72
+#: share/jpa2.glade.h:74
 msgid "Show list of entry categories"
 msgstr "Pokaż listę kategorii wpisów"
 
-#: share/jpa2.glade.h:73
+#: share/jpa2.glade.h:75
 msgid "Show list of my identities"
 msgstr "Pokaż listę moich tożsamości"
 
-#: share/jpa2.glade.h:74
+#: share/jpa2.glade.h:76
 msgid "Show list of my weblogs"
 msgstr "Pokaż listę moich dzienników"
 
-#: share/jpa2.glade.h:75
+#: share/jpa2.glade.h:77
 msgid "Show/hide log window"
 msgstr "Pokaż/ukryj okno logu"
 
-#: share/jpa2.glade.h:76
+#: share/jpa2.glade.h:78
 msgid "System command to start web browser"
 msgstr "Polecenie uruchamiające przeglądarkę WWW"
 
-#: share/jpa2.glade.h:77
+#: share/jpa2.glade.h:79
 msgid ""
 "This program is free software, you may freely use and distribute it under "
 "provision of GNU Public License (\"The GPL\"). See license page for details."
@@ -427,7 +435,7 @@ msgstr ""
 "postanowieniami Licencji Publicznej GNU (znanej także jako \"GPL\"). Więcej "
 "informacji znajdziesz na karcie z informacjami licencyjnymi."
 
-#: share/jpa2.glade.h:78
+#: share/jpa2.glade.h:80
 msgid ""
 "This program uses code written by other people:\n"
 "   - Python interpreter, http://www.python.org/\n"
@@ -443,171 +451,171 @@ msgstr ""
 "   - Biblioteka ORM SQLObject, http://www.sqlobject.org/\n"
 "   - Biblioteka protokołu XMPP/Jabber PyXMPP, http://pyxmpp.jabberstudio.org/"
 
-#: share/jpa2.glade.h:84
+#: share/jpa2.glade.h:86
 msgid "Title:"
 msgstr "Tytuł:"
 
-#: share/jpa2.glade.h:85
+#: share/jpa2.glade.h:87
 msgid "Trying to discover weblog properties, please wait..."
 msgstr "Próbuję wykryć dzienniki, proszę, poczekaj..."
 
-#: share/jpa2.glade.h:86
+#: share/jpa2.glade.h:88
 msgid "URI of remote blogging service"
 msgstr "URI usługi weblogowej"
 
-#: share/jpa2.glade.h:87
+#: share/jpa2.glade.h:89
 msgid "Use Gnome default web browser"
 msgstr "Użyj przeglądarki WWW Gnome"
 
-#: share/jpa2.glade.h:88
+#: share/jpa2.glade.h:90
 msgid "Use KDE default web browser"
 msgstr "Użyj przeglądarki WWW KDE"
 
-#: share/jpa2.glade.h:89
+#: share/jpa2.glade.h:91
 msgid "Use custom web browser:"
 msgstr "Użyj własnej przeglądarki WWW:"
 
-#: share/jpa2.glade.h:90
+#: share/jpa2.glade.h:92
 msgid "Use d_efault"
 msgstr "Użyj _domyślnego"
 
-#: share/jpa2.glade.h:91
+#: share/jpa2.glade.h:93
 msgid "Use system default web browser"
 msgstr "Użyj domyślnej przeglądarki WWW"
 
-#: share/jpa2.glade.h:92
+#: share/jpa2.glade.h:94
 msgid "Visibility level:"
 msgstr "Poziom widoczności:"
 
-#: share/jpa2.glade.h:93
+#: share/jpa2.glade.h:95
 msgid "Weblog Discovery"
 msgstr "Wykrywanie dzienników"
 
-#: share/jpa2.glade.h:94
+#: share/jpa2.glade.h:96
 msgid "Weblog ID:"
 msgstr "ID dziennika:"
 
-#: share/jpa2.glade.h:95
+#: share/jpa2.glade.h:97
 msgid "Weblog account"
 msgstr "Konto blogowe"
 
-#: share/jpa2.glade.h:96
+#: share/jpa2.glade.h:98
 msgid "Your password to this service"
 msgstr "Twoje hasło dla tej usługi"
 
-#: share/jpa2.glade.h:97
+#: share/jpa2.glade.h:99
 msgid "Your service login (aka \"user name\")"
 msgstr "Twój login dla tej usługi (\"nazwa użytkownika\")"
 
-#: share/jpa2.glade.h:98
+#: share/jpa2.glade.h:100
 msgid "_Behaviour"
 msgstr "_Zachowanie"
 
-#: share/jpa2.glade.h:99
+#: share/jpa2.glade.h:101
 msgid "_Categories"
 msgstr "_Kategorie"
 
-#: share/jpa2.glade.h:100
+#: share/jpa2.glade.h:102
 msgid "_Description:"
 msgstr "Op_is:"
 
-#: share/jpa2.glade.h:101
+#: share/jpa2.glade.h:103
 msgid "_Discover weblogs"
 msgstr "Wykryj _dzienniki"
 
-#: share/jpa2.glade.h:102
+#: share/jpa2.glade.h:104
 msgid "_Edit"
 msgstr "_Edycja"
 
-#: share/jpa2.glade.h:103
+#: share/jpa2.glade.h:105
 msgid "_File"
 msgstr "_Plik"
 
-#: share/jpa2.glade.h:104
+#: share/jpa2.glade.h:106
 msgid "_Filter"
 msgstr "_Filtr"
 
-#: share/jpa2.glade.h:105
+#: share/jpa2.glade.h:107
 msgid "_Help"
 msgstr "P_omoc"
 
-#: share/jpa2.glade.h:106
+#: share/jpa2.glade.h:108
 msgid "_Identities"
 msgstr "_Tożsamości"
 
-#: share/jpa2.glade.h:107
+#: share/jpa2.glade.h:109
 msgid "_Identity:"
 msgstr "_Tożsamość"
 
-#: share/jpa2.glade.h:108
+#: share/jpa2.glade.h:110
 msgid "_Log window"
 msgstr "Okno _logu"
 
-#: share/jpa2.glade.h:109
+#: share/jpa2.glade.h:111
 msgid "_Login:"
 msgstr "_Login:"
 
-#: share/jpa2.glade.h:110
+#: share/jpa2.glade.h:112
 msgid "_Name:"
 msgstr "_Nazwa:"
 
-#: share/jpa2.glade.h:111
+#: share/jpa2.glade.h:113
 msgid "_Network"
 msgstr "_Sieć"
 
-#: share/jpa2.glade.h:112
+#: share/jpa2.glade.h:114
 msgid "_Only active"
 msgstr "Tylk_o aktywne"
 
-#: share/jpa2.glade.h:113
+#: share/jpa2.glade.h:115
 msgid "_Port:"
 msgstr "_Port:"
 
-#: share/jpa2.glade.h:114
+#: share/jpa2.glade.h:116
 msgid "_Preview entry"
 msgstr "_Podgląd wpisu"
 
-#: share/jpa2.glade.h:115
+#: share/jpa2.glade.h:117
 msgid "_Publish"
 msgstr "O_publikuj"
 
-#: share/jpa2.glade.h:116
+#: share/jpa2.glade.h:118
 msgid "_Remember window sizes"
 msgstr "Za_pamiętaj rozmiary okien"
 
-#: share/jpa2.glade.h:117
+#: share/jpa2.glade.h:119
 msgid "_Title:"
 msgstr "_Tytuł:"
 
-#: share/jpa2.glade.h:118
+#: share/jpa2.glade.h:120
 msgid "_Tools"
 msgstr "_Narzędzia"
 
-#: share/jpa2.glade.h:119
+#: share/jpa2.glade.h:121
 msgid "_Type:"
 msgstr "_Typ:"
 
-#: share/jpa2.glade.h:120
+#: share/jpa2.glade.h:122
 msgid "_Use proxy server"
 msgstr "_Użyj pośrednika sieciowego"
 
-#: share/jpa2.glade.h:121
+#: share/jpa2.glade.h:123
 msgid "_View"
 msgstr "_Widok"
 
-#: share/jpa2.glade.h:122
+#: share/jpa2.glade.h:124
 msgid "_Visual"
 msgstr "_Wygląd"
 
-#: share/jpa2.glade.h:123
+#: share/jpa2.glade.h:125
 msgid "_Weblogs"
 msgstr "_Dzienniki"
 
-#: share/jpa2.glade.h:124
+#: share/jpa2.glade.h:126
 msgid "minutes"
 msgstr "minut"
 
-#: share/jpa2.glade.h:126
+#: share/jpa2.glade.h:128
 #, no-c-format
 msgid "version: %s"
 msgstr "wersja: %s"
