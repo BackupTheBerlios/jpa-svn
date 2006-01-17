@@ -41,7 +41,7 @@ NS_HTML = '{http://www.w3.org/1999/xhtml}'
 class BloggerTransport(api.WeblogTransport):
     """Weblog transport that uses Blogger Atom API."""
     
-    def __init__(self, userName, passwd, proxyConfig=None):
+    def __init__(self, userName, passwd, proxyConfig=None, uri=None):
         self.proxy = proxyConfig
         self.userName = userName
         self.passwd = passwd

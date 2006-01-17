@@ -71,14 +71,13 @@ class WeblogDiscoveryDialog(EditWindow):
         transClass = transport.TRANSPORTS[self.identity.transportType]
         login = self.identity.login
         passwd = self.identity.password
+        proxy = {}
         if self.cfg.getOption('network', 'use_proxy', '0') == '1':
-            proxy = {}
             proxy['host'] = self.cfg.getOption('network', 'proxy_host', '')
             proxy['port'] = int(self.cfg.getOption('network', 
                 'proxy_port', '0'))
-        else:
-            proxy = None
-        transObj = transClass(login, passwd, proxy)
+        uri = self.identity.serviceURI
+        transObj = transClass(login, passwd, proxy, uri)
         self.discoverer = DiscovererThread(transObj, self.queue)
         self.discoverer.start()
     

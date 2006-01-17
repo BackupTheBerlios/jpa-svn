@@ -20,19 +20,22 @@
 
 __revision__ = '$Id$'
 
-import blogger, jogger
+import blogger, jogger, xmlrpcblogger
 
 AVAILABLE = [
     'blogger (Atom)',
     'jogger.pl',
+    'blogger (XML-RPC)',
 ]
 
 TRANSPORTS = {
     'blogger (Atom)': blogger.BloggerTransport,
     'jogger.pl': jogger.JoggerTransport,
+    'blogger (XML-RPC)': xmlrpcblogger.BloggerTransport,
 }
 
 FEATURES = {
     'blogger (Atom)': ('discovery', 'blogID', 'auth'),
     'jogger.pl': (),
+    'blogger (XML-RPC)': ('discovery', 'blogID', 'auth')
 }

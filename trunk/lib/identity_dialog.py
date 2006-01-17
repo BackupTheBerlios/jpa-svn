@@ -78,7 +78,8 @@ class IdentityDialog(EditWindow):
             transportClass = transport.TRANSPORTS[transportName]
             meta = transportClass.getMetadata()
             self.cbxProtocol.set_active(PROTOCOLS.index(meta['proto']))
-            self.edUri.set_text(meta['uri'])
+            if meta['uri']:
+                self.edUri.set_text(meta['uri'])
         features = transport.FEATURES[transportName]
         self.edLogin.set_sensitive('auth' in features)
         self.edPassword.set_sensitive('auth' in features)

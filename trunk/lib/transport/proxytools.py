@@ -8,7 +8,7 @@
 import urllib
 import httplib
 import socket
-import xmlrpclib
+from xmlrpclib import *
 
 
 class ProxyHTTPConnection(httplib.HTTPConnection):
@@ -20,7 +20,7 @@ class ProxyHTTPConnection(httplib.HTTPConnection):
         #real host/port to be used to make CONNECT request to proxy
         proto, rest = urllib.splittype(url)
         if proto is None:
-            raise ValueError, "unknown URL type: %s" % url
+            raise ValueError, 'unknown URL type: %s' % url
         #get host
         host, rest = urllib.splithost(rest)
         #try to get port
@@ -30,7 +30,7 @@ class ProxyHTTPConnection(httplib.HTTPConnection):
             try:
                 port = self._ports[proto]
             except KeyError:
-                raise ValueError, "unknown protocol for: %s" % url
+                raise ValueError, 'unknown protocol for: %s' % url
         self._real_host = host
         self._real_port = port
         httplib.HTTPConnection.request(self, method, url, body, headers)       
@@ -38,7 +38,7 @@ class ProxyHTTPConnection(httplib.HTTPConnection):
     def connect(self):
         httplib.HTTPConnection.connect(self)
         #send proxy CONNECT request
-        self.send("CONNECT %s:%d HTTP/1.0\r\n\r\n" % (self._real_host, self._real_port))
+        self.send('CONNECT %s:%d HTTP/1.0\r\n\r\n' % (self._real_host, self._real_port))
         #expect a HTTP/1.0 200 Connection established
         response = self.response_class(self.sock, strict=self.strict, method=self._method)
         (version, code, message) = response._read_status()
@@ -46,19 +46,20 @@ class ProxyHTTPConnection(httplib.HTTPConnection):
         if code != 200:
             #proxy returned and error, abort connection, and raise exception
             self.close()
-            raise socket.error, "Proxy connection failed: %d %s" % (code, message.strip())
+            raise socket.error, 'Proxy connection failed: %d %s' % (code, message.strip())
         #eat up header block from proxy....
         while True:
             #should not use directly fp probablu
             line = response.fp.readline()
-            if line == '\r\n': break
+            if line == '\r\n':
+                break
 
 
 class ProxyHTTPSConnection(ProxyHTTPConnection):
     
     default_port = 443
 
-    def __init__(self, host, port = None, key_file = None, cert_file = None, strict = None):
+    def __init__(self, host, port=None, key_file=None, cert_file=None, strict=None):
         ProxyHTTPConnection.__init__(self, host, port)
         self.key_file = key_file
         self.cert_file = cert_file
@@ -70,8 +71,8 @@ class ProxyHTTPSConnection(ProxyHTTPConnection):
         self.sock = httplib.FakeSocket(self.sock, ssl)
 
 
-class ProxyTransport(xmlrpclib.Transport):
-    
+class ProxyTransport(Transport):
+
     def __init__(self, host, port):
         self.proxyHost = host
         self.proxyPort = port
@@ -81,4 +82,5 @@ class ProxyTransport(xmlrpclib.Transport):
             request_body, verbose)
 
     def make_connection(self, host):
+        import httplib
         return httplib.HTTP(self.proxyHost, self.proxyPort)
