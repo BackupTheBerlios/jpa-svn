@@ -157,7 +157,6 @@
 		      <property name="label" translatable="yes">_Preview entry</property>
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_miViewPreview_activate" last_modification_time="Tue, 01 Nov 2005 20:03:51 GMT"/>
-		      <accelerator key="P" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 		    </widget>
 		  </child>
 
@@ -168,7 +167,6 @@
 		      <property name="label" translatable="yes">Show _HTML</property>
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_miViewHtml_activate" last_modification_time="Mon, 09 Jan 2006 09:30:38 GMT"/>
-		      <accelerator key="H" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 		    </widget>
 		  </child>
 
@@ -1418,8 +1416,8 @@
 			  <child>
 			    <widget class="GtkLabel" id="label41">
 			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Autosave _interval:</property>
-			      <property name="use_underline">True</property>
+			      <property name="label" translatable="yes">Autosave interval:</property>
+			      <property name="use_underline">False</property>
 			      <property name="use_markup">False</property>
 			      <property name="justify">GTK_JUSTIFY_LEFT</property>
 			      <property name="wrap">False</property>
@@ -2282,8 +2280,8 @@ HTML</property>
       <child>
 	<widget class="GtkLabel" id="label10">
 	  <property name="visible">True</property>
-	  <property name="label" translatable="yes">_Title:</property>
-	  <property name="use_underline">True</property>
+	  <property name="label" translatable="yes">Title:</property>
+	  <property name="use_underline">False</property>
 	  <property name="use_markup">False</property>
 	  <property name="justify">GTK_JUSTIFY_LEFT</property>
 	  <property name="wrap">False</property>
@@ -2328,8 +2326,8 @@ HTML</property>
       <child>
 	<widget class="GtkLabel" id="label13">
 	  <property name="visible">True</property>
-	  <property name="label" translatable="yes">_Body:</property>
-	  <property name="use_underline">True</property>
+	  <property name="label" translatable="yes">Body:</property>
+	  <property name="use_underline">False</property>
 	  <property name="use_markup">False</property>
 	  <property name="justify">GTK_JUSTIFY_LEFT</property>
 	  <property name="wrap">False</property>
@@ -2440,8 +2438,8 @@ HTML</property>
 	      <child>
 		<widget class="GtkLabel" id="label15">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">_Visibility level:</property>
-		  <property name="use_underline">True</property>
+		  <property name="label" translatable="yes">Visibility level:</property>
+		  <property name="use_underline">False</property>
 		  <property name="use_markup">False</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
 		  <property name="wrap">False</property>
@@ -2530,8 +2528,8 @@ HTML</property>
 	      <child>
 		<widget class="GtkLabel" id="label17">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">Bo_dy text type:</property>
-		  <property name="use_underline">True</property>
+		  <property name="label" translatable="yes">Body text type:</property>
+		  <property name="use_underline">False</property>
 		  <property name="use_markup">False</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
 		  <property name="wrap">False</property>
@@ -2579,8 +2577,8 @@ HTML</property>
 	      <child>
 		<widget class="GtkLabel" id="label14">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">Cate_gories:</property>
-		  <property name="use_underline">True</property>
+		  <property name="label" translatable="yes">Categories:</property>
+		  <property name="use_underline">False</property>
 		  <property name="use_markup">False</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
 		  <property name="wrap">False</property>
@@ -2609,7 +2607,7 @@ HTML</property>
 		<widget class="GtkCheckButton" id="ckbIsDraft">
 		  <property name="visible">True</property>
 		  <property name="can_focus">True</property>
-		  <property name="label" translatable="yes">Is dra_ft</property>
+		  <property name="label" translatable="yes">Is a draft</property>
 		  <property name="use_underline">True</property>
 		  <property name="relief">GTK_RELIEF_NORMAL</property>
 		  <property name="focus_on_click">True</property>
@@ -5007,8 +5005,8 @@ XMPP/Jabber</property>
   <child>
     <widget class="GtkMenuItem" id="miDiscover">
       <property name="visible">True</property>
-      <property name="tooltip" translatable="yes">Discover weblogs</property>
-      <property name="label" translatable="yes">_Discover</property>
+      <property name="tooltip" translatable="yes">Discover weblogs using this identity</property>
+      <property name="label" translatable="yes">_Discover weblogs</property>
       <property name="use_underline">True</property>
       <signal name="activate" handler="on_miDiscover_activate" last_modification_time="Mon, 16 Jan 2006 13:04:00 GMT"/>
     </widget>

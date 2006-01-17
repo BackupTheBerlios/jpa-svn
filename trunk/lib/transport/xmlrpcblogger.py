@@ -21,7 +21,7 @@ and blogging systems, such as WordPress."""
 
 __revision__ = '$Id$'
 
-from xmlrpclib import *
+import xmlrpclib
 import api, proxytools
 
 APPKEY = 'nobody hears'
@@ -43,15 +43,22 @@ class BloggerTransport(api.WeblogTransport):
         meta['proto'] = 'HTTP'
         meta['uri'] = None
         return meta
-
-    def getBlogList(self):
+    
+    def _getServerProxy(self):
         kw = {}
         if self.proxy:
             kw['transport'] = proxytools.ProxyTransport(self.proxy['host'], self.proxy['port'])
         kw['encoding'] = 'utf-8'
-        s = ServerProxy(self.uri, **kw)
+        return xmlrpclib.ServerProxy(self.uri, **kw)
+
+    def getBlogList(self):
+        s = self._getServerProxy()
         ret = s.blogger.getUsersBlogs(APPKEY, self.userName, self.passwd)
         blogs = {}
         for blogData in ret:
             blogs[blogData['blogName']] = blogData['blogid']
         return blogs
+    
+    def getEntry(self, entryId):
+        s = self._getServerProxy()
+        ret = s.blogger.getPost(APPKEY, entryId, self.userName, self.passwd)
