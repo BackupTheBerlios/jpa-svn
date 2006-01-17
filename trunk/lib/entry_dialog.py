@@ -150,6 +150,9 @@ class EntryDialog:
             self.lbVisLevelDesc.set_label(_('private level %d') % visLevel)
         else:
             self.lbVisLevelDesc.set_label(_('public'))
+    
+    def on_frmEntry_delete_event(self, *args):
+        gobject.source_remove(self.autosaveTimer)
 
     def on_btnCancel_clicked(self, *args):
         gobject.source_remove(self.autosaveTimer)
