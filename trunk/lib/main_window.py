@@ -35,6 +35,7 @@ class MainWindow(notifiable.Notifiable):
         'entry-added',
         'entry-deleted',
         'filter-changed',
+        'publish-entry',
         )
     
     def __init__(self, controller):
@@ -44,29 +45,47 @@ class MainWindow(notifiable.Notifiable):
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmMain', 'jpa')
         self.wTree.signal_autoconnect(self)
         self.window = self.wTree.get_widget('frmMain')
-        self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
-            'darkbeer.xpm'))
+        listMenuTree = gtk.glade.XML(appconst.GLADE_PATH, 'pmEntryList', 'jpa')
+        listMenuTree.signal_autoconnect(self)
+        self.pmEntryList = listMenuTree.get_widget('pmEntryList')
         self.window.set_title(version.PROGRAM)
         self.logPanel = self.wTree.get_widget('pnLog')
         self.logView = self.wTree.get_widget('txLog')
         self.lbCreated = self.wTree.get_widget('lbCreated')
-        self.lbCreated.set_text('')
         self.lbSent = self.wTree.get_widget('lbSent')
-        self.lbSent.set_text('')
         self.lbTitle = self.wTree.get_widget('lbTitle')
-        self.lbTitle.set_text('')
         self.txEntry = self.wTree.get_widget('txEntry')
-        viewFontName = self.cfg.getOption('fonts', 'preview', 'Sans 10')
-        self.txEntry.modify_font(pango.FontDescription(viewFontName))
-        logFontName = self.cfg.getOption('fonts', 'log', 'Monospace 10')
-        self.logView.modify_font(pango.FontDescription(logFontName))
         self.miFileEdit = self.wTree.get_widget('miFileEdit')
         self.miFilePublish = self.wTree.get_widget('miFilePublish')
         self.tbrMain = self.wTree.get_widget('tbrMain')
         self.tbnEdit = self.wTree.get_widget('tbnEdit')
         self.tbnSend = self.wTree.get_widget('tbnSend')
-        self.activateActions(False)
         self.lvEntries = self.wTree.get_widget('lvEntries')
+        self._setWidgets()
+        self.show()
+    
+    def _setWidgets(self):
+        self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
+            'darkbeer.xpm'))
+        self.lbCreated.set_text('')
+        self.lbSent.set_text('')
+        self.lbTitle.set_text('')
+        viewFontName = self.cfg.getOption('fonts', 'preview', 'Sans 10')
+        self.txEntry.modify_font(pango.FontDescription(viewFontName))
+        logFontName = self.cfg.getOption('fonts', 'log', 'Monospace 10')
+        self.logView.modify_font(pango.FontDescription(logFontName))
+        if os.name == 'nt':
+            toolbarStyle = self.cfg.getOption('toolbars', 'style', 'icons')
+        else:
+            toolbarStyle = self.cfg.getOption('toolbars', 'style', 'both')
+        if toolbarStyle == 'both':
+            gtkStyle = gtk.TOOLBAR_BOTH
+        elif toolbarStyle == 'icons':
+            gtkStyle = gtk.TOOLBAR_ICONS
+        elif toolbarStyle == 'labels':
+            gtkStyle = gtk.TOOLBAR_TEXT
+        self.tbrMain.set_style(gtkStyle)
+        self.activateActions(False)
         self.entriesModel = gtk.ListStore(str, str, gobject.TYPE_PYOBJECT)
         today = datetime.date.today()
         cell0 = gtk.CellRendererText()
@@ -82,20 +101,8 @@ class MainWindow(notifiable.Notifiable):
             sel = self.lvEntries.get_selection()
             sel.select_path(0)
             self.displayEntry(self.getEntryFromSelection())
-        listMenuTree = gtk.glade.XML(appconst.GLADE_PATH, 'pmEntryList', 'jpa')
-        listMenuTree.signal_autoconnect(self)
-        self.pmEntryList = listMenuTree.get_widget('pmEntryList')
-        if os.name == 'nt':
-            toolbarStyle = self.cfg.getOption('toolbars', 'style', 'icons')
-        else:
-            toolbarStyle = self.cfg.getOption('toolbars', 'style', 'both')
-        if toolbarStyle == 'both':
-            gtkStyle = gtk.TOOLBAR_BOTH
-        elif toolbarStyle == 'icons':
-            gtkStyle = gtk.TOOLBAR_ICONS
-        elif toolbarStyle == 'labels':
-            gtkStyle = gtk.TOOLBAR_TEXT
-        self.tbrMain.set_style(gtkStyle)
+    
+    def show(self):
         self.window.present()
     
     def notify(self, event, *args, **kwargs):
@@ -122,6 +129,11 @@ class MainWindow(notifiable.Notifiable):
         elif event == 'filter-changed':
             self.loadEntriesList(self.entryFilter['year'],
                 self.entryFilter['month'])
+        elif event == 'publish-entry':
+            entry = self.getEntryFromSelection()
+            blogs = args[0]
+            if len(blogs) > 0:
+                self.controller.publishEntry(entry, blogs)
 
     def loadEntriesList(self, year, month):
         self.entriesModel.clear()
@@ -170,6 +182,9 @@ class MainWindow(notifiable.Notifiable):
     def _editEntry(self, *args):
         entry = self.getEntryFromSelection()
         self.controller.editEntry(entry, self)
+    
+    def _publishEntry(self, *args):
+        self.controller.getPublishTo(self)
     
     def on_miEditPrefs_activate(self, *args):
         self.controller.showPreferences(self)

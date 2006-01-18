@@ -78,6 +78,10 @@ class Entry(SQLObject):
     # indexes
     createdIdx = DatabaseIndex(created)
     titleIdx = DatabaseIndex(title)
+    
+    def publish(self, blogs):
+        """Method to publish entry to specified weblogs"""
+        pass
 
 
 class Category(SQLObject):

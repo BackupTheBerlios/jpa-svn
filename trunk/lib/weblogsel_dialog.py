@@ -31,3 +31,8 @@ class WeblogSelectionDialog(EditWindow):
 
     def show(self):
         self.window.present()
+    
+    def on_btnOk_clicked(self, *args):
+        weblogs = []
+        self.parent.notify('publish-entry', weblogs)
+        self.window.destroy()
