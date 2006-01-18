@@ -164,6 +164,7 @@ class PreferencesDialog:
         else:
             toolbarView = 'both'
         self.cfg.setOption('toolbars', 'style', toolbarView)
+        self.parent.notify('settings-changed')
 
     ### signal handlers ###
     def on_ckbEnableAutosave_toggled(self, *args):
@@ -192,6 +193,9 @@ class PreferencesDialog:
 
     def on_btnCancel_clicked(self, *args):
         self.window.destroy()
+    
+    def on_btnApply_clicked(self, *args):
+        self._savePrefs()
     
     def on_btnOk_clicked(self, *args):
         self._savePrefs()

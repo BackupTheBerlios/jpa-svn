@@ -36,6 +36,7 @@ class MainWindow(notifiable.Notifiable):
         'entry-deleted',
         'filter-changed',
         'publish-entry',
+        'settings-changed',
         )
     
     def __init__(self, controller):
@@ -62,6 +63,7 @@ class MainWindow(notifiable.Notifiable):
         self.tbnSend = self.wTree.get_widget('tbnSend')
         self.lvEntries = self.wTree.get_widget('lvEntries')
         self._setWidgets()
+        self._setDisplaySettings()
         self.show()
     
     def _setWidgets(self):
@@ -70,21 +72,6 @@ class MainWindow(notifiable.Notifiable):
         self.lbCreated.set_text('')
         self.lbSent.set_text('')
         self.lbTitle.set_text('')
-        viewFontName = self.cfg.getOption('fonts', 'preview', 'Sans 10')
-        self.txEntry.modify_font(pango.FontDescription(viewFontName))
-        logFontName = self.cfg.getOption('fonts', 'log', 'Monospace 10')
-        self.logView.modify_font(pango.FontDescription(logFontName))
-        if os.name == 'nt':
-            toolbarStyle = self.cfg.getOption('toolbars', 'style', 'icons')
-        else:
-            toolbarStyle = self.cfg.getOption('toolbars', 'style', 'both')
-        if toolbarStyle == 'both':
-            gtkStyle = gtk.TOOLBAR_BOTH
-        elif toolbarStyle == 'icons':
-            gtkStyle = gtk.TOOLBAR_ICONS
-        elif toolbarStyle == 'labels':
-            gtkStyle = gtk.TOOLBAR_TEXT
-        self.tbrMain.set_style(gtkStyle)
         self.activateActions(False)
         self.entriesModel = gtk.ListStore(str, str, gobject.TYPE_PYOBJECT)
         today = datetime.date.today()
@@ -101,6 +88,23 @@ class MainWindow(notifiable.Notifiable):
             sel = self.lvEntries.get_selection()
             sel.select_path(0)
             self.displayEntry(self.getEntryFromSelection())
+    
+    def _setDisplaySettings(self):
+        viewFontName = self.cfg.getOption('fonts', 'preview', 'Sans 10')
+        self.txEntry.modify_font(pango.FontDescription(viewFontName))
+        logFontName = self.cfg.getOption('fonts', 'log', 'Monospace 10')
+        self.logView.modify_font(pango.FontDescription(logFontName))
+        if os.name == 'nt':
+            toolbarStyle = self.cfg.getOption('toolbars', 'style', 'icons')
+        else:
+            toolbarStyle = self.cfg.getOption('toolbars', 'style', 'both')
+        if toolbarStyle == 'both':
+            gtkStyle = gtk.TOOLBAR_BOTH
+        elif toolbarStyle == 'icons':
+            gtkStyle = gtk.TOOLBAR_ICONS
+        elif toolbarStyle == 'labels':
+            gtkStyle = gtk.TOOLBAR_TEXT
+        self.tbrMain.set_style(gtkStyle)
     
     def show(self):
         self.window.present()
@@ -134,6 +138,8 @@ class MainWindow(notifiable.Notifiable):
             blogs = args[0]
             if len(blogs) > 0:
                 self.controller.publishEntry(entry, blogs)
+        elif event == 'settings-changed':
+            self._setDisplaySettings()
 
     def loadEntriesList(self, year, month):
         self.entriesModel.clear()
