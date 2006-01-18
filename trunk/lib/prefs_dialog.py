@@ -53,6 +53,9 @@ class PreferencesDialog:
         self.edProxyHost = self.wTree.get_widget('edProxyHost')
         self.edProxyPort = self.wTree.get_widget('edProxyPort')
         self.cbxDefBodyType = self.wTree.get_widget('cbxDefBodyType')
+        self.rbnIconsAndLabels = self.wTree.get_widget('rbnIconsAndLabels')
+        self.rbnIconsOnly = self.wTree.get_widget('rbnIconsOnly')
+        self.rbnLabelsOnly = self.wTree.get_widget('rbnLabelsOnly')
         self.wTree.signal_autoconnect(self)
     
     def show(self):
@@ -99,6 +102,13 @@ class PreferencesDialog:
         self.cbxDefBodyType.set_active(
             datamodel.BODY_TYPES.index(bodyType)
         )
+        toolbarView = self.cfg.getOption('toolbars', 'style', 'both')
+        if toolbarView == 'both':
+            self.rbnIconsAndLabels.set_active(True)
+        elif toolbarView == 'icons':
+            self.rbnIconsOnly.set_active(True)
+        elif toolbarView == 'labels':
+            self.rbnLabelsOnly.set_active(True)
         self.window.present()
     
     ### "private" methods ###
@@ -147,6 +157,13 @@ class PreferencesDialog:
             self.edProxyPort.get_text())
         bodyType = datamodel.BODY_TYPES[self.cbxDefBodyType.get_active()]
         self.cfg.setOption('editing', 'def_body_type', bodyType)
+        if self.rbnLabelsOnly.get_active():
+            toolbarView = 'labels'
+        elif self.rbnIconsOnly.get_active():
+            toolbarView = 'icons'
+        else:
+            toolbarView = 'both'
+        self.cfg.setOption('toolbars', 'style', toolbarView)
 
     ### signal handlers ###
     def on_ckbEnableAutosave_toggled(self, *args):

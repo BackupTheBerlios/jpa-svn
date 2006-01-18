@@ -20,7 +20,7 @@
 
 __revision__ = '$Id$'
 
-import os.path as op
+import os, os.path as op
 import datetime
 
 import gtk, pango, gobject
@@ -62,6 +62,7 @@ class MainWindow(notifiable.Notifiable):
         self.logView.modify_font(pango.FontDescription(logFontName))
         self.miFileEdit = self.wTree.get_widget('miFileEdit')
         self.miFilePublish = self.wTree.get_widget('miFilePublish')
+        self.tbrMain = self.wTree.get_widget('tbrMain')
         self.tbnEdit = self.wTree.get_widget('tbnEdit')
         self.tbnSend = self.wTree.get_widget('tbnSend')
         self.activateActions(False)
@@ -84,6 +85,17 @@ class MainWindow(notifiable.Notifiable):
         listMenuTree = gtk.glade.XML(appconst.GLADE_PATH, 'pmEntryList', 'jpa')
         listMenuTree.signal_autoconnect(self)
         self.pmEntryList = listMenuTree.get_widget('pmEntryList')
+        if os.name == 'nt':
+            toolbarStyle = self.cfg.getOption('toolbars', 'style', 'icons')
+        else:
+            toolbarStyle = self.cfg.getOption('toolbars', 'style', 'both')
+        if toolbarStyle == 'both':
+            gtkStyle = gtk.TOOLBAR_BOTH
+        elif toolbarStyle == 'icons':
+            gtkStyle = gtk.TOOLBAR_ICONS
+        elif toolbarStyle == 'labels':
+            gtkStyle = gtk.TOOLBAR_TEXT
+        self.tbrMain.set_style(gtkStyle)
         self.window.present()
     
     def notify(self, event, *args, **kwargs):
