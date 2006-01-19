@@ -165,7 +165,8 @@ class PreferencesDialog:
         else:
             toolbarView = 'both'
         self.cfg.setOption('toolbars', 'style', toolbarView)
-        self.parent.notify('settings-changed')
+        if self.parent:
+            self.parent.notify('settings-changed')
 
     ### signal handlers ###
     def on_ckbEnableAutosave_toggled(self, *args):

@@ -75,6 +75,7 @@ class Entry(SQLObject):
     year = IntCol(default=datetime.datetime.now().year)
     categories = RelatedJoin('Category')
     isDraft = BoolCol(default='f')
+    publications = MultipleJoin('Publication', orderBy='-published')
     # indexes
     createdIdx = DatabaseIndex(created)
     titleIdx = DatabaseIndex(title)
@@ -99,7 +100,7 @@ class Publication(SQLObject):
     """
     published = DateTimeCol(notNone=True)
     entry = ForeignKey('Entry')
-    weblog = ForeignKey('Weblog')
+    weblogs = MultipleJoin('Weblog')
     assignedId = UnicodeCol()
     # indexes
     pubIdx = DatabaseIndex(published)
@@ -116,6 +117,7 @@ class Identity(SQLObject):
     serviceProtocol = UnicodeCol(default='xmpp')
     serviceURI = UnicodeCol()
     servicePort = IntCol(default=0)
+    weblogs = MultipleJoin('Weblog')
 
 
 class Weblog(SQLObject):
