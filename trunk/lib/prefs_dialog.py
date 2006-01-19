@@ -33,6 +33,7 @@ class PreferencesDialog:
         self.cfg = appconst.CFG
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmPrefs', 'jpa')
         self.window = self.wTree.get_widget('frmPrefs')
+        self.parent = parent
         if parent:
             self.window.set_transient_for(parent.window)
         self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
