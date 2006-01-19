@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-19 20:57+0100\n"
+"POT-Creation-Date: 2006-01-19 22:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,6 +105,18 @@ msgstr ""
 
 #: lib/weblogs_dialog.py:49 share/jpa2.glade.h:12
 msgid "Active"
+msgstr ""
+
+#: lib/weblogsel_dialog.py:42 share/jpa2.glade.h:64
+msgid "Publish"
+msgstr ""
+
+#: lib/weblogsel_dialog.py:43
+msgid "Weblog name"
+msgstr ""
+
+#: lib/weblogsel_dialog.py:44 share/jpa2.glade.h:41
+msgid "Identity"
 msgstr ""
 
 #: lib/transport/blogger.py:69
@@ -272,10 +284,6 @@ msgstr ""
 msgid "Host name (or IP address) of proxy server"
 msgstr ""
 
-#: share/jpa2.glade.h:41
-msgid "Identity"
-msgstr ""
-
 #: share/jpa2.glade.h:42
 msgid "Identity name"
 msgstr ""
@@ -362,10 +370,6 @@ msgstr ""
 
 #: share/jpa2.glade.h:63
 msgid "Proxy _port:"
-msgstr ""
-
-#: share/jpa2.glade.h:64
-msgid "Publish"
 msgstr ""
 
 #: share/jpa2.glade.h:65

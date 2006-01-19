@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JPA-0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-18 21:40+0100\n"
+"POT-Creation-Date: 2006-01-19 22:30+0100\n"
 "PO-Revision-Date: 2005-12-23 21:39+0100\n"
 "Last-Translator: Jarek Zgoda <jzgoda@o2.pl>\n"
 "Language-Team: Polish\n"
@@ -108,6 +108,18 @@ msgstr "BlogID"
 #: lib/weblogs_dialog.py:49 share/jpa2.glade.h:12
 msgid "Active"
 msgstr "Aktywny"
+
+#: lib/weblogsel_dialog.py:42 share/jpa2.glade.h:64
+msgid "Publish"
+msgstr "Opublikuj"
+
+#: lib/weblogsel_dialog.py:43
+msgid "Weblog name"
+msgstr "Nazwa dziennika:"
+
+#: lib/weblogsel_dialog.py:44 share/jpa2.glade.h:41
+msgid "Identity"
+msgstr "Tożsamość"
 
 #: lib/transport/blogger.py:69
 msgid "Blogger.com transport using new Atom API"
@@ -274,10 +286,6 @@ msgstr "Źródło HTML treści wpisu"
 msgid "Host name (or IP address) of proxy server"
 msgstr "Nazwa lub adres IP pośrednika sieciowego"
 
-#: share/jpa2.glade.h:41
-msgid "Identity"
-msgstr "Tożsamość"
-
 #: share/jpa2.glade.h:42
 msgid "Identity name"
 msgstr "Nazwa tożsamości"
@@ -365,10 +373,6 @@ msgstr "Nazwa pośrednika:"
 #: share/jpa2.glade.h:63
 msgid "Proxy _port:"
 msgstr "_Port pośrednika:"
-
-#: share/jpa2.glade.h:64
-msgid "Publish"
-msgstr "Opublikuj"
 
 #: share/jpa2.glade.h:65
 msgid "Publish entry to weblog(s)"
