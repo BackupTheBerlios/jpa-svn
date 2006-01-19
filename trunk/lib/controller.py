@@ -136,7 +136,8 @@ class Controller:
         dialog.show()
     
     def publishEntry(self, entry, blogs):
-        entry.publish(blogs)
+        for blog in blogs:
+            entry.publish(blog)
     
     def __del__(self):
         for fileName in self.__tempFiles:

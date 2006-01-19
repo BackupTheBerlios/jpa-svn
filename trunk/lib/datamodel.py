@@ -25,7 +25,7 @@ import datetime, os
 from sqlobject import *
 from sqlobject.sqlbuilder import *
 
-import appconst
+import appconst, transport
 
 BODY_TYPES = ['plain', 'textile', 'markdown', 'HTML']
 try:
@@ -80,9 +80,21 @@ class Entry(SQLObject):
     createdIdx = DatabaseIndex(created)
     titleIdx = DatabaseIndex(title)
     
-    def publish(self, blogs):
-        """Method to publish entry to specified weblogs"""
-        pass
+    def publish(self, weblog):
+        """Method to publish entry to specified weblog"""
+        transportType = weblog.identity.transportType
+        login = weblog.identity.login
+        password = weblog.identity.password
+        uri = weblog.identity.serviceURI
+        if appconst.CFG.getOption('network', 'use_proxy', '0') == '1':
+            host = appconst.CFG.getOption('network', 'proxy_host', '')
+            port = int(appconst.CFG.getOption('network', 'proxy_port', '0'))
+            proxy = {'host': host, 'port': port}
+        else:
+            proxy = None
+        transportClass = transport.TRANSPORTS[transportType]
+        transportObj = transportClass(login, password, proxy, uri)
+        assignedId = transportObj.postNew(weblog.weblogID, self)
 
 
 class Category(SQLObject):
