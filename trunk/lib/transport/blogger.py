@@ -23,7 +23,8 @@ REST approach. Very nice, indeed!"""
 
 __revision__ = '$Id$'
 
-import httplib, urlparse, proxytools
+import time
+import httplib, urlparse
 import binascii
 try:
     import cElementTree as ElementTree
@@ -31,12 +32,35 @@ except ImportError:
     from elementtree import ElementTree
 
 # import lib.version
-import api
+import lib.renderer
+import api, proxytools
 
 # namespaces
 NS_ATOM = '{http://purl.org/atom/ns#}'
+NS_ATOM_URI = 'http://purl.org/atom/ns#'
 NS_BLOGGER = '{http://www.blogger.com/atom/ns#}'
+NS_BLOGGER_URI = 'http://www.blogger.com/atom/ns#'
 NS_HTML = '{http://www.w3.org/1999/xhtml}'
+NS_HTML_URI = 'http://www.w3.org/1999/xhtml'
+NS_DRAFT = '{http://purl.org/atom-blog/ns#}'
+NS_DRAFT_URI = 'http://purl.org/atom-blog/ns#'
+
+POST = """<?xml version="1.0" encoding="UTF-8" ?>
+<entry xmlns="http://purl.org/atom/ns#">
+<generator url="http://jpa.berlios.de/">JPA-1.0</generator>
+<title mode="escaped" type="text/html">%(title)s</title>
+<issued>%(issued)s</issued>
+<content type="application/xhtml+xml">
+<div xmlns="http://www.w3.org/1999/xhtml">%(body)s</div>
+</content>
+</entry>"""
+
+def buildBloggerPost(entry):
+    title = entry.title.encode('utf-8')
+    issued = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
+    body = lib.renderer.renderBody(entry.body.encode('utf-8'), entry.bodyType)
+    return POST % locals()
+
 
 class BloggerTransport(api.WeblogTransport):
     """Weblog transport that uses Blogger Atom API."""
@@ -97,3 +121,25 @@ class BloggerTransport(api.WeblogTransport):
             (scheme, loc, path, query, frag) = urlparse.urlsplit(href)
             blogs[link.get('title')] = path.split('/')[-1]
         return blogs
+    
+    def postNew(self, blogId, entry):
+        post = buildBloggerPost(entry)
+        if self.proxy:
+            connection = proxytools.ProxyHTTPSConnection(self.proxy['host'],
+                self.proxy['port'])
+        else:
+            connection = httplib.HTTPSConnection(self.host)
+        connection.set_debuglevel(9)
+        blogPath = '/%s' % blogId
+        path = self.path % blogPath
+        try:
+            connection.request('POST', path, body=post, headers=self.headers)
+            response = connection.getresponse()
+            print response.getheaders()
+            print response.status, response.reason
+            if response.status  >= 500:
+                print 'Blogger server error'
+                #raise api.ServiceUnavailableError('Blogger server error')
+            print response.read()
+        finally:
+            connection.close()
