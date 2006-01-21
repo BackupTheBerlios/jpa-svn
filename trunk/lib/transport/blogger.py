@@ -32,7 +32,7 @@ except ImportError:
     from elementtree import ElementTree
 
 # import lib.version
-import lib.renderer
+import lib.renderer, lib.version
 import api, proxytools
 
 # namespaces
@@ -47,19 +47,27 @@ NS_DRAFT_URI = 'http://purl.org/atom-blog/ns#'
 
 POST = """<?xml version="1.0" encoding="UTF-8" ?>
 <entry xmlns="http://purl.org/atom/ns#">
-<generator url="http://jpa.berlios.de/">JPA-1.0</generator>
+<generator url="%(generatorUrl)s">%(generatorName)s</generator>
 <title mode="escaped" type="text/html">%(title)s</title>
 <issued>%(issued)s</issued>
 <content type="application/xhtml+xml">
 <div xmlns="http://www.w3.org/1999/xhtml">%(body)s</div>
 </content>
+<draft xmlns="http://purl.org/atom-blog/ns#">%(isDraft)s</draft>
 </entry>"""
 
 def buildBloggerPost(entry):
+    generatorUrl = lib.version.PROG_URL
+    generatorName = lib.version.AGENT
     title = entry.title.encode('utf-8')
     issued = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
     body = lib.renderer.renderBody(entry.body.encode('utf-8'), entry.bodyType)
-    return POST % locals()
+    if entry.isDraft:
+        isDraft = 'true'
+    else:
+        isDraft = 'false'
+    data = locals()
+    return (POST % data, data)
 
 
 class BloggerTransport(api.WeblogTransport):
@@ -123,7 +131,7 @@ class BloggerTransport(api.WeblogTransport):
         return blogs
     
     def postNew(self, blogId, entry):
-        post = buildBloggerPost(entry)
+        post, data = buildBloggerPost(entry)
         if self.proxy:
             connection = proxytools.ProxyHTTPSConnection(self.proxy['host'],
                 self.proxy['port'])

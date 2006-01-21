@@ -23,5 +23,6 @@ __revision__ = '$Id$'
 PROGVER = '0.5.0'
 AGENTNAME = 'JPA'
 PROGRAM = '%s - %s' % (AGENTNAME, PROGVER)
+PROG_URL = 'http://jpa.berlios.de/'
 AGENTVER = '1.0'
 AGENT = '%s-%s' % (AGENTNAME, AGENTVER)

@@ -58,7 +58,7 @@ def fillTables():
 
 def getEntriesList(year, month):
     return Entry.select(
-        AND(Entry.q.year==year, Entry.q.month==month), 
+        AND(Entry.q.year==year, Entry.q.month==month),
         orderBy='created'
     ).reversed()
 
@@ -128,6 +128,10 @@ class Identity(SQLObject):
     password = UnicodeCol()
     serviceProtocol = UnicodeCol(default='xmpp')
     serviceURI = UnicodeCol()
+    postURI = UnicodeCol(default=None, dbName='post_uri')
+    editURI = UnicodeCol(default=None, dbName='edit_uri')
+    deleteURI = UnicodeCol(default=None, dbName='delete_uri')
+    getURI = UnicodeCol(default=None, dbName='get_uri')
     servicePort = IntCol(default=0)
     weblogs = MultipleJoin('Weblog')
 
