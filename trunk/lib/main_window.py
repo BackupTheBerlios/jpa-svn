@@ -22,11 +22,32 @@ __revision__ = '$Id$'
 
 import os, os.path as op
 import datetime
+import Queue, threading
 
 import gtk, pango, gobject
 import gtk.glade, gtk.gdk
 
 import appconst, version, notifiable, datamodel, apputils
+
+class BlogOperatorThread(threading.Thread):
+    
+    def __init__(self, transportObject, eventQueue, operation, entry=None):
+        self.transport = transportObject
+        self.queue = eventQueue
+        self.operation = operation
+        self.entry = entry
+        threading.Thread.__init__(self)
+
+    def run(self):
+        if self.operation == 'new':
+            pass
+        elif self.operation == 'edit':
+            pass
+        elif self.operation == 'delete':
+            pass
+        elif self.operation == 'get':
+            pass
+
 
 class MainWindow(notifiable.Notifiable):
     
@@ -40,6 +61,7 @@ class MainWindow(notifiable.Notifiable):
         )
     
     def __init__(self, controller):
+        self.events = Queue.Queue()
         self.controller = controller
         self.curEntry = None
         self.cfg = appconst.CFG
@@ -51,7 +73,8 @@ class MainWindow(notifiable.Notifiable):
         self.pmEntryList = listMenuTree.get_widget('pmEntryList')
         self.window.set_title(version.PROGRAM)
         self.logPanel = self.wTree.get_widget('pnLog')
-        self.logView = self.wTree.get_widget('txLog')
+        self.txLog = self.wTree.get_widget('txLog')
+        self.logBuffer = self.txLog.get_buffer()
         self.lbCreated = self.wTree.get_widget('lbCreated')
         self.lbSent = self.wTree.get_widget('lbSent')
         self.lbTitle = self.wTree.get_widget('lbTitle')
@@ -93,7 +116,7 @@ class MainWindow(notifiable.Notifiable):
         viewFontName = self.cfg.getOption('fonts', 'preview', 'Sans 10')
         self.txEntry.modify_font(pango.FontDescription(viewFontName))
         logFontName = self.cfg.getOption('fonts', 'log', 'Monospace 10')
-        self.logView.modify_font(pango.FontDescription(logFontName))
+        self.txLog.modify_font(pango.FontDescription(logFontName))
         if os.name == 'nt':
             toolbarStyle = self.cfg.getOption('toolbars', 'style', 'icons')
         else:

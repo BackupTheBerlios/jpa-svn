@@ -56,7 +56,13 @@ class BloggerTransport(api.WeblogTransport):
         ret = s.blogger.getUsersBlogs(APPKEY, self.userName, self.passwd)
         blogs = {}
         for blogData in ret:
-            blogs[blogData['blogName']] = blogData['blogid']
+            title = blogData['blogName']
+            try:
+                data = blogs[title]
+            except KeyError:
+                data = {}
+            data['blogID'] = blogData['blogid']
+            blogs[title] = data
         return blogs
     
     def getEntry(self, entryId):

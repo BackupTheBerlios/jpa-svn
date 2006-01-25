@@ -31,8 +31,8 @@ try:
 except ImportError:
     from elementtree import ElementTree
 
-# import lib.version
 import lib.renderer, lib.version
+from lib.appconst import DEBUG
 import api, proxytools
 
 # namespaces
@@ -127,7 +127,13 @@ class BloggerTransport(api.WeblogTransport):
         for link in links:
             href = link.get('href')
             (scheme, loc, path, query, frag) = urlparse.urlsplit(href)
-            blogs[link.get('title')] = path.split('/')[-1]
+            title = link.get('title')
+            try:
+                data = blogs[title]
+            except KeyError:
+                data = {}
+            data['blogID'] = path.split('/')[-1]
+            blogs[title] = data
         return blogs
     
     def postNew(self, blogId, entry):
@@ -137,17 +143,40 @@ class BloggerTransport(api.WeblogTransport):
                 self.proxy['port'])
         else:
             connection = httplib.HTTPSConnection(self.host)
-        connection.set_debuglevel(9)
+        if DEBUG:
+            connection.set_debuglevel(9)
         blogPath = '/%s' % blogId
         path = self.path % blogPath
         try:
             connection.request('POST', path, body=post, headers=self.headers)
             response = connection.getresponse()
-            print response.getheaders()
-            print response.status, response.reason
-            if response.status  >= 500:
-                print 'Blogger server error'
-                #raise api.ServiceUnavailableError('Blogger server error')
-            print response.read()
+            content = self._handleResponse(response)
+            if DEBUG:
+                print content
         finally:
             connection.close()
+
+    def _handleResponse(self, response):
+        content = response.read()
+        if response.status in range(200, 300):
+            # success
+            return content
+        else:
+            if response.status == 401:
+                # authorization failure
+                raise api.ServiceAuthorizationError(response.reason)
+            elif response.status == 404:
+                # resource does not exists
+                raise api.ResourceNotFoundError(response.reason)
+            elif response.status == 500:
+                # internal server error
+                lines = []
+                lines.append(_('Returned HTTP reason: %s') % response.reason)
+                lines.append(_('Received content:'))
+                lines.append(content)
+                raise api.ServiceInternalError('\n'.join(lines))
+            elif response.status == 503:
+                # service unavailable
+                raise api.ServiceUnavailableError(response.reason)
+            else:
+                raise api.ServiceError(response.reason)

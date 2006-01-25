@@ -25,7 +25,7 @@ import threading, Queue
 import gtk, gobject
 from sqlobject import SQLObjectNotFound
 
-import transport
+import transport, appconst
 from datamodel import Weblog
 from appwindow import EditWindow
 
@@ -74,7 +74,7 @@ class WeblogDiscoveryDialog(EditWindow):
         proxy = {}
         if self.cfg.getOption('network', 'use_proxy', '0') == '1':
             proxy['host'] = self.cfg.getOption('network', 'proxy_host', '')
-            proxy['port'] = int(self.cfg.getOption('network', 
+            proxy['port'] = int(self.cfg.getOption('network',
                 'proxy_port', '0'))
         uri = self.identity.serviceURI
         transObj = transClass(login, passwd, proxy, uri)
@@ -84,6 +84,8 @@ class WeblogDiscoveryDialog(EditWindow):
     def _pulse(self):
         try:
             self.weblogs = self.queue.get_nowait()
+            if appconst.DEBUG:
+                print self.weblogs
             self.pbDisco.set_fraction(0.0)
             self._fillList()
         except Queue.Empty:
@@ -95,8 +97,8 @@ class WeblogDiscoveryDialog(EditWindow):
     
     def _fillList(self):
         self.model.clear()
-        for (name, blogID) in self.weblogs.iteritems():
-            self.model.append((True, name, blogID))
+        for (name, data) in self.weblogs.iteritems():
+            self.model.append((True, name, data['blogID']))
     
     def _updateBlogData(self, blogName, blogID):
         try:

@@ -24,3 +24,4 @@ PATHS = {}
 GLADE_FILE = 'jpa2.glade'
 DB_URI = ''
 CFG = None
+DEBUG = True

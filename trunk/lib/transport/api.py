@@ -21,7 +21,11 @@
 __revision__ = '$Id$'
 
 # service errors
-class ServiceUnavailableError(Exception): pass
+class ServiceError(Exception): pass
+class ResourceNotFoundError(ServiceError): pass
+class ServiceAuthorizationError(ServiceError): pass
+class ServiceInternalError(ServiceError): pass
+class ServiceUnavailableError(ServiceError): pass
 
 class WeblogTransport:
 

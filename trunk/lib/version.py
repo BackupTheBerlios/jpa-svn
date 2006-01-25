@@ -26,3 +26,4 @@ PROGRAM = '%s - %s' % (AGENTNAME, PROGVER)
 PROG_URL = 'http://jpa.berlios.de/'
 AGENTVER = '1.0'
 AGENT = '%s-%s' % (AGENTNAME, AGENTVER)
+
