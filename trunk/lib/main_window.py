@@ -31,16 +31,16 @@ import appconst, version, notifiable, datamodel, apputils
 
 class BlogOperatorThread(threading.Thread):
     
-    def __init__(self, transportObject, eventQueue, operation, entry=None):
-        self.transport = transportObject
+    def __init__(self, eventQueue, operation, weblog, entry=None):
         self.queue = eventQueue
         self.operation = operation
+        self.weblog = weblog
         self.entry = entry
         threading.Thread.__init__(self)
 
     def run(self):
         if self.operation == 'new':
-            pass
+            entry.publish(weblog)
         elif self.operation == 'edit':
             pass
         elif self.operation == 'delete':
@@ -87,6 +87,7 @@ class MainWindow(notifiable.Notifiable):
         self.lvEntries = self.wTree.get_widget('lvEntries')
         self._setWidgets()
         self._setDisplaySettings()
+        self.idleTimer = gobject.idle_add(self._pollEventQueue)
         self.show()
     
     def _setWidgets(self):
@@ -129,6 +130,15 @@ class MainWindow(notifiable.Notifiable):
             gtkStyle = gtk.TOOLBAR_TEXT
         self.tbrMain.set_style(gtkStyle)
     
+    def _pollEventQueue(self):
+        try:
+            event, data = self.events.get_nowait()
+            buf = self.txLog.get_buffer()
+            buf.insert(buf.get_end_iter(), data)
+            buf.insert(buf.get_end_iter(), '\n')
+        except Queue.Empty:
+            pass
+    
     def show(self):
         self.window.present()
     
@@ -159,8 +169,11 @@ class MainWindow(notifiable.Notifiable):
         elif event == 'publish-entry':
             entry = self.getEntryFromSelection()
             blogs = args[0]
-            if len(blogs) > 0:
-                self.controller.publishEntry(entry, blogs)
+            #if len(blogs) > 0:
+            #    self.controller.publishEntry(entry, blogs)
+            for blog in blogs:
+                t = BlogOperatorThread(self.events, 'new', blog, entry)
+                t.start()
         elif event == 'settings-changed':
             self._setDisplaySettings()
 
@@ -203,6 +216,7 @@ class MainWindow(notifiable.Notifiable):
 
     def on_frmMain_destroy(self, *args):
         self.cfg.saveConfig()
+        gobject.source_remove(self.idleTimer)
         gtk.main_quit()
     
     def _addEntry(self, *args):

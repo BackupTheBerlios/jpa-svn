@@ -95,6 +95,12 @@ class Entry(SQLObject):
         transportClass = transport.TRANSPORTS[transportType]
         transportObj = transportClass(login, password, proxy, uri)
         assignedId = transportObj.postNew(weblog.weblogID, self)
+        pubDate = datetime.datetime.now()
+        Publication(published=pubDate,
+            entry=self,
+            weblog=weblog,
+            assignedId=assignedId
+        )
 
 
 class Category(SQLObject):
@@ -112,7 +118,7 @@ class Publication(SQLObject):
     """
     published = DateTimeCol(notNone=True)
     entry = ForeignKey('Entry')
-    weblogs = MultipleJoin('Weblog')
+    weblog = ForeignKey('Weblog')
     assignedId = UnicodeCol()
     # indexes
     pubIdx = DatabaseIndex(published)
