@@ -133,7 +133,7 @@ class Identity(SQLObject):
     login = UnicodeCol()
     password = UnicodeCol()
     serviceProtocol = UnicodeCol(default='xmpp')
-    serviceURI = UnicodeCol()
+    serviceURI = UnicodeCol(dbName='service_uri')
     postURI = UnicodeCol(default=None, dbName='post_uri')
     editURI = UnicodeCol(default=None, dbName='edit_uri')
     deleteURI = UnicodeCol(default=None, dbName='delete_uri')

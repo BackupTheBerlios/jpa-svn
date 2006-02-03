@@ -84,9 +84,10 @@ class IdentitiesDialog(ListWindow):
         self.btnEdit.set_sensitive(enableAction)
         self.miDel.set_sensitive(enableAction)
         self.btnDel.set_sensitive(enableAction)
-        identity = self._getIdentityFromSelection()
-        features = transport.FEATURES[identity.transportType]
-        self.miDiscover.set_sensitive('discovery' in features)
+        if enableAction:
+            identity = self._getIdentityFromSelection()
+            features = transport.FEATURES[identity.transportType]
+            self.miDiscover.set_sensitive('discovery' in features)
     
     def _getIdentityFromSelection(self):
         selection = self.lvIdentities.get_selection()
