@@ -21,7 +21,16 @@
 __revision__ = '$Id$'
 
 # service errors
-class ServiceError(Exception): pass
+class ServiceError(Exception):
+    """Base class for all service errors"""
+    
+    def __init__(self, message):
+        self.message = message
+    
+    def __str__(self):
+        return self.message
+
+
 class ResourceNotFoundError(ServiceError): pass
 class ServiceAuthorizationError(ServiceError): pass
 class ServiceInternalError(ServiceError): pass

@@ -16,29 +16,27 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-"""Transport initialization routines"""
+"""Weblog operation thread"""
 
 __revision__ = '$Id$'
 
-import blogger, jogger, xmlrpcblogger
+import threading
 
-from api import ServiceError, ResourceNotFoundError,\
-    ServiceAuthorizationError, ServiceInternalError, ServiceUnavailableError
+class BlogOperatorThread(threading.Thread):
+    
+    def __init__(self, eventQueue, operation, weblog, entry=None):
+        self.queue = eventQueue
+        self.operation = operation
+        self.weblog = weblog
+        self.entry = entry
+        threading.Thread.__init__(self)
 
-AVAILABLE = [
-    'blogger (Atom)',
-    'jogger.pl',
-    'blogger (XML-RPC)',
-]
-
-TRANSPORTS = {
-    'blogger (Atom)': blogger.BloggerTransport,
-    'jogger.pl': jogger.JoggerTransport,
-    'blogger (XML-RPC)': xmlrpcblogger.BloggerTransport,
-}
-
-FEATURES = {
-    'blogger (Atom)': ('discovery', 'blogID', 'auth'),
-    'jogger.pl': (),
-    'blogger (XML-RPC)': ('discovery', 'blogID', 'auth')
-}
+    def run(self):
+        if self.operation == 'new':
+            entry.publish(weblog, self.queue)
+        elif self.operation == 'edit':
+            pass
+        elif self.operation == 'delete':
+            pass
+        elif self.operation == 'get':
+            pass

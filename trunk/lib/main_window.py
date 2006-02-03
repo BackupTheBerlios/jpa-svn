@@ -22,31 +22,13 @@ __revision__ = '$Id$'
 
 import os, os.path as op
 import datetime
-import Queue, threading
+import Queue
 
 import gtk, pango, gobject
 import gtk.glade, gtk.gdk
 
-import appconst, version, notifiable, datamodel, apputils
-
-class BlogOperatorThread(threading.Thread):
-    
-    def __init__(self, eventQueue, operation, weblog, entry=None):
-        self.queue = eventQueue
-        self.operation = operation
-        self.weblog = weblog
-        self.entry = entry
-        threading.Thread.__init__(self)
-
-    def run(self):
-        if self.operation == 'new':
-            entry.publish(weblog)
-        elif self.operation == 'edit':
-            pass
-        elif self.operation == 'delete':
-            pass
-        elif self.operation == 'get':
-            pass
+import appconst, version, notifiable, datamodel, apputils, blogoper
+from appconst import DEBUG
 
 
 class MainWindow(notifiable.Notifiable):
@@ -131,6 +113,8 @@ class MainWindow(notifiable.Notifiable):
         self.tbrMain.set_style(gtkStyle)
     
     def _pollEventQueue(self):
+        if DEBUG:
+            print 'Polling events from queue...'
         try:
             event, data = self.events.get_nowait()
             buf = self.txLog.get_buffer()
@@ -138,6 +122,7 @@ class MainWindow(notifiable.Notifiable):
             buf.insert(buf.get_end_iter(), '\n')
         except Queue.Empty:
             pass
+        return True
     
     def show(self):
         self.window.present()
@@ -169,10 +154,8 @@ class MainWindow(notifiable.Notifiable):
         elif event == 'publish-entry':
             entry = self.getEntryFromSelection()
             blogs = args[0]
-            #if len(blogs) > 0:
-            #    self.controller.publishEntry(entry, blogs)
             for blog in blogs:
-                t = BlogOperatorThread(self.events, 'new', blog, entry)
+                t = blogoper.BlogOperatorThread(self.events, 'new', blog, entry)
                 t.start()
         elif event == 'settings-changed':
             self._setDisplaySettings()

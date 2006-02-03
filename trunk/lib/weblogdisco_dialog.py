@@ -89,6 +89,7 @@ class WeblogDiscoveryDialog(EditWindow):
             self.pbDisco.set_fraction(0.0)
             self._fillList()
         except Queue.Empty:
+            # ignore empty queue error
             pass
         if len(self.weblogs) == 0:
             self.pbDisco.pulse()

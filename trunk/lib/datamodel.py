@@ -80,7 +80,7 @@ class Entry(SQLObject):
     createdIdx = DatabaseIndex(created)
     titleIdx = DatabaseIndex(title)
     
-    def publish(self, weblog):
+    def publish(self, weblog, events=None):
         """Method to publish entry to specified weblog"""
         transportType = weblog.identity.transportType
         login = weblog.identity.login
@@ -94,13 +94,23 @@ class Entry(SQLObject):
             proxy = None
         transportClass = transport.TRANSPORTS[transportType]
         transportObj = transportClass(login, password, proxy, uri)
-        assignedId = transportObj.postNew(weblog.weblogID, self)
-        pubDate = datetime.datetime.now()
-        Publication(published=pubDate,
-            entry=self,
-            weblog=weblog,
-            assignedId=assignedId
-        )
+        try:
+            msg = _('Started sending entry "%s" to weblog %s') % \
+                (self.title, weblog.name)
+            events.put_nowait(('sending', msg))
+            assignedId = transportObj.postNew(weblog.weblogID, self)
+            msg = _('Entry "%s" published') % self.title
+            events.put_nowait(('sending', msg))
+            pubDate = datetime.datetime.now()
+            Publication(published=pubDate,
+                entry=self,
+                weblog=weblog,
+                assignedId=assignedId
+            )
+        except transport.ServiceError, e:
+            msg = _('Error while sending entry "%s" to weblog %s: %s') %\
+                (self.title, weblog.name, e)
+            events.put.nowait(('sending', msg))
 
 
 class Category(SQLObject):
