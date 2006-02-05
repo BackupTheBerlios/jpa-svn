@@ -113,8 +113,6 @@ class MainWindow(notifiable.Notifiable):
         self.tbrMain.set_style(gtkStyle)
     
     def _pollEventQueue(self):
-        if DEBUG:
-            print 'Polling events from queue...'
         try:
             event, data = self.events.get_nowait()
             buf = self.txLog.get_buffer()
