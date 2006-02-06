@@ -45,6 +45,7 @@ class IdentityDialog(EditWindow):
         self.ckbUseDefPort = self.wTree.get_widget('ckbUseDefPort')
         self.edLogin = self.wTree.get_widget('edLogin')
         self.edPassword = self.wTree.get_widget('edPassword')
+        self.expAdvanced = self.wTree.get_widget('expAdvanced')
     
     def show(self):
         typeModel = gtk.ListStore(str)

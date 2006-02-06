@@ -33,7 +33,7 @@ class BlogOperatorThread(threading.Thread):
 
     def run(self):
         if self.operation == 'new':
-            entry.publish(weblog, self.queue)
+            self.entry.publish(self.weblog, self.queue)
         elif self.operation == 'edit':
             pass
         elif self.operation == 'delete':

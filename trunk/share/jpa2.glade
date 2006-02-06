@@ -4219,11 +4219,12 @@ HTML</property>
       </child>
 
       <child>
-	<widget class="GtkExpander" id="expander6">
+	<widget class="GtkExpander" id="expAdvanced">
 	  <property name="visible">True</property>
 	  <property name="can_focus">True</property>
 	  <property name="expanded">False</property>
 	  <property name="spacing">4</property>
+	  <signal name="activate" handler="on_expAdvanced_activate" last_modification_time="Mon, 06 Feb 2006 10:34:35 GMT"/>
 
 	  <child>
 	    <widget class="GtkTable" id="table9">

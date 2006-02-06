@@ -51,7 +51,7 @@ POST = """<?xml version="1.0" encoding="UTF-8" ?>
 <title mode="escaped" type="text/html">%(title)s</title>
 <issued>%(issued)s</issued>
 <content type="application/xhtml+xml">
-<div xmlns="http://www.w3.org/1999/xhtml">%(body)s</div>
+%(body)s
 </content>
 <draft xmlns="http://purl.org/atom-blog/ns#">%(isDraft)s</draft>
 </entry>"""
