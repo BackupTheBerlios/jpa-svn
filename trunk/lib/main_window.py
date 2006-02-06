@@ -152,9 +152,11 @@ class MainWindow(notifiable.Notifiable):
         elif event == 'publish-entry':
             entry = self.getEntryFromSelection()
             blogs = args[0]
+            updates = Queue.Queue()
             for blog in blogs:
-                t = blogoper.BlogOperatorThread(self.events, 'new', blog, entry)
-                t.start()
+                thread = blogoper.BlogSenderThread(self.events, blog, entry, updates)
+                thread.start()
+                #entry.publish(blog, self.events, updates)
         elif event == 'settings-changed':
             self._setDisplaySettings()
 

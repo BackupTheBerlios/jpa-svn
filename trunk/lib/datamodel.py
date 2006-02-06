@@ -21,6 +21,7 @@
 __revision__ = '$Id$'
 
 import datetime, os
+import Queue
 
 from sqlobject import *
 from sqlobject.sqlbuilder import *
@@ -80,7 +81,7 @@ class Entry(SQLObject):
     createdIdx = DatabaseIndex(created)
     titleIdx = DatabaseIndex(title)
     
-    def publish(self, weblog, events=None):
+    def publish(self, weblog, events, updates):
         """Method to publish entry to specified weblog"""
         transportType = weblog.identity.transportType
         login = weblog.identity.login
@@ -102,11 +103,14 @@ class Entry(SQLObject):
             msg = _('Entry "%s" published') % self.title
             events.put_nowait(('sending', msg))
             pubDate = datetime.datetime.now()
+            updates.put_nowait(self, weblog, pubDate, assignedId)
+            """
             Publication(published=pubDate,
                 entry=self,
                 weblog=weblog,
                 assignedId=assignedId
             )
+            """
         except transport.ServiceError, e:
             msg = _('Error while sending entry "%s" to weblog %s: %s') %\
                 (self.title, weblog.name, e)

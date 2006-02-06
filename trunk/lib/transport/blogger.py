@@ -51,7 +51,7 @@ POST = """<?xml version="1.0" encoding="UTF-8" ?>
 <title mode="escaped" type="text/html">%(title)s</title>
 <issued>%(issued)s</issued>
 <content type="application/xhtml+xml">
-%(body)s
+<div xmlns="http://www.w3.org/1999/xhtml">%(body)s</div>
 </content>
 <draft xmlns="http://purl.org/atom-blog/ns#">%(isDraft)s</draft>
 </entry>"""
@@ -153,10 +153,13 @@ class BloggerTransport(api.WeblogTransport):
             content = self._handleResponse(response)
             if DEBUG:
                 print content
+            return self._getAssignedId(content)
         finally:
             connection.close()
 
     def _handleResponse(self, response):
+        if DEBUG:
+            print 'received response: ', response.status, response.reason
         content = response.read()
         if response.status in range(200, 300):
             # success
@@ -180,3 +183,11 @@ class BloggerTransport(api.WeblogTransport):
                 raise api.ServiceUnavailableError(response.reason)
             else:
                 raise api.ServiceError(response.reason)
+    
+    def _getAssignedId(self, document):
+        tree = ElementTree.fromstring(document)
+        links = tree.findall(NS_ATOM + 'link')
+        for link in links:
+            if link.get('rel') == u'service.edit':
+                return link.get('href').split('/')[-1]
+

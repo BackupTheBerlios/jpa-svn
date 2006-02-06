@@ -24,19 +24,18 @@ import threading
 
 class BlogOperatorThread(threading.Thread):
     
-    def __init__(self, eventQueue, operation, weblog, entry=None):
+    def __init__(self, eventQueue, weblog, entry=None, updates=None):
         self.queue = eventQueue
-        self.operation = operation
+        self.updates = updates
         self.weblog = weblog
         self.entry = entry
         threading.Thread.__init__(self)
 
+
+class BlogSenderThread(BlogOperatorThread):
+    
+    def __init__(self, eventQueue, weblog, entry, updates):
+        BlogOperatorThread(self, eventQueue, weblog, entry, updates)
+    
     def run(self):
-        if self.operation == 'new':
-            self.entry.publish(self.weblog, self.queue)
-        elif self.operation == 'edit':
-            pass
-        elif self.operation == 'delete':
-            pass
-        elif self.operation == 'get':
-            pass
+        self.entry.publish(self.weblog, self.queue, self.updates)

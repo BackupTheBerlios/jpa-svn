@@ -51,7 +51,6 @@ class WeblogSelectionDialog(EditWindow):
     
     def _fillList(self):
         self.model.clear()
-        #blogs = Weblog.select(orderBy='name')
         blogs = Weblog.select(Weblog.q.isActive==True, orderBy='name')
         for blog in blogs:
             self.model.append((
