@@ -29,7 +29,8 @@ import gtk.glade
 import appconst, apputils, renderer
 import entry_dialog, categories_dialog, prefs_dialog, category_dialog, \
     about_dialog, identities_dialog, identity_dialog, htmlview_dialog, \
-    weblogs_dialog, weblog_dialog, weblogdisco_dialog, weblogsel_dialog
+    weblogs_dialog, weblog_dialog, weblogdisco_dialog, weblogsel_dialog, \
+    pubhistory_dialog
 
 class Controller:
     
@@ -63,6 +64,10 @@ class Controller:
     
     def showPreferences(self, parent):
         dialog = prefs_dialog.PreferencesDialog(parent)
+        dialog.show()
+    
+    def showPubHistory(self, entry):
+        dialog = pubhistory_dialog.PublicationHistoryDialog(self, entry)
         dialog.show()
     
     def editCategory(self, category, parent):

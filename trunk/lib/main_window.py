@@ -227,6 +227,10 @@ class MainWindow(notifiable.Notifiable):
     def _publishEntry(self, *args):
         self.controller.getPublishTo(self)
     
+    def _showPubHistory(self, *args):
+        entry = self.getEntryFromSelection()
+        self.controller.showPubHistory(entry)
+    
     def on_miEditPrefs_activate(self, *args):
         self.controller.showPreferences(self)
     
