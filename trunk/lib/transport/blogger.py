@@ -154,7 +154,7 @@ class BloggerTransport(api.WeblogTransport):
             content = self._handleResponse(response)
             if DEBUG:
                 print content
-            tree = ElementTree.fromstring(document)
+            tree = ElementTree.fromstring(content)
             links = tree.findall(NS_ATOM + 'link')
             for link in links:
                 if link.get('rel') == u'service.edit':
