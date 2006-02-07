@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-22 13:16+0100\n"
+"POT-Creation-Date: 2006-02-07 21:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: lib/categories_dialog.py:46 lib/identities_dialog.py:48
-#: lib/weblogdisco_dialog.py:64 lib/weblogs_dialog.py:47
+#: lib/weblogdisco_dialog.py:65 lib/weblogs_dialog.py:47
 msgid "Name"
 msgstr ""
 
@@ -34,12 +34,27 @@ msgstr ""
 msgid "Editing new category"
 msgstr ""
 
-#: lib/datamodel.py:56
+#: lib/datamodel.py:58
 msgid "Miscellaneous"
 msgstr ""
 
-#: lib/datamodel.py:57
+#: lib/datamodel.py:59
 msgid "Miscellaneous category"
+msgstr ""
+
+#: lib/datamodel.py:106
+#, python-format
+msgid "Started sending entry \"%s\" to weblog %s"
+msgstr ""
+
+#: lib/datamodel.py:110
+#, python-format
+msgid "Entry \"%s\" published to weblog %s"
+msgstr ""
+
+#: lib/datamodel.py:116
+#, python-format
+msgid "Error while sending entry \"%s\" to weblog %s: %s"
 msgstr ""
 
 #: lib/entry_dialog.py:66
@@ -69,21 +84,34 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: lib/identity_dialog.py:67
+#: lib/identity_dialog.py:68
 #, python-format
 msgid "Editing identity \"%s\""
 msgstr ""
 
-#: lib/identity_dialog.py:69
+#: lib/identity_dialog.py:70
 msgid "Editing new identity"
 msgstr ""
 
-#: lib/main_window.py:80
+#: lib/main_window.py:89
 msgid "Created"
 msgstr ""
 
-#: lib/main_window.py:81
+#: lib/main_window.py:90
 msgid "Title"
+msgstr ""
+
+#: lib/pubhistory_dialog.py:41
+msgid "Date"
+msgstr ""
+
+#: lib/pubhistory_dialog.py:42
+msgid "Weblog"
+msgstr ""
+
+#: lib/pubhistory_dialog.py:52
+#, python-format
+msgid "Publication history for entry \"%s\""
 msgstr ""
 
 #: lib/weblog_dialog.py:56
@@ -95,11 +123,11 @@ msgstr ""
 msgid "Editing new weblog"
 msgstr ""
 
-#: lib/weblogdisco_dialog.py:63
+#: lib/weblogdisco_dialog.py:64
 msgid "Update"
 msgstr ""
 
-#: lib/weblogdisco_dialog.py:65 lib/weblogs_dialog.py:48
+#: lib/weblogdisco_dialog.py:66 lib/weblogs_dialog.py:48
 msgid "BlogID"
 msgstr ""
 
@@ -107,7 +135,7 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: lib/weblogsel_dialog.py:42 share/jpa2.glade.h:66
+#: lib/weblogsel_dialog.py:42 share/jpa2.glade.h:68
 msgid "Publish"
 msgstr ""
 
@@ -115,20 +143,20 @@ msgstr ""
 msgid "Weblog name"
 msgstr ""
 
-#: lib/weblogsel_dialog.py:44 share/jpa2.glade.h:42
+#: lib/weblogsel_dialog.py:44 share/jpa2.glade.h:43
 msgid "Identity"
 msgstr ""
 
-#: lib/transport/blogger.py:101
+#: lib/transport/blogger.py:102
 msgid "Blogger.com transport using new Atom API"
 msgstr ""
 
-#: lib/transport/blogger.py:168
+#: lib/transport/blogger.py:182
 #, python-format
 msgid "Returned HTTP reason: %s"
 msgstr ""
 
-#: lib/transport/blogger.py:169
+#: lib/transport/blogger.py:183
 msgid "Received content:"
 msgstr ""
 
@@ -136,7 +164,7 @@ msgstr ""
 msgid "Jogger.pl transport"
 msgstr ""
 
-#: lib/transport/xmlrpcblogger.py:42
+#: lib/transport/xmlrpcblogger.py:45
 msgid "Old Blogger.com transport using XML-RPC API"
 msgstr ""
 
@@ -294,191 +322,199 @@ msgid "History"
 msgstr ""
 
 #: share/jpa2.glade.h:41
+msgid "History of entry publications:"
+msgstr ""
+
+#: share/jpa2.glade.h:42
 msgid "Host name (or IP address) of proxy server"
 msgstr ""
 
-#: share/jpa2.glade.h:43
+#: share/jpa2.glade.h:44
 msgid "Identity name"
 msgstr ""
 
-#: share/jpa2.glade.h:44
+#: share/jpa2.glade.h:45
 msgid "Informations"
 msgstr ""
 
-#: share/jpa2.glade.h:45
+#: share/jpa2.glade.h:46
 msgid "Is a draft"
 msgstr ""
 
-#: share/jpa2.glade.h:46
+#: share/jpa2.glade.h:47
 msgid "JPA"
 msgstr ""
 
-#: share/jpa2.glade.h:47
+#: share/jpa2.glade.h:48
 msgid "Launch preview in Gnome default web browser"
 msgstr ""
 
-#: share/jpa2.glade.h:48
+#: share/jpa2.glade.h:49
 msgid "Launch preview in KDE default web browser"
 msgstr ""
 
-#: share/jpa2.glade.h:49
+#: share/jpa2.glade.h:50
 msgid "Launch preview in custom-defined web browser"
 msgstr ""
 
-#: share/jpa2.glade.h:50
+#: share/jpa2.glade.h:51
 msgid "Launch preview in system default web browser (not recommended on Linux)"
 msgstr ""
 
-#: share/jpa2.glade.h:51
+#: share/jpa2.glade.h:52
 msgid "License"
 msgstr ""
 
-#: share/jpa2.glade.h:52
+#: share/jpa2.glade.h:53
 msgid "List of defined entry categories:"
 msgstr ""
 
-#: share/jpa2.glade.h:53
+#: share/jpa2.glade.h:54
 msgid "List of my identities:"
 msgstr ""
 
-#: share/jpa2.glade.h:54
+#: share/jpa2.glade.h:55
 msgid "List of my weblogs that use this identity:"
 msgstr ""
 
-#: share/jpa2.glade.h:55
+#: share/jpa2.glade.h:56
 msgid "Log font:"
 msgstr ""
 
-#: share/jpa2.glade.h:56
+#: share/jpa2.glade.h:57
 msgid "Modify program preferences"
 msgstr ""
 
-#: share/jpa2.glade.h:57
+#: share/jpa2.glade.h:58
 msgid "My identities"
 msgstr ""
 
-#: share/jpa2.glade.h:58
+#: share/jpa2.glade.h:59
 msgid "My weblogs"
 msgstr ""
 
-#: share/jpa2.glade.h:59
+#: share/jpa2.glade.h:60
 msgid "P_rotocol:"
 msgstr ""
 
-#: share/jpa2.glade.h:60
+#: share/jpa2.glade.h:61
 msgid "Pa_ssword:"
 msgstr ""
 
-#: share/jpa2.glade.h:61
+#: share/jpa2.glade.h:62
 msgid "Preferences"
 msgstr ""
 
-#: share/jpa2.glade.h:62
+#: share/jpa2.glade.h:63
 msgid "Preview entry in web browser"
 msgstr ""
 
-#: share/jpa2.glade.h:63
+#: share/jpa2.glade.h:64
 msgid "Proxy _host name:"
 msgstr ""
 
-#: share/jpa2.glade.h:64
+#: share/jpa2.glade.h:65
 msgid "Proxy _port:"
 msgstr ""
 
-#: share/jpa2.glade.h:65
+#: share/jpa2.glade.h:66
 msgid "Publication _history"
 msgstr ""
 
 #: share/jpa2.glade.h:67
-msgid "Publish entry to weblog(s)"
-msgstr ""
-
-#: share/jpa2.glade.h:68
-msgid "Publish entry to weblogs:"
+msgid "Publication history"
 msgstr ""
 
 #: share/jpa2.glade.h:69
-msgid "Publish selected entry"
+msgid "Publish entry to weblog(s)"
 msgstr ""
 
 #: share/jpa2.glade.h:70
-msgid "Published:"
+msgid "Publish entry to weblogs:"
 msgstr ""
 
 #: share/jpa2.glade.h:71
-msgid "Select font"
+msgid "Publish selected entry"
 msgstr ""
 
 #: share/jpa2.glade.h:72
-msgid "Select weblogs"
+msgid "Published:"
 msgstr ""
 
 #: share/jpa2.glade.h:73
-msgid "Service _URI:"
+msgid "Select font"
 msgstr ""
 
 #: share/jpa2.glade.h:74
-msgid "Service port"
+msgid "Select weblogs"
 msgstr ""
 
 #: share/jpa2.glade.h:75
-msgid "Show HTML that will be sent and published"
+msgid "Service _URI:"
 msgstr ""
 
 #: share/jpa2.glade.h:76
-msgid "Show _HTML"
+msgid "Service port"
 msgstr ""
 
 #: share/jpa2.glade.h:77
-msgid "Show history of entry publications"
+msgid "Show HTML that will be sent and published"
 msgstr ""
 
 #: share/jpa2.glade.h:78
-msgid "Show icons and labels"
+msgid "Show _HTML"
 msgstr ""
 
 #: share/jpa2.glade.h:79
-msgid "Show icons only"
+msgid "Show history of entry publications"
 msgstr ""
 
 #: share/jpa2.glade.h:80
-msgid "Show labels only"
+msgid "Show icons and labels"
 msgstr ""
 
 #: share/jpa2.glade.h:81
-msgid "Show list of entry categories"
+msgid "Show icons only"
 msgstr ""
 
 #: share/jpa2.glade.h:82
-msgid "Show list of my identities"
+msgid "Show labels only"
 msgstr ""
 
 #: share/jpa2.glade.h:83
-msgid "Show list of my weblogs"
+msgid "Show list of entry categories"
 msgstr ""
 
 #: share/jpa2.glade.h:84
-msgid "Show/hide log window"
+msgid "Show list of my identities"
 msgstr ""
 
 #: share/jpa2.glade.h:85
-msgid "System command to start web browser"
+msgid "Show list of my weblogs"
 msgstr ""
 
 #: share/jpa2.glade.h:86
+msgid "Show/hide log window"
+msgstr ""
+
+#: share/jpa2.glade.h:87
+msgid "System command to start web browser"
+msgstr ""
+
+#: share/jpa2.glade.h:88
 msgid ""
 "The server returned unexpected result, the changes to your weblog has not "
 "been recorded.\n"
 "See below for details."
 msgstr ""
 
-#: share/jpa2.glade.h:88
+#: share/jpa2.glade.h:90
 msgid ""
 "This program is free software, you may freely use and distribute it under "
 "provision of GNU Public License (\"The GPL\"). See license page for details."
 msgstr ""
 
-#: share/jpa2.glade.h:89
+#: share/jpa2.glade.h:91
 msgid ""
 "This program uses code written by other people:\n"
 "   - Python interpreter, http://www.python.org/\n"
@@ -488,175 +524,175 @@ msgid ""
 "   - PyXMPP XMPP/Jabber library, http://pyxmpp.jabberstudio.org/"
 msgstr ""
 
-#: share/jpa2.glade.h:95
+#: share/jpa2.glade.h:97
 msgid "Title:"
 msgstr ""
 
-#: share/jpa2.glade.h:96
+#: share/jpa2.glade.h:98
 msgid "Trying to discover weblog properties, please wait..."
 msgstr ""
 
-#: share/jpa2.glade.h:97
+#: share/jpa2.glade.h:99
 msgid "URI of remote blogging service"
 msgstr ""
 
-#: share/jpa2.glade.h:98
+#: share/jpa2.glade.h:100
 msgid "Unexpected result"
 msgstr ""
 
-#: share/jpa2.glade.h:99
+#: share/jpa2.glade.h:101
 msgid "Use Gnome default web browser"
 msgstr ""
 
-#: share/jpa2.glade.h:100
+#: share/jpa2.glade.h:102
 msgid "Use KDE default web browser"
 msgstr ""
 
-#: share/jpa2.glade.h:101
+#: share/jpa2.glade.h:103
 msgid "Use custom web browser:"
 msgstr ""
 
-#: share/jpa2.glade.h:102
+#: share/jpa2.glade.h:104
 msgid "Use d_efault"
 msgstr ""
 
-#: share/jpa2.glade.h:103
+#: share/jpa2.glade.h:105
 msgid "Use system default web browser"
 msgstr ""
 
-#: share/jpa2.glade.h:104
+#: share/jpa2.glade.h:106
 msgid "Visibility level:"
 msgstr ""
 
-#: share/jpa2.glade.h:105
+#: share/jpa2.glade.h:107
 msgid "Weblog Discovery"
 msgstr ""
 
-#: share/jpa2.glade.h:106
+#: share/jpa2.glade.h:108
 msgid "Weblog ID:"
 msgstr ""
 
-#: share/jpa2.glade.h:107
+#: share/jpa2.glade.h:109
 msgid "Weblog account"
 msgstr ""
 
-#: share/jpa2.glade.h:108
+#: share/jpa2.glade.h:110
 msgid "Your password to this service"
 msgstr ""
 
-#: share/jpa2.glade.h:109
+#: share/jpa2.glade.h:111
 msgid "Your service login (aka \"user name\")"
 msgstr ""
 
-#: share/jpa2.glade.h:110
+#: share/jpa2.glade.h:112
 msgid "_Behaviour"
 msgstr ""
 
-#: share/jpa2.glade.h:111
+#: share/jpa2.glade.h:113
 msgid "_Categories"
 msgstr ""
 
-#: share/jpa2.glade.h:112
+#: share/jpa2.glade.h:114
 msgid "_Description:"
 msgstr ""
 
-#: share/jpa2.glade.h:113
+#: share/jpa2.glade.h:115
 msgid "_Discover weblogs"
 msgstr ""
 
-#: share/jpa2.glade.h:114
+#: share/jpa2.glade.h:116
 msgid "_Edit"
 msgstr ""
 
-#: share/jpa2.glade.h:115
+#: share/jpa2.glade.h:117
 msgid "_File"
 msgstr ""
 
-#: share/jpa2.glade.h:116
+#: share/jpa2.glade.h:118
 msgid "_Filter"
 msgstr ""
 
-#: share/jpa2.glade.h:117
+#: share/jpa2.glade.h:119
 msgid "_Help"
 msgstr ""
 
-#: share/jpa2.glade.h:118
+#: share/jpa2.glade.h:120
 msgid "_Identities"
 msgstr ""
 
-#: share/jpa2.glade.h:119
+#: share/jpa2.glade.h:121
 msgid "_Identity:"
 msgstr ""
 
-#: share/jpa2.glade.h:120
+#: share/jpa2.glade.h:122
 msgid "_Log window"
 msgstr ""
 
-#: share/jpa2.glade.h:121
+#: share/jpa2.glade.h:123
 msgid "_Login:"
 msgstr ""
 
-#: share/jpa2.glade.h:122
+#: share/jpa2.glade.h:124
 msgid "_Name:"
 msgstr ""
 
-#: share/jpa2.glade.h:123
+#: share/jpa2.glade.h:125
 msgid "_Network"
 msgstr ""
 
-#: share/jpa2.glade.h:124
+#: share/jpa2.glade.h:126
 msgid "_Only active"
 msgstr ""
 
-#: share/jpa2.glade.h:125
+#: share/jpa2.glade.h:127
 msgid "_Port:"
 msgstr ""
 
-#: share/jpa2.glade.h:126
+#: share/jpa2.glade.h:128
 msgid "_Preview entry"
 msgstr ""
 
-#: share/jpa2.glade.h:127
+#: share/jpa2.glade.h:129
 msgid "_Publish"
 msgstr ""
 
-#: share/jpa2.glade.h:128
+#: share/jpa2.glade.h:130
 msgid "_Remember window sizes"
 msgstr ""
 
-#: share/jpa2.glade.h:129
+#: share/jpa2.glade.h:131
 msgid "_Title:"
 msgstr ""
 
-#: share/jpa2.glade.h:130
+#: share/jpa2.glade.h:132
 msgid "_Tools"
 msgstr ""
 
-#: share/jpa2.glade.h:131
+#: share/jpa2.glade.h:133
 msgid "_Type:"
 msgstr ""
 
-#: share/jpa2.glade.h:132
+#: share/jpa2.glade.h:134
 msgid "_Use proxy server"
 msgstr ""
 
-#: share/jpa2.glade.h:133
+#: share/jpa2.glade.h:135
 msgid "_View"
 msgstr ""
 
-#: share/jpa2.glade.h:134
+#: share/jpa2.glade.h:136
 msgid "_Visual"
 msgstr ""
 
-#: share/jpa2.glade.h:135
+#: share/jpa2.glade.h:137
 msgid "_Weblogs"
 msgstr ""
 
-#: share/jpa2.glade.h:136
+#: share/jpa2.glade.h:138
 msgid "minutes"
 msgstr ""
 
-#: share/jpa2.glade.h:138
+#: share/jpa2.glade.h:140
 #, no-c-format
 msgid "version: %s"
 msgstr ""
