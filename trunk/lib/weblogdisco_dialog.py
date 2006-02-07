@@ -28,6 +28,7 @@ from sqlobject import SQLObjectNotFound
 import transport, appconst
 from datamodel import Weblog
 from appwindow import EditWindow
+from appconst import DEBUG
 
 class DiscovererThread(threading.Thread):
     
@@ -84,7 +85,7 @@ class WeblogDiscoveryDialog(EditWindow):
     def _pulse(self):
         try:
             self.weblogs = self.queue.get_nowait()
-            if appconst.DEBUG:
+            if DEBUG:
                 print self.weblogs
             self.pbDisco.set_fraction(0.0)
             self._fillList()

@@ -22,7 +22,7 @@ __revision__ = '$Id$'
 
 import os, os.path as op
 import datetime
-import Queue
+import threading, Queue
 
 import gtk, pango, gobject
 import gtk.glade, gtk.gdk
@@ -45,6 +45,7 @@ class MainWindow(notifiable.Notifiable):
     def __init__(self, controller):
         self.events = Queue.Queue()
         self.updates = Queue.Queue()
+        self.threads = []
         self.controller = controller
         self.curEntry = None
         self.cfg = appconst.CFG
@@ -54,7 +55,6 @@ class MainWindow(notifiable.Notifiable):
         listMenuTree = gtk.glade.XML(appconst.GLADE_PATH, 'pmEntryList', 'jpa')
         listMenuTree.signal_autoconnect(self)
         self.pmEntryList = listMenuTree.get_widget('pmEntryList')
-        self.window.set_title(version.PROGRAM)
         self.logPanel = self.wTree.get_widget('pnLog')
         self.txLog = self.wTree.get_widget('txLog')
         self.logBuffer = self.txLog.get_buffer()
@@ -75,6 +75,7 @@ class MainWindow(notifiable.Notifiable):
         self.show()
     
     def _setWidgets(self):
+        self.window.set_title(version.PROGRAM)
         self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
             'darkbeer.xpm'))
         self.lbCreated.set_text('')
@@ -160,10 +161,15 @@ class MainWindow(notifiable.Notifiable):
             self.loadEntriesList(self.entryFilter['year'],
                 self.entryFilter['month'])
         elif event == 'publish-entry':
+            if DEBUG:
+                print 'publishing entry'
             entry = self.getEntryFromSelection()
             blogs = args[0]
             for blog in blogs:
                 thread = blogoper.BlogSenderThread(self.events, blog, entry, self.updates)
+                if DEBUG:
+                    print 'thread', thread.getName(), 'created'
+                self.threads.append(thread)
                 thread.start()
         elif event == 'settings-changed':
             self._setDisplaySettings()

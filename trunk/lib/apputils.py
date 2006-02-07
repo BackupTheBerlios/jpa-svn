@@ -47,13 +47,24 @@ def question(text, parent=None):
         resp = msg.run()
     finally:
         msg.destroy()
-    return resp == gtk.RESPONSE_OK
+    return resp == gtk.RESPONSE_YES
 
 def error(text, parent=None):
     """
     Error message dialog.
     """
     msg = gtk.MessageDialog(parent, gtk.DIALOG_MODAL, gtk.MESSAGE_ERROR,
+        gtk.BUTTONS_OK, text)
+    try:
+        msg.run()
+    finally:
+        msg.destroy()
+
+def warning(text, parent=None):
+    """
+    Warning message dialog.
+    """
+    msg = gtk.MessageDialog(parent, gtk.DIALOG_MODAL, gtk.MESSAGE_WARNING,
         gtk.BUTTONS_OK, text)
     try:
         msg.run()

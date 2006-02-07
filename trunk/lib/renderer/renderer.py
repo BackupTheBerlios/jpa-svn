@@ -20,6 +20,9 @@
 
 __revision__ = '$Id$'
 
+from htmlentitydefs import entitydefs
+import re
+
 PAGE_TEMPLATE = """ \
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -32,6 +35,22 @@ PAGE_TEMPLATE = """ \
 %s
 </body>
 </html>"""
+
+def html2xml(html):
+    """Convert html latin-1 entities to its numeric equivalents.
+    May be usable to sanitize (X)HTML to be passed as part of XML
+    document."""
+    chunks = re.split('&(\w+);', html)
+    for i in range(1, len(chunks), 2):
+        if chunks[i] in ['amp', 'lt', 'gt', 'apos', 'quot']:
+            chunks[i] = '&' + chunks[i] + ';'
+        elif chunks[i] in entitydefs:
+            chunks[i] = entitydefs[chunks[i]]
+            if len(chunks[i]) == 1:
+                chunks[i] = '&#' + str(ord(chunks[i])) + ';'
+        else:
+            chunks[i] = '?'
+    return str(''.join(chunks))
 
 def renderPage(title, text, renderer):
     return PAGE_TEMPLATE % (title, renderBody(text, renderer))
@@ -50,3 +69,6 @@ def renderBody(text, renderer):
         import markdown
         body = markdown.markdown(text)
     return body.strip()
+
+def renderBodyAsXML(text, renderer):
+    return html2xml(renderBody(text, renderer))

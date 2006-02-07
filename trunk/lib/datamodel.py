@@ -27,6 +27,7 @@ from sqlobject import *
 from sqlobject.sqlbuilder import *
 
 import appconst, transport
+from appconst import DEBUG
 
 BODY_TYPES = ['plain', 'textile', 'markdown', 'HTML']
 try:
@@ -84,9 +85,11 @@ class Entry(SQLObject):
     def publish(self, weblog, events, updates):
         """Method to publish entry to specified weblog"""
         transportType = weblog.identity.transportType
+        if DEBUG: print transportType
         login = weblog.identity.login
         password = weblog.identity.password
         uri = weblog.identity.serviceURI
+        if DEBUG: print uri
         if appconst.CFG.getOption('network', 'use_proxy', '0') == '1':
             host = appconst.CFG.getOption('network', 'proxy_host', '')
             port = int(appconst.CFG.getOption('network', 'proxy_port', '0'))
@@ -94,7 +97,11 @@ class Entry(SQLObject):
         else:
             proxy = None
         transportClass = transport.TRANSPORTS[transportType]
+        if DEBUG:
+            print transportClass
         transportObj = transportClass(login, password, proxy, uri)
+        if DEBUG:
+            print transportObj
         try:
             msg = _('Started sending entry "%s" to weblog %s') % \
                 (self.title, weblog.name)

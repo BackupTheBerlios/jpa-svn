@@ -66,6 +66,15 @@ class PreferencesDialog:
             'Sans 12'))
         self.fbLogFont.set_font_name(self.cfg.getOption('fonts', 'log',
             'Monospace 10'))
+        self._loadPrefs()
+        self.window.present()
+    
+    ### "private" methods ###
+    def _enableCustomBrowserSelection(self, enable):
+        self.edBrowserCmd.set_sensitive(enable)
+        self.fcbSelectBrowser.set_sensitive(enable)
+    
+    def _loadPrefs(self):
         self.ckbSaveWinSizes.set_active(self.cfg.getOption('windows',
             'save_sizes', '1') == '1')
         enableAutosave = (self.cfg.getOption('features',
@@ -100,9 +109,7 @@ class PreferencesDialog:
         self.edProxyHost.set_text(proxyHost)
         self.edProxyPort.set_text(proxyPort)
         bodyType = self.cfg.getOption('editing', 'def_body_type', 'textile')
-        self.cbxDefBodyType.set_active(
-            datamodel.BODY_TYPES.index(bodyType)
-        )
+        self.cbxDefBodyType.set_active(datamodel.BODY_TYPES.index(bodyType))
         toolbarView = self.cfg.getOption('toolbars', 'style', 'both')
         if toolbarView == 'both':
             self.rbnIconsAndLabels.set_active(True)
@@ -110,12 +117,6 @@ class PreferencesDialog:
             self.rbnIconsOnly.set_active(True)
         elif toolbarView == 'labels':
             self.rbnLabelsOnly.set_active(True)
-        self.window.present()
-    
-    ### "private" methods ###
-    def _enableCustomBrowserSelection(self, enable):
-        self.edBrowserCmd.set_sensitive(enable)
-        self.fcbSelectBrowser.set_sensitive(enable)
     
     def _savePrefs(self):
         self.cfg.setOption('fonts', 'editor',

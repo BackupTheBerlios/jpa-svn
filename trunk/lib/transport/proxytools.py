@@ -102,5 +102,4 @@ class ProxyTransport(xmlrpclib.Transport):
             'http://' + host + handler, request_body, verbose)
 
     def make_connection(self, host):
-        import httplib
         return httplib.HTTP(self.proxyHost, self.proxyPort)

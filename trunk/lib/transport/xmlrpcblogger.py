@@ -22,7 +22,10 @@ and blogging systems, such as WordPress."""
 __revision__ = '$Id$'
 
 import xmlrpclib
+
 import api, proxytools
+import lib.renderer
+from lib.appconst import DEBUG
 
 APPKEY = 'nobody hears'
 
@@ -64,6 +67,18 @@ class BloggerTransport(api.WeblogTransport):
             data['blogID'] = blogData['blogid']
             blogs[title] = data
         return blogs
+    
+    def postNew(self, blogId, entry):
+        if DEBUG:
+            print 'started sending'
+        s = self._getServerProxy()
+        body = []
+        body.append(entry.title.encode('utf-8'))
+        body.append(lib.renderer.renderBodyAsXML(entry.body.encode('utf-8'),
+            entry.bodyType))
+        body = '\n'.join(body)
+        return s.blogger.newPost(APPKEY, blogId, self.userName, self.passwd,
+            body, not entry.isDraft)
     
     def getEntry(self, entryId):
         s = self._getServerProxy()

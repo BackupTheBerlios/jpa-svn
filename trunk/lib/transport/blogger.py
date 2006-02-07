@@ -61,7 +61,8 @@ def buildBloggerPost(entry):
     generatorName = lib.version.AGENT
     title = entry.title.encode('utf-8')
     issued = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
-    body = lib.renderer.renderBody(entry.body.encode('utf-8'), entry.bodyType)
+    body = lib.renderer.renderBodyAsXML(entry.body.encode('utf-8'),
+        entry.bodyType)
     if entry.isDraft:
         isDraft = 'true'
     else:
@@ -112,13 +113,13 @@ class BloggerTransport(api.WeblogTransport):
                 self.proxy['port'])
         else:
             connection = httplib.HTTPSConnection(self.host)
+        if DEBUG:
+            connection.set_debuglevel(9)
         path = self.path % ''
         try:
             connection.request('GET', path, headers=self.headers)
             response = connection.getresponse()
-            if response.status  >= 500:
-                raise api.ServiceUnavailabeError('Blogger server error')
-            document = response.read()
+            document = self._handleResponse(response)
         finally:
             connection.close()
         tree = ElementTree.fromstring(document)
@@ -153,7 +154,11 @@ class BloggerTransport(api.WeblogTransport):
             content = self._handleResponse(response)
             if DEBUG:
                 print content
-            return self._getAssignedId(content)
+            tree = ElementTree.fromstring(document)
+            links = tree.findall(NS_ATOM + 'link')
+            for link in links:
+                if link.get('rel') == u'service.edit':
+                    return link.get('href').split('/')[-1]
         finally:
             connection.close()
 
@@ -184,10 +189,4 @@ class BloggerTransport(api.WeblogTransport):
             else:
                 raise api.ServiceError(response.reason)
     
-    def _getAssignedId(self, document):
-        tree = ElementTree.fromstring(document)
-        links = tree.findall(NS_ATOM + 'link')
-        for link in links:
-            if link.get('rel') == u'service.edit':
-                return link.get('href').split('/')[-1]
 
