@@ -44,6 +44,7 @@ class MainWindow(notifiable.Notifiable):
     
     def __init__(self, controller):
         self.events = Queue.Queue()
+        self.updates = Queue.Queue()
         self.controller = controller
         self.curEntry = None
         self.cfg = appconst.CFG
@@ -70,6 +71,7 @@ class MainWindow(notifiable.Notifiable):
         self._setWidgets()
         self._setDisplaySettings()
         self.idleTimer = gobject.idle_add(self._pollEventQueue)
+        self.updatesTimer = gobject.idle_add(self._pollUpdatesQueue)
         self.show()
     
     def _setWidgets(self):
@@ -122,6 +124,14 @@ class MainWindow(notifiable.Notifiable):
             pass
         return True
     
+    def _pollUpdatesQueue(self):
+        try:
+            entry, blog, pubDate, assignedId = self.updates.get_nowait()
+            entry.updatePublication(blog, pubDate, assignedId)
+        except Queue.Empty:
+            pass
+        return True
+    
     def show(self):
         self.window.present()
     
@@ -152,11 +162,9 @@ class MainWindow(notifiable.Notifiable):
         elif event == 'publish-entry':
             entry = self.getEntryFromSelection()
             blogs = args[0]
-            updates = Queue.Queue()
             for blog in blogs:
-                thread = blogoper.BlogSenderThread(self.events, blog, entry, updates)
+                thread = blogoper.BlogSenderThread(self.events, blog, entry, self.updates)
                 thread.start()
-                #entry.publish(blog, self.events, updates)
         elif event == 'settings-changed':
             self._setDisplaySettings()
 
@@ -200,6 +208,7 @@ class MainWindow(notifiable.Notifiable):
     def on_frmMain_destroy(self, *args):
         self.cfg.saveConfig()
         gobject.source_remove(self.idleTimer)
+        gobject.source_remove(self.updatesTimer)
         gtk.main_quit()
     
     def _addEntry(self, *args):

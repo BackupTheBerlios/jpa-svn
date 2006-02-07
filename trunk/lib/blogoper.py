@@ -23,6 +23,7 @@ __revision__ = '$Id$'
 import threading
 
 class BlogOperatorThread(threading.Thread):
+    """Generic class for weblog operations."""
     
     def __init__(self, eventQueue, weblog, entry=None, updates=None):
         self.queue = eventQueue
@@ -33,9 +34,10 @@ class BlogOperatorThread(threading.Thread):
 
 
 class BlogSenderThread(BlogOperatorThread):
+    """Sender thread"""
     
     def __init__(self, eventQueue, weblog, entry, updates):
-        BlogOperatorThread(self, eventQueue, weblog, entry, updates)
+        BlogOperatorThread.__init__(self, eventQueue, weblog, entry, updates)
     
     def run(self):
         self.entry.publish(self.weblog, self.queue, self.updates)

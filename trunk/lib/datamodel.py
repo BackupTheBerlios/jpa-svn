@@ -100,21 +100,22 @@ class Entry(SQLObject):
                 (self.title, weblog.name)
             events.put_nowait(('sending', msg))
             assignedId = transportObj.postNew(weblog.weblogID, self)
-            msg = _('Entry "%s" published') % self.title
+            msg = _('Entry "%s" published to weblog %s') % \
+                (self.title, weblog.name)
             events.put_nowait(('sending', msg))
             pubDate = datetime.datetime.now()
-            updates.put_nowait(self, weblog, pubDate, assignedId)
-            """
-            Publication(published=pubDate,
-                entry=self,
-                weblog=weblog,
-                assignedId=assignedId
-            )
-            """
+            updates.put_nowait((self, weblog, pubDate, assignedId))
         except transport.ServiceError, e:
             msg = _('Error while sending entry "%s" to weblog %s: %s') %\
                 (self.title, weblog.name, e)
             events.put.nowait(('sending', msg))
+    
+    def updatePublication(self, weblog, pubDate, assignedId):
+        Publication(published=pubDate,
+            entry=self,
+            weblog=weblog,
+            assignedId=assignedId
+        )
 
 
 class Category(SQLObject):
