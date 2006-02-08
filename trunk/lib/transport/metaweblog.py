@@ -16,29 +16,20 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-"""Weblog operation thread"""
+"""Weblog Transport using MetaWeblog API implementation"""
 
 __revision__ = '$Id$'
 
-import threading
+import api
 
-class BlogOperatorThread(threading.Thread):
-    """Generic class for weblog operations."""
+class MetaWeblogTransport(api.XmlRpcTransport):
     
-    def __init__(self, eventQueue, weblog, entry=None, categories=[], updates=None):
-        self.queue = eventQueue
-        self.updates = updates
-        self.weblog = weblog
-        self.entry = entry
-        self.categories = categories
-        threading.Thread.__init__(self)
-
-
-class BlogSenderThread(BlogOperatorThread):
-    """Sender thread"""
-    
-    def __init__(self, eventQueue, weblog, entry, categories, updates):
-        BlogOperatorThread.__init__(self, eventQueue, weblog, entry, categories, updates)
-    
-    def run(self):
-        self.entry.publish(self.weblog, self.categories, self.queue, self.updates)
+    @classmethod
+    def getMetadata(self):
+        """Return transport's metadata for use in service definitions."""
+        meta = {}
+        meta['name'] = 'MetaWeblog'
+        meta['description'] = _('Transport using MetaWeblog API')
+        meta['proto'] = 'HTTP'
+        meta['uri'] = None
+        return meta

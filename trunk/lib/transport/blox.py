@@ -16,32 +16,35 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-"""Old blogger.com API, using XML-RPC. Still used with many services (i.e. blox.pl)
-and blogging systems, such as WordPress."""
+"""Blox.pl specific transport.
+
+This service is unique in that allows using blogger API along with MetaWeblog API
+simultaneously and exchangeably."""
 
 __revision__ = '$Id$'
 
+import datetime
 import xmlrpclib
 
 import api, proxytools
-import lib.renderer
+from lib.renderer import renderBodyAsXML
 from lib.version import AGENT
 from lib.appconst import DEBUG
 
 APPKEY = AGENT
 
-class BloggerTransport(api.XmlRpcTransport):
+class BloxTransport(api.XmlRpcTransport):
     
     @classmethod
     def getMetadata(self):
         """Return transport's metadata for use in service definitions."""
         meta = {}
-        meta['name'] = 'Blogger (XML-RPC)'
-        meta['description'] = _('Old Blogger.com transport using XML-RPC API')
+        meta['name'] = 'Blox.pl'
+        meta['description'] = _('Blox.pl specific transport')
         meta['proto'] = 'HTTP'
         meta['uri'] = None
         return meta
-    
+
     def getBlogList(self):
         s = self.getServerProxy()
         ret = s.blogger.getUsersBlogs(APPKEY, self.userName, self.passwd)
@@ -60,15 +63,19 @@ class BloggerTransport(api.XmlRpcTransport):
         if DEBUG:
             print 'started sending'
         s = self.getServerProxy()
-        body = []
-        body.append(entry.title.encode('utf-8'))
-        body.append(lib.renderer.renderBodyAsXML(entry.body.encode('utf-8'),
-            entry.bodyType))
-        body = '\n'.join(body)
-        assignedId = s.blogger.newPost(APPKEY, blogId, self.userName, self.passwd,
+        body = {}
+        body['flNotOnHomePage'] = False
+        body['title'] = entry.title.encode('utf-8')
+        body['description'] = renderBodyAsXML(entry.body.encode('utf-8'),
+            entry.bodyType)
+        body['categories'] = []
+        for category in categories:
+            body['categories'].append(category.name.encode('utf-8'))
+        body['pubDate'] = datetime.datetime.now().isoformat()
+        body['guid'] = 'allo allo'
+        body['author'] = self.userName.encode('utf-8')
+        if DEBUG:
+            print body
+        assignedId = s.metaWeblog.newPost(blogId, self.userName, self.passwd,
             body, not entry.isDraft)
         return assignedId
-    
-    def getEntry(self, entryId):
-        s = self.getServerProxy()
-        ret = s.blogger.getPost(APPKEY, entryId, self.userName, self.passwd)

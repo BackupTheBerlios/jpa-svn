@@ -148,31 +148,30 @@ class MainWindow(notifiable.Notifiable):
             self.displayEntry(entry)
             store, iterator = self.lvEntries.get_selection().get_selected()
             store.set_value(iterator, 1, apputils.ellipsize(entry.title, 30))
-        elif event == 'entry-added':
-            self.loadEntriesList(self.entryFilter['year'],
-                self.entryFilter['month'])
-            if len(self.entriesModel) > 0:
-                sel = self.lvEntries.get_selection()
-                sel.select_path(0)
-                self.displayEntry(self.getEntryFromSelection())
-        elif event == 'entry-deleted':
-            pass
-        elif event == 'filter-changed':
-            self.loadEntriesList(self.entryFilter['year'],
-                self.entryFilter['month'])
+        elif event in ('entry-added', 'entry-deleted', 'filter-changed'):
+            self._refreshEntriesList()
         elif event == 'publish-entry':
             if DEBUG:
                 print 'publishing entry'
             entry = self.getEntryFromSelection()
+            categories = entry.categories
             blogs = args[0]
             for blog in blogs:
-                thread = blogoper.BlogSenderThread(self.events, blog, entry, self.updates)
+                thread = blogoper.BlogSenderThread(self.events, blog, entry, categories, self.updates)
                 if DEBUG:
                     print 'thread', thread.getName(), 'created'
                 self.threads.append(thread)
                 thread.start()
         elif event == 'settings-changed':
             self._setDisplaySettings()
+    
+    def _refreshEntriesList(self):
+        self.loadEntriesList(self.entryFilter['year'],
+            self.entryFilter['month'])
+        if len(self.entriesModel) > 0:
+            sel = self.lvEntries.get_selection()
+            sel.select_path(0)
+            self.displayEntry(self.getEntryFromSelection())
 
     def loadEntriesList(self, year, month):
         self.entriesModel.clear()
@@ -226,6 +225,10 @@ class MainWindow(notifiable.Notifiable):
     
     def _publishEntry(self, *args):
         self.controller.getPublishTo(self)
+    
+    def _deleteEntry(self, *args):
+        entry = self.getEntryFromSelection()
+        self.controller.deleteEntry(entry, self)
     
     def _showPubHistory(self, *args):
         entry = self.getEntryFromSelection()

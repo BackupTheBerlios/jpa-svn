@@ -38,7 +38,7 @@ class PublicationHistoryDialog(ListWindow):
         try:
             self.model = gtk.ListStore(str, str, gobject.TYPE_PYOBJECT)
             cells = (gtk.CellRendererText(), gtk.CellRendererText())
-            columns = (gtk.TreeViewColumn(_('Date'), cells[0], text=0),
+            columns = (gtk.TreeViewColumn(_('Publication date'), cells[0], text=0),
                 gtk.TreeViewColumn(_('Weblog'), cells[1], text=1))
             for column in columns:
                 self.lvHistory.append_column(column)

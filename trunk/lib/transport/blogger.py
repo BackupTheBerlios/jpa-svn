@@ -75,16 +75,13 @@ class BloggerTransport(api.WeblogTransport):
     """Weblog transport that uses Blogger Atom API."""
     
     def __init__(self, userName, passwd, proxyConfig=None, uri=None):
-        self.proxy = proxyConfig
-        self.userName = userName
-        self.passwd = passwd
+        api.WeblogTransport.__init__(self, userName, passwd, proxyConfig, uri)
         self.authCookie = binascii.b2a_base64('%s:%s' % (userName, passwd))
         self.authCookie = self.authCookie.strip() # strip final newline
         self.headers = {
             'Content-type': 'application/atom+xml',
             'Authorization': 'BASIC %s' % self.authCookie,
-            #'UserAgent': '%s' % lib.version.AGENT,
-            'UserAgent': 'JPA-1.0', # temporary for tests
+            'UserAgent': '%s' % lib.version.AGENT,
             }
         if proxyConfig:
             # we do not support proxies with authentication at this time
@@ -137,7 +134,7 @@ class BloggerTransport(api.WeblogTransport):
             blogs[title] = data
         return blogs
     
-    def postNew(self, blogId, entry):
+    def postNew(self, blogId, entry, categories):
         post, data = buildBloggerPost(entry)
         if self.proxy:
             connection = proxytools.ProxyHTTPSConnection(self.proxy['host'],

@@ -50,6 +50,11 @@ class Controller:
         dialog = entry_dialog.EntryDialog(parent, entry)
         dialog.show()
     
+    def deleteEntry(self, entry, parent):
+        if apputils.question(_('Do you really want to delete this entry?'), parent.window):
+            entry.destroySelf()
+            parent.notify('entry-deleted')
+    
     def showIdentities(self):
         dialog = identities_dialog.IdentitiesDialog(self)
         dialog.show()

@@ -47,6 +47,7 @@ def initModel():
     connection = connectionForURI(appconst.DB_URI)
     sqlhub.processConnection = connection
     Entry.createTable(ifNotExists=True)
+    Media.createTable(ifNotExists=True)
     Category.createTable(ifNotExists=True)
     Publication.createTable(ifNotExists=True)
     Identity.createTable(ifNotExists=True)
@@ -82,7 +83,7 @@ class Entry(SQLObject):
     createdIdx = DatabaseIndex(created)
     titleIdx = DatabaseIndex(title)
     
-    def publish(self, weblog, events, updates):
+    def publish(self, weblog, categories, events, updates):
         """Method to publish entry to specified weblog"""
         transportType = weblog.identity.transportType
         if DEBUG: print transportType
@@ -106,7 +107,7 @@ class Entry(SQLObject):
             msg = _('Started sending entry "%s" to weblog %s') % \
                 (self.title, weblog.name)
             events.put_nowait(('sending', msg))
-            assignedId = transportObj.postNew(weblog.weblogID, self)
+            assignedId = transportObj.postNew(weblog.weblogID, self, categories)
             msg = _('Entry "%s" published to weblog %s') % \
                 (self.title, weblog.name)
             events.put_nowait(('sending', msg))
@@ -123,6 +124,15 @@ class Entry(SQLObject):
             weblog=weblog,
             assignedId=assignedId
         )
+
+
+class Media(SQLObject):
+    """
+    Object that represents media (binary) files.
+    """
+    name = UnicodeCol(alternateID=True)
+    mime = UnicodeCol()
+    publications = MultipleJoin('Publication', orderBy='-published')
 
 
 class Category(SQLObject):

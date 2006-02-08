@@ -20,6 +20,10 @@
 
 __revision__ = '$Id$'
 
+import xmlrpclib
+
+import proxytools
+
 # service errors
 class ServiceError(Exception):
     """Base class for all service errors"""
@@ -37,13 +41,35 @@ class ServiceInternalError(ServiceError): pass
 class ServiceUnavailableError(ServiceError): pass
 
 class WeblogTransport:
+    """Nearly-abstract class, specifying base transport functionality"""
+    
+    def __init__(self, userName, passwd, proxyConfig=None, uri=None):
+        self.proxy = proxyConfig
+        self.userName = userName
+        self.passwd = passwd
+        self.uri = uri
 
     def getBlogList(self): raise NotImplementedError
 
-    def postNew(self, blogId, entry): raise NotImplementedError
+    def postNew(self, blogId, entry, categories): raise NotImplementedError
 
     def postModified(self, entryId, entry): raise NotImplementedError
 
     def getEntry(self, entryId): raise NotImplementedError
 
     def deleteEntry(self, entryId): raise NotImplementedError
+    
+    def getCategories(self): raise NotImplementedError
+    
+    def putMediaObject(self, mediaFileName): raise NotImplementedError
+
+
+class XmlRpcTransport(WeblogTransport):
+
+    def getServerProxy(self):    
+        kw = {}
+        if self.proxy:
+            kw['transport'] = proxytools.ProxyTransport(self.proxy['host'], self.proxy['port'])
+        kw['encoding'] = 'utf-8'
+        return xmlrpclib.ServerProxy(self.uri, **kw)
+
