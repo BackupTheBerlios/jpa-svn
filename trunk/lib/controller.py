@@ -51,7 +51,8 @@ class Controller:
         dialog.show()
     
     def deleteEntry(self, entry, parent):
-        if apputils.question(_('Do you really want to delete this entry?'), parent.window):
+        text = _('Do you really want to delete this entry?')
+        if apputils.question(text, parent.window):
             entry.destroySelf()
             parent.notify('entry-deleted')
     
@@ -83,6 +84,12 @@ class Controller:
         dialog = category_dialog.CategoryDialog(parent)
         dialog.show()
     
+    def deleteCategory(self, category, parent):
+        text = _('Do you really want to delete this category?')
+        if apputils.question(text, parent.window):
+            category.destroySelf()
+            parent.notify('data-changed')
+    
     def newIdentity(self, parent):
         dialog = identity_dialog.IdentityDialog(parent)
         dialog.show()
@@ -90,6 +97,12 @@ class Controller:
     def editIdentity(self, identity, parent):
         dialog = identity_dialog.IdentityDialog(parent, identity)
         dialog.show()
+    
+    def deleteIdentity(self, identity, parent):
+        text = _('Do you really want to delete this identity?')
+        if apputils.question(text, parent.window):
+            identity.destroySelf()
+            parent.notify('data-changed')
 
     def newWeblog(self, parent):
         dialog = weblog_dialog.WeblogDialog(parent)
@@ -99,19 +112,24 @@ class Controller:
         dialog = weblog_dialog.WeblogDialog(parent, weblog)
         dialog.show()
     
+    def deleteWeblog(self, weblog, parent):
+        text = _('Do you really want to delete this weblog?')
+        if apputils.question(text, parent.window):
+            weblog.destroySelf()
+            parent.notify('data-changed')
+    
     def discoverWeblogs(self, identity, parent):
         dialog = weblogdisco_dialog.WeblogDiscoveryDialog(parent, identity)
         dialog.show()
     
     def previewEntry(self, entry, parent=None):
         fd, fileName = tempfile.mkstemp('.html')
-        os.close(fd)
         self.__tempFiles.append(fileName)
         title = entry.title.encode('utf-8')
         text = entry.body.encode('utf-8')
         bodyType = entry.bodyType.encode('utf-8')
         html = renderer.renderPage(title, text, bodyType)
-        fp = open(fileName, 'w')
+        fp = os.fdopen(fd, 'w')
         try:
             fp.write(html)
         finally:

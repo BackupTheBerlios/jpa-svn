@@ -105,9 +105,7 @@ class WeblogsDialog(ListWindow):
     
     def _del(self, *args):
         blog = self._getBlogFromSelection()
-        blog.destroySelf()
-        self._loadData()
-        self._enableActions()
+        self.controller.deleteWeblog(blog, self)
 
     ### signal handlers ###
     def on_lvBlogs_button_press_event(self, *args):

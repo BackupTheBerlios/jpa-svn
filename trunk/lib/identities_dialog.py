@@ -100,6 +100,10 @@ class IdentitiesDialog(ListWindow):
     def _edit(self, *args):
         identity = self._getIdentityFromSelection()
         self.controller.editIdentity(identity, self)
+    
+    def _del(self, *args):
+        identity = self._getIdentityFromSelection()
+        self.controller.deleteIdentity(identity, self)
 
     ### signal handlers ###
     def on_lvIdentities_button_press_event(self, *args):

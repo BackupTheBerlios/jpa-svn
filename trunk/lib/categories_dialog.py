@@ -99,6 +99,7 @@ class CategoriesDialog(ListWindow):
     
     def _del(self, *args):
         category = self._getCategoryFromSelection()
+        self.controller.deleteCategory(category, self)
     
     ### signal handlers ###
     def on_lvCategory_button_press_event(self, *args):

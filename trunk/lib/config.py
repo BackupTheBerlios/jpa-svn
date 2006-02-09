@@ -22,14 +22,14 @@ __revision__ = '$Id$'
 
 import os.path
 
-from ConfigParser import SafeConfigParser, NoSectionError, NoOptionError
+from ConfigParser import RawConfigParser, NoSectionError, NoOptionError
 
-class AppConfig(SafeConfigParser):
+class AppConfig(RawConfigParser):
     """Based on ConfigParser, this class is generic configuration processor.
     Only few new methods were added."""
 
     def __init__(self, fileName):
-        SafeConfigParser.__init__(self)
+        RawConfigParser.__init__(self)
         self.fileName = fileName
         self.optionxform = str
         if os.path.exists(fileName):

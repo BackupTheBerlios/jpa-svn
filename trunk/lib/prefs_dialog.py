@@ -57,6 +57,9 @@ class PreferencesDialog:
         self.rbnIconsAndLabels = self.wTree.get_widget('rbnIconsAndLabels')
         self.rbnIconsOnly = self.wTree.get_widget('rbnIconsOnly')
         self.rbnLabelsOnly = self.wTree.get_widget('rbnLabelsOnly')
+        self.edLastFmUserName = self.wTree.get_widget('edLastFmUserName')
+        self.edTrackInfoFormat = self.wTree.get_widget('edTrackInfoFormat')
+        self.ckbUseAS = self.wTree.get_widget('ckbUseAS')
         self.wTree.signal_autoconnect(self)
     
     def show(self):
@@ -73,6 +76,10 @@ class PreferencesDialog:
     def _enableCustomBrowserSelection(self, enable):
         self.edBrowserCmd.set_sensitive(enable)
         self.fcbSelectBrowser.set_sensitive(enable)
+    
+    def _enableLastfmInfo(self, enable):
+        self.edLastFmUserName.set_sensitive(enable)
+        self.edTrackInfoFormat.set_sensitive(enable)
     
     def _loadPrefs(self):
         self.ckbSaveWinSizes.set_active(self.cfg.getOption('windows',
@@ -117,6 +124,12 @@ class PreferencesDialog:
             self.rbnIconsOnly.set_active(True)
         elif toolbarView == 'labels':
             self.rbnLabelsOnly.set_active(True)
+        useAS = (self.cfg.getOption('gadgets', 'use_as', '0') == '1')
+        self.ckbUseAS.set_active(useAS)
+        self.edLastFmUserName.set_text(self.cfg.getOption('gadgets',
+            'as_username', ''))
+        self.edTrackInfoFormat.set_text(self.cfg.getOption('gadgets',
+            'as_format', ''))
     
     def _savePrefs(self):
         self.cfg.setOption('fonts', 'editor',
@@ -168,6 +181,15 @@ class PreferencesDialog:
         self.cfg.setOption('toolbars', 'style', toolbarView)
         if self.parent:
             self.parent.notify('settings-changed')
+        if self.ckbUseAS.get_active():
+            value = '1'
+        else:
+            value = '0'
+        self.cfg.setOption('gadgets', 'use_as', value)
+        self.cfg.setOption('gadgets', 'as_username',
+            self.edLastFmUserName.get_text())
+        self.cfg.setOption('gadgets', 'as_format',
+            self.edTrackInfoFormat.get_text())
 
     ### signal handlers ###
     def on_ckbEnableAutosave_toggled(self, *args):
@@ -178,6 +200,9 @@ class PreferencesDialog:
         isActive = self.ckbUseProxy.get_active()
         self.edProxyPort.set_sensitive(isActive)
         self.edProxyHost.set_sensitive(isActive)
+    
+    def on_ckbUseAS_toggled(self, *args):
+        self._enableLastfmInfo(self.ckbUseAS.get_active())
     
     def on_rbnUseSysDef_toggled(self, *args):
         self._enableCustomBrowserSelection(False)
