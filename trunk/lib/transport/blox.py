@@ -71,7 +71,9 @@ class BloxTransport(api.XmlRpcTransport):
         body['categories'] = []
         for category in categories:
             body['categories'].append(category.name.encode('utf-8'))
-        body['pubDate'] = datetime.datetime.now().isoformat()
+        # publication date turned off as temporary workaround for
+        # blox.pl code bug
+        #body['pubDate'] = datetime.datetime.now().isoformat()
         body['guid'] = 'allo allo'
         body['author'] = self.userName.encode('utf-8')
         if DEBUG:
