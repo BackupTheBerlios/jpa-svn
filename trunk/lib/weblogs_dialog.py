@@ -22,7 +22,10 @@ __revision__ = '$Id$'
 
 import gtk, gobject
 
+from sqlobject.sqlbuilder import *
+
 import apputils, datamodel
+from appconst import DEBUG
 from datamodel import Weblog
 from appwindow import ListWindow
 
@@ -32,6 +35,7 @@ class WeblogsDialog(ListWindow):
         ListWindow.__init__(self, 'frmWeblogs', controller)
         self.lvBlogs = self.wTree.get_widget('lvBlogs')
         self.ckbOnlyActive = self.wTree.get_widget('ckbOnlyActive')
+        self.cbxIdentity = self.wTree.get_widget('cbxIdentity')
         self.btnAdd = self.wTree.get_widget('btnAdd')
         self.btnEdit = self.wTree.get_widget('btnEdit')
         self.btnDel = self.wTree.get_widget('btnDel')
@@ -56,6 +60,16 @@ class WeblogsDialog(ListWindow):
                 sel = self.lvBlogs.get_selection()
                 sel.select_path(0)
             self._enableActions()
+            identModel = gtk.ListStore(str, gobject.TYPE_PYOBJECT)
+            identities = datamodel.Identity.select(orderBy='name')
+            identModel.append((_('All identities'), None))
+            for identity in identities:
+                identModel.append((identity.name, identity))
+            self.cbxIdentity.set_model(identModel)
+            cell = gtk.CellRendererText()
+            self.cbxIdentity.pack_start(cell, True)
+            self.cbxIdentity.add_attribute(cell, 'text', 0)
+            self.cbxIdentity.set_active(0)
         finally:
             apputils.endWait(self.window)
         self.window.present()
@@ -70,12 +84,24 @@ class WeblogsDialog(ListWindow):
                 apputils.endWait(self.window)
         self._enableActions()
     
-    def _loadData(self, onlyActive=True):
-        if onlyActive:
-            blogs = Weblog.select(Weblog.q.isActive==True, 
-                orderBy='name')
+    def _loadData(self, onlyActive=True, identity=None):
+        if identity:
+            if onlyActive:
+                blogs = Weblog.select(
+                    AND(
+                        Weblog.q.isActive==True,
+                        Weblog.q.identityID==identity.id
+                    ),
+                    orderBy='name'
+                )
+            else:
+                blogs = Weblog.select(Weblog.q.identityID==identity.id,
+                    orderBy='name')
         else:
-            blogs = Weblog.select(orderBy='name')
+            if onlyActive:
+                blogs = Weblog.select(Weblog.q.isActive==True, orderBy='name')
+            else:
+                blogs = Weblog.select(orderBy='name')
         for blog in blogs:
             self.model.append((
                 blog.name,
@@ -119,6 +145,19 @@ class WeblogsDialog(ListWindow):
     def on_ckbOnlyActive_toggled(self, *args):
         apputils.startWait(self.window)
         try:
-            self._loadData(self.ckbOnlyActive.get_active())
+            self.model.clear()
+            model = self.cbxIdentity.get_model()
+            identity = model.get_value(self.cbxIdentity.get_active_iter(), 1)
+            self._loadData(self.ckbOnlyActive.get_active(), identity)
+        finally:
+            apputils.endWait(self.window)
+    
+    def on_cbxIdentity_changed(self, *args):
+        apputils.startWait(self.window)
+        try:
+            self.model.clear()
+            model = self.cbxIdentity.get_model()
+            identity = model.get_value(self.cbxIdentity.get_active_iter(), 1)
+            self._loadData(self.ckbOnlyActive.get_active(), identity)
         finally:
             apputils.endWait(self.window)

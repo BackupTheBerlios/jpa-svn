@@ -64,6 +64,7 @@ class MainWindow(notifiable.Notifiable):
         self.txEntry = self.wTree.get_widget('txEntry')
         self.miFileEdit = self.wTree.get_widget('miFileEdit')
         self.miFilePublish = self.wTree.get_widget('miFilePublish')
+        self.miViewLog = self.wTree.get_widget('miViewLog')
         self.tbrMain = self.wTree.get_widget('tbrMain')
         self.tbnEdit = self.wTree.get_widget('tbnEdit')
         self.tbnSend = self.wTree.get_widget('tbnSend')
@@ -121,6 +122,10 @@ class MainWindow(notifiable.Notifiable):
             buf = self.txLog.get_buffer()
             buf.insert(buf.get_end_iter(), data)
             buf.insert(buf.get_end_iter(), '\n')
+            showLog = (self.cfg.getOption('views', 'show_log', '1') == '1')
+            if showLog:
+                self.logPanel.show_all()
+                self.miViewLog.set_active(showLog)
         except Queue.Empty:
             pass
         return True

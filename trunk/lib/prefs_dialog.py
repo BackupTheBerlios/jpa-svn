@@ -60,6 +60,7 @@ class PreferencesDialog:
         self.edLastFmUserName = self.wTree.get_widget('edLastFmUserName')
         self.edTrackInfoFormat = self.wTree.get_widget('edTrackInfoFormat')
         self.ckbUseAS = self.wTree.get_widget('ckbUseAS')
+        self.ckbShowLog = self.wTree.get_widget('ckbShowLog')
         self.wTree.signal_autoconnect(self)
     
     def show(self):
@@ -130,6 +131,8 @@ class PreferencesDialog:
             'as_username', ''))
         self.edTrackInfoFormat.set_text(self.cfg.getOption('gadgets',
             'as_format', ''))
+        showLog = (self.cfg.getOption('views', 'show_log', '1') == '1')
+        self.ckbShowLog.set_active(showLog)
     
     def _savePrefs(self):
         self.cfg.setOption('fonts', 'editor',
@@ -190,6 +193,11 @@ class PreferencesDialog:
             self.edLastFmUserName.get_text())
         self.cfg.setOption('gadgets', 'as_format',
             self.edTrackInfoFormat.get_text())
+        if self.ckbShowLog.get_active():
+            value = '1'
+        else:
+            value = '0'
+        self.cfg.setOption('views', 'show_log', value)
 
     ### signal handlers ###
     def on_ckbEnableAutosave_toggled(self, *args):
