@@ -36,6 +36,11 @@ PAGE_TEMPLATE = """ \
 </body>
 </html>"""
 
+BODY_TEMPLATE = """\
+<body xmlns='http://www.w3.org/1999/xhtml'>
+%s
+</body>"""
+
 def html2xml(html):
     """Convert html latin-1 entities to its numeric equivalents.
     May be usable to sanitize (X)HTML to be passed as part of XML
@@ -69,6 +74,9 @@ def renderBody(text, renderer):
         import markdown
         body = markdown.markdown(text)
     return body.strip()
+
+def renderPreview(text, renderer):
+    return BODY_TEMPLATE % renderBodyAsXML(text, renderer)
 
 def renderBodyAsXML(text, renderer):
     return html2xml(renderBody(text, renderer))

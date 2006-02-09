@@ -18,4 +18,4 @@
 
 __revision__ = '$Id$'
 
-from renderer import renderBody, renderPage, renderBodyAsXML
+from renderer import renderBody, renderPage, renderBodyAsXML, renderPreview

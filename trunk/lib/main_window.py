@@ -27,7 +27,8 @@ import threading, Queue
 import gtk, pango, gobject
 import gtk.glade, gtk.gdk
 
-import appconst, version, notifiable, datamodel, apputils, blogoper
+import htmltextview
+import appconst, version, notifiable, datamodel, apputils, blogoper, renderer
 from appconst import DEBUG
 
 
@@ -48,6 +49,10 @@ class MainWindow(notifiable.Notifiable):
         self.threads = []
         self.controller = controller
         self.curEntry = None
+        self.txEntry = htmltextview.HtmlTextView()
+        self.txEntry.set_left_margin(8)
+        self.txEntry.set_right_margin(8)
+        self.txEntry.set_pixels_above_lines(8)
         self.cfg = appconst.CFG
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmMain', 'jpa')
         self.wTree.signal_autoconnect(self)
@@ -61,7 +66,8 @@ class MainWindow(notifiable.Notifiable):
         self.lbCreated = self.wTree.get_widget('lbCreated')
         self.lbSent = self.wTree.get_widget('lbSent')
         self.lbTitle = self.wTree.get_widget('lbTitle')
-        self.txEntry = self.wTree.get_widget('txEntry')
+        self.scwEntry = self.wTree.get_widget('scwEntry')
+        self.scwEntry.add(self.txEntry)
         self.miFileEdit = self.wTree.get_widget('miFileEdit')
         self.miFilePublish = self.wTree.get_widget('miFilePublish')
         self.miViewLog = self.wTree.get_widget('miViewLog')
@@ -139,6 +145,7 @@ class MainWindow(notifiable.Notifiable):
         return True
     
     def show(self):
+        self.scwEntry.show_all()
         self.window.present()
     
     def notify(self, event, *args, **kwargs):
@@ -201,8 +208,11 @@ class MainWindow(notifiable.Notifiable):
             published = ''
         self.lbSent.set_label(published)
         self.lbTitle.set_label(entry.title)
+        body = renderer.renderPreview(entry.body.encode('utf-8'),
+            entry.bodyType.encode('utf-8'))
         bf = self.txEntry.get_buffer()
-        bf.set_text(entry.body)
+        bf.set_text('')
+        self.txEntry.display_html(body)
     
     def activateActions(self, activate):
         self.miFileEdit.set_sensitive(activate)
