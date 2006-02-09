@@ -56,6 +56,37 @@ class Controller:
             entry.destroySelf()
             parent.notify('entry-deleted')
     
+    def saveEntry(self, entry, parent):
+        dialog = gtk.FileChooserDialog(
+            title=_('Save entry to file'),
+            parent=parent.window,
+            action=gtk.FILE_CHOOSER_ACTION_SAVE,
+            buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK),
+        )
+        try:
+            f = gtk.FileFilter()
+            f.set_name(_('All files'))
+            f.add_pattern('*')
+            dialog.add_filter(f)
+            f = gtk.FileFilter()
+            f.set_name(_('HTML files'))
+            f.add_mime_type('text/html')
+            dialog.add_filter(f)
+            dialog.set_current_folder(os.path.expanduser('~'))
+            if dialog.run() == gtk.RESPONSE_OK:
+                fileName = dialog.get_filename()
+                title = entry.title.encode('utf-8')
+                text = entry.body.encode('utf-8')
+                bodyType = entry.bodyType.encode('utf-8')
+                html = renderer.renderPage(title, text, bodyType)
+                fp = open(fileName, 'w')
+                try:
+                    fp.write(html)
+                finally:
+                    fp.close()
+        finally:
+            dialog.destroy()
+    
     def showIdentities(self):
         dialog = identities_dialog.IdentitiesDialog(self)
         dialog.show()
