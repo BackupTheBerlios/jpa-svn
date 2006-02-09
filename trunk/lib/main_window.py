@@ -195,7 +195,11 @@ class MainWindow(notifiable.Notifiable):
 
     def displayEntry(self, entry):
         self.lbCreated.set_label(entry.created.strftime('%Y-%m-%d %H:%M'))
-        self.lbSent.set_label('')
+        if len(entry.publications) > 0:
+            published = entry.publications[0].published.strftime('%Y-%m-%d %H:%M')
+        else:
+            published = ''
+        self.lbSent.set_label(published)
         self.lbTitle.set_label(entry.title)
         bf = self.txEntry.get_buffer()
         bf.set_text(entry.body)
