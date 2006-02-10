@@ -40,6 +40,7 @@ class MainWindow(notifiable.Notifiable):
         'filter-changed',
         'publish-entry',
         'settings-changed',
+        'delete-entry',
         )
     
     def __init__(self, controller):
@@ -165,23 +166,22 @@ class MainWindow(notifiable.Notifiable):
                 for publication in entry.publications:
                     if publication.weblog.weblogID == blog.weblogID:
                         postNew = False
-                        thread = blogoper.EntryUpdaterThread(
-                            self.events,
-                            blog,
-                            publication.assignedId,
-                            entry,
-                            categories,
-                            self.updates
-                        )
+                        thread = blogoper.EntryUpdaterThread(self.events, blog,
+                            publication.assignedId, entry, categories, 
+                            self.updates)
                         thread.start()
                         break
                 if postNew:
-                    thread = blogoper.BlogSenderThread(self.events, blog, entry, categories, self.updates)
+                    thread = blogoper.BlogSenderThread(self.events, blog,
+                        entry, categories, self.updates)
                     if DEBUG:
                         print 'thread', thread.getName(), 'created'
                     thread.start()
         elif event == 'settings-changed':
             self._setDisplaySettings()
+        elif event == 'delete-entry':
+            entry = self.getEntryFromSelection()
+            publications = args[0]
     
     def _refreshEntriesList(self):
         self.loadEntriesList(self.entryFilter['year'],

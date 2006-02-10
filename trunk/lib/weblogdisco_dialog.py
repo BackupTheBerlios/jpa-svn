@@ -20,6 +20,7 @@
 
 __revision__ = '$Id$'
 
+import time
 import threading, Queue
 
 import gtk, gobject
@@ -89,6 +90,7 @@ class WeblogDiscoveryDialog(EditWindow):
             # ignore empty queue error
             pass
         if len(self.weblogs) == 0:
+            time.sleep(0.01)
             self.pbDisco.pulse()
             return True
         return False
