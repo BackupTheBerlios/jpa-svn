@@ -42,3 +42,14 @@ class BlogSenderThread(BlogOperatorThread):
     
     def run(self):
         self.entry.publish(self.weblog, self.categories, self.queue, self.updates)
+
+
+class EntryUpdaterThread(BlogOperatorThread):
+    """Thread sending updated entry"""
+    
+    def __init__(self, eventQueue, weblog, entryId, entry, categories, updates):
+        self.entryId = entryId
+        BlogOperatorThread.__init__(self, eventQueue, weblog, entry, categories, updates)
+    
+    def run(self):
+        self.entry.postUpdate(self.weblog, self.entryId, self.categories, self.queue, self.updates)

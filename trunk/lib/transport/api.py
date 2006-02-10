@@ -53,15 +53,15 @@ class WeblogTransport:
 
     def postNew(self, blogId, entry, categories): raise NotImplementedError
 
-    def postModified(self, entryId, entry): raise NotImplementedError
+    def postModified(self, blogId, entryId, entry, categories): raise NotImplementedError
 
     def getEntry(self, entryId): raise NotImplementedError
 
     def deleteEntry(self, entryId): raise NotImplementedError
     
-    def getCategories(self): raise NotImplementedError
+    def getCategories(self, blogId): raise NotImplementedError
     
-    def putMediaObject(self, mediaFileName): raise NotImplementedError
+    def putMediaObject(self, blogId, mediaFileName): raise NotImplementedError
 
 
 class XmlRpcTransport(WeblogTransport):

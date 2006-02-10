@@ -86,17 +86,14 @@ class Entry(SQLObject):
     def publish(self, weblog, categories, events, updates):
         """Method to publish entry to specified weblog"""
         transportType = weblog.identity.transportType
-        if DEBUG: print transportType
+        if DEBUG:
+            print transportType
         login = weblog.identity.login
         password = weblog.identity.password
         uri = weblog.identity.serviceURI
-        if DEBUG: print uri
-        if appconst.CFG.getOption('network', 'use_proxy', '0') == '1':
-            host = appconst.CFG.getOption('network', 'proxy_host', '')
-            port = int(appconst.CFG.getOption('network', 'proxy_port', '0'))
-            proxy = {'host': host, 'port': port}
-        else:
-            proxy = None
+        if DEBUG:
+            print uri
+        proxy = appconst.CFG.getProxy()
         transportClass = transport.TRANSPORTS[transportType]
         if DEBUG:
             print transportClass
@@ -116,14 +113,48 @@ class Entry(SQLObject):
         except transport.ServiceError, e:
             msg = _('Error while sending entry "%s" to weblog %s: %s') %\
                 (self.title, weblog.name, e)
-            events.put.nowait(('sending', msg))
+            events.put_nowait(('sending', msg))
     
     def updatePublication(self, weblog, pubDate, assignedId):
-        Publication(published=pubDate,
-            entry=self,
-            weblog=weblog,
-            assignedId=assignedId
-        )
+        createNew = True
+        for publication in self.publications:
+            if publication.assignedId == assignedId:
+                createNew = False
+                publication.published = pubDate
+                break
+        if createNew:
+            Publication(published=pubDate,
+                entry=self,
+                weblog=weblog,
+                assignedId=assignedId
+            )
+    
+    def postUpdated(self, weblog, entryId, categories, events, updates):
+        transportType = weblog.identity.transportType
+        login = weblog.identity.login
+        password = weblog.identity.password
+        uri = weblog.identity.serviceURI
+        proxy = appconst.CFG.getProxy()
+        transportClass = transport.TRANSPORTS[transportType]
+        transportObj = transportClass(login, password, proxy, uri)
+        try:
+            msg = _('Started sending entry "%s" to weblog %s') % \
+                (self.title, weblog.name)
+            events.put_nowait(('sending', msg))
+            try:
+                transportObj.postModified(weblog.weblogID, entryId, self, categories)
+            except NotImplementedError:
+                # ignore this beast
+                pass
+            msg = _('Entry "%s" published to weblog %s') % \
+                (self.title, weblog.name)
+            events.put_nowait(('sending', msg))
+            pubDate = datetime.datetime.now()
+            updates.put_nowait((self, weblog, pubDate, entryId))
+        except transport.ServiceError, e:
+            msg = _('Error while sending entry "%s" to weblog %s: %s') %\
+                (self.title, weblog.name, e)
+            events.put_nowait(('sending', msg))
 
 
 class Media(SQLObject):

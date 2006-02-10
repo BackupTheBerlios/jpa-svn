@@ -81,3 +81,13 @@ class AppConfig(RawConfigParser):
             height = int(self.get(windowName, 'height'))
         except (NoSectionError, NoOptionError):
             return default
+    
+    def getProxy(self):
+        """Convenience method to get proxy settings"""
+        try:
+            if self.get('network', 'use_proxy') == '1':
+                host = self.get('network', 'proxy_host')
+                port = int(self.get('network', 'proxy_port'))
+                return {'host': host, 'port': port}
+        except (NoSectionError, NoOptionError):
+            return None

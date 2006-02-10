@@ -45,7 +45,6 @@ class MainWindow(notifiable.Notifiable):
     def __init__(self, controller):
         self.events = Queue.Queue()
         self.updates = Queue.Queue()
-        self.threads = []
         self.controller = controller
         self.curEntry = None
         self.cfg = appconst.CFG
@@ -162,10 +161,21 @@ class MainWindow(notifiable.Notifiable):
             categories = entry.categories
             blogs = args[0]
             for blog in blogs:
+                for publication in entry.publications:
+                    if publication.weblog.weblogID == blog.weblogID:
+                        thread = blogoper.EntryUpdaterThread(
+                            self.events,
+                            blog,
+                            publication.assignedId,
+                            entry,
+                            categories,
+                            self.updates
+                        )
+                        thread.start()
+                        break
                 thread = blogoper.BlogSenderThread(self.events, blog, entry, categories, self.updates)
                 if DEBUG:
                     print 'thread', thread.getName(), 'created'
-                self.threads.append(thread)
                 thread.start()
         elif event == 'settings-changed':
             self._setDisplaySettings()
