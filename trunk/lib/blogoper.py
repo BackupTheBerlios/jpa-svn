@@ -52,4 +52,4 @@ class EntryUpdaterThread(BlogOperatorThread):
         BlogOperatorThread.__init__(self, eventQueue, weblog, entry, categories, updates)
     
     def run(self):
-        self.entry.postUpdate(self.weblog, self.entryId, self.categories, self.queue, self.updates)
+        self.entry.postUpdated(self.weblog, self.entryId, self.categories, self.queue, self.updates)

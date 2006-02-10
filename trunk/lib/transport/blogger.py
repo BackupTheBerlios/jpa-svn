@@ -158,6 +158,26 @@ class BloggerTransport(api.WeblogTransport):
                     return link.get('href').split('/')[-1]
         finally:
             connection.close()
+    
+    def postModified(self, blogId, entryId, entry, categories):
+        post, data = buildBloggerPost(entry)
+        if self.proxy:
+            connection = proxytools.ProxyHTTPSConnection(self.proxy['host'],
+                self.proxy['port'])
+        else:
+            connection = httplib.HTTPSConnection(self.host)
+        if DEBUG:
+            connection.set_debuglevel(9)
+        entryPath = '/%s/%s' % (blogId, entryId)
+        path = self.path % entryPath
+        try:
+            connection.request('PUT', path, body=post, headers=self.headers)
+            response = connection.getresponse()
+            content = self._handleResponse(response)
+            if DEBUG:
+                print content
+        finally:
+            connection.close()
 
     def _handleResponse(self, response):
         if DEBUG:

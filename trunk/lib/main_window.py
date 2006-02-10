@@ -161,8 +161,10 @@ class MainWindow(notifiable.Notifiable):
             categories = entry.categories
             blogs = args[0]
             for blog in blogs:
+                postNew = True
                 for publication in entry.publications:
                     if publication.weblog.weblogID == blog.weblogID:
+                        postNew = False
                         thread = blogoper.EntryUpdaterThread(
                             self.events,
                             blog,
@@ -173,10 +175,11 @@ class MainWindow(notifiable.Notifiable):
                         )
                         thread.start()
                         break
-                thread = blogoper.BlogSenderThread(self.events, blog, entry, categories, self.updates)
-                if DEBUG:
-                    print 'thread', thread.getName(), 'created'
-                thread.start()
+                if postNew:
+                    thread = blogoper.BlogSenderThread(self.events, blog, entry, categories, self.updates)
+                    if DEBUG:
+                        print 'thread', thread.getName(), 'created'
+                    thread.start()
         elif event == 'settings-changed':
             self._setDisplaySettings()
     
