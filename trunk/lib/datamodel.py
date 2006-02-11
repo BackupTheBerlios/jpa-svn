@@ -83,7 +83,7 @@ class Entry(SQLObject):
     createdIdx = DatabaseIndex(created)
     titleIdx = DatabaseIndex(title)
     
-    def publish(self, weblog, categories, events, updates):
+    def publish(self, weblog, categories, parent):
         """Method to publish entry to specified weblog"""
         transportType = weblog.identity.transportType
         if DEBUG:
@@ -103,17 +103,17 @@ class Entry(SQLObject):
         try:
             msg = _('Started sending entry "%s" to weblog %s') % \
                 (self.title, weblog.name)
-            events.put_nowait(('sending', msg))
+            parent.updateStatus(msg)
             assignedId = transportObj.postNew(weblog.weblogID, self, categories)
             msg = _('Entry "%s" published to weblog %s') % \
                 (self.title, weblog.name)
-            events.put_nowait(('sending', msg))
+            parent.updateStatus(msg)
             pubDate = datetime.datetime.now()
-            updates.put_nowait((self, weblog, pubDate, assignedId))
+            parent.updateEntry(self, weblog, pubDate, assignedId)
         except transport.ServiceError, e:
             msg = _('Error while sending entry "%s" to weblog %s: %s') %\
                 (self.title, weblog.name, e)
-            events.put_nowait(('sending', msg))
+            parent.updateStatus(msg)
     
     def updatePublication(self, weblog, pubDate, assignedId):
         createNew = True
@@ -129,7 +129,7 @@ class Entry(SQLObject):
                 assignedId=assignedId
             )
     
-    def postUpdated(self, weblog, entryId, categories, events, updates):
+    def postUpdated(self, weblog, entryId, categories, parent):
         transportType = weblog.identity.transportType
         login = weblog.identity.login
         password = weblog.identity.password
@@ -138,23 +138,23 @@ class Entry(SQLObject):
         transportClass = transport.TRANSPORTS[transportType]
         transportObj = transportClass(login, password, proxy, uri)
         try:
-            msg = _('Started sending entry "%s" to weblog %s') % \
+            msg = _('Started republishing entry "%s" to weblog %s') % \
                 (self.title, weblog.name)
-            events.put_nowait(('sending', msg))
+            parent.updateStatus(msg)
             try:
                 transportObj.postModified(weblog.weblogID, entryId, self, categories)
             except NotImplementedError:
                 # ignore this beast
                 pass
-            msg = _('Entry "%s" published to weblog %s') % \
+            msg = _('Entry "%s" republished to weblog %s') % \
                 (self.title, weblog.name)
-            events.put_nowait(('sending', msg))
+            parent.updateStatus(msg)
             pubDate = datetime.datetime.now()
-            updates.put_nowait((self, weblog, pubDate, entryId))
+            parent.updateEntry(self, weblog, pubDate, entryId)
         except transport.ServiceError, e:
-            msg = _('Error while sending entry "%s" to weblog %s: %s') %\
+            msg = _('Error while republishing entry "%s" to weblog %s: %s') %\
                 (self.title, weblog.name, e)
-            events.put_nowait(('sending', msg))
+            parent.updateStatus(msg)
 
 
 class Media(SQLObject):

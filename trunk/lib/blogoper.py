@@ -25,31 +25,30 @@ import threading
 class BlogOperatorThread(threading.Thread):
     """Generic class for weblog operations."""
     
-    def __init__(self, eventQueue, weblog, entry=None, categories=[], updates=None):
-        self.queue = eventQueue
-        self.updates = updates
+    def __init__(self, weblog, entry=None, categories=[], parent=None):
         self.weblog = weblog
         self.entry = entry
         self.categories = categories
+        self.parent = parent
         threading.Thread.__init__(self)
 
 
 class BlogSenderThread(BlogOperatorThread):
     """Sender thread"""
     
-    def __init__(self, eventQueue, weblog, entry, categories, updates):
-        BlogOperatorThread.__init__(self, eventQueue, weblog, entry, categories, updates)
+    def __init__(self, weblog, entry, categories, parent):
+        BlogOperatorThread.__init__(self, weblog, entry, categories, parent)
     
     def run(self):
-        self.entry.publish(self.weblog, self.categories, self.queue, self.updates)
+        self.entry.publish(self.weblog, self.categories, self.parent)
 
 
 class EntryUpdaterThread(BlogOperatorThread):
     """Thread sending updated entry"""
     
-    def __init__(self, eventQueue, weblog, entryId, entry, categories, updates):
+    def __init__(self, weblog, entryId, entry, categories, parent):
         self.entryId = entryId
-        BlogOperatorThread.__init__(self, eventQueue, weblog, entry, categories, updates)
+        BlogOperatorThread.__init__(self, weblog, entry, categories, parent)
     
     def run(self):
-        self.entry.postUpdated(self.weblog, self.entryId, self.categories, self.queue, self.updates)
+        self.entry.postUpdated(self.weblog, self.entryId, self.categories, self.parent)

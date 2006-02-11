@@ -30,7 +30,6 @@ import gtk.glade, gtk.gdk
 import appconst, version, notifiable, datamodel, apputils, blogoper
 from appconst import DEBUG
 
-
 class MainWindow(notifiable.Notifiable):
     
     registeredEvents = (
@@ -44,7 +43,6 @@ class MainWindow(notifiable.Notifiable):
         )
     
     def __init__(self, controller):
-        self.events = Queue.Queue()
         self.updates = Queue.Queue()
         self.controller = controller
         self.curEntry = None
@@ -71,10 +69,8 @@ class MainWindow(notifiable.Notifiable):
         self.lvEntries = self.wTree.get_widget('lvEntries')
         self._setWidgets()
         self._setDisplaySettings()
-        self.idleTimer = gobject.idle_add(self._pollEventQueue)
-        self.updatesTimer = gobject.idle_add(self._pollUpdatesQueue)
         self.show()
-    
+
     def _setWidgets(self):
         self.window.set_title(version.PROGRAM)
         self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
@@ -116,28 +112,6 @@ class MainWindow(notifiable.Notifiable):
             gtkStyle = gtk.TOOLBAR_TEXT
         self.tbrMain.set_style(gtkStyle)
     
-    def _pollEventQueue(self):
-        try:
-            event, data = self.events.get_nowait()
-            buf = self.txLog.get_buffer()
-            buf.insert(buf.get_end_iter(), data)
-            buf.insert(buf.get_end_iter(), '\n')
-            showLog = (self.cfg.getOption('views', 'show_log', '1') == '1')
-            if showLog:
-                self.logPanel.show_all()
-                self.miViewLog.set_active(showLog)
-        except Queue.Empty:
-            pass
-        return True
-    
-    def _pollUpdatesQueue(self):
-        try:
-            entry, blog, pubDate, assignedId = self.updates.get_nowait()
-            entry.updatePublication(blog, pubDate, assignedId)
-        except Queue.Empty:
-            pass
-        return True
-    
     def show(self):
         self.window.present()
     
@@ -162,21 +136,20 @@ class MainWindow(notifiable.Notifiable):
             categories = entry.categories
             blogs = args[0]
             for blog in blogs:
+                """
                 postNew = True
                 for publication in entry.publications:
                     if publication.weblog.weblogID == blog.weblogID:
                         postNew = False
-                        thread = blogoper.EntryUpdaterThread(self.events, blog,
-                            publication.assignedId, entry, categories, 
-                            self.updates)
+                        thread = blogoper.EntryUpdaterThread(blog, 
+                            publication.assignedId, entry, categories, self)
                         thread.start()
                         break
-                if postNew:
-                    thread = blogoper.BlogSenderThread(self.events, blog,
-                        entry, categories, self.updates)
-                    if DEBUG:
-                        print 'thread', thread.getName(), 'created'
-                    thread.start()
+                """ #this code needs to land elsewhere
+                sender = blogoper.BlogSenderThread(blog, entry, categories, self)
+                if DEBUG:
+                    print 'thread', thread.getName(), 'created'
+                sender.start()
         elif event == 'settings-changed':
             self._setDisplaySettings()
         elif event == 'delete-entry':
@@ -223,6 +196,28 @@ class MainWindow(notifiable.Notifiable):
         self.tbnEdit.set_sensitive(activate)
         self.tbnSend.set_sensitive(activate)
     
+    ### update entry ###
+    def updateEntry(self, entry, blog, pubDate, assignedId):
+        gobject.idle_add(self._updatePublishedEntry, entry, blog, pubDate, assignedId)
+    
+    def _updatePublishedEntry(self, entry, blog, pubDate, assignedId):
+        entry.updatePublication(blog, pubDate, assignedId)
+        return False
+
+    ### update log window with status message ###
+    def updateStatus(self, message):
+        gobject.idle_add(self._addLogMessage, message)
+    
+    def _addLogMessage(self, message):
+        buf = self.txLog.get_buffer()
+        buf.insert(buf.get_end_iter(), message)
+        buf.insert(buf.get_end_iter(), '\n')
+        showLog = (self.cfg.getOption('views', 'show_log', '1') == '1')
+        if showLog:
+            self.logPanel.show_all()
+            self.miViewLog.set_active(showLog)
+        return False
+    
     ### signal handlers ###
     def on_miFileQuit_activate(self, *args):
         self.on_frmMain_delete(args)
@@ -234,8 +229,6 @@ class MainWindow(notifiable.Notifiable):
 
     def on_frmMain_destroy(self, *args):
         self.cfg.saveConfig()
-        gobject.source_remove(self.idleTimer)
-        gobject.source_remove(self.updatesTimer)
         gtk.main_quit()
     
     def _addEntry(self, *args):
@@ -247,6 +240,9 @@ class MainWindow(notifiable.Notifiable):
     
     def _publishEntry(self, *args):
         self.controller.getPublishTo(self)
+    
+    def _publishAgain(self, *args):
+        pass
     
     def _deleteEntry(self, *args):
         entry = self.getEntryFromSelection()
