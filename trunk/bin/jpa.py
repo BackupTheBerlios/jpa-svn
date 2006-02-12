@@ -69,8 +69,6 @@ if __name__ == '__main__':
     pygtk.require('2.0')
     import gtk, gobject, gtk.glade
     gobject.threads_init()
-    #gtk.threads_init()
-    #gtk.threads_enter()
     import gettext, locale
     locale.setlocale(locale.LC_ALL, '')
     gtk.glade.bindtextdomain('jpa', lib.appconst.PATHS['i18n'])
@@ -79,4 +77,3 @@ if __name__ == '__main__':
     from lib.jpa import JPAApplication
     app = JPAApplication()
     gtk.main()
-    #gtk.threads_leave()

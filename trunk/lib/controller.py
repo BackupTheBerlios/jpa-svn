@@ -53,8 +53,11 @@ class Controller:
     def deleteEntry(self, entry, parent):
         text = _('Do you really want to delete this entry?')
         if apputils.question(text, parent.window):
-            for publication in entry.publications:
+            i = 0
+            while len(entry.publications) > 0:
+                publication = entry.publications[i]
                 publication.destroySelf()
+                i = i + 1
             entry.destroySelf()
             parent.notify('entry-deleted')
     

@@ -22,7 +22,6 @@ __revision__ = '$Id$'
 
 import os, os.path as op
 import datetime
-import threading, Queue
 
 import gtk, pango, gobject
 import gtk.glade, gtk.gdk
@@ -44,7 +43,6 @@ class MainWindow(notifiable.Notifiable):
         )
     
     def __init__(self, controller):
-        self.updates = Queue.Queue()
         self.controller = controller
         self.curEntry = None
         self.cfg = appconst.CFG
