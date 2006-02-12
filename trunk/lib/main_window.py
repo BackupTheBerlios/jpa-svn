@@ -38,6 +38,7 @@ class MainWindow(notifiable.Notifiable):
         'entry-deleted',
         'filter-changed',
         'publish-entry',
+        'republish-entry',
         'settings-changed',
         'delete-entry',
         )
@@ -136,20 +137,24 @@ class MainWindow(notifiable.Notifiable):
             categories = entry.categories
             blogs = args[0]
             for blog in blogs:
-                """
-                postNew = True
-                for publication in entry.publications:
-                    if publication.weblog.weblogID == blog.weblogID:
-                        postNew = False
-                        thread = blogoper.EntryUpdaterThread(blog, 
-                            publication.assignedId, entry, categories, self)
-                        thread.start()
-                        break
-                """ #this code needs to land elsewhere
                 sender = blogoper.BlogSenderThread(blog, entry, categories, self)
                 if DEBUG:
-                    print 'thread', thread.getName(), 'created'
+                    print 'thread', sender.getName(), 'created'
                 sender.start()
+        elif event == 'republish-entry':
+            if DEBUG:
+                print 'republishing entry'
+            entry = self.getEntryFromSelection()
+            categories = entry.categories
+            blogs = args[0]
+            for blog in blogs:
+                for publication in entry.publications:
+                    if publication.weblog.weblogID == blog.weblogID:
+                        thread = blogoper.EntryUpdaterThread(blog,
+                            publication.assignedId, entry, categories, self)
+                        if DEBUG:
+                            print 'thread', thread.getName(), 'created'
+                        thread.start()
         elif event == 'settings-changed':
             self._setDisplaySettings()
         elif event == 'delete-entry':
@@ -241,8 +246,9 @@ class MainWindow(notifiable.Notifiable):
     def _publishEntry(self, *args):
         self.controller.getPublishTo(self)
     
-    def _publishAgain(self, *args):
-        pass
+    def _republishEntry(self, *args):
+        entry = self.getEntryFromSelection()
+        self.controller.getRepublishTo(entry, self)
     
     def _deleteEntry(self, *args):
         entry = self.getEntryFromSelection()

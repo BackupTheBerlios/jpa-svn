@@ -27,8 +27,9 @@ from appwindow import EditWindow
 
 class WeblogSelectionDialog(EditWindow):
     
-    def __init__(self, parent):
+    def __init__(self, parent, entry=None):
         EditWindow.__init__(self, 'frmBlogSelDialog', parent)
+        self.entry = entry
         self.lvBlogs = self.wTree.get_widget('lvBlogs')
 
     def show(self):
@@ -51,14 +52,25 @@ class WeblogSelectionDialog(EditWindow):
     
     def _fillList(self):
         self.model.clear()
-        blogs = Weblog.select(Weblog.q.isActive==True, orderBy='name')
-        for blog in blogs:
-            self.model.append((
-                False,
-                blog.name,
-                blog.identity.name,
-                blog
-            ))
+        if self.entry:
+            publications = self.entry.publications
+            blogs = []
+            for publication in publications:
+                self.model.append((
+                    False,
+                    publication.weblog.name,
+                    publication.weblog.identity.name,
+                    publication.weblog,
+                ))
+        else:
+            blogs = Weblog.select(Weblog.q.isActive==True, orderBy='name')
+            for blog in blogs:
+                self.model.append((
+                    False,
+                    blog.name,
+                    blog.identity.name,
+                    blog,
+                ))
     
     def on_lvBlogs_toggle(self, cell, path, model=None):
         iter = model.get_iter(path)
@@ -69,5 +81,9 @@ class WeblogSelectionDialog(EditWindow):
         for (publish, blogName, identityName, blog) in self.model:
             if publish:
                 weblogs.append(blog)
-        self.parent.notify('publish-entry', weblogs)
+        if self.entry:
+            event = 'republish-entry'
+        else:
+            event = 'publish-entry'
+        self.parent.notify(event, weblogs)
         self.window.destroy()

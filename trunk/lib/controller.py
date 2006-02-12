@@ -53,6 +53,8 @@ class Controller:
     def deleteEntry(self, entry, parent):
         text = _('Do you really want to delete this entry?')
         if apputils.question(text, parent.window):
+            for publication in entry.publications:
+                publication.destroySelf()
             entry.destroySelf()
             parent.notify('entry-deleted')
     
@@ -192,6 +194,10 @@ class Controller:
     
     def getPublishTo(self, parent):
         dialog = weblogsel_dialog.WeblogSelectionDialog(parent)
+        dialog.show()
+    
+    def getRepublishTo(self, entry, parent):
+        dialog = weblogsel_dialog.WeblogSelectionDialog(parent, entry)
         dialog.show()
     
     def publishEntry(self, entry, blogs):
