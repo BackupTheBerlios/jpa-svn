@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-11 23:46+0100\n"
+"POT-Creation-Date: 2006-02-12 13:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,27 +38,27 @@ msgstr ""
 msgid "Do you really want to delete this entry?"
 msgstr ""
 
-#: lib/controller.py:61
+#: lib/controller.py:63
 msgid "Save entry to file"
 msgstr ""
 
-#: lib/controller.py:68
+#: lib/controller.py:70
 msgid "All files"
 msgstr ""
 
-#: lib/controller.py:72
+#: lib/controller.py:74
 msgid "HTML files"
 msgstr ""
 
-#: lib/controller.py:119
+#: lib/controller.py:121
 msgid "Do you really want to delete this category?"
 msgstr ""
 
-#: lib/controller.py:133
+#: lib/controller.py:135
 msgid "Do you really want to delete this identity?"
 msgstr ""
 
-#: lib/controller.py:147
+#: lib/controller.py:149
 msgid "Do you really want to delete this weblog?"
 msgstr ""
 
@@ -108,7 +108,7 @@ msgstr ""
 msgid "Publication date"
 msgstr ""
 
-#: lib/delentry_dialog.py:44 lib/weblogsel_dialog.py:43
+#: lib/delentry_dialog.py:44 lib/weblogsel_dialog.py:44
 msgid "Weblog name"
 msgstr ""
 
@@ -148,11 +148,11 @@ msgstr ""
 msgid "Editing new identity"
 msgstr ""
 
-#: lib/main_window.py:86
+#: lib/main_window.py:87
 msgid "Created"
 msgstr ""
 
-#: lib/main_window.py:87
+#: lib/main_window.py:88
 msgid "Title"
 msgstr ""
 
@@ -190,11 +190,11 @@ msgstr ""
 msgid "All identities"
 msgstr ""
 
-#: lib/weblogsel_dialog.py:42 share/jpa2.glade.h:76
+#: lib/weblogsel_dialog.py:43 share/jpa2.glade.h:76
 msgid "Publish"
 msgstr ""
 
-#: lib/weblogsel_dialog.py:44 share/jpa2.glade.h:48
+#: lib/weblogsel_dialog.py:45 share/jpa2.glade.h:48
 msgid "Identity"
 msgstr ""
 

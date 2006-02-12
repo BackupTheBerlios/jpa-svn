@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JPA-0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-11 23:46+0100\n"
+"POT-Creation-Date: 2006-02-12 13:55+0100\n"
 "PO-Revision-Date: 2005-12-23 21:39+0100\n"
 "Last-Translator: Jarek Zgoda <jzgoda@o2.pl>\n"
 "Language-Team: Polish\n"
@@ -40,27 +40,27 @@ msgstr "Edycja nowej kategorii"
 msgid "Do you really want to delete this entry?"
 msgstr "Czy na pewno chcesz usunąć ten wpis?"
 
-#: lib/controller.py:61
+#: lib/controller.py:63
 msgid "Save entry to file"
 msgstr "Zapisz wpis do pliku"
 
-#: lib/controller.py:68
+#: lib/controller.py:70
 msgid "All files"
 msgstr "Wszystkie pliki"
 
-#: lib/controller.py:72
+#: lib/controller.py:74
 msgid "HTML files"
 msgstr "Dokumenty hipertekstowe"
 
-#: lib/controller.py:119
+#: lib/controller.py:121
 msgid "Do you really want to delete this category?"
 msgstr "Czy na pewno chcesz usunąć tę kategorię?"
 
-#: lib/controller.py:133
+#: lib/controller.py:135
 msgid "Do you really want to delete this identity?"
 msgstr "Czy na pewno chcesz usunąć tę tożsamość?"
 
-#: lib/controller.py:147
+#: lib/controller.py:149
 msgid "Do you really want to delete this weblog?"
 msgstr "Czy na pewno chcesz usunąć ten dziennik?"
 
@@ -110,7 +110,7 @@ msgstr "Usuń"
 msgid "Publication date"
 msgstr "Data publikacji"
 
-#: lib/delentry_dialog.py:44 lib/weblogsel_dialog.py:43
+#: lib/delentry_dialog.py:44 lib/weblogsel_dialog.py:44
 msgid "Weblog name"
 msgstr "Nazwa dziennika:"
 
@@ -150,11 +150,11 @@ msgstr "Edycja tożsamości \"%s\""
 msgid "Editing new identity"
 msgstr "Edycja nowej tożsamości"
 
-#: lib/main_window.py:86
+#: lib/main_window.py:87
 msgid "Created"
 msgstr "Utworzony"
 
-#: lib/main_window.py:87
+#: lib/main_window.py:88
 msgid "Title"
 msgstr "Tytuł"
 
@@ -192,11 +192,11 @@ msgstr "Aktywny"
 msgid "All identities"
 msgstr "Wszystkie tożsamości"
 
-#: lib/weblogsel_dialog.py:42 share/jpa2.glade.h:76
+#: lib/weblogsel_dialog.py:43 share/jpa2.glade.h:76
 msgid "Publish"
 msgstr "Opublikuj"
 
-#: lib/weblogsel_dialog.py:44 share/jpa2.glade.h:48
+#: lib/weblogsel_dialog.py:45 share/jpa2.glade.h:48
 msgid "Identity"
 msgstr "Tożsamość"
 
