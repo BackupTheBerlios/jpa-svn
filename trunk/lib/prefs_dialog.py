@@ -61,6 +61,7 @@ class PreferencesDialog:
         self.edTrackInfoFormat = self.wTree.get_widget('edTrackInfoFormat')
         self.ckbUseAS = self.wTree.get_widget('ckbUseAS')
         self.ckbShowLog = self.wTree.get_widget('ckbShowLog')
+        self.ckbSpellCheck = self.wTree.get_widget('ckbSpellCheck')
         self.wTree.signal_autoconnect(self)
     
     def show(self):
@@ -110,6 +111,7 @@ class PreferencesDialog:
             # disable linux-specific buttons
             self.rbnUseGnomeDefBrowser.set_sensitive(False)
             self.rbnUseKdeDefBrowser.set_sensitive(False)
+            self.ckbSpellCheck.set_sensitive(False)
         useProxy = (self.cfg.getOption('network', 'use_proxy', '0') == '1')
         proxyHost = self.cfg.getOption('network', 'proxy_host', '')
         proxyPort = self.cfg.getOption('network', 'proxy_port', '0')
@@ -133,6 +135,8 @@ class PreferencesDialog:
             'as_format', ''))
         showLog = (self.cfg.getOption('views', 'show_log', '1') == '1')
         self.ckbShowLog.set_active(showLog)
+        spellChk = (self.cfg.getOption('editing', 'check_spelling', '0') == '1')
+        self.ckbSpellCheck.set_active(spellChk)
     
     def _savePrefs(self):
         self.cfg.setOption('fonts', 'editor',
@@ -198,6 +202,11 @@ class PreferencesDialog:
         else:
             value = '0'
         self.cfg.setOption('views', 'show_log', value)
+        if self.ckbSpellCheck.get_active():
+            value = '1'
+        else:
+            value = '1'
+        self.cfg.setOption('editing', 'check_spelling', value)
 
     ### signal handlers ###
     def on_ckbEnableAutosave_toggled(self, *args):
