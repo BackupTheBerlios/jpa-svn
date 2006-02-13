@@ -281,7 +281,7 @@ class MainWindow(notifiable.Notifiable):
         self.controller.showAbout(self)
 
     def on_miToolsCategories_activate(self, *args):
-        self.controller.showCategories()
+        self.controller.showCategories(self)
         
     def on_miToolsIdentities_activate(self, *args):
         self.controller.showIdentities()

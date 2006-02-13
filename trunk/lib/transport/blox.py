@@ -69,8 +69,9 @@ class BloxTransport(api.XmlRpcTransport):
         body['description'] = renderBodyAsXML(entry.body.encode('utf-8'),
             entry.bodyType)
         body['categories'] = []
-        for category in categories:
-            body['categories'].append(category.name.encode('utf-8'))
+        if len(categories) > 0:
+            # blox.pl allows only one category to be specified
+            body['categories'].append(categories[0].name.encode('utf-8'))
         # publication date turned off as temporary workaround for
         # blox.pl code bug
         #body['pubDate'] = datetime.datetime.now().isoformat()
@@ -105,5 +106,15 @@ class BloxTransport(api.XmlRpcTransport):
         try:
             s.metaWeblog.editPost(entryId, self.userName, self.passwd,
                 body, not entry.isDraft)
+        except xmlrpclib.Fault, e:
+            raise api.ServiceError(e.faultString)
+    
+    def getCategories(self, blogId):
+        if DEBUG:
+            print 'started categories synchronization'
+        s = self.getServerProxy()
+        try:
+            return s.metaWeblog.getCategories(blogId, self.userName,
+                self.passwd)
         except xmlrpclib.Fault, e:
             raise api.ServiceError(e.faultString)

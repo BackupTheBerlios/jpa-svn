@@ -52,12 +52,6 @@ def initModel():
     Publication.createTable(ifNotExists=True)
     Identity.createTable(ifNotExists=True)
     Weblog.createTable(ifNotExists=True)
-    if isSchemaEmpty:
-        fillTables()
-
-def fillTables():
-    Category(name=_('Miscellaneous'),
-        description=_('Miscellaneous category'))
 
 def getEntriesList(year, month):
     return Entry.select(
@@ -215,3 +209,22 @@ class Weblog(SQLObject):
     isActive = BoolCol(default='t', notNone=True)
     # indexes
     activeIdx = DatabaseIndex(isActive)
+    
+    def getCategories(self, parent):
+        login = self.identity.login
+        password = self.identity.password
+        uri = self.identity.serviceURI
+        proxy = appconst.CFG.getProxy()
+        transportClass = transport.TRANSPORTS[self.identity.transportType]
+        transportObj = transportClass(login, password, proxy, uri)
+        try:
+            msg = _('Started synchronizing categories for weblog %s') % self.name
+            parent.updateStatus(msg)
+            return transportObj.getCategories(self.weblogID)
+        except transport.ServiceError, e:
+            msg = _('Error while synchronizing categories for weblog %s: %s') \
+                (self.name, e)
+            parent.updateStatus(msg)
+        except NotImplementedError:
+            # ignore this one
+            pass

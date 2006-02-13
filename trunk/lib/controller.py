@@ -96,8 +96,8 @@ class Controller:
         dialog = identities_dialog.IdentitiesDialog(self)
         dialog.show()
 
-    def showCategories(self):
-        dialog = categories_dialog.CategoriesDialog(self)
+    def showCategories(self, parent):
+        dialog = categories_dialog.CategoriesDialog(self, parent)
         dialog.show()
     
     def showWeblogs(self):

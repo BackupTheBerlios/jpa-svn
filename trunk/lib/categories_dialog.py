@@ -25,15 +25,24 @@ import os.path as op
 import gobject, gtk, gtk.glade, gtk.gdk
 
 import appconst, datamodel, apputils, notifiable
+from datamodel import Weblog
 from appwindow import ListWindow
 
 class CategoriesDialog(ListWindow):
     
-    def __init__(self, controller):
+    def __init__(self, controller, parent):
         ListWindow.__init__(self, 'frmCategories', controller)
+        self.parent = parent
         self.categoryList = self.wTree.get_widget('lvCategory')
-        self.listMenuTree = gtk.glade.XML(appconst.GLADE_PATH, 'pmListEdit',
+        self.listMenuTree = gtk.glade.XML(appconst.GLADE_PATH, 'pmCatListEdit',
             'jpa')
+        self.listMenuTree.signal_autoconnect(self)
+        self.listMenu = self.listMenuTree.get_widget('pmCatListEdit')
+        self.miSync = self.listMenuTree.get_widget('miSync')
+        self.miAdd = self.listMenuTree.get_widget('miAdd')
+        self.miEdit = self.listMenuTree.get_widget('miEdit')
+        self.miDel = self.listMenuTree.get_widget('miDel')
+        self.miClose = self.listMenuTree.get_widget('miClose')
         self.btnAdd = self.wTree.get_widget('btnAdd')
         self.btnEdit = self.wTree.get_widget('btnEdit')
         self.btnDel = self.wTree.get_widget('btnDel')
@@ -80,11 +89,7 @@ class CategoriesDialog(ListWindow):
         return model.get_value(selected, 2)
     
     def _enableActions(self):
-        if len(self.model) == 0:
-            enableAction = False
-        else:
-            category = self._getCategoryFromSelection()
-            enableAction = (category.id > 1)
+        enableAction = len(self.model) > 0
         self.miEdit.set_sensitive(enableAction)
         self.btnEdit.set_sensitive(enableAction)
         self.miDel.set_sensitive(enableAction)
@@ -112,3 +117,8 @@ class CategoriesDialog(ListWindow):
     
     def on_lvCategory_cursor_changed(self, *args):
         self._enableActions()
+    
+    def on_miSync_activate(self, *args):
+        blogs = datamodel.Weblog.select(datamodel.Weblog.q.isActive==True)
+        for blog in blogs:
+            categories = blog.getCategories(self.parent)
