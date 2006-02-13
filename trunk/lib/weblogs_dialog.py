@@ -24,7 +24,7 @@ import gtk, gobject
 
 from sqlobject.sqlbuilder import *
 
-import apputils, datamodel
+import apputils, datamodel, transport
 from appconst import DEBUG
 from datamodel import Weblog
 from appwindow import ListWindow
@@ -36,6 +36,7 @@ class WeblogsDialog(ListWindow):
         self.lvBlogs = self.wTree.get_widget('lvBlogs')
         self.ckbOnlyActive = self.wTree.get_widget('ckbOnlyActive')
         self.cbxIdentity = self.wTree.get_widget('cbxIdentity')
+        self.btnDiscover = self.wTree.get_widget('btnDiscover')
         self.btnAdd = self.wTree.get_widget('btnAdd')
         self.btnEdit = self.wTree.get_widget('btnEdit')
         self.btnDel = self.wTree.get_widget('btnDel')
@@ -122,6 +123,14 @@ class WeblogsDialog(ListWindow):
         model, selected = selection.get_selected()
         return model.get_value(selected, 3)
     
+    def _activateDiscovery(self, identity):
+        if identity:
+            hasDiscovery = 'discovery' in transport.FEATURES[identity.transportType]
+        else:
+            hasDiscovery = False
+        activate = identity is not None and hasDiscovery
+        self.btnDiscover.set_sensitive(activate)
+    
     def _add(self, *args):
         self.controller.newWeblog(self)
     
@@ -158,6 +167,15 @@ class WeblogsDialog(ListWindow):
             self.model.clear()
             model = self.cbxIdentity.get_model()
             identity = model.get_value(self.cbxIdentity.get_active_iter(), 1)
+            self._activateDiscovery(identity)
             self._loadData(self.ckbOnlyActive.get_active(), identity)
         finally:
             apputils.endWait(self.window)
+    
+    def on_btnDiscover_clicked(self, *args):
+        model = self.cbxIdentity.get_model()
+        identity = model.get_value(self.cbxIdentity.get_active_iter(), 1)
+        if identity:
+            self.controller.discoverWeblogs(identity, self)
+            self.model.clear()
+            self._loadData(self.ckbOnlyActive.get_active(), identity)
