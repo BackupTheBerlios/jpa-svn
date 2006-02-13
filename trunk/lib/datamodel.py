@@ -210,21 +210,24 @@ class Weblog(SQLObject):
     # indexes
     activeIdx = DatabaseIndex(isActive)
     
-    def getCategories(self, parent):
-        login = self.identity.login
-        password = self.identity.password
-        uri = self.identity.serviceURI
+    def getCategories(self, identity, parent):
+        login = identity.login
+        password = identity.password
+        uri = identity.serviceURI
         proxy = appconst.CFG.getProxy()
         transportClass = transport.TRANSPORTS[self.identity.transportType]
         transportObj = transportClass(login, password, proxy, uri)
         try:
-            msg = _('Started synchronizing categories for weblog %s') % self.name
+            msg = _('Started downloading categories for weblog %s') % self.name
             parent.updateStatus(msg)
-            return transportObj.getCategories(self.weblogID)
+            categories = transportObj.getCategories(self.weblogID)
+            parent.addCategories(categories)
+            msg = _('Finished downloading categories for weblog %s') % self.name
+            parent.updateStatus(msg)
         except transport.ServiceError, e:
-            msg = _('Error while synchronizing categories for weblog %s: %s') \
+            msg = _('Error while downloading categories for weblog %s: %s') \
                 (self.name, e)
             parent.updateStatus(msg)
         except NotImplementedError:
-            # ignore this one
-            pass
+            msg = _('Weblog %s does not support categories') % self.name
+            parent.updateStatus(msg)

@@ -30,7 +30,7 @@ import appconst, apputils, renderer
 import entry_dialog, categories_dialog, prefs_dialog, category_dialog, \
     about_dialog, identities_dialog, identity_dialog, htmlview_dialog, \
     weblogs_dialog, weblog_dialog, weblogdisco_dialog, weblogsel_dialog, \
-    pubhistory_dialog
+    pubhistory_dialog, categorydisco_dialog
 
 class Controller:
     
@@ -98,6 +98,10 @@ class Controller:
 
     def showCategories(self, parent):
         dialog = categories_dialog.CategoriesDialog(self, parent)
+        dialog.show()
+    
+    def showRemoteCategories(self, categories, parent):
+        dialog = categorydisco_dialog.CategoryDiscoveryDialog(categories, parent)
         dialog.show()
     
     def showWeblogs(self):

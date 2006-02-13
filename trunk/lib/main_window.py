@@ -159,7 +159,7 @@ class MainWindow(notifiable.Notifiable):
             entry = self.getEntryFromSelection()
             publications = args[0]
     
-    def _refreshEntriesList(self):
+    def _refreshEntriesList(self, *args):
         self.loadEntriesList(self.entryFilter['year'],
             self.entryFilter['month'])
         if len(self.entriesModel) > 0:

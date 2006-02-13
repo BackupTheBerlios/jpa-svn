@@ -24,9 +24,10 @@ import os.path as op
 
 import gobject, gtk, gtk.glade, gtk.gdk
 
-import appconst, datamodel, apputils, notifiable
+import appconst, datamodel, apputils, notifiable, blogoper
 from datamodel import Weblog
 from appwindow import ListWindow
+from appconst import DEBUG
 
 class CategoriesDialog(ListWindow):
     
@@ -75,6 +76,30 @@ class CategoriesDialog(ListWindow):
             finally:
                 apputils.endWait(self.window)
     
+    def updateStatus(self, message):
+        self.parent.updateStatus(message)
+    
+    def addCategories(self, categories):
+        gobject.idle_add(self._addCategories, categories)
+    
+    def _addCategories(self, categories):
+        msg = _('Downloaded %d categories, do you want to update list?') % len(categories)
+        if apputils.question(msg):
+            for remoteCat in categories:
+                remoteCat['updated'] = False
+                for (name, desc, category) in self.model:
+                    if name.decode('utf-8') == remoteCat['name']:
+                        category.description = remoteCat['description']
+                        remoteCat['updated'] = True
+            for remoteCat in categories:
+                if not remoteCat['updated']:
+                    name = remoteCat['name']
+                    description = remoteCat['description']
+                    category = datamodel.Category(name=name,
+                        description=description)
+                    self.model.append((name, apputils.ellipsize(description, 80), category))
+        return False
+    
     ### "private" methods ###
     def _loadData(self):
         categories = datamodel.Category.select(orderBy='name')
@@ -121,4 +146,5 @@ class CategoriesDialog(ListWindow):
     def on_miSync_activate(self, *args):
         blogs = datamodel.Weblog.select(datamodel.Weblog.q.isActive==True)
         for blog in blogs:
-            categories = blog.getCategories(self.parent)
+            thread = blogoper.CategorySynchronizerThread(blog, blog.identity, self)
+            thread.start()

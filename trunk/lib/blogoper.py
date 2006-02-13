@@ -52,3 +52,14 @@ class EntryUpdaterThread(BlogOperatorThread):
     
     def run(self):
         self.entry.postUpdated(self.weblog, self.entryId, self.categories, self.parent)
+
+
+class CategorySynchronizerThread(BlogOperatorThread):
+    """Thread that downloads category descriptions from weblog service"""
+    
+    def __init__(self, weblog, identity, parent):
+        BlogOperatorThread.__init__(self, weblog, parent=parent)
+        self.identity = identity
+    
+    def run(self):
+        self.weblog.getCategories(self.identity, self.parent)
