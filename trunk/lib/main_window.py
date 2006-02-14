@@ -26,8 +26,10 @@ import datetime
 import gtk, pango, gobject
 import gtk.glade, gtk.gdk
 
-import appconst, version, notifiable, datamodel, apputils, blogoper
+import appconst, version, notifiable, datamodel, apputils, blogoper, transport
 from appconst import DEBUG
+
+
 
 class MainWindow(notifiable.Notifiable):
     
@@ -41,7 +43,7 @@ class MainWindow(notifiable.Notifiable):
         'settings-changed',
         'delete-entry',
         )
-    
+
     def __init__(self, controller):
         self.controller = controller
         self.curEntry = None
@@ -69,7 +71,7 @@ class MainWindow(notifiable.Notifiable):
         self._setWidgets()
         self._setDisplaySettings()
         self.show()
-
+    
     def _setWidgets(self):
         self.window.set_title(version.PROGRAM)
         self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
@@ -137,7 +139,9 @@ class MainWindow(notifiable.Notifiable):
                 service = blog.identity.transportType
                 if (len(entry.categories) > 1) and \
                         ('category' in transport.FEATURES[service]):
-                    controller.selectCategories(entry, service, self)
+                    if DEBUG:
+                        print 'too much categories, need to change this'
+                    self.controller.selectCategories(entry, service, self)
                 categories = entry.categories
                 sender = blogoper.BlogSenderThread(blog, entry, categories, self)
                 if DEBUG:

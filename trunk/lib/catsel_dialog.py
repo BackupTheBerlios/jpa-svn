@@ -20,6 +20,8 @@
 
 __revision__ = '$Id$'
 
+import gtk, gobject
+
 from appwindow import EditWindow
 
 class CategorySelectionDialog(EditWindow):
@@ -29,6 +31,7 @@ class CategorySelectionDialog(EditWindow):
     def __init__(self, parent, entry, service):
         EditWindow.__init__(self, 'frmSelectCat', parent)
         self.lbInfo = self.wTree.get_widget('lbInfo')
+        self.lvCategories = self.wTree.get_widget('lvCategories')
         self.entry = entry
         self.service = service
     
@@ -36,4 +39,38 @@ class CategorySelectionDialog(EditWindow):
         count = len(self.entry.categories)
         service = self.service
         self.lbInfo.set_text(self.info % locals())
+        self.model = gtk.ListStore(bool, str, gobject.TYPE_PYOBJECT)
+        cell0 = gtk.CellRendererToggle()
+        cell0.set_property('radio', False)
+        cell0.set_property('activatable', True)
+        cell0.connect('toggled', self.on_lvCategories_toggle, self.model)
+        cells = (cell0, gtk.CellRendererText())
+        columns = (
+            gtk.TreeViewColumn(_('Select'), cells[0], active=0),
+            gtk.TreeViewColumn(_('Category name'), cells[1], text=1),
+        )
+        for column in columns:
+            self.lvCategories.append_column(column)
+        self.lvCategories.set_model(self.model)
+        self._fillList()
         self.window.present()
+    
+    def _fillList(self):
+        self.model.clear()
+        for category in self.entry.categories:
+            self.model.append((
+                True,
+                category.name,
+                category,
+            ))
+    
+    ### signal handlers ###
+    def on_lvCategories_toggle(self, cell, path, model=None):
+        iter = model.get_iter(path)
+        model.set_value(iter, 0, not cell.get_active())
+    
+    def on_btnOk_clicked(self, *args):
+        for (select, name, category) in self.model:
+            if not select:
+                self.entry.removeCategory(category)
+        self.window.destroy()

@@ -22,8 +22,8 @@ __revision__ = '$Id$'
 
 import os, os.path as op
 
-import gtk
-import gtk.glade
+import gobject
+import gtk, gtk.glade
 
 import appconst, datamodel
 
@@ -186,8 +186,6 @@ class PreferencesDialog:
         else:
             toolbarView = 'both'
         self.cfg.setOption('toolbars', 'style', toolbarView)
-        if self.parent:
-            self.parent.notify('settings-changed')
         if self.ckbUseAS.get_active():
             value = '1'
         else:
@@ -207,6 +205,8 @@ class PreferencesDialog:
         else:
             value = '1'
         self.cfg.setOption('editing', 'check_spelling', value)
+        if self.parent:
+            self.parent.notify('settings-changed')
 
     ### signal handlers ###
     def on_ckbEnableAutosave_toggled(self, *args):

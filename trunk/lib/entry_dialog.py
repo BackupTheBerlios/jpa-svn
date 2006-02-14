@@ -61,6 +61,10 @@ class EntryDialog:
     def _setWidgetProperties(self):
         editorFontName = self.cfg.getOption('fonts', 'editor', 'Monospace 10')
         self.txBody.modify_font(pango.FontDescription(editorFontName))
+        model = gtk.ListStore(str)
+        for bodyType in datamodel.BODY_TYPES:
+            model.append((bodyType, ))
+        self.cbxContentType.set_model(model)
         if self.entry:
             title = self.entry.title
             self.window.set_title(_('Editing entry "%s"') % title)
