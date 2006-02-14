@@ -28,14 +28,15 @@ from appwindow import EditWindow
 class WeblogDialog(EditWindow):
     
     def __init__(self, parent, weblog=None):
-        EditWindow.__init__(self, 'frmWeblog', parent)
+        EditWindow.__init__(self, 'dlgWeblog', parent)
         self.weblog = weblog
         self.edWeblogName = self.wTree.get_widget('edWeblogName')
         self.cbxIdentity = self.wTree.get_widget('cbxIdentity')
         self.edWeblogID = self.wTree.get_widget('edWeblogID')
         self.ckbActive = self.wTree.get_widget('ckbActive')
+        self._initGui()
     
-    def show(self):
+    def _initGui(self):
         identModel = gtk.ListStore(str, gobject.TYPE_PYOBJECT)
         identities = datamodel.Identity.select(orderBy='name')
         self.identities = []
@@ -58,8 +59,26 @@ class WeblogDialog(EditWindow):
             windowTitle = _('Editing new weblog')
         self.window.set_title(windowTitle)
         self._activateFeatures()
-        self.window.present()
     
+    def run(self):
+        ret = self.window.run()
+        if ret == gtk.RESPONSE_OK:
+            name = self.edWeblogName.get_text().decode('utf-8')
+            model = self.cbxIdentity.get_model()
+            identity = model.get_value(self.cbxIdentity.get_active_iter(), 1)
+            blogID = self.edWeblogID.get_text().decode('utf-8')
+            isActive = self.ckbActive.get_active()
+            if self.weblog:
+                self.weblog.name = name
+                self.weblog.identity = identity
+                self.weblog.weblogID = blogID
+                self.weblog.isActive = isActive
+            else:
+                datamodel.Weblog(name=name, identity=identity, weblogID=blogID,
+                    isActive=isActive)
+            self.parent.notify('data-changed')
+        self.window.destroy()
+
     def _activateFeatures(self):
         model = self.cbxIdentity.get_model()
         identity = model.get_value(self.cbxIdentity.get_active_iter(), 1)
@@ -69,20 +88,3 @@ class WeblogDialog(EditWindow):
     ### signal handlers ###
     def on_cbxIdentity_changed(self, *args):
         self._activateFeatures()
-    
-    def on_btnOk_clicked(self, *args):
-        name = self.edWeblogName.get_text().decode('utf-8')
-        model = self.cbxIdentity.get_model()
-        identity = model.get_value(self.cbxIdentity.get_active_iter(), 1)
-        blogID = self.edWeblogID.get_text().decode('utf-8')
-        isActive = self.ckbActive.get_active()
-        if self.weblog:
-            self.weblog.name = name
-            self.weblog.identity = identity
-            self.weblog.weblogID = blogID
-            self.weblog.isActive = isActive
-        else:
-            datamodel.Weblog(name=name, identity=identity, weblogID=blogID,
-                isActive=isActive)
-        self.parent.notify('data-changed')
-        self.window.destroy()

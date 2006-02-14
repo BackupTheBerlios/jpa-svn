@@ -146,11 +146,11 @@ class Controller:
 
     def newWeblog(self, parent):
         dialog = weblog_dialog.WeblogDialog(parent)
-        dialog.show()
+        dialog.run()
 
     def editWeblog(self, weblog, parent):
         dialog = weblog_dialog.WeblogDialog(parent, weblog)
-        dialog.show()
+        dialog.run()
     
     def deleteWeblog(self, weblog, parent):
         text = _('Do you really want to delete this weblog?')

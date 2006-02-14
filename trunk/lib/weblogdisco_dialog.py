@@ -124,4 +124,5 @@ class WeblogDiscoveryDialog(EditWindow):
         for (update, blogName, blogID) in self.model:
             if update:
                 self._updateBlogData(blogName, blogID)
+        self.parent.notify('data-changed')
         self.window.destroy()
