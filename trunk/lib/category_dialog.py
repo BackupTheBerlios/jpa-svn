@@ -23,17 +23,18 @@ __revision__ = '$Id$'
 import gtk
 
 import datamodel
-from appwindow import EditWindow
+from appwindow import EditDialog
 
-class CategoryDialog(EditWindow):
+class CategoryDialog(EditDialog):
     
     def __init__(self, parent, category=None):
-        EditWindow.__init__(self, 'frmCategory', parent)
+        EditDialog.__init__(self, 'dlgCategory', parent)
         self.category = category
         self.edName = self.wTree.get_widget('edName')
         self.tvDescription = self.wTree.get_widget('tvDescription')
+        self._initGui()
     
-    def show(self):
+    def _initGui(self):
         if self.category:
             name = self.category.name
             description = self.category.description
@@ -45,18 +46,19 @@ class CategoryDialog(EditWindow):
         else:
             windowTitle = _('Editing new category')
         self.window.set_title(windowTitle)
-        self.window.present()
     
-    ### signal handlers ###
-    def on_btnOk_clicked(self, *args):
-        name = self.edName.get_text().decode('utf-8')
-        bf = self.tvDescription.get_buffer()
-        description = bf.get_text(bf.get_start_iter(), 
-            bf.get_end_iter()).decode('utf-8')
-        if self.category:
-            self.category.name = name
-            self.category.description = description
-        else:
-            datamodel.Category(name=name, description=description)
-        self.parent.notify('data-changed')
-        self.window.destroy()
+    def run(self):
+        ret = self.window.run()
+        if ret == gtk.RESPONSE_OK:
+            name = self.edName.get_text().decode('utf-8')
+            bf = self.tvDescription.get_buffer()
+            description = bf.get_text(bf.get_start_iter(), 
+                bf.get_end_iter()).decode('utf-8')
+            if self.category:
+                self.category.name = name
+                self.category.description = description
+            else:
+                datamodel.Category(name=name, description=description)
+            self.parent.notify('data-changed')
+        self.window.destroy()            
+

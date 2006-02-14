@@ -23,12 +23,12 @@ __revision__ = '$Id$'
 import gtk, gobject
 
 import datamodel, transport
-from appwindow import EditWindow
+from appwindow import EditDialog
 
-class WeblogDialog(EditWindow):
+class WeblogDialog(EditDialog):
     
     def __init__(self, parent, weblog=None):
-        EditWindow.__init__(self, 'dlgWeblog', parent)
+        EditDialog.__init__(self, 'dlgWeblog', parent)
         self.weblog = weblog
         self.edWeblogName = self.wTree.get_widget('edWeblogName')
         self.cbxIdentity = self.wTree.get_widget('cbxIdentity')

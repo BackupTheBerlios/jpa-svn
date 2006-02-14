@@ -84,3 +84,15 @@ class EditWindow(JPAWindow):
 
     def on_btnCancel_clicked(self, *args):
         self.window.destroy()
+
+
+class EditDialog:
+    
+    def __init__(self, windowName, parent=None):
+        self.cfg = appconst.CFG
+        self.parent = parent
+        self.wTree = gtk.glade.XML(appconst.GLADE_PATH, windowName, 'jpa')
+        self.window = self.wTree.get_widget(windowName)
+        self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
+            'darkbeer.xpm'))        
+        self.wTree.signal_autoconnect(self)

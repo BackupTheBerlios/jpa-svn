@@ -118,11 +118,11 @@ class Controller:
     
     def editCategory(self, category, parent):
         dialog = category_dialog.CategoryDialog(parent, category)
-        dialog.show()
+        dialog.run()
     
     def newCategory(self, parent):
         dialog = category_dialog.CategoryDialog(parent)
-        dialog.show()
+        dialog.run()
     
     def deleteCategory(self, category, parent):
         text = _('Do you really want to delete this category?')

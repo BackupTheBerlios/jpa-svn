@@ -121,7 +121,8 @@ class WeblogsDialog(ListWindow):
     def _getBlogFromSelection(self):
         selection = self.lvBlogs.get_selection()
         model, selected = selection.get_selected()
-        return model.get_value(selected, 3)
+        if selected:
+            return model.get_value(selected, 3)
     
     def _activateDiscovery(self, identity):
         if identity:
