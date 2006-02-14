@@ -26,11 +26,11 @@ import webbrowser
 import gtk
 import gtk.glade
 
-import appconst, apputils, renderer
+import appconst, apputils, renderer, transport
 import entry_dialog, categories_dialog, prefs_dialog, category_dialog, \
     about_dialog, identities_dialog, identity_dialog, htmlview_dialog, \
     weblogs_dialog, weblog_dialog, weblogdisco_dialog, weblogsel_dialog, \
-    pubhistory_dialog, categorydisco_dialog
+    pubhistory_dialog, catsel_dialog
 
 class Controller:
     
@@ -207,9 +207,9 @@ class Controller:
         dialog = weblogsel_dialog.WeblogSelectionDialog(parent, entry)
         dialog.show()
     
-    def publishEntry(self, entry, blogs):
-        for blog in blogs:
-            entry.publish(blog)
+    def selectCategories(self, entry, service, parent):
+        dialog = catsel_dialog.CategorySelectionDialog(parent, entry, service)
+        dialog.show()
     
     def __del__(self):
         for fileName in self.__tempFiles:

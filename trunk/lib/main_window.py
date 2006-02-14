@@ -132,9 +132,13 @@ class MainWindow(notifiable.Notifiable):
             if DEBUG:
                 print 'publishing entry'
             entry = self.getEntryFromSelection()
-            categories = entry.categories
             blogs = args[0]
             for blog in blogs:
+                service = blog.identity.transportType
+                if (len(entry.categories) > 1) and \
+                        ('category' in transport.FEATURES[service]):
+                    controller.selectCategories(entry, service, self)
+                categories = entry.categories
                 sender = blogoper.BlogSenderThread(blog, entry, categories, self)
                 if DEBUG:
                     print 'thread', sender.getName(), 'created'
@@ -143,11 +147,15 @@ class MainWindow(notifiable.Notifiable):
             if DEBUG:
                 print 'republishing entry'
             entry = self.getEntryFromSelection()
-            categories = entry.categories
             blogs = args[0]
             for blog in blogs:
                 for publication in entry.publications:
                     if publication.weblog.weblogID == blog.weblogID:
+                        service = blog.identity.transportType
+                        if (len(entry.categories) > 1) and \
+                                ('category' in transport.FEATURES[service]):
+                            controller.selectCategories(entry, service, self)
+                        categories = entry.categories
                         thread = blogoper.EntryUpdaterThread(blog,
                             publication.assignedId, entry, categories, self)
                         if DEBUG:
