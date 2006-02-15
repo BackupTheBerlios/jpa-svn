@@ -22,6 +22,7 @@ __revision__ = '$Id$'
 
 import os.path as op
 
+import louie
 import gtk, gobject, pango
 import gtk.glade
 
@@ -29,12 +30,11 @@ import appconst, datamodel, apputils
 
 class EntryDialog:
     
-    def __init__(self, parent, entry=None):
+    def __init__(self, entry=None):
         self.cfg = appconst.CFG
         self.modified = False
         self.isNew = (entry is None)
         self.entry = entry
-        self.parent = parent
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmEntry', 'jpa')
         self.window = self.wTree.get_widget('frmEntry')
         self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
@@ -167,10 +167,9 @@ class EntryDialog:
     def on_btnOk_clicked(self, *args):
         gobject.source_remove(self.autosaveTimer)
         self._saveEntry()
-        if self.parent:
-            if self.isNew:
-                event = 'entry-added'
-            else:
-                event = 'entry-changed'
-            self.parent.notify(event, self.entry)
+        if self.isNew:
+            event = 'entry-added'
+        else:
+            event = 'entry-changed'
+        louie.send(event)
         self.window.destroy()

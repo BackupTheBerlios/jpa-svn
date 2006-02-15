@@ -23,10 +23,10 @@ __revision__ = '$Id$'
 import os, os.path as op
 import datetime
 
+import louie
 import gtk, pango, gobject
 import gtk.glade, gtk.gdk
 
-import siglistener
 import appconst, version, notifiable, datamodel, apputils, blogoper, transport
 from appconst import DEBUG
 
@@ -35,17 +35,11 @@ from appconst import DEBUG
 class MainWindow(notifiable.Notifiable):
     
     registeredEvents = (
-        'entry-changed',
-        'entry-added',
-        'entry-deleted',
-        'filter-changed',
         'publish-entry',
         'republish-entry',
-        'delete-entry',
         )
 
     def __init__(self, controller):
-        self.listener = siglistener.getListener()
         self.controller = controller
         self.curEntry = None
         self.cfg = appconst.CFG
@@ -71,6 +65,7 @@ class MainWindow(notifiable.Notifiable):
         self.lvEntries = self.wTree.get_widget('lvEntries')
         self._setWidgets()
         self._setDisplaySettings()
+        self._connectSignals()
         self.show()
     
     def _setWidgets(self):
@@ -113,6 +108,13 @@ class MainWindow(notifiable.Notifiable):
         elif toolbarStyle == 'labels':
             gtkStyle = gtk.TOOLBAR_TEXT
         self.tbrMain.set_style(gtkStyle)
+
+    def _connectSignals(self):
+        louie.connect(self.onSettingsChanged, 'settings-changed')
+        louie.connect(self.onEntryListChanged, 'entry-added')
+        louie.connect(self.onEntryChanged, 'entry-changed')
+        louie.connect(self.onEntryListChanged, 'entry-deleted')
+        louie.connect(self.onEntryListChanged, 'filter-changed')
     
     def show(self):
         self.window.present()
@@ -124,14 +126,7 @@ class MainWindow(notifiable.Notifiable):
         """
         if not (event in self.registeredEvents):
             return
-        if event == 'entry-changed':
-            entry = self.getEntryFromSelection()
-            self.displayEntry(entry)
-            store, iterator = self.lvEntries.get_selection().get_selected()
-            store.set_value(iterator, 1, apputils.ellipsize(entry.title, 30))
-        elif event in ('entry-added', 'entry-deleted', 'filter-changed'):
-            self._refreshEntriesList()
-        elif event == 'publish-entry':
+        if event == 'publish-entry':
             if DEBUG:
                 print 'publishing entry'
             entry = self.getEntryFromSelection()
@@ -167,9 +162,6 @@ class MainWindow(notifiable.Notifiable):
                         if DEBUG:
                             print 'thread', thread.getName(), 'created'
                         thread.start()
-        elif event == 'delete-entry':
-            entry = self.getEntryFromSelection()
-            publications = args[0]
     
     def _refreshEntriesList(self, *args):
         self.loadEntriesList(self.entryFilter['year'],
@@ -247,11 +239,11 @@ class MainWindow(notifiable.Notifiable):
         gtk.main_quit()
     
     def _addEntry(self, *args):
-        self.controller.newEntry(self)
+        self.controller.newEntry()
     
     def _editEntry(self, *args):
         entry = self.getEntryFromSelection()
-        self.controller.editEntry(entry, self)
+        self.controller.editEntry(entry)
     
     def _publishEntry(self, *args):
         self.controller.getPublishTo(self)
@@ -315,6 +307,15 @@ class MainWindow(notifiable.Notifiable):
             self.curEntry = entry
             self.displayEntry(entry)
     
-    # custom signals #
-    def onSettingsChanged(self, *args):
+    # custom signals for louie dispatcher #
+    def onSettingsChanged(self):
         self._setDisplaySettings()
+    
+    def onEntryListChanged(self):
+        self._refreshEntriesList()
+    
+    def onEntryChanged(self):
+        entry = self.getEntryFromSelection()
+        self.displayEntry(entry)
+        store, iterator = self.lvEntries.get_selection().get_selected()
+        store.set_value(iterator, 1, apputils.ellipsize(entry.title, 30))

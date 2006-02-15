@@ -23,6 +23,7 @@ __revision__ = '$Id$'
 import os, tempfile, subprocess
 import webbrowser
 
+import louie
 import gtk
 import gtk.glade
 
@@ -42,12 +43,12 @@ class Controller:
         dialog = about_dialog.AboutDialog(parent)
         dialog.run()
     
-    def newEntry(self, parent):
-        dialog = entry_dialog.EntryDialog(parent)
+    def newEntry(self):
+        dialog = entry_dialog.EntryDialog()
         dialog.show()
     
-    def editEntry(self, entry, parent):
-        dialog = entry_dialog.EntryDialog(parent, entry)
+    def editEntry(self, entry):
+        dialog = entry_dialog.EntryDialog(entry)
         dialog.show()
     
     def deleteEntry(self, entry, parent):
@@ -59,7 +60,7 @@ class Controller:
                 publication.destroySelf()
                 i = i + 1
             entry.destroySelf()
-            parent.notify('entry-deleted')
+            louie.send('entry-deleted')
     
     def saveEntry(self, entry, parent):
         dialog = gtk.FileChooserDialog(
@@ -110,7 +111,6 @@ class Controller:
     
     def showPreferences(self, parent):
         dialog = prefs_dialog.PreferencesDialog(parent)
-        parent.listener.connectSignal(dialog, 'settings-changed', parent.onSettingsChanged)
         dialog.show()
     
     def showPubHistory(self, entry):

@@ -20,19 +20,14 @@ __revision__ = '$Id$'
 
 import os, os.path as op
 
-import gobject
+import louie
 import gtk, gtk.glade
 
 import appconst, datamodel
 
-class PreferencesDialog(gobject.GObject):
-    
-    __gsignals__ = {
-        'settings-changed': (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
-    }
+class PreferencesDialog:
     
     def __init__(self, parent):
-        gobject.GObject.__init__(self)
         self.cfg = appconst.CFG
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmPrefs', 'jpa')
         self.window = self.wTree.get_widget('frmPrefs')
@@ -208,7 +203,7 @@ class PreferencesDialog(gobject.GObject):
         else:
             value = '1'
         self.cfg.setOption('editing', 'check_spelling', value)
-        self.emit('settings-changed')
+        louie.send('settings-changed')
 
     ### signal handlers ###
     def on_ckbEnableAutosave_toggled(self, *args):
