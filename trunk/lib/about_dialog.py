@@ -25,17 +25,16 @@ import os.path as op
 import gtk
 
 import appconst
-from appwindow import JPAWindow
+from appwindow import EditDialog
 
-class AboutDialog(JPAWindow):
+class AboutDialog(EditDialog):
     
     def __init__(self, parent):
-        JPAWindow.__init__(self, 'frmAbout')
-        if parent:
-            self.window.set_transient_for(parent.window)
-        self.licenseView = self.wTree.get_widget('tvLicense')
+        EditDialog.__init__(self, 'dlgAbout', parent)
+        self.txLicense = self.wTree.get_widget('txLicense')
+        self._initGui()
     
-    def show(self):
+    def _initGui(self):
         imgLogo = self.wTree.get_widget('imgLogo')
         imgLogo.set_from_file(op.join(appconst.PATHS['img'], 
             'jogger-logo.png'))
@@ -46,9 +45,9 @@ class AboutDialog(JPAWindow):
         finally:
             fp.close()
         bf = gtk.TextBuffer(None)
-        self.licenseView.set_buffer(bf)
+        self.txLicense.set_buffer(bf)
         bf.set_text(data.decode('utf-8'))
-        self.window.present()
     
-    def on_btnClose_clicked(self, *args):
+    def run(self):
+        self.window.run()
         self.window.destroy()

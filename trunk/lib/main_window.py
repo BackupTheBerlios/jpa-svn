@@ -142,11 +142,12 @@ class MainWindow(notifiable.Notifiable):
                     if DEBUG:
                         print 'too much categories, need to change this'
                     self.controller.selectCategories(entry, service, self)
-                categories = entry.categories
-                sender = blogoper.BlogSenderThread(blog, entry, categories, self)
-                if DEBUG:
-                    print 'thread', sender.getName(), 'created'
-                sender.start()
+                else:
+                    categories = entry.categories
+                    sender = blogoper.BlogSenderThread(blog, entry, categories, self)
+                    if DEBUG:
+                        print 'thread', sender.getName(), 'created'
+                    sender.start()
         elif event == 'republish-entry':
             if DEBUG:
                 print 'republishing entry'

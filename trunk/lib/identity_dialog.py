@@ -23,7 +23,7 @@ __revision__ = '$Id$'
 import gtk
 
 import datamodel, transport
-from appwindow import EditWindow
+from appwindow import EditDialog
 
 PROTOCOLS = [
     'HTTP',
@@ -32,10 +32,10 @@ PROTOCOLS = [
     'XMPP/Jabber',
 ]
 
-class IdentityDialog(EditWindow):
+class IdentityDialog(EditDialog):
     
     def __init__(self, parent, identity=None):
-        EditWindow.__init__(self, 'frmIdentity', parent)
+        EditDialog.__init__(self, 'dlgIdentity', parent)
         self.identity = identity
         self.edName = self.wTree.get_widget('edName')
         self.cbxType = self.wTree.get_widget('cbxType')
@@ -46,8 +46,9 @@ class IdentityDialog(EditWindow):
         self.edLogin = self.wTree.get_widget('edLogin')
         self.edPassword = self.wTree.get_widget('edPassword')
         self.expAdvanced = self.wTree.get_widget('expAdvanced')
+        self._initGui()
     
-    def show(self):
+    def _initGui(self):
         typeModel = gtk.ListStore(str)
         for transportName in transport.AVAILABLE:
             typeModel.append([transportName])
@@ -69,7 +70,41 @@ class IdentityDialog(EditWindow):
         else:
             windowTitle = _('Editing new identity')
         self.window.set_title(windowTitle)
-        self.window.present()
+
+    def run(self):
+        ret = self.window.run()
+        if ret == gtk.RESPONSE_OK:
+            name = self.edName.get_text().decode('utf-8')
+            model = self.cbxType.get_model()
+            it = self.cbxType.get_active_iter()
+            transportType = model.get_value(it, 0)
+            model = self.cbxProtocol.get_model()
+            it = self.cbxProtocol.get_active_iter()
+            proto = model.get_value(it, 0)
+            uri = self.edUri.get_text().decode('utf-8')
+            useDefPort = self.ckbUseDefPort.get_active()
+            if useDefPort:
+                port = 0
+            else:
+                port = int(self.edPort.get_text())
+            login = self.edLogin.get_text().decode('utf-8')
+            password = self.edPassword.get_text().decode('utf-8')
+            if self.identity:
+                identity = self.identity
+                identity.name = name
+                identity.transportType = transportType
+                identity.login = login
+                identity.password = password
+                identity.serviceProtocol = proto
+                identity.serviceURI = uri
+                identity.servicePort = port
+            else:
+                identity = datamodel.Identity(name=name,
+                    transportType=transportType, login=login,
+                    password=password, serviceURI = uri,
+                    serviceProtocol=proto, servicePort=port)
+            self.parent.notify('data-changed')
+        self.window.destroy()
     
     ### signal handlers ###
     def on_cbxType_changed(self, *args):
@@ -87,35 +122,3 @@ class IdentityDialog(EditWindow):
     
     def on_ckbUseDefPort_toggled(self, *args):
         self.edPort.set_sensitive(not self.ckbUseDefPort.get_active())
-    
-    def on_btnOk_clicked(self, *args):
-        name = self.edName.get_text().decode('utf-8')
-        model = self.cbxType.get_model()
-        it = self.cbxType.get_active_iter()
-        transportType = model.get_value(it, 0)
-        model = self.cbxProtocol.get_model()
-        it = self.cbxProtocol.get_active_iter()
-        proto = model.get_value(it, 0)
-        uri = self.edUri.get_text().decode('utf-8')
-        useDefPort = self.ckbUseDefPort.get_active()
-        if useDefPort:
-            port = 0
-        else:
-            port = int(self.edPort.get_text())
-        login = self.edLogin.get_text().decode('utf-8')
-        password = self.edPassword.get_text().decode('utf-8')
-        if self.identity:
-            identity = self.identity
-            identity.name = name
-            identity.transportType = transportType
-            identity.login = login
-            identity.password = password
-            identity.serviceProtocol = proto
-            identity.serviceURI = uri
-            identity.servicePort = port
-        else:
-            identity = datamodel.Identity(name=name,
-                transportType=transportType, login=login, password=password,
-                serviceURI = uri, serviceProtocol=proto, servicePort=port)
-        self.parent.notify('data-changed')
-        self.window.destroy()

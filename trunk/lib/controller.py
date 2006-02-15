@@ -40,7 +40,7 @@ class Controller:
     
     def showAbout(self, parent):
         dialog = about_dialog.AboutDialog(parent)
-        dialog.show()
+        dialog.run()
     
     def newEntry(self, parent):
         dialog = entry_dialog.EntryDialog(parent)
@@ -132,11 +132,11 @@ class Controller:
     
     def newIdentity(self, parent):
         dialog = identity_dialog.IdentityDialog(parent)
-        dialog.show()
+        dialog.run()
     
     def editIdentity(self, identity, parent):
         dialog = identity_dialog.IdentityDialog(parent, identity)
-        dialog.show()
+        dialog.run()
     
     def deleteIdentity(self, identity, parent):
         text = _('Do you really want to delete this identity?')
