@@ -26,6 +26,7 @@ import datetime
 import gtk, pango, gobject
 import gtk.glade, gtk.gdk
 
+import siglistener
 import appconst, version, notifiable, datamodel, apputils, blogoper, transport
 from appconst import DEBUG
 
@@ -40,11 +41,11 @@ class MainWindow(notifiable.Notifiable):
         'filter-changed',
         'publish-entry',
         'republish-entry',
-        'settings-changed',
         'delete-entry',
         )
 
     def __init__(self, controller):
+        self.listener = siglistener.getListener()
         self.controller = controller
         self.curEntry = None
         self.cfg = appconst.CFG
@@ -166,8 +167,6 @@ class MainWindow(notifiable.Notifiable):
                         if DEBUG:
                             print 'thread', thread.getName(), 'created'
                         thread.start()
-        elif event == 'settings-changed':
-            self._setDisplaySettings()
         elif event == 'delete-entry':
             entry = self.getEntryFromSelection()
             publications = args[0]
@@ -315,3 +314,7 @@ class MainWindow(notifiable.Notifiable):
         if entry != self.curEntry:
             self.curEntry = entry
             self.displayEntry(entry)
+    
+    # custom signals #
+    def onSettingsChanged(self, *args):
+        self._setDisplaySettings()

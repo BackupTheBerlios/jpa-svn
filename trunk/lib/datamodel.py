@@ -63,7 +63,8 @@ class Entry(SQLObject):
     """
     Object that represents single entry.
     """
-    created = DateTimeCol(default=datetime.datetime.utcnow)
+    created = DateTimeCol(default=datetime.datetime.now)
+    createdUTC = DateTimeCol(default=datetime.datetime.utcnow, dbName='created_utc')
     title = UnicodeCol()
     body = UnicodeCol()
     bodyType = EnumCol(enumValues=BODY_TYPES, default='plain')

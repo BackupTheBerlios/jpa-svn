@@ -110,6 +110,7 @@ class Controller:
     
     def showPreferences(self, parent):
         dialog = prefs_dialog.PreferencesDialog(parent)
+        parent.listener.connectSignal(dialog, 'settings-changed', parent.onSettingsChanged)
         dialog.show()
     
     def showPubHistory(self, entry):

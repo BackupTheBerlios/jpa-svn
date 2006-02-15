@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-
 # This file is part of JPA.
 # Copyright: (C) 2003 - 2005 Jarek Zgoda <jzgoda@o2.pl>
 #
@@ -27,9 +25,14 @@ import gtk, gtk.glade
 
 import appconst, datamodel
 
-class PreferencesDialog:
+class PreferencesDialog(gobject.GObject):
+    
+    __gsignals__ = {
+        'settings-changed': (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
+    }
     
     def __init__(self, parent):
+        gobject.GObject.__init__(self)
         self.cfg = appconst.CFG
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmPrefs', 'jpa')
         self.window = self.wTree.get_widget('frmPrefs')
@@ -205,8 +208,7 @@ class PreferencesDialog:
         else:
             value = '1'
         self.cfg.setOption('editing', 'check_spelling', value)
-        if self.parent:
-            self.parent.notify('settings-changed')
+        self.emit('settings-changed')
 
     ### signal handlers ###
     def on_ckbEnableAutosave_toggled(self, *args):
