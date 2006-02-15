@@ -23,7 +23,7 @@ __revision__ = '$Id$'
 import os, tempfile, subprocess
 import webbrowser
 
-import louie
+import lib.louie
 import gtk
 import gtk.glade
 

@@ -32,11 +32,11 @@ try:
 except NameError:
     from sets import Set as set, ImmutableSet as frozenset
 
-from louie import error
-from louie import robustapply
-from louie import saferef
-from louie.sender import Any, Anonymous
-from louie.signal import All
+import error
+import robustapply
+import saferef
+from sender import Any, Anonymous
+from signal import All
 
 
 # Support for statistics.

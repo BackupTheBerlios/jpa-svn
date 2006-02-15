@@ -1,7 +1,7 @@
 """Common plugins for Louie."""
 
-from louie import dispatcher
-from louie import error
+import dispatcher
+import error
 
 
 def install_plugin(plugin):
