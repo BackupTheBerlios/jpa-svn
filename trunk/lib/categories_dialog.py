@@ -70,7 +70,7 @@ class CategoriesDialog(ListWindow):
         self.window.present()
     
     def updateStatus(self, message):
-        louie.send_exact('update-status', louie.Anonymous, message)
+        louie.send('update-status', louie.Anonymous, message)
     
     def addCategories(self, categories):
         gobject.idle_add(self._addCategories, categories)

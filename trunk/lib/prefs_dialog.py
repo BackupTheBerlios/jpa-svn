@@ -207,7 +207,7 @@ class PreferencesDialog:
         else:
             value = '1'
         self.cfg.setOption('editing', 'check_spelling', value)
-        louie.send_exact('settings-changed')
+        louie.send('settings-changed')
 
     ### signal handlers ###
     def on_ckbEnableAutosave_toggled(self, *args):

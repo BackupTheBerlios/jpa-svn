@@ -60,7 +60,7 @@ class Controller:
                 publication.destroySelf()
                 i = i + 1
             entry.destroySelf()
-            louie.send_exact('entry-deleted')
+            louie.send('entry-deleted')
     
     def saveEntry(self, entry, parent):
         dialog = gtk.FileChooserDialog(
@@ -129,7 +129,7 @@ class Controller:
         text = _('Do you really want to delete this category?')
         if apputils.question(text, parent.window):
             category.destroySelf()
-            louie.send_exact('category-deleted')
+            louie.send('category-deleted')
     
     def newIdentity(self, parent):
         dialog = identity_dialog.IdentityDialog(parent)
@@ -143,7 +143,7 @@ class Controller:
         text = _('Do you really want to delete this identity?')
         if apputils.question(text, parent.window):
             identity.destroySelf()
-            louie.send_exact('identity-deleted')
+            louie.send('identity-deleted')
 
     def newWeblog(self, parent):
         dialog = weblog_dialog.WeblogDialog(parent)
@@ -157,7 +157,7 @@ class Controller:
         text = _('Do you really want to delete this weblog?')
         if apputils.question(text, parent.window):
             weblog.destroySelf()
-            louie.send_exact('weblog-deleted')
+            louie.send('weblog-deleted')
     
     def discoverWeblogs(self, identity, parent):
         dialog = weblogdisco_dialog.WeblogDiscoveryDialog(parent, identity)

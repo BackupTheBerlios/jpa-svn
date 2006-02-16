@@ -77,7 +77,7 @@ class WeblogDialog(EditDialog):
             else:
                 datamodel.Weblog(name=name, identity=identity, weblogID=blogID,
                     isActive=isActive)
-            louie.send_exact('weblog-changed')
+            louie.send('weblog-changed')
         self.window.destroy()
 
     def _activateFeatures(self):

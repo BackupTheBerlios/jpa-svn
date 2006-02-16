@@ -125,5 +125,5 @@ class WeblogDiscoveryDialog(EditWindow):
         for (update, blogName, blogID) in self.model:
             if update:
                 self._updateBlogData(blogName, blogID)
-        louie.send_exact('discovery-done')
+        louie.send('discovery-done')
         self.window.destroy()

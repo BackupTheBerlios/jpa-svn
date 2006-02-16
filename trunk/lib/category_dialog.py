@@ -60,6 +60,6 @@ class CategoryDialog(EditDialog):
                 self.category.description = description
             else:
                 datamodel.Category(name=name, description=description)
-            louie.send_exact('category-changed')
+            louie.send('category-changed')
         self.window.destroy()            
 

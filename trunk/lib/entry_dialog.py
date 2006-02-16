@@ -171,5 +171,5 @@ class EntryDialog:
             event = 'entry-added'
         else:
             event = 'entry-changed'
-        louie.send_exact(event)
+        louie.send(event)
         self.window.destroy()

@@ -86,5 +86,5 @@ class WeblogSelectionDialog(EditWindow):
             event = 'entry-republish'
         else:
             event = 'entry-publish'
-        louie.send_exact(event, louie.Anonymous, weblogs)
+        louie.send(event, louie.Anonymous, weblogs)
         self.window.destroy()
