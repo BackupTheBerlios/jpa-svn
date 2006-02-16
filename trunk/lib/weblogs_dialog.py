@@ -20,8 +20,8 @@
 
 __revision__ = '$Id$'
 
+import louie
 import gtk, gobject
-
 from sqlobject.sqlbuilder import *
 
 import apputils, datamodel, transport
@@ -40,6 +40,7 @@ class WeblogsDialog(ListWindow):
         self.btnAdd = self.wTree.get_widget('btnAdd')
         self.btnEdit = self.wTree.get_widget('btnEdit')
         self.btnDel = self.wTree.get_widget('btnDel')
+        self._connectSignals()
     
     def show(self):
         apputils.startWait(self.window)
@@ -75,15 +76,10 @@ class WeblogsDialog(ListWindow):
             apputils.endWait(self.window)
         self.window.present()
     
-    def notify(self, event, *args, **kwargs):
-        if event == 'data-changed':
-            apputils.startWait(self.window)
-            try:
-                self.model.clear()
-                self._loadData()
-            finally:
-                apputils.endWait(self.window)
-        self._enableActions()
+    def _connectSignals(self):
+        louie.connect(self.onDataChanged, 'discovery-done')
+        louie.connect(self.onDataChanged, 'weblog-deleted')
+        louie.connect(self.onDataChanged, 'weblog-changed')
     
     def _loadData(self, onlyActive=True, identity=None):
         if identity:
@@ -180,3 +176,9 @@ class WeblogsDialog(ListWindow):
             self.controller.discoverWeblogs(identity, self)
             self.model.clear()
             self._loadData(self.ckbOnlyActive.get_active(), identity)
+    
+    # custom signals for louie #
+    def onDataChanged(self):
+        self.model.clear()
+        self._loadData()
+

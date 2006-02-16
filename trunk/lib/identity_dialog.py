@@ -20,6 +20,7 @@
 
 __revision__ = '$Id$'
 
+import louie
 import gtk
 
 import datamodel, transport
@@ -103,7 +104,7 @@ class IdentityDialog(EditDialog):
                     transportType=transportType, login=login,
                     password=password, serviceURI = uri,
                     serviceProtocol=proto, servicePort=port)
-            self.parent.notify('data-changed')
+            louie.send('identity-changed')
         self.window.destroy()
     
     ### signal handlers ###

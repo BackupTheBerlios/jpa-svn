@@ -22,9 +22,10 @@ __revision__ = '$Id$'
 
 import os.path as op
 
+import louie
 import gobject, gtk, gtk.glade, gtk.gdk
 
-import appconst, datamodel, apputils, notifiable, blogoper
+import appconst, datamodel, apputils, blogoper
 from datamodel import Weblog
 from appwindow import ListWindow
 from appconst import DEBUG
@@ -47,6 +48,7 @@ class CategoriesDialog(ListWindow):
         self.btnAdd = self.wTree.get_widget('btnAdd')
         self.btnEdit = self.wTree.get_widget('btnEdit')
         self.btnDel = self.wTree.get_widget('btnDel')
+        self._connectSignals()
 
     def show(self):
         apputils.startWait(self.window)
@@ -67,20 +69,15 @@ class CategoriesDialog(ListWindow):
             apputils.endWait(self.window)
         self.window.present()
     
-    def notify(self, event):
-        if event == 'data-changed':
-            apputils.startWait(self.window)
-            try:
-                self.model.clear()
-                self._loadData()
-            finally:
-                apputils.endWait(self.window)
-    
     def updateStatus(self, message):
-        self.parent.updateStatus(message)
+        louie.send('update-status', louie.Anonymous, message)
     
     def addCategories(self, categories):
         gobject.idle_add(self._addCategories, categories)
+    
+    def _connectSignals(self):
+        louie.connect(self.onDataChanged, 'category-changed')
+        louie.connect(self.onDataChanged, 'category-deleted')
     
     def _addCategories(self, categories):
         msg = _('Downloaded %d categories, do you want to update list?') % len(categories)
@@ -148,3 +145,8 @@ class CategoriesDialog(ListWindow):
         for blog in blogs:
             thread = blogoper.CategorySynchronizerThread(blog, blog.identity, self)
             thread.start()
+    
+    # custom signals for louie #
+    def onDataChanged(self):
+        self.model.clear()
+        self._loadData()

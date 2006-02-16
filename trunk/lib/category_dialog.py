@@ -20,6 +20,7 @@
 
 __revision__ = '$Id$'
 
+import louie
 import gtk
 
 import datamodel
@@ -59,6 +60,6 @@ class CategoryDialog(EditDialog):
                 self.category.description = description
             else:
                 datamodel.Category(name=name, description=description)
-            self.parent.notify('data-changed')
+            louie.send('category-changed')
         self.window.destroy()            
 

@@ -129,7 +129,7 @@ class Controller:
         text = _('Do you really want to delete this category?')
         if apputils.question(text, parent.window):
             category.destroySelf()
-            parent.notify('data-changed')
+            louie.send('category-deleted')
     
     def newIdentity(self, parent):
         dialog = identity_dialog.IdentityDialog(parent)
@@ -143,7 +143,7 @@ class Controller:
         text = _('Do you really want to delete this identity?')
         if apputils.question(text, parent.window):
             identity.destroySelf()
-            parent.notify('data-changed')
+            louie.send('identity-deleted')
 
     def newWeblog(self, parent):
         dialog = weblog_dialog.WeblogDialog(parent)
@@ -157,7 +157,7 @@ class Controller:
         text = _('Do you really want to delete this weblog?')
         if apputils.question(text, parent.window):
             weblog.destroySelf()
-            parent.notify('data-changed')
+            louie.send('weblog-deleted')
     
     def discoverWeblogs(self, identity, parent):
         dialog = weblogdisco_dialog.WeblogDiscoveryDialog(parent, identity)

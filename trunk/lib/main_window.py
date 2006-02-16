@@ -27,18 +27,13 @@ import louie
 import gtk, pango, gobject
 import gtk.glade, gtk.gdk
 
-import appconst, version, notifiable, datamodel, apputils, blogoper, transport
+import appconst, version, datamodel, apputils, blogoper, transport
 from appconst import DEBUG
 
 
 
-class MainWindow(notifiable.Notifiable):
+class MainWindow:
     
-    registeredEvents = (
-        'publish-entry',
-        'republish-entry',
-        )
-
     def __init__(self, controller):
         self.controller = controller
         self.curEntry = None
@@ -115,53 +110,12 @@ class MainWindow(notifiable.Notifiable):
         louie.connect(self.onEntryChanged, 'entry-changed')
         louie.connect(self.onEntryListChanged, 'entry-deleted')
         louie.connect(self.onEntryListChanged, 'filter-changed')
+        louie.connect(self.updateStatus, 'update-status')
+        louie.connect(self.onEntryPublish, 'entry-publish')
+        louie.connect(self.onEntryRepublish, 'entry-republish')
     
     def show(self):
         self.window.present()
-    
-    def notify(self, event, *args, **kwargs):
-        """
-        Inherited from Notifiable.
-        Any not registered event is silently ignored.
-        """
-        if not (event in self.registeredEvents):
-            return
-        if event == 'publish-entry':
-            if DEBUG:
-                print 'publishing entry'
-            entry = self.getEntryFromSelection()
-            blogs = args[0]
-            for blog in blogs:
-                service = blog.identity.transportType
-                if (len(entry.categories) > 1) and \
-                        ('category' in transport.FEATURES[service]):
-                    if DEBUG:
-                        print 'too much categories, need to change this'
-                    self.controller.selectCategories(entry, service, self)
-                else:
-                    categories = entry.categories
-                    sender = blogoper.BlogSenderThread(blog, entry, categories, self)
-                    if DEBUG:
-                        print 'thread', sender.getName(), 'created'
-                    sender.start()
-        elif event == 'republish-entry':
-            if DEBUG:
-                print 'republishing entry'
-            entry = self.getEntryFromSelection()
-            blogs = args[0]
-            for blog in blogs:
-                for publication in entry.publications:
-                    if publication.weblog.weblogID == blog.weblogID:
-                        service = blog.identity.transportType
-                        if (len(entry.categories) > 1) and \
-                                ('category' in transport.FEATURES[service]):
-                            controller.selectCategories(entry, service, self)
-                        categories = entry.categories
-                        thread = blogoper.EntryUpdaterThread(blog,
-                            publication.assignedId, entry, categories, self)
-                        if DEBUG:
-                            print 'thread', thread.getName(), 'created'
-                        thread.start()
     
     def _refreshEntriesList(self, *args):
         self.loadEntriesList(self.entryFilter['year'],
@@ -319,3 +273,40 @@ class MainWindow(notifiable.Notifiable):
         self.displayEntry(entry)
         store, iterator = self.lvEntries.get_selection().get_selected()
         store.set_value(iterator, 1, apputils.ellipsize(entry.title, 30))
+    
+    def onEntryPublish(self, weblogs):
+        if DEBUG:
+            print 'publishing entry'
+        entry = self.getEntryFromSelection()
+        for blog in weblogs:
+            service = blog.identity.transportType
+            if (len(entry.categories) > 1) and \
+                    ('category' in transport.FEATURES[service]):
+                if DEBUG:
+                    print 'too much categories, need to change this'
+                self.controller.selectCategories(entry, service, self)
+            else:
+                categories = entry.categories
+                sender = blogoper.BlogSenderThread(blog, entry, categories, self)
+                if DEBUG:
+                    print 'thread', sender.getName(), 'created'
+                sender.start()
+    
+    def onEntryRepublish(self, weblogs):
+        if DEBUG:
+            print 'republishing entry'
+        entry = self.getEntryFromSelection()
+        for blog in weblogs:
+            for publication in entry.publications:
+                if publication.weblog.weblogID == blog.weblogID:
+                    service = blog.identity.transportType
+                    if (len(entry.categories) > 1) and \
+                            ('category' in transport.FEATURES[service]):
+                        controller.selectCategories(entry, service, self)
+                    categories = entry.categories
+                    thread = blogoper.EntryUpdaterThread(blog,
+                        publication.assignedId, entry, categories, self)
+                    if DEBUG:
+                        print 'thread', thread.getName(), 'created'
+                    thread.start()
+

@@ -23,6 +23,7 @@ __revision__ = '$Id$'
 import time
 import threading, Queue
 
+import louie
 import gtk, gobject
 from sqlobject import SQLObjectNotFound
 
@@ -124,5 +125,5 @@ class WeblogDiscoveryDialog(EditWindow):
         for (update, blogName, blogID) in self.model:
             if update:
                 self._updateBlogData(blogName, blogID)
-        self.parent.notify('data-changed')
+        louie.send('discovery-done')
         self.window.destroy()

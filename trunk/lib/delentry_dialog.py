@@ -20,6 +20,7 @@
 
 __revision__ = '$Id$'
 
+import louie
 import gtk, gobject
 
 from appwindow import EditWindow
@@ -69,5 +70,5 @@ class EntryDeletionDialog(EditWindow):
         for (delete, pubDate, blogName, publication) in self.model:
             if delete:
                 publications.append(publication)
-        self.parent.notify('delete-entry', publications)
+        louie.send('entry-delete', publications)
         self.window.destroy()

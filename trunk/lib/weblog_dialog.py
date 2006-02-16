@@ -20,6 +20,7 @@
 
 __revision__ = '$Id$'
 
+import louie
 import gtk, gobject
 
 import datamodel, transport
@@ -76,7 +77,7 @@ class WeblogDialog(EditDialog):
             else:
                 datamodel.Weblog(name=name, identity=identity, weblogID=blogID,
                     isActive=isActive)
-            self.parent.notify('data-changed')
+            louie.send('weblog-changed')
         self.window.destroy()
 
     def _activateFeatures(self):

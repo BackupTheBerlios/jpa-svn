@@ -20,6 +20,7 @@
 
 __revision__ = '$Id$'
 
+import louie
 import gtk, gobject
 
 from datamodel import Weblog
@@ -82,8 +83,8 @@ class WeblogSelectionDialog(EditWindow):
             if publish:
                 weblogs.append(blog)
         if self.entry:
-            event = 'republish-entry'
+            event = 'entry-republish'
         else:
-            event = 'publish-entry'
-        self.parent.notify(event, weblogs)
+            event = 'entry-publish'
+        louie.send(event, louie.Anonymous, weblogs)
         self.window.destroy()

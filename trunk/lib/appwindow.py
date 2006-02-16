@@ -25,7 +25,7 @@ import os.path as op
 import gtk
 import gtk.glade
 
-import appconst, notifiable
+import appconst
 
 class JPAWindow:
     """
@@ -41,7 +41,7 @@ class JPAWindow:
         self.wTree.signal_autoconnect(self)
 
 
-class ListWindow(JPAWindow, notifiable.Notifiable):
+class ListWindow(JPAWindow):
     """
     Generic non-modal window showing a list of items
     """
