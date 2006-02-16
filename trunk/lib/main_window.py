@@ -263,6 +263,8 @@ class MainWindow:
     
     # custom signals for louie dispatcher #
     def onSettingsChanged(self):
+        if DEBUG:
+            print 'settings changed'
         self._setDisplaySettings()
     
     def onEntryListChanged(self):

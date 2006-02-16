@@ -111,7 +111,7 @@ class Controller:
     
     def showPreferences(self, parent):
         dialog = prefs_dialog.PreferencesDialog(parent)
-        dialog.show()
+        dialog.run()
     
     def showPubHistory(self, entry):
         dialog = pubhistory_dialog.PublicationHistoryDialog(self, entry)

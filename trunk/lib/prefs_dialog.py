@@ -24,18 +24,12 @@ import louie
 import gtk, gtk.glade
 
 import appconst, datamodel
+from appwindow import EditDialog
 
-class PreferencesDialog:
+class PreferencesDialog(EditDialog):
     
     def __init__(self, parent):
-        self.cfg = appconst.CFG
-        self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmPrefs', 'jpa')
-        self.window = self.wTree.get_widget('frmPrefs')
-        self.parent = parent
-        if parent:
-            self.window.set_transient_for(parent.window)
-        self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
-            'darkbeer.xpm'))
+        EditDialog.__init__(self, 'dlgPrefs', parent)
         self.fbEditorFont = self.wTree.get_widget('fbEditorFont')
         self.fbPreviewFont = self.wTree.get_widget('fbPreviewFont')
         self.fbLogFont = self.wTree.get_widget('fbLogFont')
@@ -60,9 +54,9 @@ class PreferencesDialog:
         self.ckbUseAS = self.wTree.get_widget('ckbUseAS')
         self.ckbShowLog = self.wTree.get_widget('ckbShowLog')
         self.ckbSpellCheck = self.wTree.get_widget('ckbSpellCheck')
-        self.wTree.signal_autoconnect(self)
+        self._initGui()
     
-    def show(self):
+    def _initGui(self):
         self.fbEditorFont.set_font_name(self.cfg.getOption('fonts', 'editor',
             'Monospace 10'))
         self.fbPreviewFont.set_font_name(self.cfg.getOption('fonts', 'preview',
@@ -74,7 +68,18 @@ class PreferencesDialog:
             model.append((bodyType, ))
         self.cbxDefBodyType.set_model(model)
         self._loadPrefs()
-        self.window.present()
+
+    def run(self):
+        while 1:
+            ret = self.window.run()
+            if ret == gtk.RESPONSE_APPLY:
+                self._savePrefs()
+            elif ret == gtk.RESPONSE_OK:
+                self._savePrefs()
+                break
+            else:
+                break
+        self.window.destroy()
     
     ### "private" methods ###
     def _enableCustomBrowserSelection(self, enable):
@@ -236,13 +241,6 @@ class PreferencesDialog:
         
     def on_fcbSelectBrowser_selection_changed(self, *args):
         self.edBrowserCmd.set_text(self.fcbSelectBrowser.get_filename())
-
-    def on_btnCancel_clicked(self, *args):
-        self.window.destroy()
     
     def on_btnApply_clicked(self, *args):
         self._savePrefs()
-    
-    def on_btnOk_clicked(self, *args):
-        self._savePrefs()
-        self.window.destroy()
