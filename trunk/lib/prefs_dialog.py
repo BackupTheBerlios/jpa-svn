@@ -69,6 +69,10 @@ class PreferencesDialog:
             'Sans 12'))
         self.fbLogFont.set_font_name(self.cfg.getOption('fonts', 'log',
             'Monospace 10'))
+        model = gtk.ListStore(str)
+        for bodyType in datamodel.BODY_TYPES:
+            model.append((bodyType, ))
+        self.cbxDefBodyType.set_model(model)
         self._loadPrefs()
         self.window.present()
     

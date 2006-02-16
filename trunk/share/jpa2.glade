@@ -1826,11 +1826,7 @@
 			      <child>
 				<widget class="GtkComboBox" id="cbxDefBodyType">
 				  <property name="visible">True</property>
-				  <property name="items">plain
-textile
-markdown
-ReST
-HTML</property>
+				  <property name="items"></property>
 				  <property name="add_tearoffs">False</property>
 				  <property name="focus_on_click">True</property>
 				</widget>
@@ -2819,7 +2815,7 @@ when it was created (if possible).</property>
 	<widget class="GtkExpander" id="expAdvanced">
 	  <property name="visible">True</property>
 	  <property name="can_focus">True</property>
-	  <property name="expanded">False</property>
+	  <property name="expanded">True</property>
 	  <property name="spacing">0</property>
 	  <accelerator key="N" modifiers="GDK_MOD1_MASK" signal="activate"/>
 
@@ -2986,11 +2982,7 @@ when it was created (if possible).</property>
 	      <child>
 		<widget class="GtkComboBox" id="cbxContentType">
 		  <property name="visible">True</property>
-		  <property name="items">plain
-textile
-markdown
-ReST
-HTML</property>
+		  <property name="items"></property>
 		  <property name="add_tearoffs">False</property>
 		  <property name="focus_on_click">True</property>
 		</widget>
