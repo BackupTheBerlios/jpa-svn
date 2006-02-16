@@ -70,5 +70,5 @@ class EntryDeletionDialog(EditWindow):
         for (delete, pubDate, blogName, publication) in self.model:
             if delete:
                 publications.append(publication)
-        louie.send('entry-delete', publications)
+        louie.send_exact('entry-delete', publications)
         self.window.destroy()

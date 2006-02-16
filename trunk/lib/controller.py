@@ -36,7 +36,7 @@ import entry_dialog, categories_dialog, prefs_dialog, category_dialog, \
 class Controller:
     
     def __init__(self):
-        self.__tempFiles = []
+        self._tempFiles = []
         self.cfg = appconst.CFG
     
     def showAbout(self, parent):
@@ -60,7 +60,7 @@ class Controller:
                 publication.destroySelf()
                 i = i + 1
             entry.destroySelf()
-            louie.send('entry-deleted')
+            louie.send_exact('entry-deleted')
     
     def saveEntry(self, entry, parent):
         dialog = gtk.FileChooserDialog(
@@ -129,7 +129,7 @@ class Controller:
         text = _('Do you really want to delete this category?')
         if apputils.question(text, parent.window):
             category.destroySelf()
-            louie.send('category-deleted')
+            louie.send_exact('category-deleted')
     
     def newIdentity(self, parent):
         dialog = identity_dialog.IdentityDialog(parent)
@@ -143,7 +143,7 @@ class Controller:
         text = _('Do you really want to delete this identity?')
         if apputils.question(text, parent.window):
             identity.destroySelf()
-            louie.send('identity-deleted')
+            louie.send_exact('identity-deleted')
 
     def newWeblog(self, parent):
         dialog = weblog_dialog.WeblogDialog(parent)
@@ -157,7 +157,7 @@ class Controller:
         text = _('Do you really want to delete this weblog?')
         if apputils.question(text, parent.window):
             weblog.destroySelf()
-            louie.send('weblog-deleted')
+            louie.send_exact('weblog-deleted')
     
     def discoverWeblogs(self, identity, parent):
         dialog = weblogdisco_dialog.WeblogDiscoveryDialog(parent, identity)
@@ -165,7 +165,7 @@ class Controller:
     
     def previewEntry(self, entry, parent=None):
         fd, fileName = tempfile.mkstemp('.html')
-        self.__tempFiles.append(fileName)
+        self._tempFiles.append(fileName)
         title = entry.title.encode('utf-8')
         text = entry.body.encode('utf-8')
         bodyType = entry.bodyType.encode('utf-8')
@@ -213,5 +213,5 @@ class Controller:
         dialog.show()
     
     def __del__(self):
-        for fileName in self.__tempFiles:
+        for fileName in self._tempFiles:
             os.unlink(fileName)

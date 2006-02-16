@@ -104,7 +104,7 @@ class IdentityDialog(EditDialog):
                     transportType=transportType, login=login,
                     password=password, serviceURI = uri,
                     serviceProtocol=proto, servicePort=port)
-            louie.send('identity-changed')
+            louie.send_exact('identity-changed')
         self.window.destroy()
     
     ### signal handlers ###
