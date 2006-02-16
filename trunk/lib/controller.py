@@ -23,7 +23,7 @@ __revision__ = '$Id$'
 import os, tempfile, subprocess
 import webbrowser
 
-import lib.louie
+import louie
 import gtk
 import gtk.glade
 
@@ -163,7 +163,7 @@ class Controller:
         dialog = weblogdisco_dialog.WeblogDiscoveryDialog(parent, identity)
         dialog.show()
     
-    def previewEntry(self, entry, parent=None):
+    def previewEntry(self, entry):
         fd, fileName = tempfile.mkstemp('.html')
         self._tempFiles.append(fileName)
         title = entry.title.encode('utf-8')

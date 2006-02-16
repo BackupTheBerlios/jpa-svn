@@ -223,7 +223,7 @@ class MainWindow:
     
     def on_miViewPreview_activate(self, *args):
         entry = self.getEntryFromSelection()
-        self.controller.previewEntry(entry, self)
+        self.controller.previewEntry(entry)
     
     def on_miViewHtml_activate(self, *args):
         entry = self.getEntryFromSelection()
