@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-15 21:32+0100\n"
+"POT-Creation-Date: 2006-02-16 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,26 +16,26 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lib/categories_dialog.py:56 lib/identities_dialog.py:48
-#: lib/weblogdisco_dialog.py:66 lib/weblogs_dialog.py:52
+#: lib/categories_dialog.py:58 lib/identities_dialog.py:51
+#: lib/weblogdisco_dialog.py:67 lib/weblogs_dialog.py:53
 msgid "Name"
 msgstr ""
 
-#: lib/categories_dialog.py:57
+#: lib/categories_dialog.py:59
 msgid "Description"
 msgstr ""
 
-#: lib/categories_dialog.py:86
+#: lib/categories_dialog.py:83
 #, python-format
 msgid "Downloaded %d categories, do you want to update list?"
 msgstr ""
 
-#: lib/category_dialog.py:45
+#: lib/category_dialog.py:46
 #, python-format
 msgid "Editing category \"%s\""
 msgstr ""
 
-#: lib/category_dialog.py:47
+#: lib/category_dialog.py:48
 msgid "Editing new category"
 msgstr ""
 
@@ -132,15 +132,15 @@ msgstr ""
 msgid "Weblog %s does not support categories"
 msgstr ""
 
-#: lib/delentry_dialog.py:42
+#: lib/delentry_dialog.py:43
 msgid "Delete"
 msgstr ""
 
-#: lib/delentry_dialog.py:43 lib/pubhistory_dialog.py:41
+#: lib/delentry_dialog.py:44 lib/pubhistory_dialog.py:41
 msgid "Publication date"
 msgstr ""
 
-#: lib/delentry_dialog.py:44 lib/weblogsel_dialog.py:44
+#: lib/delentry_dialog.py:45 lib/weblogsel_dialog.py:45
 msgid "Weblog name"
 msgstr ""
 
@@ -167,24 +167,24 @@ msgstr ""
 msgid "Viewing entry: \"%s\""
 msgstr ""
 
-#: lib/identities_dialog.py:49
+#: lib/identities_dialog.py:52
 msgid "Type"
 msgstr ""
 
-#: lib/identity_dialog.py:69
+#: lib/identity_dialog.py:70
 #, python-format
 msgid "Editing identity \"%s\""
 msgstr ""
 
-#: lib/identity_dialog.py:71
+#: lib/identity_dialog.py:72
 msgid "Editing new identity"
 msgstr ""
 
-#: lib/main_window.py:83
+#: lib/main_window.py:78
 msgid "Created"
 msgstr ""
 
-#: lib/main_window.py:84
+#: lib/main_window.py:79
 msgid "Title"
 msgstr ""
 
@@ -197,36 +197,36 @@ msgstr ""
 msgid "Publication history for entry \"%s\""
 msgstr ""
 
-#: lib/weblog_dialog.py:57
+#: lib/weblog_dialog.py:58
 #, python-format
 msgid "Editing weblog \"%s\""
 msgstr ""
 
-#: lib/weblog_dialog.py:59
+#: lib/weblog_dialog.py:60
 msgid "Editing new weblog"
 msgstr ""
 
-#: lib/weblogdisco_dialog.py:65
+#: lib/weblogdisco_dialog.py:66
 msgid "Update"
 msgstr ""
 
-#: lib/weblogdisco_dialog.py:67 lib/weblogs_dialog.py:53
+#: lib/weblogdisco_dialog.py:68 lib/weblogs_dialog.py:54
 msgid "BlogID"
 msgstr ""
 
-#: lib/weblogs_dialog.py:54 share/jpa2.glade.h:15
+#: lib/weblogs_dialog.py:55 share/jpa2.glade.h:15
 msgid "Active"
 msgstr ""
 
-#: lib/weblogs_dialog.py:66
+#: lib/weblogs_dialog.py:67
 msgid "All identities"
 msgstr ""
 
-#: lib/weblogsel_dialog.py:43 share/jpa2.glade.h:81
+#: lib/weblogsel_dialog.py:44 share/jpa2.glade.h:81
 msgid "Publish"
 msgstr ""
 
-#: lib/weblogsel_dialog.py:45 share/jpa2.glade.h:51
+#: lib/weblogsel_dialog.py:46 share/jpa2.glade.h:51
 msgid "Identity"
 msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JPA-0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-15 21:32+0100\n"
+"POT-Creation-Date: 2006-02-16 21:06+0100\n"
 "PO-Revision-Date: 2005-12-23 21:39+0100\n"
 "Last-Translator: Jarek Zgoda <jzgoda@o2.pl>\n"
 "Language-Team: Polish\n"
@@ -18,26 +18,26 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: lib/categories_dialog.py:56 lib/identities_dialog.py:48
-#: lib/weblogdisco_dialog.py:66 lib/weblogs_dialog.py:52
+#: lib/categories_dialog.py:58 lib/identities_dialog.py:51
+#: lib/weblogdisco_dialog.py:67 lib/weblogs_dialog.py:53
 msgid "Name"
 msgstr "Nazwa"
 
-#: lib/categories_dialog.py:57
+#: lib/categories_dialog.py:59
 msgid "Description"
 msgstr "Opis"
 
-#: lib/categories_dialog.py:86
+#: lib/categories_dialog.py:83
 #, python-format
 msgid "Downloaded %d categories, do you want to update list?"
 msgstr "Pobrałem %d kategorii, czy chcesz uaktualnić listę?"
 
-#: lib/category_dialog.py:45
+#: lib/category_dialog.py:46
 #, python-format
 msgid "Editing category \"%s\""
 msgstr "Edycja kategorii \"%s\""
 
-#: lib/category_dialog.py:47
+#: lib/category_dialog.py:48
 msgid "Editing new category"
 msgstr "Edycja nowej kategorii"
 
@@ -46,8 +46,8 @@ msgstr "Edycja nowej kategorii"
 msgid ""
 "You selected %(count)d categories, but %(service)s allows specifying only "
 "one."
-msgstr "Wybrano %(count)d kategorii, ale %(service)s pozwala na podanie "
-"tylko jednej."
+msgstr ""
+"Wybrano %(count)d kategorii, ale %(service)s pozwala na podanie tylko jednej."
 
 #: lib/catsel_dialog.py:49
 msgid "Select"
@@ -135,15 +135,15 @@ msgstr "Błąd podczas pobierania kategorii dla dziennika %s: %s"
 msgid "Weblog %s does not support categories"
 msgstr "Dziennik %s nie posiada ketegorii"
 
-#: lib/delentry_dialog.py:42
+#: lib/delentry_dialog.py:43
 msgid "Delete"
 msgstr "Usuń"
 
-#: lib/delentry_dialog.py:43 lib/pubhistory_dialog.py:41
+#: lib/delentry_dialog.py:44 lib/pubhistory_dialog.py:41
 msgid "Publication date"
 msgstr "Data publikacji"
 
-#: lib/delentry_dialog.py:44 lib/weblogsel_dialog.py:44
+#: lib/delentry_dialog.py:45 lib/weblogsel_dialog.py:45
 msgid "Weblog name"
 msgstr "Nazwa dziennika:"
 
@@ -170,24 +170,24 @@ msgstr "prywatny poziom %d"
 msgid "Viewing entry: \"%s\""
 msgstr "Podgląd wpisu \"%s\""
 
-#: lib/identities_dialog.py:49
+#: lib/identities_dialog.py:52
 msgid "Type"
 msgstr "Typ"
 
-#: lib/identity_dialog.py:69
+#: lib/identity_dialog.py:70
 #, python-format
 msgid "Editing identity \"%s\""
 msgstr "Edycja tożsamości \"%s\""
 
-#: lib/identity_dialog.py:71
+#: lib/identity_dialog.py:72
 msgid "Editing new identity"
 msgstr "Edycja nowej tożsamości"
 
-#: lib/main_window.py:83
+#: lib/main_window.py:78
 msgid "Created"
 msgstr "Utworzony"
 
-#: lib/main_window.py:84
+#: lib/main_window.py:79
 msgid "Title"
 msgstr "Tytuł"
 
@@ -200,36 +200,36 @@ msgstr "Dziennik"
 msgid "Publication history for entry \"%s\""
 msgstr "Historia publikacji wpisu \"%s\""
 
-#: lib/weblog_dialog.py:57
+#: lib/weblog_dialog.py:58
 #, python-format
 msgid "Editing weblog \"%s\""
 msgstr "Edycja dziennika \"%s\""
 
-#: lib/weblog_dialog.py:59
+#: lib/weblog_dialog.py:60
 msgid "Editing new weblog"
 msgstr "Edycja nowego dziennika"
 
-#: lib/weblogdisco_dialog.py:65
+#: lib/weblogdisco_dialog.py:66
 msgid "Update"
 msgstr "Uaktualnij"
 
-#: lib/weblogdisco_dialog.py:67 lib/weblogs_dialog.py:53
+#: lib/weblogdisco_dialog.py:68 lib/weblogs_dialog.py:54
 msgid "BlogID"
 msgstr "BlogID"
 
-#: lib/weblogs_dialog.py:54 share/jpa2.glade.h:15
+#: lib/weblogs_dialog.py:55 share/jpa2.glade.h:15
 msgid "Active"
 msgstr "Aktywny"
 
-#: lib/weblogs_dialog.py:66
+#: lib/weblogs_dialog.py:67
 msgid "All identities"
 msgstr "Wszystkie tożsamości"
 
-#: lib/weblogsel_dialog.py:43 share/jpa2.glade.h:81
+#: lib/weblogsel_dialog.py:44 share/jpa2.glade.h:81
 msgid "Publish"
 msgstr "Opublikuj"
 
-#: lib/weblogsel_dialog.py:45 share/jpa2.glade.h:51
+#: lib/weblogsel_dialog.py:46 share/jpa2.glade.h:51
 msgid "Identity"
 msgstr "Tożsamość"
 
@@ -917,6 +917,3 @@ msgstr "minut"
 #, no-c-format
 msgid "version: %s"
 msgstr "wersja: %s"
-
-#~ msgid "Miscellaneous"
-#~ msgstr "Ogólna"
