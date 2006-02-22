@@ -180,6 +180,27 @@ class Publication(SQLObject):
     assignedId = UnicodeCol()
     # indexes
     pubIdx = DatabaseIndex(published)
+    
+    def deleteRemoteEntry(self, weblog, parent):
+        transportType = weblog.identity.transportType
+        login = weblog.identity.login
+        password = weblog.identity.password
+        uri = weblog.identity.serviceURI
+        proxy = appconst.CFG.getProxy()
+        transportClass = transport.TRANSPORTS[transportType]
+        transportObj = transportClass(login, password, proxy, uri)
+        try:
+            msg = _('Initiated process of deleting entry %s from weblog %s') % (self.assignedId, weblog.name)
+            parent.updateStatus(msg)
+            transportObj.deleteEntry(self.assignedId)
+            msg = _('Entry %s deleted from weblog %s') % (self.assignedId, weblog.name)
+            parent.updateStatus(msg)
+        except transport.ServiceError, e:
+            msg = _('Error while trying to delete entry from weblog %s: %s') \
+                (weblog.name, e)
+            parent.updateStatus(msg)
+        except NotImplementedError:
+            pass
 
 
 class Identity(SQLObject):

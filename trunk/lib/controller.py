@@ -27,7 +27,7 @@ import louie
 import gtk
 import gtk.glade
 
-import appconst, apputils, renderer, transport
+import appconst, apputils, renderer, transport, blogoper
 import entry_dialog, categories_dialog, prefs_dialog, category_dialog, \
     about_dialog, identities_dialog, identity_dialog, htmlview_dialog, \
     weblogs_dialog, weblog_dialog, weblogdisco_dialog, weblogsel_dialog, \
@@ -52,11 +52,18 @@ class Controller:
         dialog.show()
     
     def deleteEntry(self, entry, parent):
-        text = _('Do you really want to delete this entry?')
+        if entry.publications:
+            text = _('This entry has been published to weblogs.\n'
+                'Do you want to delete this entry with all publications?')
+        else:
+            text = _('Do you really want to delete this entry?')
         if apputils.question(text, parent.window):
             i = 0
-            while len(entry.publications) > 0:
+            while entry.publications:
                 publication = entry.publications[i]
+                blog = publication.weblog
+                thread = blogoper.EntryDeleterThread(blog, publication, parent)
+                thread.run()
                 publication.destroySelf()
                 i = i + 1
             entry.destroySelf()

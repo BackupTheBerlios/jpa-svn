@@ -63,3 +63,14 @@ class CategorySynchronizerThread(BlogOperatorThread):
     
     def run(self):
         self.weblog.getCategories(self.identity, self.parent)
+
+
+class EntryDeleterThread(BlogOperatorThread):
+    """Thread that deletes entry from weblog"""
+    
+    def __init__(self, weblog, publication, parent):
+        BlogOperatorThread.__init__(self, weblog, parent=parent)
+        self.publication = publication
+    
+    def run(self):
+        self.publication.deleteRemoteEntry(self.weblog, self.parent)
