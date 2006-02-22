@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JPA-0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-16 21:06+0100\n"
+"POT-Creation-Date: 2006-02-22 20:45+0100\n"
 "PO-Revision-Date: 2005-12-23 21:39+0100\n"
 "Last-Translator: Jarek Zgoda <jzgoda@o2.pl>\n"
 "Language-Team: Polish\n"
@@ -57,31 +57,39 @@ msgstr "Wybierz"
 msgid "Category name"
 msgstr "Nazwa kategorii"
 
-#: lib/controller.py:55
+#: lib/controller.py:56
+msgid ""
+"This entry has been published to weblogs.\n"
+"Do you want to delete this entry with all publications?"
+msgstr ""
+"Ten wpis został już opublikowany w dziennikach.\n"
+"Czy na pewno chcesz go usunąć wraz ze wszystkimi publikacjami?"
+
+#: lib/controller.py:59
 msgid "Do you really want to delete this entry?"
 msgstr "Czy na pewno chcesz usunąć ten wpis?"
 
-#: lib/controller.py:67
+#: lib/controller.py:74
 msgid "Save entry to file"
 msgstr "Zapisz wpis do pliku"
 
-#: lib/controller.py:74
+#: lib/controller.py:81
 msgid "All files"
 msgstr "Wszystkie pliki"
 
-#: lib/controller.py:78
+#: lib/controller.py:85
 msgid "HTML files"
 msgstr "Dokumenty hipertekstowe"
 
-#: lib/controller.py:129
+#: lib/controller.py:136
 msgid "Do you really want to delete this category?"
 msgstr "Czy na pewno chcesz usunąć tę kategorię?"
 
-#: lib/controller.py:143
+#: lib/controller.py:150
 msgid "Do you really want to delete this identity?"
 msgstr "Czy na pewno chcesz usunąć tę tożsamość?"
 
-#: lib/controller.py:157
+#: lib/controller.py:164
 msgid "Do you really want to delete this weblog?"
 msgstr "Czy na pewno chcesz usunąć ten dziennik?"
 
@@ -115,22 +123,37 @@ msgstr "Wpis \"%s\" ponownie opublikowany w dzienniku %s"
 msgid "Error while republishing entry \"%s\" to weblog %s: %s"
 msgstr "Błąd podczas ponownego publikowania wpisu \"%s\" do dziennika %s: %s"
 
-#: lib/datamodel.py:222
+#: lib/datamodel.py:193
+#, python-format
+msgid "Initiated process of deleting entry %s from weblog %s"
+msgstr "Rozpocząłem usuwanie wpisu %s z dziennika %s"
+
+#: lib/datamodel.py:196
+#, python-format
+msgid "Entry %s deleted from weblog %s"
+msgstr "Wpis %s usunięty z dziennika %s"
+
+#: lib/datamodel.py:199
+#, python-format
+msgid "Error while trying to delete entry from weblog %s: %s"
+msgstr "Błąd podczas próby usunięcia wpisu %s z dziennika %s: %s"
+
+#: lib/datamodel.py:243
 #, python-format
 msgid "Started downloading categories for weblog %s"
 msgstr "Rozpocząłem pobieranie kategorii dla dziennika %s"
 
-#: lib/datamodel.py:226
+#: lib/datamodel.py:247
 #, python-format
 msgid "Finished downloading categories for weblog %s"
 msgstr "Zakończyłem pobieranie kategorii dla dziennika %s"
 
-#: lib/datamodel.py:229
+#: lib/datamodel.py:250
 #, python-format
 msgid "Error while downloading categories for weblog %s: %s"
 msgstr "Błąd podczas pobierania kategorii dla dziennika %s: %s"
 
-#: lib/datamodel.py:233
+#: lib/datamodel.py:254
 #, python-format
 msgid "Weblog %s does not support categories"
 msgstr "Dziennik %s nie posiada ketegorii"
