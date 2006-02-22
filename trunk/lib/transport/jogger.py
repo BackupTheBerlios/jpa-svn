@@ -33,3 +33,7 @@ class JoggerTransport(api.WeblogTransport):
         meta['proto'] = 'XMPP/Jabber'
         meta['uri'] = 'blog@jogger.pl'
         return meta
+
+    @classmethod
+    def supports(self):
+        return 'C'

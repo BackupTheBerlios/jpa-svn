@@ -45,6 +45,10 @@ class BloxTransport(api.XmlRpcTransport):
         meta['uri'] = None
         return meta
 
+    @classmethod
+    def supports(self):
+        return 'CRUD'
+
     def getBlogList(self):
         s = self.getServerProxy()
         ret = s.blogger.getUsersBlogs(APPKEY, self.userName, self.passwd)

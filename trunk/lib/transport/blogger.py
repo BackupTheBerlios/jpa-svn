@@ -101,6 +101,11 @@ class BloggerTransport(api.WeblogTransport):
         meta['uri'] = 'https://www.blogger.com/atom'
         return meta
 
+    @classmethod
+    def supports(self):
+        """Return what transport supports from basic CRUD operations"""
+        return 'CRUD'
+
     def getBlogList(self):
         """This method returns dictionary of user's blog names (keys) and
         their identifiers (values), suitable for use in blog inquiries and
