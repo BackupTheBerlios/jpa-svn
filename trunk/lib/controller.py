@@ -28,6 +28,7 @@ import gtk
 import gtk.glade
 
 import appconst, apputils, renderer, transport, blogoper
+from appconst import DEBUG
 import entry_dialog, categories_dialog, prefs_dialog, category_dialog, \
     about_dialog, identities_dialog, identity_dialog, htmlview_dialog, \
     weblogs_dialog, weblog_dialog, weblogdisco_dialog, weblogsel_dialog, \
@@ -60,10 +61,11 @@ class Controller:
         if apputils.question(text, parent.window):
             i = 0
             while entry.publications:
+                if DEBUG:
+                    print entry.publications
                 publication = entry.publications[i]
                 blog = publication.weblog
-                thread = blogoper.EntryDeleterThread(blog, publication, parent)
-                thread.run()
+                publication.deleteRemoteEntry(blog, parent)
                 publication.destroySelf()
                 i = i + 1
             entry.destroySelf()
