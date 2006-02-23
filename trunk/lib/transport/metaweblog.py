@@ -25,7 +25,7 @@ import api
 class MetaWeblogTransport(api.XmlRpcTransport):
     
     @classmethod
-    def getMetadata(self):
+    def getMetadata(cls):
         """Return transport's metadata for use in service definitions."""
         meta = {}
         meta['name'] = 'MetaWeblog'
@@ -35,5 +35,5 @@ class MetaWeblogTransport(api.XmlRpcTransport):
         return meta
 
     @classmethod
-    def supports(self):
+    def supports(cls):
         return 'CRUD'

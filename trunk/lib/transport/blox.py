@@ -36,7 +36,7 @@ APPKEY = AGENT
 class BloxTransport(api.XmlRpcTransport):
     
     @classmethod
-    def getMetadata(self):
+    def getMetadata(cls):
         """Return transport's metadata for use in service definitions."""
         meta = {}
         meta['name'] = 'Blox.pl'
@@ -46,7 +46,7 @@ class BloxTransport(api.XmlRpcTransport):
         return meta
 
     @classmethod
-    def supports(self):
+    def supports(cls):
         return 'CRUD'
 
     def getBlogList(self):

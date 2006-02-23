@@ -25,7 +25,7 @@ import api
 class JoggerTransport(api.WeblogTransport):
     
     @classmethod
-    def getMetadata(self):
+    def getMetadata(cls):
         """Return transport's metadata for use in service definitions."""
         meta = {}
         meta['name'] = 'Jogger.pl'
@@ -35,5 +35,5 @@ class JoggerTransport(api.WeblogTransport):
         return meta
 
     @classmethod
-    def supports(self):
+    def supports(cls):
         return 'C'

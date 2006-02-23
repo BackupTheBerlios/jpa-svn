@@ -92,7 +92,7 @@ class BloggerTransport(api.WeblogTransport):
             self.host = 'www.blogger.com'
     
     @classmethod
-    def getMetadata(self):
+    def getMetadata(cls):
         """Return transport's metadata for use in service definitions."""
         meta = {}
         meta['name'] = 'Blogger (Atom)'
@@ -102,7 +102,7 @@ class BloggerTransport(api.WeblogTransport):
         return meta
 
     @classmethod
-    def supports(self):
+    def supports(cls):
         """Return what transport supports from basic CRUD operations"""
         return 'CRUD'
 

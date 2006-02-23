@@ -33,7 +33,7 @@ APPKEY = AGENT
 class BloggerTransport(api.XmlRpcTransport):
     
     @classmethod
-    def getMetadata(self):
+    def getMetadata(cls):
         """Return transport's metadata for use in service definitions."""
         meta = {}
         meta['name'] = 'Blogger (XML-RPC)'
@@ -43,7 +43,7 @@ class BloggerTransport(api.XmlRpcTransport):
         return meta
 
     @classmethod
-    def supports(self):
+    def supports(cls):
         return 'CRUD'
     
     def getBlogList(self):
