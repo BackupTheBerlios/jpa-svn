@@ -251,7 +251,7 @@ class MainWindow:
         widget, event = args
         if event.button == 1 and event.type == gtk.gdk._2BUTTON_PRESS:
             entry = self.getEntryFromSelection()
-            self.controller.editEntry(entry, self)
+            self.controller.editEntry(entry)
         elif event.button == 3:
             self.pmEntryList.popup(None, None, None, event.button, event.time)
 
