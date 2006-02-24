@@ -59,15 +59,15 @@ class Controller:
         else:
             text = _('Do you really want to delete this entry?')
         if apputils.question(text, parent.window):
-            i = 0
+            i = len(entry.publications) - 1
             if DEBUG:
                 print entry.publications
-            while len(entry.publications) > 0:
+            while i > -1:
                 publication = entry.publications[i]
                 blog = publication.weblog
                 publication.deleteRemoteEntry(blog, parent)
                 publication.destroySelf()
-                i = i + 1
+                i = i - 1
             entry.destroySelf()
             louie.send('entry-deleted')
     

@@ -182,26 +182,28 @@ class Publication(SQLObject):
     pubIdx = DatabaseIndex(published)
     
     def deleteRemoteEntry(self, weblog, parent):
+        entryTitle = self.entry.title
         transportType = weblog.identity.transportType
         login = weblog.identity.login
         password = weblog.identity.password
         uri = weblog.identity.serviceURI
-        blogId = weblogID
+        blogId = weblog.weblogID
         proxy = appconst.CFG.getProxy()
         transportClass = transport.TRANSPORTS[transportType]
         transportObj = transportClass(login, password, proxy, uri)
         try:
-            msg = _('Initiated process of deleting entry %s from weblog %s') % (self.assignedId, weblog.name)
+            msg = _('Initiated process of deleting entry "%s" from weblog %s') % (entryTitle, weblog.name)
             parent.updateStatus(msg)
             transportObj.deleteEntry(blogId, self.assignedId)
-            msg = _('Entry %s deleted from weblog %s') % (self.assignedId, weblog.name)
+            msg = _('Entry "%s" deleted from weblog %s') % (entryTitle, weblog.name)
             parent.updateStatus(msg)
         except transport.ServiceError, e:
-            msg = _('Error while trying to delete entry from weblog %s: %s') \
+            msg = _('Error while trying to delete entry from weblog %s: %s') % \
                 (weblog.name, e)
             parent.updateStatus(msg)
         except NotImplementedError:
-            pass
+            msg = _("Service %s doesn't support deleting entries") % weblog.name
+            parent.updateStatus(msg)
 
 
 class Identity(SQLObject):
