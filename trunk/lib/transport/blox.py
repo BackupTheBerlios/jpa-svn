@@ -130,7 +130,7 @@ class BloxTransport(api.XmlRpcTransport):
         except xmlrpclib.Fault, e:
             raise api.ServiceError(e.faultString)
     
-    def deleteEntry(self, entryId):
+    def deleteEntry(self, blogId, entryId):
         if DEBUG:
             print 'started deleting entry'
         s = self.getServerProxy()

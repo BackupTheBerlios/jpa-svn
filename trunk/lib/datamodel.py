@@ -186,13 +186,14 @@ class Publication(SQLObject):
         login = weblog.identity.login
         password = weblog.identity.password
         uri = weblog.identity.serviceURI
+        blogId = weblogID
         proxy = appconst.CFG.getProxy()
         transportClass = transport.TRANSPORTS[transportType]
         transportObj = transportClass(login, password, proxy, uri)
         try:
             msg = _('Initiated process of deleting entry %s from weblog %s') % (self.assignedId, weblog.name)
             parent.updateStatus(msg)
-            transportObj.deleteEntry(self.assignedId)
+            transportObj.deleteEntry(blogId, self.assignedId)
             msg = _('Entry %s deleted from weblog %s') % (self.assignedId, weblog.name)
             parent.updateStatus(msg)
         except transport.ServiceError, e:

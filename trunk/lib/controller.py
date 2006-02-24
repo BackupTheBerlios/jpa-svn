@@ -60,9 +60,9 @@ class Controller:
             text = _('Do you really want to delete this entry?')
         if apputils.question(text, parent.window):
             i = 0
+            if DEBUG:
+                print entry.publications
             while len(entry.publications) > 0:
-                if DEBUG:
-                    print entry.publications
                 publication = entry.publications[i]
                 blog = publication.weblog
                 publication.deleteRemoteEntry(blog, parent)

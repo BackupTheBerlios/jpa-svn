@@ -57,7 +57,7 @@ class WeblogTransport:
 
     def getEntry(self, entryId): raise NotImplementedError
 
-    def deleteEntry(self, entryId): raise NotImplementedError
+    def deleteEntry(self, blogId, entryId): raise NotImplementedError
     
     def getCategories(self, blogId): raise NotImplementedError
     
