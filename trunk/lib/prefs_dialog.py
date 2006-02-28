@@ -54,6 +54,7 @@ class PreferencesDialog(EditDialog):
         self.ckbUseAS = self.wTree.get_widget('ckbUseAS')
         self.ckbShowLog = self.wTree.get_widget('ckbShowLog')
         self.ckbSpellCheck = self.wTree.get_widget('ckbSpellCheck')
+        self.ckbOneInstanceOnly = self.wTree.get_widget('ckbOneInstanceOnly')
         self._initGui()
     
     def _initGui(self):
@@ -144,6 +145,8 @@ class PreferencesDialog(EditDialog):
         self.ckbShowLog.set_active(showLog)
         spellChk = (self.cfg.getOption('editing', 'check_spelling', '0') == '1')
         self.ckbSpellCheck.set_active(spellChk)
+        oneInstance = (self.cfg.getOption('misc', 'single_instance', '1') == '1')
+        self.ckbOneInstanceOnly.set_active(oneInstance)
     
     def _savePrefs(self):
         self.cfg.setOption('fonts', 'editor',
@@ -210,8 +213,13 @@ class PreferencesDialog(EditDialog):
         if self.ckbSpellCheck.get_active():
             value = '1'
         else:
-            value = '1'
+            value = '0'
         self.cfg.setOption('editing', 'check_spelling', value)
+        if self.ckbOneInstanceOnly.get_active():
+            value = '1'
+        else:
+            value = '0'
+        self.cfg.setOption('misc', 'single_instance', value)
         louie.send('settings-changed')
 
     ### signal handlers ###
