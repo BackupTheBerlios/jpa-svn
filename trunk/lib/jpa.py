@@ -30,8 +30,6 @@ class JPAApplication:
     
     def __init__(self):
         datamodel.initModel()
-        appconst.CFG = config.AppConfig(op.join(appconst.PATHS['user'],
-            'jpa.cfg'))
         appconst.GLADE_PATH = op.join(appconst.PATHS['share'], 
             appconst.GLADE_FILE)
         self.controller = controller.Controller()

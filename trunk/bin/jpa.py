@@ -65,6 +65,24 @@ lib.appconst.DB_URI = uri
 
 
 if __name__ == '__main__':
+    pidFile = op.join(lib.appconst.PATHS['user'], 'jpa.pid')
+    import lib.config
+    lib.appconst.CFG = lib.config.AppConfig(op.join(lib.appconst.PATHS['user'],
+        'jpa.cfg'))
+    cfg = lib.appconst.CFG
+    runSingle = (cfg.getOption('misc', 'single_instance', '1') == '1')
+    if runSingle:
+        if os.name == 'nt':
+            pass
+            # will use mutex on Windows
+        else:
+            import fcntl
+            fp = open(pidFile, 'w')
+            try:
+                fcntl.lockf(fp, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except IOError:
+                # another instance is running
+                sys.exit(0)
     import pygtk
     pygtk.require('2.0')
     import gtk, gobject, gtk.glade
@@ -77,3 +95,5 @@ if __name__ == '__main__':
     from lib.jpa import JPAApplication
     app = JPAApplication()
     gtk.main()
+    if op.isfile(pidFile):
+        os.unlink(pidFile)
