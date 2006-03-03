@@ -20,7 +20,13 @@
 
 __revision__ = '$Id$'
 
-import api
+import datetime
+import xmlrpclib
+
+import api, proxytools
+from lib.renderer import renderBodyAsXML
+from lib.version import AGENT
+from lib.appconst import DEBUG
 
 class MetaWeblogTransport(api.XmlRpcTransport):
     
@@ -37,3 +43,48 @@ class MetaWeblogTransport(api.XmlRpcTransport):
     @classmethod
     def supports(cls):
         return 'CRUD'
+
+    def postNew(self, blogId, entry, categories):
+        if DEBUG:
+            print 'started sending'
+        s = self.getServerProxy()
+        body = {}
+        body['flNotOnHomePage'] = False
+        body['title'] = entry.title.encode('utf-8')
+        body['description'] = renderBodyAsXML(entry.body.encode('utf-8'),
+            entry.bodyType)
+        body['categories'] = []
+        for category in categories:
+            body['categories'].append(category.name.encode('utf-8'))
+        body['pubDate'] = datetime.datetime.now().isoformat()
+        body['guid'] = 'allo allo'
+        body['author'] = self.userName.encode('utf-8')
+        if DEBUG:
+            print body
+        try:
+            assignedId = s.metaWeblog.newPost(blogId, self.userName, self.passwd,
+                body, not entry.isDraft)
+            return assignedId
+        except xmlrpclib.Fault, e:
+            raise api.ServiceError(e.faultString)
+    
+    def postModified(self, blogId, entryId, entry, categories):
+        if DEBUG:
+            print 'started sending modified entry'
+        s = self.getServerProxy()
+        body = {}
+        body['flNotOnHomePage'] = False
+        body['title'] = entry.title.encode('utf-8')
+        body['description'] = renderBodyAsXML(entry.body.encode('utf-8'),
+            entry.bodyType)
+        body['categories'] = []
+        for category in categories:
+            body['categories'].append(category.name.encode('utf-8'))
+        body['pubDate'] = datetime.datetime.now().isoformat()
+        body['guid'] = 'allo allo'
+        body['author'] = self.userName.encode('utf-8')
+        try:
+            s.metaWeblog.editPost(entryId, self.userName, self.passwd,
+                body, not entry.isDraft)
+        except xmlrpclib.Fault, e:
+            raise api.ServiceError(e.faultString)
