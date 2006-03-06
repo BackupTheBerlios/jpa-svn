@@ -73,8 +73,14 @@ if __name__ == '__main__':
     runSingle = (cfg.getOption('misc', 'single_instance', '1') == '1')
     if runSingle:
         if os.name == 'nt':
-            pass
-            # will use mutex on Windows
+            try:
+                from lib.w32_singleinstance import SingleInstance
+                instance = SingleInstance()
+                if instance.alreadyRunning():
+                    sys.exit(0)
+            except ImportError:
+                # no win32 libraries, just continue
+                pass
         else:
             import fcntl
             fp = open(pidFile, 'w')
