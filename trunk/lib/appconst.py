@@ -25,3 +25,8 @@ GLADE_FILE = 'jpa2.glade'
 DB_URI = ''
 CFG = None
 DEBUG = True
+
+# various API keys, for possible future use
+GOOGLE_KEY = 'IZamdRBQFHK3blDtTRD83Buix1kSDwTu'
+YAHOO_KEY = 'joggertools'
+AMAZON_KEY = '0VZBG8C69Y9GQSQD9F82'
