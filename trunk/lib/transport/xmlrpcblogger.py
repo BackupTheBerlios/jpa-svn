@@ -69,10 +69,19 @@ class BloggerTransport(api.XmlRpcTransport):
         body.append(lib.renderer.renderBodyAsXML(entry.body.encode('utf-8'),
             entry.bodyType))
         body = '\n'.join(body)
-        assignedId = s.blogger.newPost(APPKEY, blogId, self.userName, self.passwd,
-            body, not entry.isDraft)
-        return assignedId
-    
-    def getEntry(self, entryId):
+        try:
+            assignedId = s.blogger.newPost(APPKEY, blogId, self.userName,
+                self.passwd, body, not entry.isDraft)
+            return assignedId
+        except xmlrpclib.Fault, e:
+            raise api.ServiceError(e.faultString)
+
+    def deleteEntry(self, blogId, entryId):
+        if DEBUG:
+            print 'started deleting'
         s = self.getServerProxy()
-        ret = s.blogger.getPost(APPKEY, entryId, self.userName, self.passwd)
+        try:
+            s.blogger.deletePost(APPKEY, entryId, self.userName, self.passwd,
+                True)
+        except xmlrpclib.Fault, e:
+            raise api.ServiceError(e.faultString)
