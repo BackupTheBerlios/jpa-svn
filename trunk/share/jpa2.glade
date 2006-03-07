@@ -3839,9 +3839,10 @@ See below for details.</property>
 
 		  <child>
 		    <widget class="GtkImage" id="imgLogo">
-		      <property name="width_request">153</property>
-		      <property name="height_request">55</property>
+		      <property name="width_request">120</property>
+		      <property name="height_request">120</property>
 		      <property name="visible">True</property>
+		      <property name="sensitive">False</property>
 		      <property name="xalign">0.5</property>
 		      <property name="yalign">0.5</property>
 		      <property name="xpad">0</property>

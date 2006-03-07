@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-28 13:22+0100\n"
+"POT-Creation-Date: 2006-03-07 21:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -260,12 +260,12 @@ msgstr ""
 msgid "Blogger.com transport using new Atom API"
 msgstr ""
 
-#: lib/transport/blogger.py:223
+#: lib/transport/blogger.py:242
 #, python-format
 msgid "Returned HTTP reason: %s"
 msgstr ""
 
-#: lib/transport/blogger.py:224
+#: lib/transport/blogger.py:243
 msgid "Received content:"
 msgstr ""
 
@@ -277,7 +277,7 @@ msgstr ""
 msgid "Jogger.pl transport"
 msgstr ""
 
-#: lib/transport/metaweblog.py:32
+#: lib/transport/metaweblog.py:38
 msgid "Transport using MetaWeblog API"
 msgstr ""
 
