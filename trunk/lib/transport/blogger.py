@@ -202,6 +202,25 @@ class BloggerTransport(api.WeblogTransport):
                 print content
         finally:
             connection.close()
+    
+    def getEntry(self, blogId, entryId):
+        if self.proxy:
+            connection = proxytools.ProxyHTTPSConnection(self.proxy['host'],
+                self.proxy['port'])
+        else:
+            connection = httplib.HTTPSConnection(self.host)
+        if DEBUG:
+            connection.set_debuglevel(9)
+        entryPath = '/%s/%s' % (blogId, entryId)
+        path = self.path % entryPath
+        try:
+            connection.request('GET', path, headers=self.headers)
+            response = connection.getresponse()
+            content = self._handleResponse(response)
+            if DEBUG:
+                print content
+        finally:
+            connection.close()
 
     def _handleResponse(self, response):
         if DEBUG:
@@ -229,5 +248,4 @@ class BloggerTransport(api.WeblogTransport):
                 raise api.ServiceUnavailableError(response.reason)
             else:
                 raise api.ServiceError(response.reason)
-    
 
