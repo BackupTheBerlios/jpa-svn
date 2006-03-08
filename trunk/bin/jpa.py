@@ -95,6 +95,15 @@ if __name__ == '__main__':
     gobject.threads_init()
     import gettext, locale
     locale.setlocale(locale.LC_ALL, '')
+    if os.name == 'nt':
+        # windows hack for locale setting
+        lang = os.getenv('LANG')
+        if lang is None:
+            defaultLang, defaultEnc = locale.getdefaultlocale()
+            if defaultLang:
+                lang = defaultLang
+        if lang:
+            os.environ['LANG'] = lang
     gtk.glade.bindtextdomain('jpa', lib.appconst.PATHS['i18n'])
     gtk.glade.textdomain('jpa')
     gettext.install('jpa', lib.appconst.PATHS['i18n'], unicode=True)
