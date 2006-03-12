@@ -20,7 +20,7 @@
 
 __revision__ = '$Id$'
 
-import os, tempfile, subprocess
+import os, tempfile
 import webbrowser
 
 import louie
@@ -76,7 +76,10 @@ class Controller:
             title=_('Save entry to file'),
             parent=parent.window,
             action=gtk.FILE_CHOOSER_ACTION_SAVE,
-            buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK),
+            buttons=(
+                gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                gtk.STOCK_SAVE, gtk.RESPONSE_OK
+            ),
         )
         try:
             f = gtk.FileFilter()
