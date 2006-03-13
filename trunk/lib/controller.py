@@ -32,7 +32,7 @@ from appconst import DEBUG
 import entry_dialog, categories_dialog, prefs_dialog, category_dialog, \
     about_dialog, identities_dialog, identity_dialog, htmlview_dialog, \
     weblogs_dialog, weblog_dialog, weblogdisco_dialog, weblogsel_dialog, \
-    pubhistory_dialog, catsel_dialog
+    pubhistory_dialog, catsel_dialog, filter_dialog
 
 class Controller:
     
@@ -104,6 +104,10 @@ class Controller:
                     fp.close()
         finally:
             dialog.destroy()
+    
+    def getEntryFilter(self, parent):
+        dialog = filter_dialog.FilterDialog(parent)
+        dialog.run()
     
     def showIdentities(self):
         dialog = identities_dialog.IdentitiesDialog(self)

@@ -220,6 +220,9 @@ class MainWindow:
     
     def on_miEditPrefs_activate(self, *args):
         self.controller.showPreferences(self)
+        
+    def on_miViewFilter_activate(self, *args):
+        self.controller.getEntryFilter(self)
     
     def on_miViewPreview_activate(self, *args):
         entry = self.getEntryFromSelection()
