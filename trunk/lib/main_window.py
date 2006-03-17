@@ -59,6 +59,7 @@ class MainWindow:
         self.tbnSend = self.wTree.get_widget('tbnSend')
         self.lvEntries = self.wTree.get_widget('lvEntries')
         self.splVert = self.wTree.get_widget('splVert')
+        self.splHor = self.wTree.get_widget('splHor')
         self._setWidgets()
         self._setDisplaySettings()
         self._connectSignals()
@@ -88,9 +89,12 @@ class MainWindow:
             sel.select_path(0)
             self.displayEntry(self.getEntryFromSelection())
         if (self.cfg.getOption('windows', 'save_sizes', '1') == '1'):
-            pos = int(self.cfg.getOption('main', 'vsplit_pos', -1))
+            pos = int(self.cfg.getOption('main', 'vsplit_pos', '-1'))
             if pos > 0:
                 self.splVert.set_position(pos)
+            pos = int(self.cfg.getOption('main', 'hsplit_pos', '-1'))
+            if pos > 0:
+                self.splHor.set_position(pos)
     
     def _setDisplaySettings(self):
         viewFontName = self.cfg.getOption('fonts', 'preview', 'Sans 10')
@@ -197,6 +201,8 @@ class MainWindow:
         if (self.cfg.getOption('windows', 'save_sizes', '1') == '1'):
             pos = self.splVert.get_position()
             self.cfg.setOption('main', 'vsplit_pos', str(pos))
+            pos = self.splHor.get_position()
+            self.cfg.setOption('main', 'hsplit_pos', str(pos))
         self.cfg.saveConfig()
         gtk.main_quit()
     

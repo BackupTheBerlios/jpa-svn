@@ -418,7 +418,7 @@
       </child>
 
       <child>
-	<widget class="GtkVPaned" id="vpaned1">
+	<widget class="GtkVPaned" id="splHor">
 	  <property name="border_width">4</property>
 	  <property name="visible">True</property>
 	  <property name="can_focus">True</property>
