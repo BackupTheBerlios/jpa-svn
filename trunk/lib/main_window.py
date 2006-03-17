@@ -58,6 +58,7 @@ class MainWindow:
         self.tbnEdit = self.wTree.get_widget('tbnEdit')
         self.tbnSend = self.wTree.get_widget('tbnSend')
         self.lvEntries = self.wTree.get_widget('lvEntries')
+        self.splVert = self.wTree.get_widget('splVert')
         self._setWidgets()
         self._setDisplaySettings()
         self._connectSignals()
@@ -86,6 +87,10 @@ class MainWindow:
             sel = self.lvEntries.get_selection()
             sel.select_path(0)
             self.displayEntry(self.getEntryFromSelection())
+        if (self.cfg.getOption('windows', 'save_sizes', '1') == '1'):
+            pos = int(self.cfg.getOption('main', 'vsplit_pos', -1))
+            if pos > 0:
+                self.splVert.set_position(pos)
     
     def _setDisplaySettings(self):
         viewFontName = self.cfg.getOption('fonts', 'preview', 'Sans 10')
@@ -189,6 +194,9 @@ class MainWindow:
         self.on_frmMain_destroy(args)
 
     def on_frmMain_destroy(self, *args):
+        if (self.cfg.getOption('windows', 'save_sizes', '1') == '1'):
+            pos = self.splVert.get_position()
+            self.cfg.setOption('main', 'vsplit_pos', str(pos))
         self.cfg.saveConfig()
         gtk.main_quit()
     

@@ -424,7 +424,7 @@
 	  <property name="can_focus">True</property>
 
 	  <child>
-	    <widget class="GtkHPaned" id="hpaned1">
+	    <widget class="GtkHPaned" id="splVert">
 	      <property name="visible">True</property>
 	      <property name="can_focus">True</property>
 
