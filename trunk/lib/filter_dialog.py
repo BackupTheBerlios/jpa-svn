@@ -30,6 +30,7 @@ class FilterDialog(EditDialog):
     
     def __init__(self, parent):
         EditDialog.__init__(self, 'dlgFilter', parent)
+        self.cbxMonth = self.wTree.get_widget('cbxMonth')
         self._initGui()
     
     def _initGui(self):
@@ -37,6 +38,11 @@ class FilterDialog(EditDialog):
         # stupid hack
         for i in range(12):
             monthStore.append((datetime.date(2005, i + 1, 1).strftime('%B'), ))
+        self.cbxMonth.set_model(monthStore)
+        cell = gtk.CellRendererText()
+        self.cbxMonth.pack_start(cell, True)
+        self.cbxMonth.add_attribute(cell, 'text', 0)
+        self.cbxMonth.set_active(0)
     
     def run(self):
         ret = self.window.run()
