@@ -20,6 +20,7 @@
 
 __revision__ = '$Id$'
 
+import locale
 import datetime
 
 import gtk
@@ -37,7 +38,9 @@ class FilterDialog(EditDialog):
         monthStore = gtk.ListStore(str)
         # stupid hack
         for i in range(12):
-            monthStore.append((datetime.date(2005, i + 1, 1).strftime('%B'), ))
+            monthStr = datetime.date(2005, i + 1, 1).strftime('%B')
+            enc = locale.getdefaultlocale()[1]
+            monthStore.append((monthStr.decode(enc), ))
         self.cbxMonth.set_model(monthStore)
         cell = gtk.CellRendererText()
         self.cbxMonth.pack_start(cell, True)
