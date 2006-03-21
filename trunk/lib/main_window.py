@@ -82,7 +82,8 @@ class MainWindow:
         self.lvEntries.append_column(col0)
         self.lvEntries.append_column(col1)
         self.lvEntries.set_model(self.entriesModel)
-        self.entryFilter={'year': today.year, 'month': today.month}
+        self.entryFilter={'year': today.year, 'month': today.month,
+            'categories': []}
         self.loadEntriesList(today.year, today.month)
         if len(self.entriesModel) > 0:
             sel = self.lvEntries.get_selection()
@@ -236,7 +237,7 @@ class MainWindow:
         self.controller.showPreferences(self)
         
     def on_miViewFilter_activate(self, *args):
-        self.controller.getEntryFilter(self)
+        self.entryFilter = self.controller.getEntryFilter(self, self.entryFilter)
     
     def on_miViewPreview_activate(self, *args):
         entry = self.getEntryFromSelection()

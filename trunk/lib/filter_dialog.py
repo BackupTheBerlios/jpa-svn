@@ -36,6 +36,7 @@ class FilterDialog(EditDialog):
         self.cbxMonth = self.wTree.get_widget('cbxMonth')
         self.lvCategories = self.wTree.get_widget('lvCategories')
         self.ckbShowAllCategories = self.wTree.get_widget('ckbShowAllCategories')
+        self.spnYear = self.wTree.get_widget('spnYear')
         self._initGui()
     
     def _initGui(self):
@@ -49,11 +50,17 @@ class FilterDialog(EditDialog):
         cell = gtk.CellRendererText()
         self.cbxMonth.pack_start(cell, True)
         self.cbxMonth.add_attribute(cell, 'text', 0)
-        self.cbxMonth.set_active(0)
+        if not self.curFilter:
+            today = datetime.date.today()
+            self.curFilter['month'] = today.month
+            self.curFilter['year'] = today.year
+            self.curFilter['categories'] = []
+        self.cbxMonth.set_active(self.curFilter['month'] - 1)
+        self.spnYear.set_value(self.curFilter['year'])
         catStore = gtk.ListStore(bool, str)
         categories = datamodel.Category.select(orderBy='name')
         for category in categories:
-            catStore.append((False, category.name))
+            catStore.append((category.name in self.curFilter['categories'], category.name))
         cell0 = gtk.CellRendererToggle()
         cell0.set_property('radio', False)
         cell0.set_property('activatable', True)
@@ -68,6 +75,7 @@ class FilterDialog(EditDialog):
     def run(self):
         ret = self.window.run()
         self.window.destroy()
+        return self.curFilter
     
     ### signal handlers ###
     def on_lvCategories_toggle(self, cell, path, model=None):

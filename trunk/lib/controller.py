@@ -105,9 +105,9 @@ class Controller:
         finally:
             dialog.destroy()
     
-    def getEntryFilter(self, parent):
-        dialog = filter_dialog.FilterDialog(parent)
-        dialog.run()
+    def getEntryFilter(self, parent, curFilter):
+        dialog = filter_dialog.FilterDialog(parent, curFilter)
+        return dialog.run()
     
     def showIdentities(self):
         dialog = identities_dialog.IdentitiesDialog(self)
