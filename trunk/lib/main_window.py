@@ -51,9 +51,13 @@ class MainWindow:
         self.lbSent = self.wTree.get_widget('lbSent')
         self.lbTitle = self.wTree.get_widget('lbTitle')
         self.txEntry = self.wTree.get_widget('txEntry')
+        self.frmFilter = self.wTree.get_widget('frmFilter')
+        self.lbDatesFilter = self.wTree.get_widget('lbDatesFilter')
+        self.lbCatFilter = self.wTree.get_widget('lbCatFilter')
         self.miFileEdit = self.wTree.get_widget('miFileEdit')
         self.miFilePublish = self.wTree.get_widget('miFilePublish')
         self.miViewLog = self.wTree.get_widget('miViewLog')
+        self.miViewFilterPane = self.wTree.get_widget('miViewFilterPane')
         self.tbrMain = self.wTree.get_widget('tbrMain')
         self.tbnEdit = self.wTree.get_widget('tbnEdit')
         self.tbnSend = self.wTree.get_widget('tbnSend')
@@ -96,6 +100,8 @@ class MainWindow:
             pos = int(self.cfg.getOption('main', 'hsplit_pos', '-1'))
             if pos > 0:
                 self.splHor.set_position(pos)
+        self.lbDatesFilter.set_text(today.strftime('%Y-%m'))
+        self.lbCatFilter.set_text(_('all'))
     
     def _setDisplaySettings(self):
         viewFontName = self.cfg.getOption('fonts', 'preview', 'Sans 10')
@@ -140,6 +146,12 @@ class MainWindow:
     def loadEntriesList(self, year, month, categories=[]):
         self.entriesModel.clear()
         entries = datamodel.getEntriesList(year, month, categories)
+        day = datetime.date(year, month, 1)
+        self.lbDatesFilter.set_text(day.strftime('%Y-%m'))
+        if categories:
+            self.lbCatFilter.set_text(', '.join(categories))
+        else:
+            self.lbCatFilter.set_text(_('all'))
         for entry in entries:
             self.entriesModel.append((
                 entry.created.strftime('%Y-%m-%d'),
@@ -254,6 +266,12 @@ class MainWindow:
             self.logPanel.hide()
         else:
             self.logPanel.show_all()
+    
+    def on_miViewFilterPane_activate(self, *args):
+        if self.frmFilter.get_property('visible'):
+            self.frmFilter.hide()
+        else:
+            self.frmFilter.show_all()
 
     def on_miAbout_activate(self, *args):
         self.controller.showAbout(self)
