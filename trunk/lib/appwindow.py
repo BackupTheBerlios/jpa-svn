@@ -94,5 +94,7 @@ class EditDialog:
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, windowName, 'jpa')
         self.window = self.wTree.get_widget(windowName)
         self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
-            'darkbeer.xpm'))        
+            'darkbeer.xpm'))
+        if parent:
+            self.window.set_transient_for(parent.window)
         self.wTree.signal_autoconnect(self)

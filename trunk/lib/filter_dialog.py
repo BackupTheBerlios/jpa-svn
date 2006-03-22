@@ -34,6 +34,8 @@ class FilterDialog(EditDialog):
     
     def __init__(self, parent, curFilter={}):
         EditDialog.__init__(self, 'dlgFilter', parent)
+        if DEBUG:
+            print 'modal:', self.window.get_modal()
         self.curFilter = curFilter
         self.cbxMonth = self.wTree.get_widget('cbxMonth')
         self.lvCategories = self.wTree.get_widget('lvCategories')
