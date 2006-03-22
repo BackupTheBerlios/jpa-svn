@@ -139,7 +139,7 @@ class MainWindow:
 
     def loadEntriesList(self, year, month, categories=[]):
         self.entriesModel.clear()
-        entries = datamodel.getEntriesList(year, month)
+        entries = datamodel.getEntriesList(year, month, categories)
         for entry in entries:
             self.entriesModel.append((
                 entry.created.strftime('%Y-%m-%d'),

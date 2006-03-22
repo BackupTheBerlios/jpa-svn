@@ -53,11 +53,21 @@ def initModel():
     Identity.createTable(ifNotExists=True)
     Weblog.createTable(ifNotExists=True)
 
-def getEntriesList(year, month):
-    return Entry.select(
+def getEntriesList(year, month, categories):
+    entries = Entry.select(
         AND(Entry.q.year==year, Entry.q.month==month),
         orderBy='created'
     ).reversed()
+    # no category selection, just return what we got
+    if not categories:
+        return entries
+    ret = []
+    for entry in entries:
+        for category in entry.categories:
+            if category.name in categories:
+                ret.append(entry)
+                break
+    return ret
 
 class Entry(SQLObject):
     """

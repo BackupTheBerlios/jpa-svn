@@ -62,7 +62,8 @@ class FilterDialog(EditDialog):
         catStore = gtk.ListStore(bool, str)
         categories = datamodel.Category.select(orderBy='name')
         for category in categories:
-            catStore.append((category.name in self.curFilter['categories'], category.name))
+            active = category.name in self.curFilter['categories']
+            catStore.append((active, category.name))
         cell0 = gtk.CellRendererToggle()
         cell0.set_property('radio', False)
         cell0.set_property('activatable', True)
@@ -80,7 +81,13 @@ class FilterDialog(EditDialog):
             if DEBUG:
                 print 'pressed ok, sending signal'
             self.curFilter['month'] = self.cbxMonth.get_active() + 1
-            self.curFilter['year'] = self.spnYear.get_value()
+            self.curFilter['year'] = int(self.spnYear.get_value())
+            if self.ckbShowAllCategories.get_active():
+                self.curFilter['categories'] = []
+            else:
+                for (selected, name) in self.lvCategories.get_model():
+                    if selected:
+                        self.curFilter['categories'].append(name.decode('utf-8'))
             louie.send('filter-changed')
         self.window.destroy()
     
