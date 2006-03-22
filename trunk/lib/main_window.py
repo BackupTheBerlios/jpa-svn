@@ -128,14 +128,16 @@ class MainWindow:
         self.window.present()
     
     def _refreshEntriesList(self, *args):
+        if DEBUG:
+            print 'loading entries using filter:', self.entryFilter
         self.loadEntriesList(self.entryFilter['year'],
-            self.entryFilter['month'])
+            self.entryFilter['month'], self.entryFilter['categories'])
         if len(self.entriesModel) > 0:
             sel = self.lvEntries.get_selection()
             sel.select_path(0)
             self.displayEntry(self.getEntryFromSelection())
 
-    def loadEntriesList(self, year, month):
+    def loadEntriesList(self, year, month, categories=[]):
         self.entriesModel.clear()
         entries = datamodel.getEntriesList(year, month)
         for entry in entries:
@@ -237,7 +239,7 @@ class MainWindow:
         self.controller.showPreferences(self)
         
     def on_miViewFilter_activate(self, *args):
-        self.entryFilter = self.controller.getEntryFilter(self, self.entryFilter)
+        self.controller.getEntryFilter(self, self.entryFilter)
     
     def on_miViewPreview_activate(self, *args):
         entry = self.getEntryFromSelection()
@@ -286,6 +288,8 @@ class MainWindow:
         self._setDisplaySettings()
     
     def onEntryListChanged(self):
+        if DEBUG:
+            print 'changed entry list'
         self._refreshEntriesList()
     
     def onEntryChanged(self):

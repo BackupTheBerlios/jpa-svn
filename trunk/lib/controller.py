@@ -107,7 +107,7 @@ class Controller:
     
     def getEntryFilter(self, parent, curFilter):
         dialog = filter_dialog.FilterDialog(parent, curFilter)
-        return dialog.run()
+        dialog.run()
     
     def showIdentities(self):
         dialog = identities_dialog.IdentitiesDialog(self)

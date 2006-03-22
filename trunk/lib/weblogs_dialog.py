@@ -151,19 +151,21 @@ class WeblogsDialog(ListWindow):
     def on_ckbOnlyActive_toggled(self, *args):
         apputils.startWait(self.window)
         try:
+            button = args[0]
             self.model.clear()
             model = self.cbxIdentity.get_model()
             identity = model.get_value(self.cbxIdentity.get_active_iter(), 1)
-            self._loadData(self.ckbOnlyActive.get_active(), identity)
+            self._loadData(button.get_active(), identity)
         finally:
             apputils.endWait(self.window)
     
     def on_cbxIdentity_changed(self, *args):
         apputils.startWait(self.window)
         try:
+            comboBox = args[0]
             self.model.clear()
-            model = self.cbxIdentity.get_model()
-            identity = model.get_value(self.cbxIdentity.get_active_iter(), 1)
+            model = comboBox.get_model()
+            identity = model.get_value(comboBox.get_active_iter(), 1)
             self._activateDiscovery(identity)
             self._loadData(self.ckbOnlyActive.get_active(), identity)
         finally:

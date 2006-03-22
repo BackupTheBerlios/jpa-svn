@@ -23,10 +23,12 @@ __revision__ = '$Id$'
 import locale
 import datetime
 
+import louie
 import gtk
 
 import datamodel
 from appwindow import EditDialog
+from appconst import DEBUG
 
 class FilterDialog(EditDialog):
     
@@ -74,8 +76,13 @@ class FilterDialog(EditDialog):
     
     def run(self):
         ret = self.window.run()
+        if ret == gtk.RESPONSE_OK:
+            if DEBUG:
+                print 'pressed ok, sending signal'
+            self.curFilter['month'] = self.cbxMonth.get_active() + 1
+            self.curFilter['year'] = self.spnYear.get_value()
+            louie.send('filter-changed')
         self.window.destroy()
-        return self.curFilter
     
     ### signal handlers ###
     def on_lvCategories_toggle(self, cell, path, model=None):
@@ -83,4 +90,5 @@ class FilterDialog(EditDialog):
         model.set_value(iter, 0, not cell.get_active())
 
     def on_ckbShowAllCategories_toggled(self, *args):
-        self.lvCategories.set_sensitive(not self.ckbShowAllCategories.get_active())
+        button = args[0]
+        self.lvCategories.set_sensitive(not button.get_active())

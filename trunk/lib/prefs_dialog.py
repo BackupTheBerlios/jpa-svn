@@ -224,16 +224,18 @@ class PreferencesDialog(EditDialog):
 
     ### signal handlers ###
     def on_ckbEnableAutosave_toggled(self, *args):
-        isActive = self.ckbEnableAutosave.get_active()
-        self.spnAutosaveInterval.set_sensitive(isActive)
+        button = args[0]
+        self.spnAutosaveInterval.set_sensitive(button.get_active())
     
     def on_ckbUseProxy_toggled(self, *args):
-        isActive = self.ckbUseProxy.get_active()
+        button = args[0]
+        isActive = button.get_active()
         self.edProxyPort.set_sensitive(isActive)
         self.edProxyHost.set_sensitive(isActive)
     
     def on_ckbUseAS_toggled(self, *args):
-        self._enableLastfmInfo(self.ckbUseAS.get_active())
+        button = args[0]
+        self._enableLastfmInfo(button.get_active())
     
     def on_rbnUseSysDef_toggled(self, *args):
         self._enableCustomBrowserSelection(False)
@@ -248,7 +250,8 @@ class PreferencesDialog(EditDialog):
         self._enableCustomBrowserSelection(True)
         
     def on_fcbSelectBrowser_selection_changed(self, *args):
-        self.edBrowserCmd.set_text(self.fcbSelectBrowser.get_filename())
+        widget = args[0]
+        self.edBrowserCmd.set_text(widget.get_filename())
     
     def on_btnApply_clicked(self, *args):
         self._savePrefs()
