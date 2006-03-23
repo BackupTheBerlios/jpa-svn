@@ -82,9 +82,10 @@ class WeblogDialog(EditDialog):
 
     def _activateFeatures(self):
         model = self.cbxIdentity.get_model()
-        identity = model.get_value(self.cbxIdentity.get_active_iter(), 1)
-        features = transport.FEATURES[identity.transportType]
-        self.edWeblogID.set_sensitive('blogID' in features)
+        if len(model) > 0:
+            identity = model.get_value(self.cbxIdentity.get_active_iter(), 1)
+            features = transport.FEATURES[identity.transportType]
+            self.edWeblogID.set_sensitive('blogID' in features)
     
     ### signal handlers ###
     def on_cbxIdentity_changed(self, *args):
