@@ -144,12 +144,18 @@ class EntryDialog:
         self._saveEntry()
         return True
     
+    def on_edTitle_changed(self, *args):
+        widget = args[0]
+        title = widget.get_text()
+        self.window.set_title(_('Editing entry "%s"') % title)
+    
     def on_lvCategory_toggle(self, cell, path, model=None):
         iter = model.get_iter(path)
         model.set_value(iter, 0, not cell.get_active())
     
     def on_spnVisLevel_value_changed(self, *args):
-        visLevel = self.spnVisLevel.get_value_as_int()
+        widget = args[0]
+        visLevel = widget.get_value_as_int()
         if visLevel > 0:
             self.lbVisLevelDesc.set_label(_('private level %d') % visLevel)
         else:

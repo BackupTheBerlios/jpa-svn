@@ -1051,6 +1051,7 @@
 	  <property name="has_frame">True</property>
 	  <property name="invisible_char">*</property>
 	  <property name="activates_default">False</property>
+	  <signal name="changed" handler="on_edTitle_changed" last_modification_time="Sun, 26 Mar 2006 19:45:57 GMT"/>
 	</widget>
 	<packing>
 	  <property name="padding">0</property>
