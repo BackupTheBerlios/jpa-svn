@@ -55,6 +55,7 @@ class PreferencesDialog(EditDialog):
         self.ckbShowLog = self.wTree.get_widget('ckbShowLog')
         self.ckbSpellCheck = self.wTree.get_widget('ckbSpellCheck')
         self.ckbOneInstanceOnly = self.wTree.get_widget('ckbOneInstanceOnly')
+        self.lvEntryCategories = self.wTree.get_widget('lvEntryCategories')
         self._initGui()
     
     def _initGui(self):
@@ -68,6 +69,20 @@ class PreferencesDialog(EditDialog):
         for bodyType in datamodel.BODY_TYPES:
             model.append((bodyType, ))
         self.cbxDefBodyType.set_model(model)
+        model = gtk.ListStore(bool, str)
+        categories = datamodel.Category.select(orderBy='name')
+        for category in categories:
+            model.append((False, category.name))
+        cell0 = gtk.CellRendererToggle()
+        cell0.set_property('radio', False)
+        cell0.set_property('activatable', True)
+        cell0.connect('toggled', self.on_lvEntryCategories_toggle, model)
+        column0 = gtk.TreeViewColumn('use', cell0, active=0)
+        cell1 = gtk.CellRendererText()
+        column1 = gtk.TreeViewColumn('name', cell1, text=1)
+        self.lvEntryCategories.append_column(column0)
+        self.lvEntryCategories.append_column(column1)
+        self.lvEntryCategories.set_model(model)
         self._loadPrefs()
 
     def run(self):
@@ -223,6 +238,10 @@ class PreferencesDialog(EditDialog):
         louie.send('settings-changed')
 
     ### signal handlers ###
+    def on_lvEntryCategories_toggle(self, cell, path, model=None):
+        iter = model.get_iter(path)
+        model.set_value(iter, 0, not cell.get_active())
+        
     def on_ckbEnableAutosave_toggled(self, *args):
         button = args[0]
         self.spnAutosaveInterval.set_sensitive(button.get_active())
