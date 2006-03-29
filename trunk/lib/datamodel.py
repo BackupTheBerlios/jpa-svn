@@ -168,7 +168,9 @@ class Media(SQLObject):
     """
     name = UnicodeCol(alternateID=True)
     mime = UnicodeCol()
-    publications = MultipleJoin('Publication', orderBy='-published')
+    URI = UnicodeCol(dbName='uri')
+    localPath = UnicodeCol(dbName='local_path')
+    weblog = ForeignKey('Weblog')
 
 
 class Category(SQLObject):
