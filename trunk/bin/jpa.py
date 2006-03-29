@@ -33,6 +33,15 @@ for dirName in ('bin', 'doc', 'lib', 'share'):
 paths['img'] = op.join(paths['share'], 'images')
 paths['i18n'] = op.join(paths['share'], 'locale')
 userPath = op.join(op.expanduser('~'), '.jpa')
+if not os.access(userPath, os.F_OK) and os.name == 'nt':
+    #OMG, misconfigured Windows
+    userPath = os.environ['USERPROFILE']
+    if not os.access(userPath, os.F_OK):
+        #OMFG, totally fucked-up Windows
+        userPath = os.environ['HOMEDRIVE'] + os.environ['HOMEPATH']
+if not os.access(userPath, os.F_OK):
+    # give up
+    userPath = basePath
 paths['user'] = userPath
 userTransports = op.join(userPath, 'plugins', 'transport')
 if not op.isdir(userTransports):
