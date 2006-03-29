@@ -277,13 +277,16 @@ class MainWindow:
         self.controller.showAbout(self)
 
     def on_miToolsCategories_activate(self, *args):
-        self.controller.showCategories(self)
+        self.controller.showCategories()
         
     def on_miToolsIdentities_activate(self, *args):
         self.controller.showIdentities()
     
     def on_miToolsWeblogs_activate(self, *args):
         self.controller.showWeblogs()
+    
+    def on_miToolsMedia_activate(self, *args):
+        self.controller.showMedia()
     
     def on_lvEntries_button_press_event(self, *args):
         widget, event = args

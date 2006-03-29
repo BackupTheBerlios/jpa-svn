@@ -262,6 +262,16 @@
 		      <signal name="activate" handler="on_miToolsWeblogs_activate" last_modification_time="Tue, 10 Jan 2006 12:54:16 GMT"/>
 		    </widget>
 		  </child>
+
+		  <child>
+		    <widget class="GtkMenuItem" id="miToolsMedia">
+		      <property name="visible">True</property>
+		      <property name="tooltip" translatable="yes">Show list of published media objects</property>
+		      <property name="label" translatable="yes">_Media</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_miToolsMedia_activate" last_modification_time="Wed, 29 Mar 2006 13:21:25 GMT"/>
+		    </widget>
+		  </child>
 		</widget>
 	      </child>
 	    </widget>

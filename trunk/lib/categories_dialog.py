@@ -32,9 +32,8 @@ from appconst import DEBUG
 
 class CategoriesDialog(ListWindow):
     
-    def __init__(self, controller, parent):
+    def __init__(self, controller):
         ListWindow.__init__(self, 'frmCategories', controller)
-        self.parent = parent
         self.categoryList = self.wTree.get_widget('lvCategory')
         self.listMenuTree = gtk.glade.XML(appconst.GLADE_PATH, 'pmCatListEdit',
             'jpa')

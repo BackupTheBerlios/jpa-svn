@@ -113,8 +113,8 @@ class Controller:
         dialog = identities_dialog.IdentitiesDialog(self)
         dialog.show()
 
-    def showCategories(self, parent):
-        dialog = categories_dialog.CategoriesDialog(self, parent)
+    def showCategories(self):
+        dialog = categories_dialog.CategoriesDialog(self)
         dialog.show()
     
     def showRemoteCategories(self, categories, parent):
@@ -124,6 +124,9 @@ class Controller:
     def showWeblogs(self):
         dialog = weblogs_dialog.WeblogsDialog(self)
         dialog.show()
+    
+    def showMedia(self):
+        pass
     
     def showPreferences(self, parent):
         dialog = prefs_dialog.PreferencesDialog(parent)
