@@ -63,13 +63,3 @@ class WeblogTransport:
     
     def putMediaObject(self, blogId, mediaFileName): raise NotImplementedError
 
-
-class XmlRpcTransport(WeblogTransport):
-
-    def getServerProxy(self):    
-        kw = {}
-        if self.proxy:
-            kw['transport'] = proxytools.ProxyTransport(self.proxy['host'], self.proxy['port'])
-        kw['encoding'] = 'utf-8'
-        return xmlrpclib.ServerProxy(self.uri, **kw)
-

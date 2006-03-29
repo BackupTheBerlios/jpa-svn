@@ -23,14 +23,14 @@ __revision__ = '$Id$'
 
 import xmlrpclib
 
-import api, proxytools
+import api, commonxmlrpc, proxytools
 import lib.renderer
 from lib.version import AGENT
 from lib.appconst import DEBUG
 
 APPKEY = AGENT
 
-class BloggerTransport(api.XmlRpcTransport):
+class BloggerTransport(commonxmlrpc.CommonXmlRpcTransport):
     
     @classmethod
     def getMetadata(cls):
@@ -46,20 +46,6 @@ class BloggerTransport(api.XmlRpcTransport):
     def supports(cls):
         return 'CRUD'
     
-    def getBlogList(self):
-        s = self.getServerProxy()
-        ret = s.blogger.getUsersBlogs(APPKEY, self.userName, self.passwd)
-        blogs = {}
-        for blogData in ret:
-            title = blogData['blogName']
-            try:
-                data = blogs[title]
-            except KeyError:
-                data = {}
-            data['blogID'] = blogData['blogid']
-            blogs[title] = data
-        return blogs
-    
     def postNew(self, blogId, entry, categories):
         if DEBUG:
             print 'started sending'
@@ -73,15 +59,5 @@ class BloggerTransport(api.XmlRpcTransport):
             assignedId = s.blogger.newPost(APPKEY, blogId, self.userName,
                 self.passwd, body, not entry.isDraft)
             return assignedId
-        except xmlrpclib.Fault, e:
-            raise api.ServiceError(e.faultString)
-
-    def deleteEntry(self, blogId, entryId):
-        if DEBUG:
-            print 'started deleting'
-        s = self.getServerProxy()
-        try:
-            s.blogger.deletePost(APPKEY, entryId, self.userName, self.passwd,
-                True)
         except xmlrpclib.Fault, e:
             raise api.ServiceError(e.faultString)

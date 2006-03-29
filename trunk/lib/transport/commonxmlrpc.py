@@ -16,38 +16,42 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-"""Blox.pl specific transport.
-
-This service is unique in that allows using blogger API along with MetaWeblog API
-simultaneously and exchangeably."""
+"""Base for all XML-RPC based services"""
 
 __revision__ = '$Id$'
 
 import datetime
 import xmlrpclib
 
-import api, commonxmlrpc, proxytools
+import api, proxytools
 from lib.renderer import renderBodyAsXML
 from lib.version import AGENT
 from lib.appconst import DEBUG
 
 APPKEY = AGENT
 
-class BloxTransport(commonxmlrpc.CommonXmlRpcTransport):
-    
-    @classmethod
-    def getMetadata(cls):
-        """Return transport's metadata for use in service definitions."""
-        meta = {}
-        meta['name'] = 'Blox.pl'
-        meta['description'] = _('Blox.pl specific transport')
-        meta['proto'] = 'HTTP'
-        meta['uri'] = 'http://www.blox.pl/xmlrpc'
-        return meta
+class CommonXmlRpcTransport(api.WeblogTransport):
 
-    @classmethod
-    def supports(cls):
-        return 'CRUD'
+    def getServerProxy(self):    
+        kw = {}
+        if self.proxy:
+            kw['transport'] = proxytools.ProxyTransport(self.proxy['host'], self.proxy['port'])
+        kw['encoding'] = 'utf-8'
+        return xmlrpclib.ServerProxy(self.uri, **kw)
+
+    def getBlogList(self):
+        s = self.getServerProxy()
+        ret = s.blogger.getUsersBlogs(APPKEY, self.userName, self.passwd)
+        blogs = {}
+        for blogData in ret:
+            title = blogData['blogName']
+            try:
+                data = blogs[title]
+            except KeyError:
+                data = {}
+            data['blogID'] = blogData['blogid']
+            blogs[title] = data
+        return blogs
 
     def postNew(self, blogId, entry, categories):
         if DEBUG:
@@ -61,10 +65,8 @@ class BloxTransport(commonxmlrpc.CommonXmlRpcTransport):
         body['categories'] = []
         for category in categories:
             body['categories'].append(category.name.encode('utf-8'))
-        # publication date turned off as temporary workaround for
-        # blox.pl code bug
-        #body['pubDate'] = datetime.datetime.now().isoformat()
-        body['guid'] = 'allo allo'
+        body['pubDate'] = datetime.datetime.now().isoformat()
+        body['guid'] = AGENT
         body['author'] = self.userName.encode('utf-8')
         if DEBUG:
             print body
@@ -87,13 +89,37 @@ class BloxTransport(commonxmlrpc.CommonXmlRpcTransport):
         body['categories'] = []
         for category in categories:
             body['categories'].append(category.name.encode('utf-8'))
-        # publication date turned off as temporary workaround for
-        # blox.pl code bug
-        #body['pubDate'] = datetime.datetime.now().isoformat()
-        body['guid'] = 'allo allo'
+        body['pubDate'] = datetime.datetime.now().isoformat()
+        body['guid'] = AGENT
         body['author'] = self.userName.encode('utf-8')
         try:
             s.metaWeblog.editPost(entryId, self.userName, self.passwd,
                 body, not entry.isDraft)
+        except xmlrpclib.Fault, e:
+            raise api.ServiceError(e.faultString)
+
+    def getCategories(self, blogId):
+        if DEBUG:
+            print 'started categories synchronization'
+        s = self.getServerProxy()
+        try:
+            categories = s.metaWeblog.getCategories(blogId, self.userName,
+                self.passwd)
+            ret = []
+            for category in categories:
+                category['name'] = category['htmlUrl']
+                ret.append(category)
+            if DEBUG:
+                print ret
+            return ret
+        except xmlrpclib.Fault, e:
+            raise api.ServiceError(e.faultString)
+
+    def deleteEntry(self, blogId, entryId):
+        if DEBUG:
+            print 'started deleting entry'
+        s = self.getServerProxy()
+        try:
+            s.blogger.deletePost(APPKEY, entryId, self.userName, self.passwd, True)
         except xmlrpclib.Fault, e:
             raise api.ServiceError(e.faultString)

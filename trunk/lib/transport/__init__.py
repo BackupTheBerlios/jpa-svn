@@ -20,7 +20,7 @@
 
 __revision__ = '$Id$'
 
-import blogger, jogger, xmlrpcblogger, blox
+import blogger, jogger, xmlrpcblogger, blox, metaweblog
 
 from api import ServiceError, ResourceNotFoundError,\
     ServiceAuthorizationError, ServiceInternalError, ServiceUnavailableError
@@ -30,6 +30,7 @@ AVAILABLE = [
     'jogger.pl',
     'blogger (XML-RPC)',
     'blox.pl',
+    'MetaWeblog',
 ]
 
 TRANSPORTS = {
@@ -37,6 +38,7 @@ TRANSPORTS = {
     'jogger.pl': jogger.JoggerTransport,
     'blogger (XML-RPC)': xmlrpcblogger.BloggerTransport,
     'blox.pl': blox.BloxTransport,
+    'MetaWeblog': metaweblog.MetaWeblogTransport,
 }
 
 FEATURES = {
@@ -44,4 +46,5 @@ FEATURES = {
     'jogger.pl': (),
     'blogger (XML-RPC)': ('discovery', 'blogID', 'auth'),
     'blox.pl': ('discovery', 'blogID', 'auth', 'category', 'media'),
+    'MetaWeblog': ('discovery', 'blogID', 'auth', 'category', 'media'),
 }
