@@ -46,5 +46,5 @@ FEATURES = {
     'jogger.pl': (),
     'blogger (XML-RPC)': ('discovery', 'blogID', 'auth'),
     'blox.pl': ('discovery', 'blogID', 'auth', 'category', 'media'),
-    'MetaWeblog': ('discovery', 'blogID', 'auth', 'category', 'media'),
+    'MetaWeblog': ('discovery', 'blogID', 'auth', 'categories', 'media'),
 }
