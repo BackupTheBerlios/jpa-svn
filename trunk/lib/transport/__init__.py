@@ -27,7 +27,7 @@ from api import ServiceError, ResourceNotFoundError,\
 
 AVAILABLE = [
     'blogger (Atom)',
-    'jogger.pl',
+    #'jogger.pl',
     'blogger (XML-RPC)',
     'blox.pl',
     'MetaWeblog',
@@ -35,7 +35,7 @@ AVAILABLE = [
 
 TRANSPORTS = {
     'blogger (Atom)': blogger.BloggerTransport,
-    'jogger.pl': jogger.JoggerTransport,
+    #'jogger.pl': jogger.JoggerTransport,
     'blogger (XML-RPC)': xmlrpcblogger.BloggerTransport,
     'blox.pl': blox.BloxTransport,
     'MetaWeblog': metaweblog.MetaWeblogTransport,
@@ -43,7 +43,7 @@ TRANSPORTS = {
 
 FEATURES = {
     'blogger (Atom)': ('discovery', 'blogID', 'auth'),
-    'jogger.pl': (),
+    #'jogger.pl': (),
     'blogger (XML-RPC)': ('discovery', 'blogID', 'auth'),
     'blox.pl': ('discovery', 'blogID', 'auth', 'category', 'media'),
     'MetaWeblog': ('discovery', 'blogID', 'auth', 'categories', 'media'),
