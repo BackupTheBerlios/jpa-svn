@@ -20,7 +20,7 @@
 
 __revision__ = '$Id$'
 
-import datetime
+import email.Utils
 import xmlrpclib
 
 import api, proxytools
@@ -65,7 +65,7 @@ class CommonXmlRpcTransport(api.WeblogTransport):
         body['categories'] = []
         for category in categories:
             body['categories'].append(category.name.encode('utf-8'))
-        body['pubDate'] = datetime.datetime.now().isoformat()
+        body['pubDate'] = email.Utils.formatdate(usegmt=True)
         body['guid'] = AGENT
         body['author'] = self.userName.encode('utf-8')
         if DEBUG:
@@ -89,7 +89,7 @@ class CommonXmlRpcTransport(api.WeblogTransport):
         body['categories'] = []
         for category in categories:
             body['categories'].append(category.name.encode('utf-8'))
-        body['pubDate'] = datetime.datetime.now().isoformat()
+        body['pubDate'] = email.Utils.formatdate(usegmt=True)
         body['guid'] = AGENT
         body['author'] = self.userName.encode('utf-8')
         try:
