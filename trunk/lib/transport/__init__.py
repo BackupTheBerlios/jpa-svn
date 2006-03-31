@@ -20,7 +20,8 @@
 
 __revision__ = '$Id$'
 
-import blogger, jogger, xmlrpcblogger, blox, metaweblog
+import blogger, xmlrpcblogger, blox, metaweblog
+#import jogger
 
 from api import ServiceError, ResourceNotFoundError,\
     ServiceAuthorizationError, ServiceInternalError, ServiceUnavailableError
