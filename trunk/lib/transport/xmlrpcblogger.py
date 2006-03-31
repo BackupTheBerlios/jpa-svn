@@ -61,3 +61,18 @@ class BloggerTransport(commonxmlrpc.CommonXmlRpcTransport):
             return assignedId
         except xmlrpclib.Fault, e:
             raise api.ServiceError(e.faultString)
+    
+    def postModified(self, blogId, entryId, entry, categories):
+        if DEBUG:
+            print 'started sending'
+        s = self.getServerProxy()
+        body = []
+        body.append(entry.title.encode('utf-8'))
+        body.append(lib.renderer.renderBodyAsXML(entry.body.encode('utf-8'),
+            entry.bodyType))
+        body = '\n'.join(body)
+        try:
+            s.blogger.editPost(APPKEY, entryId, self.userName, self.passwd,
+                body, not entry.isDraft)
+        except xmlrpclib.Fault, e:
+            raise api.ServiceError(e.faultString)
