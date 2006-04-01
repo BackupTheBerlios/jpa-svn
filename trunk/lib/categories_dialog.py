@@ -139,7 +139,7 @@ class CategoriesDialog(ListWindow):
     def on_lvCategory_cursor_changed(self, *args):
         self._enableActions()
     
-    def on_miSync_activate(self, *args):
+    def _synchronize(self, *args):
         blogs = datamodel.Weblog.select(datamodel.Weblog.q.isActive==True)
         for blog in blogs:
             thread = blogoper.CategorySynchronizerThread(blog, blog.identity, self)
