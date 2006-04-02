@@ -86,6 +86,10 @@ class EntryDialog:
             self.cbxContentType.set_active(0)
             bodyType = self.cfg.getOption('editing', 'def_body_type', 'textile')
             self.cbxContentType.set_active(datamodel.BODY_TYPES.index(bodyType))
+            model = self.lvCategory.get_model()
+            defaultCats = self.cfg.getOption('editing', 'def_categories', '').split(',')
+            for categoryItem in model:
+                categoryItem[0] = categoryItem[1] in defaultCats
         expAdvanced = self.wTree.get_widget('expAdvanced')
         expAdvanced.set_expanded(False)
 

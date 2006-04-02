@@ -99,10 +99,6 @@ class PreferencesDialog(EditDialog):
         self.edBrowserCmd.set_sensitive(enable)
         self.fcbSelectBrowser.set_sensitive(enable)
     
-    def _enableLastfmInfo(self, enable):
-        self.edLastFmUserName.set_sensitive(enable)
-        self.edTrackInfoFormat.set_sensitive(enable)
-    
     def _loadPrefs(self):
         self.ckbSaveWinSizes.set_active(self.cfg.getOption('windows',
             'save_sizes', '1') == '1')
@@ -153,6 +149,10 @@ class PreferencesDialog(EditDialog):
         self.ckbSpellCheck.set_active(spellChk)
         oneInstance = (self.cfg.getOption('misc', 'single_instance', '1') == '1')
         self.ckbOneInstanceOnly.set_active(oneInstance)
+        defaultCategories = self.cfg.getOption('editing', 'def_categories', '').split(',')
+        for category in self.lvEntryCategories.get_model():
+            # warning, this is a list of encoded strings, as it comes from file!
+            category[0] = category[1] in defaultCategories
     
     def _savePrefs(self):
         self.cfg.setOption('fonts', 'editor',
@@ -217,6 +217,11 @@ class PreferencesDialog(EditDialog):
         else:
             value = '0'
         self.cfg.setOption('misc', 'single_instance', value)
+        defaultCategories = []
+        for category in self.lvEntryCategories.get_model():
+            if category[0]:
+                defaultCategories.append(category[1])
+        self.cfg.setOption('editing', 'def_categories', ','.join(defaultCategories))
         louie.send('settings-changed')
 
     ### signal handlers ###
