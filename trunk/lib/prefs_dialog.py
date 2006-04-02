@@ -49,9 +49,6 @@ class PreferencesDialog(EditDialog):
         self.rbnIconsAndLabels = self.wTree.get_widget('rbnIconsAndLabels')
         self.rbnIconsOnly = self.wTree.get_widget('rbnIconsOnly')
         self.rbnLabelsOnly = self.wTree.get_widget('rbnLabelsOnly')
-        self.edLastFmUserName = self.wTree.get_widget('edLastFmUserName')
-        self.edTrackInfoFormat = self.wTree.get_widget('edTrackInfoFormat')
-        self.ckbUseAS = self.wTree.get_widget('ckbUseAS')
         self.ckbShowLog = self.wTree.get_widget('ckbShowLog')
         self.ckbSpellCheck = self.wTree.get_widget('ckbSpellCheck')
         self.ckbOneInstanceOnly = self.wTree.get_widget('ckbOneInstanceOnly')
@@ -150,12 +147,6 @@ class PreferencesDialog(EditDialog):
             self.rbnIconsOnly.set_active(True)
         elif toolbarView == 'labels':
             self.rbnLabelsOnly.set_active(True)
-        useAS = (self.cfg.getOption('gadgets', 'use_as', '0') == '1')
-        self.ckbUseAS.set_active(useAS)
-        self.edLastFmUserName.set_text(self.cfg.getOption('gadgets',
-            'as_username', ''))
-        self.edTrackInfoFormat.set_text(self.cfg.getOption('gadgets',
-            'as_format', ''))
         showLog = (self.cfg.getOption('views', 'show_log', '1') == '1')
         self.ckbShowLog.set_active(showLog)
         spellChk = (self.cfg.getOption('editing', 'check_spelling', '0') == '1')
@@ -211,15 +202,6 @@ class PreferencesDialog(EditDialog):
         else:
             toolbarView = 'both'
         self.cfg.setOption('toolbars', 'style', toolbarView)
-        if self.ckbUseAS.get_active():
-            value = '1'
-        else:
-            value = '0'
-        self.cfg.setOption('gadgets', 'use_as', value)
-        self.cfg.setOption('gadgets', 'as_username',
-            self.edLastFmUserName.get_text())
-        self.cfg.setOption('gadgets', 'as_format',
-            self.edTrackInfoFormat.get_text())
         if self.ckbShowLog.get_active():
             value = '1'
         else:
