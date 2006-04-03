@@ -43,6 +43,8 @@ class MainWindow:
         self.window = self.wTree.get_widget('frmMain')
         self.listMenu = {}
         self._loadListMenu()
+        self.mainMenu = {}
+        self._loadMainMenu()
         self.logPanel = self.wTree.get_widget('pnLog')
         self.txLog = self.wTree.get_widget('txLog')
         self.logBuffer = self.txLog.get_buffer()
@@ -53,10 +55,6 @@ class MainWindow:
         self.frmFilter = self.wTree.get_widget('frmFilter')
         self.lbDatesFilter = self.wTree.get_widget('lbDatesFilter')
         self.lbCatFilter = self.wTree.get_widget('lbCatFilter')
-        self.miFileEdit = self.wTree.get_widget('miFileEdit')
-        self.miFilePublish = self.wTree.get_widget('miFilePublish')
-        self.miViewLog = self.wTree.get_widget('miViewLog')
-        self.miViewFilterPane = self.wTree.get_widget('miViewFilterPane')
         self.tbrMain = self.wTree.get_widget('tbrMain')
         self.tbnEdit = self.wTree.get_widget('tbnEdit')
         self.tbnSend = self.wTree.get_widget('tbnSend')
@@ -131,7 +129,15 @@ class MainWindow:
         self.listMenu['miDel'] = tree.get_widget('miDel')
         self.listMenu['miPublish'] = tree.get_widget('miPublish')
         self.listMenu['miPubHistory'] = tree.get_widget('miPubHistory')
-        self.listMenu['pmEntryList'] = tree.get_widget('pmEntryList')        
+        self.listMenu['pmEntryList'] = tree.get_widget('pmEntryList')
+
+    def _loadMainMenu(self):
+        self.mainMenu['miFileEdit'] = self.wTree.get_widget('miFileEdit')
+        self.mainMenu['miFileDelete'] = self.wTree.get_widget('miFileDelete')
+        self.mainMenu['miFilePublish'] = self.wTree.get_widget('miFilePublish')
+        self.mainMenu['miViewPreview'] = self.wTree.get_widget('miViewPreview')
+        self.mainMenu['miViewLog'] = self.wTree.get_widget('miViewLog')
+        self.mainMenu['miViewFilterPane'] = self.wTree.get_widget('miViewFilterPane')
 
     def _connectSignals(self):
         louie.connect(self.onSettingsChanged, 'settings-changed')
@@ -189,8 +195,8 @@ class MainWindow:
         bf.set_text(entry.body.encode('utf-8'))
     
     def activateActions(self, activate):
-        self.miFileEdit.set_sensitive(activate)
-        self.miFilePublish.set_sensitive(activate)
+        self.mainMenu['miFileEdit'].set_sensitive(activate)
+        self.mainMenu['miFilePublish'].set_sensitive(activate)
         self.listMenu['miEdit'].set_sensitive(activate)
         self.listMenu['miDel'].set_sensitive(activate)
         self.listMenu['miPublish'].set_sensitive(activate)
@@ -218,7 +224,7 @@ class MainWindow:
         showLog = (self.cfg.getOption('views', 'show_log', '1') == '1')
         if showLog:
             self.logPanel.show_all()
-            self.miViewLog.set_active(showLog)
+            self.mainMenu['miViewLog'].set_active(showLog)
         return False
     
     ### signal handlers ###
