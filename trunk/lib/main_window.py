@@ -41,9 +41,8 @@ class MainWindow:
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, 'frmMain', 'jpa')
         self.wTree.signal_autoconnect(self)
         self.window = self.wTree.get_widget('frmMain')
-        listMenuTree = gtk.glade.XML(appconst.GLADE_PATH, 'pmEntryList', 'jpa')
-        listMenuTree.signal_autoconnect(self)
-        self.pmEntryList = listMenuTree.get_widget('pmEntryList')
+        self.listMenu = {}
+        self._loadListMenu()
         self.logPanel = self.wTree.get_widget('pnLog')
         self.txLog = self.wTree.get_widget('txLog')
         self.logBuffer = self.txLog.get_buffer()
@@ -64,6 +63,7 @@ class MainWindow:
         self.lvEntries = self.wTree.get_widget('lvEntries')
         self.splVert = self.wTree.get_widget('splVert')
         self.splHor = self.wTree.get_widget('splHor')
+        self.btnPubHistory = self.wTree.get_widget('btnPubHistory')
         self._setWidgets()
         self._setDisplaySettings()
         self._connectSignals()
@@ -119,6 +119,19 @@ class MainWindow:
         elif toolbarStyle == 'labels':
             gtkStyle = gtk.TOOLBAR_TEXT
         self.tbrMain.set_style(gtkStyle)
+    
+    def _loadListMenu(self):
+        tree = gtk.glade.XML(appconst.GLADE_PATH, 'pmEntryList', 'jpa')
+        tree.signal_autoconnect(self)
+        self.listMenu['tree'] = tree
+        self.listMenu['menu'] = tree.get_widget('pmEntryList')
+        self.listMenu['miRefresh'] = tree.get_widget('miRefresh')
+        self.listMenu['miAdd'] = tree.get_widget('miAdd')
+        self.listMenu['miEdit'] = tree.get_widget('miEdit')
+        self.listMenu['miDel'] = tree.get_widget('miDel')
+        self.listMenu['miPublish'] = tree.get_widget('miPublish')
+        self.listMenu['miPubHistory'] = tree.get_widget('miPubHistory')
+        self.listMenu['pmEntryList'] = tree.get_widget('pmEntryList')        
 
     def _connectSignals(self):
         louie.connect(self.onSettingsChanged, 'settings-changed')
@@ -178,8 +191,13 @@ class MainWindow:
     def activateActions(self, activate):
         self.miFileEdit.set_sensitive(activate)
         self.miFilePublish.set_sensitive(activate)
+        self.listMenu['miEdit'].set_sensitive(activate)
+        self.listMenu['miDel'].set_sensitive(activate)
+        self.listMenu['miPublish'].set_sensitive(activate)
+        self.listMenu['miPubHistory'].set_sensitive(activate)
         self.tbnEdit.set_sensitive(activate)
         self.tbnSend.set_sensitive(activate)
+        self.btnPubHistory.set_sensitive(activate)
     
     ### update entry ###
     def updateEntry(self, entry, blog, pubDate, assignedId):
@@ -294,7 +312,7 @@ class MainWindow:
             entry = self.getEntryFromSelection()
             self.controller.editEntry(entry)
         elif event.button == 3:
-            self.pmEntryList.popup(None, None, None, event.button, event.time)
+            self.listMenu['pmEntryList'].popup(None, None, None, event.button, event.time)
 
     def on_lvEntries_cursor_changed(self, *args):
         entry = self.getEntryFromSelection()
