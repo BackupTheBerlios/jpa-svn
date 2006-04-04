@@ -128,15 +128,18 @@ class BloggerTransport(api.WeblogTransport):
         links = tree.findall(NS_ATOM + 'link')
         blogs = {}
         for link in links:
-            href = link.get('href')
-            (scheme, loc, path, query, frag) = urlparse.urlsplit(href)
-            title = link.get('title')
-            try:
-                data = blogs[title]
-            except KeyError:
-                data = {}
-            data['blogID'] = path.split('/')[-1]
-            blogs[title] = data
+            if link.get('rel') != 'alternate':
+                href = link.get('href')
+                (scheme, loc, path, query, frag) = urlparse.urlsplit(href)
+                title = link.get('title')
+                try:
+                    data = blogs[title]
+                except KeyError:
+                    data = {}
+                if DEBUG:
+                    print 'path:', path
+                data['blogID'] = path.split('/')[-1]
+                blogs[title] = data
         return blogs
     
     def postNew(self, blogId, entry, categories):
@@ -226,6 +229,8 @@ class BloggerTransport(api.WeblogTransport):
         if DEBUG:
             print 'received response: ', response.status, response.reason
         content = response.read()
+        if DEBUG:
+            print 'response content:', content
         if response.status in range(200, 300):
             # success
             return content
