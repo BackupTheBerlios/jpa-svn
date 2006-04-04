@@ -116,7 +116,7 @@ class IdentitiesDialog(ListWindow):
     def on_lvIdentities_cursor_changed(self, *args):
         self._enableActions()
     
-    def on_miDiscover_activate(self, *args):
+    def _discoverWeblogs(self, *args):
         identity = self._getIdentityFromSelection()
         self.controller.discoverWeblogs(identity, self)
     
