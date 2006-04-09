@@ -21,7 +21,7 @@
 __revision__ = '$Id$'
 
 import os, os.path as op
-import datetime
+import time, datetime
 
 import louie
 import gtk, pango, gobject
@@ -43,6 +43,8 @@ class MainWindow:
         self.window = self.wTree.get_widget('frmMain')
         self.listMenu = {}
         self._loadListMenu()
+        self.toolMenu = {}
+        self._loadToolMenu()
         self.mainMenu = {}
         self._loadMainMenu()
         self.logPanel = self.wTree.get_widget('pnLog')
@@ -130,6 +132,15 @@ class MainWindow:
         self.listMenu['miPublish'] = tree.get_widget('miPublish')
         self.listMenu['miPubHistory'] = tree.get_widget('miPubHistory')
         self.listMenu['pmEntryList'] = tree.get_widget('pmEntryList')
+    
+    def _loadToolMenu(self):
+        tree = gtk.glade.XML(appconst.GLADE_PATH, 'pmToolbar', 'jpa')
+        tree.signal_autoconnect(self)
+        self.toolMenu['tree'] = tree
+        self.toolMenu['menu'] = tree.get_widget('pmToolbar')
+        self.toolMenu['miShowIcons'] = tree.get_widget('miShowIcons')
+        self.toolMenu['miShowLabels'] = tree.get_widget('miShowLabels')
+        self.toolMenu['miShowBoth'] = tree.get_widget('miShowBoth')
 
     def _loadMainMenu(self):
         self.mainMenu['miFileEdit'] = self.wTree.get_widget('miFileEdit')
@@ -318,13 +329,20 @@ class MainWindow:
             entry = self.getEntryFromSelection()
             self.controller.editEntry(entry)
         elif event.button == 3:
-            self.listMenu['pmEntryList'].popup(None, None, None, event.button, event.time)
+            self.listMenu['menu'].popup(None, None, None, event.button, event.time)
 
     def on_lvEntries_cursor_changed(self, *args):
         entry = self.getEntryFromSelection()
         if entry != self.curEntry:
             self.curEntry = entry
             self.displayEntry(entry)
+    
+    def on_tbrMain_popup_context_menu(self, *args):
+        widget, x, y, button = args
+        self.toolMenu['menu'].popup(None, None, None, button, 0)
+    
+    def on_miShowIcons_activate(self, *args):
+        self.tbrMain.set_style(gtk.TOOLBAR_ICONS)
     
     # custom signals for louie dispatcher #
     def onSettingsChanged(self):

@@ -343,6 +343,7 @@
 	  <property name="toolbar_style">GTK_TOOLBAR_BOTH</property>
 	  <property name="tooltips">True</property>
 	  <property name="show_arrow">True</property>
+	  <signal name="popup_context_menu" handler="on_tbrMain_popup_context_menu" last_modification_time="Sun, 09 Apr 2006 10:30:29 GMT"/>
 
 	  <child>
 	    <widget class="GtkToolButton" id="toolbutton5">
@@ -7130,6 +7131,44 @@ when it was created (if possible).</property>
 	  <property name="fill">True</property>
 	</packing>
       </child>
+    </widget>
+  </child>
+</widget>
+
+<widget class="GtkMenu" id="pmToolbar">
+
+  <child>
+    <widget class="GtkRadioMenuItem" id="miShowIcons">
+      <property name="visible">True</property>
+      <property name="tooltip" translatable="yes">Show only icons in toolbar</property>
+      <property name="label" translatable="yes">Icons only</property>
+      <property name="use_underline">True</property>
+      <property name="active">False</property>
+      <signal name="activate" handler="on_miShowIcons_activate" last_modification_time="Sun, 09 Apr 2006 10:37:13 GMT"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkRadioMenuItem" id="miShowLabels">
+      <property name="visible">True</property>
+      <property name="tooltip" translatable="yes">Show only labels in toolbar</property>
+      <property name="label" translatable="yes">Labels only</property>
+      <property name="use_underline">True</property>
+      <property name="active">False</property>
+      <property name="group">miShowIcons</property>
+      <signal name="activate" handler="on_miShowLabels_activate" last_modification_time="Sun, 09 Apr 2006 10:37:13 GMT"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkRadioMenuItem" id="miShowBoth">
+      <property name="visible">True</property>
+      <property name="tooltip" translatable="yes">Show both icons and labels in toolbar</property>
+      <property name="label" translatable="yes">Icons &amp; Labels</property>
+      <property name="use_underline">True</property>
+      <property name="active">False</property>
+      <property name="group">miShowIcons</property>
+      <signal name="activate" handler="on_miShowBoth_activate" last_modification_time="Sun, 09 Apr 2006 10:37:13 GMT"/>
     </widget>
   </child>
 </widget>
