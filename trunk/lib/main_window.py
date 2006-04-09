@@ -343,6 +343,12 @@ class MainWindow:
     
     def on_miShowIcons_activate(self, *args):
         self.tbrMain.set_style(gtk.TOOLBAR_ICONS)
+
+    def on_miShowLabels_activate(self, *args):
+        self.tbrMain.set_style(gtk.TOOLBAR_TEXT)
+
+    def on_miShowBoth_activate(self, *args):
+        self.tbrMain.set_style(gtk.TOOLBAR_BOTH)
     
     # custom signals for louie dispatcher #
     def onSettingsChanged(self):
