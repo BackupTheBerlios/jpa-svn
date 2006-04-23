@@ -24,7 +24,7 @@ import os.path as op
 
 import gtk
 
-import appconst
+import appconst, version
 from appwindow import EditDialog
 
 class AboutDialog(EditDialog):
@@ -32,12 +32,11 @@ class AboutDialog(EditDialog):
     def __init__(self, parent):
         EditDialog.__init__(self, 'dlgAbout', parent)
         self.txLicense = self.wTree.get_widget('txLicense')
+        self.lbVersion = self.wTree.get_widget('lbVersion')
         self._initGui()
     
     def _initGui(self):
-        imgLogo = self.wTree.get_widget('imgLogo')
-        imgLogo.set_from_file(op.join(appconst.PATHS['img'], 
-            'jogger-logo.png'))
+        self.lbVersion.set_text(_('version: %s') % version.PROGVER)
         licFile = op.join(appconst.PATHS['doc'], 'COPYING')
         fp = open(licFile)
         try:
@@ -51,3 +50,6 @@ class AboutDialog(EditDialog):
     def run(self):
         self.window.run()
         self.window.destroy()
+    
+    def on_btnHomePage_clicked(self, *args):
+        url = appconst.HOME_URL

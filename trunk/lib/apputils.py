@@ -20,6 +20,9 @@
 
 __revision__ = '$Id$'
 
+import os
+import webbrowser
+
 import gtk, gtk.gdk
 
 def startWait(window):
@@ -79,3 +82,22 @@ def ellipsize(text, maxLength=30):
     if len(text) <= maxLength:
         return text
     return text[:maxLength - 3] + '...'
+
+def openURL(url, system, browserCmd=None):
+    if system == 'system':
+        browser = webbrowser.get()
+        browser.open(url, 1)
+        return
+    elif system == 'kde':
+        command = 'kfmclient exec'
+    elif system == 'gnome':
+        command = 'gnome-open'
+    else:
+        command = browserCmd
+    if os.name != 'nt':
+        url = url.replace('"', '\\"') # escape " for shell happiness
+    command = command + ' "' + url + '"'
+    try: #FIXME: dirty hack
+        os.system(command)
+    except:
+        pass

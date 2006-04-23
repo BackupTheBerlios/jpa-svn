@@ -194,26 +194,11 @@ class Controller:
             fp.write(html)
         finally:
             fp.close()
-        # the following code is inspired by Gajim
         uri = 'file://%s' % fileName
         browserType = self.cfg.getOption('features', 'browser', 'system')
-        if browserType == 'system':
-            browser = webbrowser.get()
-            browser.open(uri, 1)
-            return
-        elif browserType == 'kde':
-            command = 'kfmclient exec'
-        elif browserType == 'gnome':
-            command = 'gnome-open'
-        else:
-            command = self.cfg.getOption('features', 'browser_cmd', '')
-        if os.name != 'nt':
-            uri = uri.replace('"', '\\"') # escape " for shell happiness
-        command = command + ' "' + uri + '"'
-        try: #FIXME: dirty hack
-            os.system(command)
-        except:
-            pass
+        command = self.cfg.getOption('features', 'browser_cmd', None)
+        command = self.cfg.getOption('features', 'browser_cmd', '')
+        apputils.openURL(uri, browserType, command)
     
     def showHtml(self, entry, parent=None):
         dialog = htmlview_dialog.HtmlViewDialog(parent, entry)

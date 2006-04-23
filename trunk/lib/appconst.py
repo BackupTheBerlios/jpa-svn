@@ -25,6 +25,7 @@ GLADE_FILE = 'jpa2.glade'
 DB_URI = ''
 CFG = None
 DEBUG = True
+HOME_URL = 'http://jpa.berlios.de/'
 
 # various API keys, for possible future use
 GOOGLE_KEY = 'IZamdRBQFHK3blDtTRD83Buix1kSDwTu'
