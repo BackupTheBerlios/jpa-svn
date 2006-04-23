@@ -44,12 +44,12 @@ class Controller:
         dialog = about_dialog.AboutDialog(parent)
         dialog.run()
     
-    def newEntry(self):
-        dialog = entry_dialog.EntryDialog()
+    def newEntry(self, parent=None):
+        dialog = entry_dialog.EntryDialog(None, parent)
         dialog.show()
     
-    def editEntry(self, entry):
-        dialog = entry_dialog.EntryDialog(entry)
+    def editEntry(self, entry, parent=None):
+        dialog = entry_dialog.EntryDialog(entry, parent)
         dialog.show()
     
     def deleteEntry(self, entry, parent):

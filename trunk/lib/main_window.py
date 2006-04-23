@@ -257,11 +257,11 @@ class MainWindow:
         gtk.main_quit()
     
     def _addEntry(self, *args):
-        self.controller.newEntry()
+        self.controller.newEntry(self)
     
     def _editEntry(self, *args):
         entry = self.getEntryFromSelection()
-        self.controller.editEntry(entry)
+        self.controller.editEntry(entry, self)
     
     def _publishEntry(self, *args):
         self.controller.getPublishTo(self)

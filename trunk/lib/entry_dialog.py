@@ -30,7 +30,7 @@ import appconst, datamodel, apputils
 
 class EntryDialog:
     
-    def __init__(self, entry=None):
+    def __init__(self, entry=None, parent=None):
         self.cfg = appconst.CFG
         self.modified = False
         self.isNew = (entry is None)
@@ -39,6 +39,8 @@ class EntryDialog:
         self.window = self.wTree.get_widget('frmEntry')
         self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
             'darkbeer.xpm'))
+        if parent:
+            self.window.set_transient_for(parent.window)
         self.spnVisLevel = self.wTree.get_widget('spnVisLevel')
         self.lbVisLevelDesc = self.wTree.get_widget('lbVisLevelDesc')
         self.edTitle = self.wTree.get_widget('edTitle')
