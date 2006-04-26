@@ -222,6 +222,7 @@ class MainWindow:
     
     def _updatePublishedEntry(self, entry, blog, pubDate, assignedId):
         entry.updatePublication(blog, pubDate, assignedId)
+        self.lbSent.set_text(entry.publications[0].published.strftime('%Y-%m-%d %H:%M'))
         return False
 
     ### update log window with status message ###
