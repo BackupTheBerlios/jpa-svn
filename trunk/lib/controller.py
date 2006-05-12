@@ -196,7 +196,6 @@ class Controller:
             fp.close()
         uri = 'file://%s' % fileName
         browserType = self.cfg.getOption('features', 'browser', 'system')
-        command = self.cfg.getOption('features', 'browser_cmd', None)
         command = self.cfg.getOption('features', 'browser_cmd', '')
         apputils.openURL(uri, browserType, command)
     

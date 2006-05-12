@@ -24,7 +24,7 @@ import os.path as op
 
 import gtk
 
-import appconst, version
+import appconst, version, apputils
 from appwindow import EditDialog
 
 class AboutDialog(EditDialog):
@@ -53,3 +53,6 @@ class AboutDialog(EditDialog):
     
     def on_btnHomePage_clicked(self, *args):
         url = appconst.HOME_URL
+        browserType = self.cfg.getOption('features', 'browser', 'system')
+        command = self.cfg.getOption('features', 'browser_cmd', '')
+        apputils.openURL(url, browserType, command)
