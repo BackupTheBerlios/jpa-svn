@@ -26,6 +26,13 @@ import louie
 import gtk, gobject, pango
 import gtk.glade
 
+# GTKSpell module
+try:
+    import gtkspell
+    hasSpeller = True
+except ImportError:
+    hasSpeller = False
+
 import appconst, datamodel, apputils
 
 class EntryDialog:
@@ -45,6 +52,9 @@ class EntryDialog:
         self.lbVisLevelDesc = self.wTree.get_widget('lbVisLevelDesc')
         self.edTitle = self.wTree.get_widget('edTitle')
         self.txBody = self.wTree.get_widget('txBody')
+        useSpell = (self.cfg.getOption('editing', 'check_spelling', '1') == '1')
+        if hasSpeller and useSpell:
+            self.speller = gtkspell.Spell(self.txBody)
         self.cbxContentType = self.wTree.get_widget('cbxContentType')
         self.ckbIsDraft = self.wTree.get_widget('ckbIsDraft')
         self.lvCategory = self.wTree.get_widget('lvCategory')
@@ -54,7 +64,7 @@ class EntryDialog:
         self._loadCategories()
         self._setWidgetProperties()
         if self.cfg.getOption('features', 'enable_autosave', '1') == '1':
-            interval = int(self.cfg.getOption('features', 
+            interval = int(self.cfg.getOption('features',
                 'autosave_interval', '5')) * 60 * 1000
             self.autosaveTimer = gobject.timeout_add(interval, self.autosave)
         self.window.present()
@@ -114,7 +124,7 @@ class EntryDialog:
     def _saveEntry(self):
         title = self.edTitle.get_text().decode('utf-8')
         bf = self.txBody.get_buffer()
-        body = bf.get_text(bf.get_start_iter(), 
+        body = bf.get_text(bf.get_start_iter(),
             bf.get_end_iter()).decode('utf-8')
         bodyType = datamodel.BODY_TYPES[self.cbxContentType.get_active()]
         isDraft = self.ckbIsDraft.get_active()
@@ -124,7 +134,7 @@ class EntryDialog:
         model = categoryList.get_model()
         for category in model:
             categories.append((
-                category[0], 
+                category[0],
                 datamodel.Category.byName(category[1].decode('utf-8'))
             ))
         if self.entry:
