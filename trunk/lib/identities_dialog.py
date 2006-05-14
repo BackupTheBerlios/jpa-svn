@@ -103,7 +103,9 @@ class IdentitiesDialog(ListWindow):
     
     def _del(self, *args):
         identity = self._getIdentityFromSelection()
-        self.controller.deleteIdentity(identity, self)
+        weblogCount = len(identity.weblogs)
+        if weblogCount == 0:
+            self.controller.deleteIdentity(identity, self)
 
     ### signal handlers ###
     def on_lvIdentities_button_press_event(self, *args):

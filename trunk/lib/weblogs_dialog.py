@@ -46,8 +46,8 @@ class WeblogsDialog(ListWindow):
         apputils.startWait(self.window)
         try:
             self.model = gtk.ListStore(str, str, str, gobject.TYPE_PYOBJECT)
-            cells = (gtk.CellRendererText(), 
-                gtk.CellRendererText(), 
+            cells = (gtk.CellRendererText(),
+                gtk.CellRendererText(),
                 gtk.CellRendererText())
             columns = (
                 gtk.TreeViewColumn(_('Name'), cells[0], text=0),
