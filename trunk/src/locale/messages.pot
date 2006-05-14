@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-12 21:32+0200\n"
+"POT-Creation-Date: 2006-05-14 20:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,6 +33,13 @@ msgstr ""
 #: lib/categories_dialog.py:82
 #, python-format
 msgid "Downloaded %d categories, do you want to update list?"
+msgstr ""
+
+#: lib/categories_dialog.py:132
+#, python-format
+msgid ""
+"There are %d entries related to this category,\n"
+"cann't delete."
 msgstr ""
 
 #: lib/category_dialog.py:46
@@ -175,20 +182,20 @@ msgstr ""
 msgid "Weblog name"
 msgstr ""
 
-#: lib/entry_dialog.py:72 lib/entry_dialog.py:156
+#: lib/entry_dialog.py:82 lib/entry_dialog.py:166
 #, python-format
 msgid "Editing entry \"%s\""
 msgstr ""
 
-#: lib/entry_dialog.py:86
+#: lib/entry_dialog.py:96
 msgid "Editing new entry"
 msgstr ""
 
-#: lib/entry_dialog.py:87 lib/entry_dialog.py:168
+#: lib/entry_dialog.py:97 lib/entry_dialog.py:178
 msgid "public"
 msgstr ""
 
-#: lib/entry_dialog.py:166
+#: lib/entry_dialog.py:176
 #, python-format
 msgid "private level %d"
 msgstr ""

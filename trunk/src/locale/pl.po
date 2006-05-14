@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JPA-0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-12 21:32+0200\n"
+"POT-Creation-Date: 2006-05-14 20:33+0200\n"
 "PO-Revision-Date: 2006-03-08 10:16+0100\n"
 "Last-Translator: Jarek Zgoda <jzgoda@o2.pl>\n"
 "Language-Team: Polish\n"
@@ -36,6 +36,15 @@ msgstr "Opis"
 #, python-format
 msgid "Downloaded %d categories, do you want to update list?"
 msgstr "Pobrałem %d kategorii, czy chcesz uaktualnić listę?"
+
+#: lib/categories_dialog.py:132
+#, python-format
+msgid ""
+"There are %d entries related to this category,\n"
+"cann't delete."
+msgstr ""
+"Istnieje %d wpisów przypisanych do tej kategorii,\n"
+"usunięcie jest niemożliwe."
 
 #: lib/category_dialog.py:46
 #, python-format
@@ -180,20 +189,20 @@ msgstr "Data publikacji"
 msgid "Weblog name"
 msgstr "Nazwa dziennika:"
 
-#: lib/entry_dialog.py:72 lib/entry_dialog.py:156
+#: lib/entry_dialog.py:82 lib/entry_dialog.py:166
 #, python-format
 msgid "Editing entry \"%s\""
 msgstr "Edycja wpisu \"%s\""
 
-#: lib/entry_dialog.py:86
+#: lib/entry_dialog.py:96
 msgid "Editing new entry"
 msgstr "Edycja nowego wpisu"
 
-#: lib/entry_dialog.py:87 lib/entry_dialog.py:168
+#: lib/entry_dialog.py:97 lib/entry_dialog.py:178
 msgid "public"
 msgstr "publiczny"
 
-#: lib/entry_dialog.py:166
+#: lib/entry_dialog.py:176
 #, python-format
 msgid "private level %d"
 msgstr "prywatny poziom %d"

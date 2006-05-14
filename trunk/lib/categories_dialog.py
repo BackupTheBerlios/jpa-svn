@@ -125,7 +125,12 @@ class CategoriesDialog(ListWindow):
     
     def _del(self, *args):
         category = self._getCategoryFromSelection()
-        self.controller.deleteCategory(category, self)
+        entryCount = len(category.entries)
+        if entryCount == 0:
+            self.controller.deleteCategory(category, self)
+        else:
+            apputils.error(_("There are %d entries related to this category,\n"
+                "cann't delete.") % entryCount)
     
     ### signal handlers ###
     def on_lvCategory_button_press_event(self, *args):
