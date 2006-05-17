@@ -67,6 +67,8 @@ class EntryDialog:
             interval = int(self.cfg.getOption('features',
                 'autosave_interval', '5')) * 60 * 1000
             self.autosaveTimer = gobject.timeout_add(interval, self.autosave)
+        else:
+            self.autosaveTimer = None
         self.window.present()
     
     ### "private" methods ###
@@ -178,16 +180,19 @@ class EntryDialog:
             self.lbVisLevelDesc.set_label(_('public'))
     
     def on_frmEntry_delete_event(self, *args):
-        gobject.source_remove(self.autosaveTimer)
+        if self.autosaveTimer:
+            gobject.source_remove(self.autosaveTimer)
 
     def on_btnCancel_clicked(self, *args):
-        gobject.source_remove(self.autosaveTimer)
+        if self.autosaveTimer:
+            gobject.source_remove(self.autosaveTimer)
         if self.isNew and self.entry:
             self.entry.destroySelf()
         self.window.destroy()
     
     def on_btnOk_clicked(self, *args):
-        gobject.source_remove(self.autosaveTimer)
+        if self.autosaveTimer:
+            gobject.source_remove(self.autosaveTimer)
         self._saveEntry()
         if self.isNew:
             event = 'entry-added'
