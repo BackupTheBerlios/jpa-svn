@@ -9,22 +9,23 @@ msgstr ""
 "Project-Id-Version: JPA-0.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-05-14 20:33+0200\n"
-"PO-Revision-Date: 2006-03-08 10:16+0100\n"
+"PO-Revision-Date: 2006-05-17 15:40+0100\n"
 "Last-Translator: Jarek Zgoda <jzgoda@o2.pl>\n"
 "Language-Team: Polish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: lib/about_dialog.py:39
 #, python-format
 msgid "version: %s"
 msgstr "wersja: %s"
 
-#: lib/categories_dialog.py:57 lib/identities_dialog.py:51
-#: lib/weblogdisco_dialog.py:67 lib/weblogs_dialog.py:53
+#: lib/categories_dialog.py:57
+#: lib/identities_dialog.py:51
+#: lib/weblogdisco_dialog.py:67
+#: lib/weblogs_dialog.py:53
 msgid "Name"
 msgstr "Nazwa"
 
@@ -35,7 +36,7 @@ msgstr "Opis"
 #: lib/categories_dialog.py:82
 #, python-format
 msgid "Downloaded %d categories, do you want to update list?"
-msgstr "Pobrałem %d kategorii, czy chcesz uaktualnić listę?"
+msgstr "Pobrano %d kategorii, czy chcesz uaktualnić listę?"
 
 #: lib/categories_dialog.py:132
 #, python-format
@@ -55,13 +56,11 @@ msgstr "Edycja kategorii \"%s\""
 msgid "Editing new category"
 msgstr "Edycja nowej kategorii"
 
-#: lib/catsel_dialog.py:29 share/jpa2.glade.h:144
+#: lib/catsel_dialog.py:29
+#: share/jpa2.glade.h:144
 #, no-c-format, python-format
-msgid ""
-"You selected %(count)d categories, but %(service)s allows specifying only "
-"one."
-msgstr ""
-"Wybrano %(count)d kategorii, ale %(service)s pozwala na podanie tylko jednej."
+msgid "You selected %(count)d categories, but %(service)s allows specifying only one."
+msgstr "Wybrano %(count)d kategorii, ale %(service)s pozwala na podanie tylko jednej."
 
 #: lib/catsel_dialog.py:49
 msgid "Select"
@@ -110,7 +109,7 @@ msgstr "Czy na pewno chcesz usunąć ten dziennik?"
 #: lib/datamodel.py:109
 #, python-format
 msgid "Started sending entry \"%s\" to weblog %s"
-msgstr "Rozpocząłem wysyłanie wpisu \"%s\" do dziennika %s"
+msgstr "Rozpoczęto wysyłanie wpisu \"%s\" do dziennika %s"
 
 #: lib/datamodel.py:113
 #, python-format
@@ -125,7 +124,7 @@ msgstr "Błąd podczas wysyłania wpisu \"%s\" do dziennika %s: %s"
 #: lib/datamodel.py:146
 #, python-format
 msgid "Started republishing entry \"%s\" to weblog %s"
-msgstr "Rozpocząłem ponowne publikowanie wpisu \"%s\" do dziennika %s"
+msgstr "Rozpoczęto ponowne publikowanie wpisu \"%s\" do dziennika %s"
 
 #: lib/datamodel.py:154
 #, python-format
@@ -140,7 +139,7 @@ msgstr "Błąd podczas ponownego publikowania wpisu \"%s\" do dziennika %s: %s"
 #: lib/datamodel.py:207
 #, python-format
 msgid "Initiated process of deleting entry \"%s\" from weblog %s"
-msgstr "Rozpocząłem usuwanie wpisu \"%s\" z dziennika %s"
+msgstr "Rozpoczęto usuwanie wpisu \"%s\" z dziennika %s"
 
 #: lib/datamodel.py:210
 #, python-format
@@ -160,12 +159,12 @@ msgstr "Usługa %s nie umożliwia usuwania wpisów"
 #: lib/datamodel.py:258
 #, python-format
 msgid "Started downloading categories for weblog %s"
-msgstr "Rozpocząłem pobieranie kategorii dla dziennika %s"
+msgstr "Rozpoczęto pobieranie kategorii dla dziennika %s"
 
 #: lib/datamodel.py:262
 #, python-format
 msgid "Finished downloading categories for weblog %s"
-msgstr "Zakończyłem pobieranie kategorii dla dziennika %s"
+msgstr "Zakończono pobieranie kategorii dla dziennika %s"
 
 #: lib/datamodel.py:265
 #, python-format
@@ -181,15 +180,18 @@ msgstr "Dziennik %s nie posiada ketegorii"
 msgid "Delete"
 msgstr "Usuń"
 
-#: lib/delentry_dialog.py:44 lib/pubhistory_dialog.py:41
+#: lib/delentry_dialog.py:44
+#: lib/pubhistory_dialog.py:41
 msgid "Publication date"
 msgstr "Data publikacji"
 
-#: lib/delentry_dialog.py:45 lib/weblogsel_dialog.py:45
+#: lib/delentry_dialog.py:45
+#: lib/weblogsel_dialog.py:45
 msgid "Weblog name"
 msgstr "Nazwa dziennika:"
 
-#: lib/entry_dialog.py:82 lib/entry_dialog.py:166
+#: lib/entry_dialog.py:82
+#: lib/entry_dialog.py:166
 #, python-format
 msgid "Editing entry \"%s\""
 msgstr "Edycja wpisu \"%s\""
@@ -198,7 +200,8 @@ msgstr "Edycja wpisu \"%s\""
 msgid "Editing new entry"
 msgstr "Edycja nowego wpisu"
 
-#: lib/entry_dialog.py:97 lib/entry_dialog.py:178
+#: lib/entry_dialog.py:97
+#: lib/entry_dialog.py:178
 msgid "public"
 msgstr "publiczny"
 
@@ -233,7 +236,8 @@ msgstr "Utworzony"
 msgid "Title"
 msgstr "Tytuł"
 
-#: lib/main_window.py:104 lib/main_window.py:184
+#: lib/main_window.py:104
+#: lib/main_window.py:184
 msgid "all"
 msgstr "wszystkie"
 
@@ -259,11 +263,13 @@ msgstr "Edycja nowego dziennika"
 msgid "Update"
 msgstr "Uaktualnij"
 
-#: lib/weblogdisco_dialog.py:68 lib/weblogs_dialog.py:54
+#: lib/weblogdisco_dialog.py:68
+#: lib/weblogs_dialog.py:54
 msgid "BlogID"
 msgstr "BlogID"
 
-#: lib/weblogs_dialog.py:55 share/jpa2.glade.h:18
+#: lib/weblogs_dialog.py:55
+#: share/jpa2.glade.h:18
 msgid "Active"
 msgstr "Aktywny"
 
@@ -271,11 +277,13 @@ msgstr "Aktywny"
 msgid "All identities"
 msgstr "Wszystkie tożsamości"
 
-#: lib/weblogsel_dialog.py:44 share/jpa2.glade.h:89
+#: lib/weblogsel_dialog.py:44
+#: share/jpa2.glade.h:89
 msgid "Publish"
 msgstr "Opublikuj"
 
-#: lib/weblogsel_dialog.py:46 share/jpa2.glade.h:59
+#: lib/weblogsel_dialog.py:46
+#: share/jpa2.glade.h:59
 msgid "Identity"
 msgstr "Tożsamość"
 
@@ -622,12 +630,8 @@ msgid "Pa_ssword:"
 msgstr "Ha_sło:"
 
 #: share/jpa2.glade.h:82
-msgid ""
-"Please, select <b>only one</b> from the list below, or the first one will be "
-"used."
-msgstr ""
-"Proszę wybrać <b>tylko jedną</b> z poniższej listy, albo zostanie użyta "
-"pierwsza."
+msgid "Please, select <b>only one</b> from the list below, or the first one will be used."
+msgstr "Proszę wybrać <b>tylko jedną</b> z poniższej listy, albo zostanie użyta pierwsza."
 
 #: share/jpa2.glade.h:83
 msgid "Preferences"
@@ -783,21 +787,15 @@ msgstr "Polecenie uruchamiające przeglądarkę WWW"
 
 #: share/jpa2.glade.h:122
 msgid ""
-"The server returned unexpected result, the changes to your weblog has not "
-"been recorded.\n"
+"The server returned unexpected result, the changes to your weblog has not been recorded.\n"
 "See below for details."
 msgstr ""
 "Serwer zwrócił nieoczekiwaną odpowiedź, zmiany nie zostały wprowadzone.\n"
 "Szczegółowe informacje poniżej."
 
 #: share/jpa2.glade.h:124
-msgid ""
-"This program is free software, you may freely use and distribute it under "
-"provision of GNU Public License (\"The GPL\"). See license page for details."
-msgstr ""
-"Ten program jest wolnym oprogramowaniem, rozprowadzanym zgodnie z "
-"postanowieniami Licencji Publicznej GNU (znanej także jako \"GPL\"). Więcej "
-"informacji znajdziesz na karcie z informacjami licencyjnymi."
+msgid "This program is free software, you may freely use and distribute it under provision of GNU Public License (\"The GPL\"). See license page for details."
+msgstr "Ten program jest wolnym oprogramowaniem, rozprowadzanym zgodnie z postanowieniami Licencji Publicznej GNU (znanej także jako \"GPL\"). Więcej informacji znajdziesz na karcie z informacjami licencyjnymi."
 
 #: share/jpa2.glade.h:125
 msgid "Title:"
@@ -805,7 +803,7 @@ msgstr "Tytuł:"
 
 #: share/jpa2.glade.h:126
 msgid "Trying to discover weblog properties, please wait..."
-msgstr "Próbuję wykryć dzienniki, proszę, poczekaj..."
+msgstr "Próba wykrycia dzienników, proszę poczekać..."
 
 #: share/jpa2.glade.h:127
 msgid "URI of remote blogging service"
@@ -994,3 +992,4 @@ msgstr "_Dzienniki"
 #: share/jpa2.glade.h:175
 msgid "minutes"
 msgstr "minut"
+
