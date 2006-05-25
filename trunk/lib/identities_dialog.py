@@ -90,7 +90,7 @@ class IdentitiesDialog(ListWindow):
     
     def _getIdentityFromSelection(self):
         selection = self.lvIdentities.get_selection()
-        if selection:
+        if not (None in selection.get_selected()):
             model, selected = selection.get_selected()
             return model.get_value(selected, 2)
     
@@ -121,7 +121,8 @@ class IdentitiesDialog(ListWindow):
     
     def _discoverWeblogs(self, *args):
         identity = self._getIdentityFromSelection()
-        self.controller.discoverWeblogs(identity, self)
+        if identity:
+            self.controller.discoverWeblogs(identity, self)
     
     # custom signals for louie #
     def onDataChanged(self):
