@@ -90,8 +90,8 @@ class IdentitiesDialog(ListWindow):
     
     def _getIdentityFromSelection(self):
         selection = self.lvIdentities.get_selection()
-        if not (None in selection.get_selected()):
-            model, selected = selection.get_selected()
+        model, selected = selection.get_selected()
+        if selected is not None:
             return model.get_value(selected, 2)
     
     def _add(self, *args):
