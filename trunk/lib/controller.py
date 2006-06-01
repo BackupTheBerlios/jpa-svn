@@ -32,26 +32,26 @@ from appconst import DEBUG
 import entry_dialog, categories_dialog, prefs_dialog, category_dialog, \
     about_dialog, identities_dialog, identity_dialog, htmlview_dialog, \
     weblogs_dialog, weblog_dialog, weblogdisco_dialog, weblogsel_dialog, \
-    pubhistory_dialog, catsel_dialog, filter_dialog
+    pubhistory_dialog, catsel_dialog, filter_dialog, captcha_dialog
 
 class Controller:
-    
+
     def __init__(self):
         self._tempFiles = []
         self.cfg = appconst.CFG
-    
+
     def showAbout(self, parent):
         dialog = about_dialog.AboutDialog(parent)
         dialog.run()
-    
+
     def newEntry(self, parent=None):
         dialog = entry_dialog.EntryDialog(None, parent)
         dialog.show()
-    
+
     def editEntry(self, entry, parent=None):
         dialog = entry_dialog.EntryDialog(entry, parent)
         dialog.show()
-    
+
     def deleteEntry(self, entry, parent):
         if entry.publications:
             text = _('This entry has been published to weblogs.\n'
@@ -70,7 +70,7 @@ class Controller:
                 i = i - 1
             entry.destroySelf()
             louie.send('entry-deleted')
-    
+
     def saveEntry(self, entry, parent):
         dialog = gtk.FileChooserDialog(
             title=_('Save entry to file'),
@@ -104,11 +104,11 @@ class Controller:
                     fp.close()
         finally:
             dialog.destroy()
-    
+
     def getEntryFilter(self, parent, curFilter):
         dialog = filter_dialog.FilterDialog(parent, curFilter)
         dialog.run()
-    
+
     def showIdentities(self):
         dialog = identities_dialog.IdentitiesDialog(self)
         dialog.show()
@@ -116,48 +116,48 @@ class Controller:
     def showCategories(self):
         dialog = categories_dialog.CategoriesDialog(self)
         dialog.show()
-    
+
     def showRemoteCategories(self, categories, parent):
         dialog = categorydisco_dialog.CategoryDiscoveryDialog(categories, parent)
         dialog.show()
-    
+
     def showWeblogs(self):
         dialog = weblogs_dialog.WeblogsDialog(self)
         dialog.show()
-    
+
     def showMedia(self):
         pass
-    
+
     def showPreferences(self, parent):
         dialog = prefs_dialog.PreferencesDialog(parent)
         dialog.run()
-    
+
     def showPubHistory(self, entry):
         dialog = pubhistory_dialog.PublicationHistoryDialog(self, entry)
         dialog.show()
-    
+
     def editCategory(self, category, parent):
         dialog = category_dialog.CategoryDialog(parent, category)
         dialog.run()
-    
+
     def newCategory(self, parent):
         dialog = category_dialog.CategoryDialog(parent)
         dialog.run()
-    
+
     def deleteCategory(self, category, parent):
         text = _('Do you really want to delete this category?')
         if apputils.question(text, parent.window):
             category.destroySelf()
             louie.send('category-deleted')
-    
+
     def newIdentity(self, parent):
         dialog = identity_dialog.IdentityDialog(parent)
         dialog.run()
-    
+
     def editIdentity(self, identity, parent):
         dialog = identity_dialog.IdentityDialog(parent, identity)
         dialog.run()
-    
+
     def deleteIdentity(self, identity, parent):
         text = _('Do you really want to delete this identity?')
         if apputils.question(text, parent.window):
@@ -171,17 +171,17 @@ class Controller:
     def editWeblog(self, weblog, parent):
         dialog = weblog_dialog.WeblogDialog(parent, weblog)
         dialog.run()
-    
+
     def deleteWeblog(self, weblog, parent):
         text = _('Do you really want to delete this weblog?')
         if apputils.question(text, parent.window):
             weblog.destroySelf()
             louie.send('weblog-deleted')
-    
+
     def discoverWeblogs(self, identity, parent):
         dialog = weblogdisco_dialog.WeblogDiscoveryDialog(parent, identity)
         dialog.show()
-    
+
     def previewEntry(self, entry):
         fd, fileName = tempfile.mkstemp('.html')
         self._tempFiles.append(fileName)
@@ -198,23 +198,27 @@ class Controller:
         browserType = self.cfg.getOption('features', 'browser', 'system')
         command = self.cfg.getOption('features', 'browser_cmd', '')
         apputils.openURL(uri, browserType, command)
-    
+
     def showHtml(self, entry, parent=None):
         dialog = htmlview_dialog.HtmlViewDialog(parent, entry)
         dialog.show()
-    
+
     def getPublishTo(self, parent):
         dialog = weblogsel_dialog.WeblogSelectionDialog(parent)
         dialog.show()
-    
+
     def getRepublishTo(self, entry, parent):
         dialog = weblogsel_dialog.WeblogSelectionDialog(parent, entry)
         dialog.show()
-    
+
     def selectCategories(self, entry, service, parent):
         dialog = catsel_dialog.CategorySelectionDialog(parent, entry, service)
         dialog.show()
-    
+
+    def getCaptchaCode(self, filePath, parent):
+        dialog = captcha_dialog.CaptchaDialog(parent, filePath)
+        return dialog.run()
+
     def __del__(self):
         for fileName in self._tempFiles:
             os.unlink(fileName)

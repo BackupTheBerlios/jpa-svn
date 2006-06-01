@@ -31,7 +31,7 @@ from appwindow import EditDialog
 from appconst import DEBUG
 
 class FilterDialog(EditDialog):
-    
+
     def __init__(self, parent, curFilter={}):
         EditDialog.__init__(self, 'dlgFilter', parent)
         if DEBUG:
@@ -42,7 +42,7 @@ class FilterDialog(EditDialog):
         self.ckbShowAllCategories = self.wTree.get_widget('ckbShowAllCategories')
         self.spnYear = self.wTree.get_widget('spnYear')
         self._initGui()
-    
+
     def _initGui(self):
         monthStore = gtk.ListStore(str)
         # stupid hack
@@ -75,8 +75,8 @@ class FilterDialog(EditDialog):
         column1 = gtk.TreeViewColumn('name', cell1, text=1)
         self.lvCategories.append_column(column0)
         self.lvCategories.append_column(column1)
-        self.lvCategories.set_model(catStore)        
-    
+        self.lvCategories.set_model(catStore)
+
     def run(self):
         ret = self.window.run()
         if ret == gtk.RESPONSE_OK:
@@ -92,11 +92,11 @@ class FilterDialog(EditDialog):
                         self.curFilter['categories'].append(name.decode('utf-8'))
             louie.send('filter-changed')
         self.window.destroy()
-    
+
     ### signal handlers ###
     def on_lvCategories_toggle(self, cell, path, model=None):
-        iter = model.get_iter(path)
-        model.set_value(iter, 0, not cell.get_active())
+        it = model.get_iter(path)
+        model.set_value(it, 0, not cell.get_active())
 
     def on_ckbShowAllCategories_toggled(self, *args):
         button = args[0]
