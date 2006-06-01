@@ -28,3 +28,13 @@ PATH = '/accounts/ClientLogin'
 HEADERS = {
     'Content-type': 'application/x-www-form-urlencoded',
     }
+RESPONSE403 = {
+    'BadAuthentication': _('Wrong password or unknown user name.'),
+    'NotVerified': _('Your account has not been verified. Please, login to your Google account directly to resolve the issue.'),
+    'TermsNotAgreed': _('You had not agreed to terms of service. Please, login to your Google account directly to resolve the issue.'),
+    'CaptchaRequired': _('Additional authentication required.'),
+    'Unknown': _('Unknown or unspecified error.'),
+    'AccountDeleted': _('Your account has been deleted.'),
+    'AccountDisabled': _('Your account has been disabled.'),
+    'ServiceUnavailable': _('Authorization service temporarily unavailable.'),
+    }
