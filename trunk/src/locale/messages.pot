@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-17 20:26+0200\n"
+"POT-Creation-Date: 2006-06-01 21:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,7 +51,7 @@ msgstr ""
 msgid "Editing new category"
 msgstr ""
 
-#: lib/catsel_dialog.py:29 share/jpa2.glade.h:145
+#: lib/catsel_dialog.py:29 share/jpa2.glade.h:147
 #, no-c-format, python-format
 msgid ""
 "You selected %(count)d categories, but %(service)s allows specifying only "
@@ -264,11 +264,11 @@ msgstr ""
 msgid "All identities"
 msgstr ""
 
-#: lib/weblogsel_dialog.py:44 share/jpa2.glade.h:90
+#: lib/weblogsel_dialog.py:44 share/jpa2.glade.h:92
 msgid "Publish"
 msgstr ""
 
-#: lib/weblogsel_dialog.py:46 share/jpa2.glade.h:60
+#: lib/weblogsel_dialog.py:46 share/jpa2.glade.h:62
 msgid "Identity"
 msgstr ""
 
@@ -299,6 +299,42 @@ msgstr ""
 
 #: lib/transport/xmlrpcblogger.py:40
 msgid "Old Blogger.com transport using XML-RPC API"
+msgstr ""
+
+#: lib/transport/google/auth.py:32
+msgid "Wrong password or unknown user name."
+msgstr ""
+
+#: lib/transport/google/auth.py:33
+msgid ""
+"Your account has not been verified. Please, login to your Google account "
+"directly to resolve the issue."
+msgstr ""
+
+#: lib/transport/google/auth.py:34
+msgid ""
+"You had not agreed to terms of service. Please, login to your Google account "
+"directly to resolve the issue."
+msgstr ""
+
+#: lib/transport/google/auth.py:35
+msgid "Additional authentication required."
+msgstr ""
+
+#: lib/transport/google/auth.py:36
+msgid "Unknown or unspecified error."
+msgstr ""
+
+#: lib/transport/google/auth.py:37
+msgid "Your account has been deleted."
+msgstr ""
+
+#: lib/transport/google/auth.py:38
+msgid "Your account has been disabled."
+msgstr ""
+
+#: lib/transport/google/auth.py:39
+msgid "Authorization service temporarily unavailable."
 msgstr ""
 
 #: share/jpa2.glade.h:2
@@ -375,610 +411,618 @@ msgid "Allow running only one instance of application"
 msgstr ""
 
 #: share/jpa2.glade.h:21
-msgid "Automatically show log"
+msgid "Authentication code from image:"
 msgstr ""
 
 #: share/jpa2.glade.h:22
-msgid "Autosave interval:"
+msgid "Authentication support"
 msgstr ""
 
 #: share/jpa2.glade.h:23
-msgid "Available weblogs:"
+msgid "Automatically show log"
 msgstr ""
 
 #: share/jpa2.glade.h:24
-msgid "Body text type:"
+msgid "Autosave interval:"
 msgstr ""
 
 #: share/jpa2.glade.h:25
-msgid "Body:"
+msgid "Available weblogs:"
 msgstr ""
 
 #: share/jpa2.glade.h:26
-msgid "Categories:"
+msgid "Body text type:"
 msgstr ""
 
 #: share/jpa2.glade.h:27
-msgid "Category"
+msgid "Body:"
 msgstr ""
 
 #: share/jpa2.glade.h:28
-msgid "Check for spelling errors while typing"
+msgid "Categories:"
 msgstr ""
 
 #: share/jpa2.glade.h:29
-msgid "Choose file"
+msgid "Category"
 msgstr ""
 
 #: share/jpa2.glade.h:30
-msgid "Click to go to program's homepage"
+msgid "Check for spelling errors while typing"
 msgstr ""
 
 #: share/jpa2.glade.h:31
-msgid "Click to select font for editor window"
+msgid "Choose file"
 msgstr ""
 
 #: share/jpa2.glade.h:32
-msgid "Click to select font for log window"
+msgid "Click to go to program's homepage"
 msgstr ""
 
 #: share/jpa2.glade.h:33
-msgid "Click to select font for preview window"
+msgid "Click to select font for editor window"
 msgstr ""
 
 #: share/jpa2.glade.h:34
-msgid "Command:"
+msgid "Click to select font for log window"
 msgstr ""
 
 #: share/jpa2.glade.h:35
-msgid "Create new entry"
+msgid "Click to select font for preview window"
 msgstr ""
 
 #: share/jpa2.glade.h:36
-msgid "Created:"
+msgid "Command:"
 msgstr ""
 
 #: share/jpa2.glade.h:37
-msgid "Default entry body type:"
+msgid "Create new entry"
 msgstr ""
 
 #: share/jpa2.glade.h:38
-msgid "Default entry categories:"
+msgid "Created:"
 msgstr ""
 
 #: share/jpa2.glade.h:39
-msgid "Delete this entry also from weblogs:"
+msgid "Default entry body type:"
 msgstr ""
 
 #: share/jpa2.glade.h:40
-msgid "Deleting an entry"
+msgid "Default entry categories:"
 msgstr ""
 
 #: share/jpa2.glade.h:41
-msgid "Dictionary:"
+msgid "Delete this entry also from weblogs:"
 msgstr ""
 
 #: share/jpa2.glade.h:42
-msgid "Discover weblogs attached to this identity"
+msgid "Deleting an entry"
 msgstr ""
 
 #: share/jpa2.glade.h:43
-msgid "Discover weblogs using this identity"
+msgid "Dictionary:"
 msgstr ""
 
 #: share/jpa2.glade.h:44
-msgid "Edit selected entry"
+msgid "Discover weblogs attached to this identity"
 msgstr ""
 
 #: share/jpa2.glade.h:45
-msgid "Editor font:"
+msgid "Discover weblogs using this identity"
 msgstr ""
 
 #: share/jpa2.glade.h:46
-msgid "Enable a_utosave feature"
+msgid "Edit selected entry"
 msgstr ""
 
 #: share/jpa2.glade.h:47
-msgid "Entry"
+msgid "Editor font:"
 msgstr ""
 
 #: share/jpa2.glade.h:48
-msgid "Entry categories"
+msgid "Enable a_utosave feature"
 msgstr ""
 
 #: share/jpa2.glade.h:49
-msgid "Entry preview font:"
+msgid "Entry"
 msgstr ""
 
 #: share/jpa2.glade.h:50
-msgid "Filt_er pane"
+msgid "Entry categories"
 msgstr ""
 
 #: share/jpa2.glade.h:51
-msgid "Filter entries display"
+msgid "Entry preview font:"
 msgstr ""
 
 #: share/jpa2.glade.h:52
-msgid "Filter entries view"
+msgid "Filt_er pane"
 msgstr ""
 
 #: share/jpa2.glade.h:53
-msgid "HTML Source"
+msgid "Filter entries display"
 msgstr ""
 
 #: share/jpa2.glade.h:54
-msgid "HTML source of entry body:"
+msgid "Filter entries view"
 msgstr ""
 
 #: share/jpa2.glade.h:55
-msgid "History"
+msgid "HTML Source"
 msgstr ""
 
 #: share/jpa2.glade.h:56
-msgid "History of entry publications:"
+msgid "HTML source of entry body:"
 msgstr ""
 
 #: share/jpa2.glade.h:57
-msgid "Host name (or IP address) of proxy server"
+msgid "History"
 msgstr ""
 
 #: share/jpa2.glade.h:58
-msgid "Icons & Labels"
+msgid "History of entry publications:"
 msgstr ""
 
 #: share/jpa2.glade.h:59
-msgid "Icons only"
+msgid "Host name (or IP address) of proxy server"
+msgstr ""
+
+#: share/jpa2.glade.h:60
+msgid "Icons & Labels"
 msgstr ""
 
 #: share/jpa2.glade.h:61
-msgid "Identity name"
-msgstr ""
-
-#: share/jpa2.glade.h:62
-msgid "Informations"
+msgid "Icons only"
 msgstr ""
 
 #: share/jpa2.glade.h:63
-msgid "Is a draft"
+msgid "Identity name"
 msgstr ""
 
 #: share/jpa2.glade.h:64
-msgid "JPA"
+msgid "Informations"
 msgstr ""
 
 #: share/jpa2.glade.h:65
-msgid "Labels only"
+msgid "Is a draft"
 msgstr ""
 
 #: share/jpa2.glade.h:66
-msgid "Launch preview in Gnome default web browser"
+msgid "JPA"
 msgstr ""
 
 #: share/jpa2.glade.h:67
-msgid "Launch preview in KDE default web browser"
+msgid "Labels only"
 msgstr ""
 
 #: share/jpa2.glade.h:68
-msgid "Launch preview in custom-defined web browser"
+msgid "Launch preview in Gnome default web browser"
 msgstr ""
 
 #: share/jpa2.glade.h:69
-msgid "Launch preview in system default web browser (not recommended on Linux)"
+msgid "Launch preview in KDE default web browser"
 msgstr ""
 
 #: share/jpa2.glade.h:70
-msgid "License"
+msgid "Launch preview in custom-defined web browser"
 msgstr ""
 
 #: share/jpa2.glade.h:71
-msgid "List of defined entry categories"
+msgid "Launch preview in system default web browser (not recommended on Linux)"
 msgstr ""
 
 #: share/jpa2.glade.h:72
-msgid "List of my identities:"
+msgid "License"
 msgstr ""
 
 #: share/jpa2.glade.h:73
-msgid "List of my weblogs that use this identity:"
+msgid "List of defined entry categories"
 msgstr ""
 
 #: share/jpa2.glade.h:74
-msgid "List of published media objects (files)"
+msgid "List of my identities:"
 msgstr ""
 
 #: share/jpa2.glade.h:75
-msgid "Log font:"
+msgid "List of my weblogs that use this identity:"
 msgstr ""
 
 #: share/jpa2.glade.h:76
-msgid "Modify program preferences"
+msgid "List of published media objects (files)"
 msgstr ""
 
 #: share/jpa2.glade.h:77
-msgid "Month:"
+msgid "Log font:"
 msgstr ""
 
 #: share/jpa2.glade.h:78
-msgid "My identities"
+msgid "Modify program preferences"
 msgstr ""
 
 #: share/jpa2.glade.h:79
-msgid "My weblogs"
+msgid "Month:"
 msgstr ""
 
 #: share/jpa2.glade.h:80
-msgid "Op_erations"
+msgid "My identities"
 msgstr ""
 
 #: share/jpa2.glade.h:81
-msgid "P_rotocol:"
+msgid "My weblogs"
 msgstr ""
 
 #: share/jpa2.glade.h:82
-msgid "Pa_ssword:"
+msgid "Op_erations"
 msgstr ""
 
 #: share/jpa2.glade.h:83
+msgid "P_rotocol:"
+msgstr ""
+
+#: share/jpa2.glade.h:84
+msgid "Pa_ssword:"
+msgstr ""
+
+#: share/jpa2.glade.h:85
 msgid ""
 "Please, select <b>only one</b> from the list below, or the first one will be "
 "used."
 msgstr ""
 
-#: share/jpa2.glade.h:84
+#: share/jpa2.glade.h:86
 msgid "Preferences"
 msgstr ""
 
-#: share/jpa2.glade.h:85
+#: share/jpa2.glade.h:87
 msgid "Preview entry in web browser"
 msgstr ""
 
-#: share/jpa2.glade.h:86
+#: share/jpa2.glade.h:88
 msgid "Proxy _host name:"
 msgstr ""
 
-#: share/jpa2.glade.h:87
+#: share/jpa2.glade.h:89
 msgid "Proxy _port:"
 msgstr ""
 
-#: share/jpa2.glade.h:88
+#: share/jpa2.glade.h:90
 msgid "Publication _history"
 msgstr ""
 
-#: share/jpa2.glade.h:89
+#: share/jpa2.glade.h:91
 msgid "Publication history"
 msgstr ""
 
-#: share/jpa2.glade.h:91
+#: share/jpa2.glade.h:93
 msgid "Publish a_gain"
 msgstr ""
 
-#: share/jpa2.glade.h:92
+#: share/jpa2.glade.h:94
 msgid "Publish entry to weblog(s)"
 msgstr ""
 
-#: share/jpa2.glade.h:93
+#: share/jpa2.glade.h:95
 msgid "Publish entry to weblogs:"
 msgstr ""
 
-#: share/jpa2.glade.h:94
+#: share/jpa2.glade.h:96
 msgid "Publish selected entry"
 msgstr ""
 
-#: share/jpa2.glade.h:95
+#: share/jpa2.glade.h:97
 msgid "Published media"
 msgstr ""
 
-#: share/jpa2.glade.h:96
+#: share/jpa2.glade.h:98
 msgid "Published:"
 msgstr ""
 
-#: share/jpa2.glade.h:97
+#: share/jpa2.glade.h:99
 msgid "Republish entry to all weblogs it was published"
 msgstr ""
 
-#: share/jpa2.glade.h:98
+#: share/jpa2.glade.h:100
 msgid "Select category"
 msgstr ""
 
-#: share/jpa2.glade.h:99
+#: share/jpa2.glade.h:101
 msgid "Select font"
 msgstr ""
 
-#: share/jpa2.glade.h:100
+#: share/jpa2.glade.h:102
 msgid "Select weblogs"
 msgstr ""
 
-#: share/jpa2.glade.h:101
+#: share/jpa2.glade.h:103
 msgid "Service _URI:"
 msgstr ""
 
-#: share/jpa2.glade.h:102
+#: share/jpa2.glade.h:104
 msgid "Service port"
 msgstr ""
 
-#: share/jpa2.glade.h:103
+#: share/jpa2.glade.h:105
 msgid "Show (unhide) log window on program activity"
 msgstr ""
 
-#: share/jpa2.glade.h:104
+#: share/jpa2.glade.h:106
 msgid "Show HTML that will be sent and published"
 msgstr ""
 
-#: share/jpa2.glade.h:105
+#: share/jpa2.glade.h:107
 msgid "Show _HTML"
 msgstr ""
 
-#: share/jpa2.glade.h:106
+#: share/jpa2.glade.h:108
 msgid "Show _only active"
 msgstr ""
 
-#: share/jpa2.glade.h:107
+#: share/jpa2.glade.h:109
 msgid "Show all categories"
 msgstr ""
 
-#: share/jpa2.glade.h:108
+#: share/jpa2.glade.h:110
 msgid "Show both icons and labels in toolbar"
 msgstr ""
 
-#: share/jpa2.glade.h:109
+#: share/jpa2.glade.h:111
 msgid "Show history of entry publications"
 msgstr ""
 
-#: share/jpa2.glade.h:110
+#: share/jpa2.glade.h:112
 msgid "Show icons and labels"
 msgstr ""
 
-#: share/jpa2.glade.h:111
+#: share/jpa2.glade.h:113
 msgid "Show icons only"
 msgstr ""
 
-#: share/jpa2.glade.h:112
+#: share/jpa2.glade.h:114
 msgid "Show labels only"
 msgstr ""
 
-#: share/jpa2.glade.h:113
+#: share/jpa2.glade.h:115
 msgid "Show list of entry categories"
 msgstr ""
 
-#: share/jpa2.glade.h:114
+#: share/jpa2.glade.h:116
 msgid "Show list of my identities"
 msgstr ""
 
-#: share/jpa2.glade.h:115
+#: share/jpa2.glade.h:117
 msgid "Show list of my weblogs"
 msgstr ""
 
-#: share/jpa2.glade.h:116
+#: share/jpa2.glade.h:118
 msgid "Show list of published media objects"
 msgstr ""
 
-#: share/jpa2.glade.h:117
+#: share/jpa2.glade.h:119
 msgid "Show only icons in toolbar"
 msgstr ""
 
-#: share/jpa2.glade.h:118
+#: share/jpa2.glade.h:120
 msgid "Show only labels in toolbar"
 msgstr ""
 
-#: share/jpa2.glade.h:119
+#: share/jpa2.glade.h:121
 msgid "Show/hide filter pane"
 msgstr ""
 
-#: share/jpa2.glade.h:120
+#: share/jpa2.glade.h:122
 msgid "Show/hide log window"
 msgstr ""
 
-#: share/jpa2.glade.h:121
+#: share/jpa2.glade.h:123
 msgid "Synchronize categories with weblogs"
 msgstr ""
 
-#: share/jpa2.glade.h:122
+#: share/jpa2.glade.h:124
 msgid "System command to start web browser"
 msgstr ""
 
-#: share/jpa2.glade.h:123
+#: share/jpa2.glade.h:125
 msgid ""
 "The server returned unexpected result, the changes to your weblog has not "
 "been recorded.\n"
 "See below for details."
 msgstr ""
 
-#: share/jpa2.glade.h:125
+#: share/jpa2.glade.h:127
 msgid ""
 "This program is free software, you may freely use and distribute it under "
 "provision of GNU Public License (\"The GPL\"). See license page for details."
 msgstr ""
 
-#: share/jpa2.glade.h:126
+#: share/jpa2.glade.h:128
 msgid "Title:"
 msgstr ""
 
-#: share/jpa2.glade.h:127
+#: share/jpa2.glade.h:129
 msgid "Trying to discover weblog properties, please wait..."
 msgstr ""
 
-#: share/jpa2.glade.h:128
+#: share/jpa2.glade.h:130
 msgid "URI of remote blogging service"
 msgstr ""
 
-#: share/jpa2.glade.h:129
+#: share/jpa2.glade.h:131
 msgid "Unexpected result"
 msgstr ""
 
-#: share/jpa2.glade.h:130
+#: share/jpa2.glade.h:132
 msgid "Use Gnome default web browser"
 msgstr ""
 
-#: share/jpa2.glade.h:131
+#: share/jpa2.glade.h:133
 msgid "Use KDE default web browser"
 msgstr ""
 
-#: share/jpa2.glade.h:132
+#: share/jpa2.glade.h:134
 msgid "Use custom web browser:"
 msgstr ""
 
-#: share/jpa2.glade.h:133
+#: share/jpa2.glade.h:135
 msgid "Use d_efault"
 msgstr ""
 
-#: share/jpa2.glade.h:134
+#: share/jpa2.glade.h:136
 msgid "Use entry creation date as entry date"
 msgstr ""
 
-#: share/jpa2.glade.h:135
+#: share/jpa2.glade.h:137
 msgid "Use spell checking"
 msgstr ""
 
-#: share/jpa2.glade.h:136
+#: share/jpa2.glade.h:138
 msgid "Use system default web browser"
 msgstr ""
 
-#: share/jpa2.glade.h:137
+#: share/jpa2.glade.h:139
 msgid "Visibility level:"
 msgstr ""
 
-#: share/jpa2.glade.h:138
+#: share/jpa2.glade.h:140
 msgid "Weblog Discovery"
 msgstr ""
 
-#: share/jpa2.glade.h:139
+#: share/jpa2.glade.h:141
 msgid "Weblog ID:"
 msgstr ""
 
-#: share/jpa2.glade.h:140
+#: share/jpa2.glade.h:142
 msgid "Weblog account"
 msgstr ""
 
-#: share/jpa2.glade.h:141
+#: share/jpa2.glade.h:143
 msgid ""
 "When set, entry will be published with date and time\n"
 "when it was created (if possible)."
 msgstr ""
 
-#: share/jpa2.glade.h:143
+#: share/jpa2.glade.h:145
 msgid "You are about to remove an entry."
 msgstr ""
 
-#: share/jpa2.glade.h:146
+#: share/jpa2.glade.h:148
 msgid "Your password to this service"
 msgstr ""
 
-#: share/jpa2.glade.h:147
+#: share/jpa2.glade.h:149
 msgid "Your service login (aka \"user name\")"
 msgstr ""
 
-#: share/jpa2.glade.h:148
+#: share/jpa2.glade.h:150
 msgid "_Behaviour"
 msgstr ""
 
-#: share/jpa2.glade.h:149
+#: share/jpa2.glade.h:151
 msgid "_Categories"
 msgstr ""
 
-#: share/jpa2.glade.h:150
+#: share/jpa2.glade.h:152
 msgid "_Description:"
 msgstr ""
 
-#: share/jpa2.glade.h:151
+#: share/jpa2.glade.h:153
 msgid "_Discover"
 msgstr ""
 
-#: share/jpa2.glade.h:152
+#: share/jpa2.glade.h:154
 msgid "_Discover weblogs"
 msgstr ""
 
-#: share/jpa2.glade.h:153
+#: share/jpa2.glade.h:155
 msgid "_Edit"
 msgstr ""
 
-#: share/jpa2.glade.h:154
+#: share/jpa2.glade.h:156
 msgid "_File"
 msgstr ""
 
-#: share/jpa2.glade.h:155
+#: share/jpa2.glade.h:157
 msgid "_Filter"
 msgstr ""
 
-#: share/jpa2.glade.h:156
+#: share/jpa2.glade.h:158
 msgid "_Help"
 msgstr ""
 
-#: share/jpa2.glade.h:157
+#: share/jpa2.glade.h:159
 msgid "_Identities"
 msgstr ""
 
-#: share/jpa2.glade.h:158
+#: share/jpa2.glade.h:160
 msgid "_Identity:"
 msgstr ""
 
-#: share/jpa2.glade.h:159
+#: share/jpa2.glade.h:161
 msgid "_Log window"
 msgstr ""
 
-#: share/jpa2.glade.h:160
+#: share/jpa2.glade.h:162
 msgid "_Login:"
 msgstr ""
 
-#: share/jpa2.glade.h:161
+#: share/jpa2.glade.h:163
 msgid "_Media"
 msgstr ""
 
-#: share/jpa2.glade.h:162
+#: share/jpa2.glade.h:164
 msgid "_Name:"
 msgstr ""
 
-#: share/jpa2.glade.h:163
+#: share/jpa2.glade.h:165
 msgid "_Network"
 msgstr ""
 
-#: share/jpa2.glade.h:164
+#: share/jpa2.glade.h:166
 msgid "_Port:"
 msgstr ""
 
-#: share/jpa2.glade.h:165
+#: share/jpa2.glade.h:167
 msgid "_Preview entry"
 msgstr ""
 
-#: share/jpa2.glade.h:166
+#: share/jpa2.glade.h:168
 msgid "_Publish"
 msgstr ""
 
-#: share/jpa2.glade.h:167
+#: share/jpa2.glade.h:169
 msgid "_Remember window sizes"
 msgstr ""
 
-#: share/jpa2.glade.h:168
+#: share/jpa2.glade.h:170
 msgid "_Synchronize"
 msgstr ""
 
-#: share/jpa2.glade.h:169
+#: share/jpa2.glade.h:171
 msgid "_Title:"
 msgstr ""
 
-#: share/jpa2.glade.h:170
+#: share/jpa2.glade.h:172
 msgid "_Tools"
 msgstr ""
 
-#: share/jpa2.glade.h:171
+#: share/jpa2.glade.h:173
 msgid "_Type:"
 msgstr ""
 
-#: share/jpa2.glade.h:172
+#: share/jpa2.glade.h:174
 msgid "_Use proxy server"
 msgstr ""
 
-#: share/jpa2.glade.h:173
+#: share/jpa2.glade.h:175
 msgid "_View"
 msgstr ""
 
-#: share/jpa2.glade.h:174
+#: share/jpa2.glade.h:176
 msgid "_Visual"
 msgstr ""
 
-#: share/jpa2.glade.h:175
+#: share/jpa2.glade.h:177
 msgid "_Weblogs"
 msgstr ""
 
-#: share/jpa2.glade.h:176
+#: share/jpa2.glade.h:178
 msgid "minutes"
 msgstr ""
