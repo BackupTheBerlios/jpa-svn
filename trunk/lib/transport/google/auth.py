@@ -19,4 +19,12 @@
 """Google API authentication system (aka ProgrammaticLogin, see
 http://code.google.com/apis/accounts/AuthForInstalledApps.html"""
 
-__revision__ = '$Id'
+__revision__ = '$Id$'
+
+from lib.appconst import SOURCE, DEBUG
+
+HOST = 'www.google.com'
+PATH = '/accounts/ClientLogin'
+HEADERS = {
+    'Content-type': 'application/x-www-form-urlencoded',
+    }

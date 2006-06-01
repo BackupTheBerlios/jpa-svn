@@ -22,8 +22,9 @@ __revision__ = '$Id$'
 
 PROGVER = '0.5.3'
 AGENTNAME = 'JPA'
+ORIGIN = 'jzgoda'
 PROGRAM = '%s - %s' % (AGENTNAME, PROGVER)
 PROG_URL = 'http://jpa.berlios.de/'
 AGENTVER = '1.0'
 AGENT = '%s-%s' % (AGENTNAME, AGENTVER)
-
+SOURCE = '%s-%s-%s' % (ORIGIN, AGENTNAME, AGENTVER)
