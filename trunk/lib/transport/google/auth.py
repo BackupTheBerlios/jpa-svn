@@ -21,8 +21,11 @@ http://code.google.com/apis/accounts/AuthForInstalledApps.html"""
 
 __revision__ = '$Id$'
 
+import httplib
+
 from lib.appconst import SOURCE, DEBUG
 
+# service constants
 HOST = 'www.google.com'
 PATH = '/accounts/ClientLogin'
 HEADERS = {
@@ -38,3 +41,59 @@ RESPONSE403 = {
     'AccountDisabled': _('Your account has been disabled.'),
     'ServiceUnavailable': _('Authorization service temporarily unavailable.'),
     }
+
+
+# service exceptions
+class AurhorizationException(Exception):
+    """Basic authorization service exception."""
+    pass
+
+class GoogleAuthException(AuthorizationException):
+    """Basic authorization service exception, continuation is possible."""
+    pass
+
+class GoogleAuthError(AuthorizationException):
+    """Basic authorization service error, can not continue."""
+    pass
+
+class BadAuthenticationError(GoogleAuthError):
+    """Wrong password or unknown user name."""
+    pass
+
+class NotVerifiedError(GoogleAuthError):
+    """Account has not been verified."""
+    pass
+
+class TermsNotAgreedError(GoogleAuthError):
+    """User dod not agree to TOS."""
+    pass
+
+class UnknownError(GoogleAuthError):
+    """Unknown or unspecified service error."""
+    pass
+
+class AccountDeletedError(GoogleAuthError):
+    """User account has been deleted."""
+    pass
+
+class AccountDisabledError(GoogleAuthError):
+    """User account has been suspended."""
+    pass
+
+class ServiceUnavailableError(GoogleAuthError):
+    """Authorization service is temporarily unavailable."""
+    pass
+
+class CaptchaRequiredException(GoogleAuthException):
+    """Service asks additional security measure (CAPTCHA image)."""
+    pass
+
+
+class GoogleAccount:
+
+    def __init__(self, email, password):
+        self.email = email
+        self.password = password
+
+    def login(self):
+        http = httplib.HTTPSConnection(HOST)
