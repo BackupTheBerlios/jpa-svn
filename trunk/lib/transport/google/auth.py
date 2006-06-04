@@ -21,79 +21,130 @@ http://code.google.com/apis/accounts/AuthForInstalledApps.html"""
 
 __revision__ = '$Id$'
 
+import urllib
 import httplib
 
 from lib.appconst import SOURCE, DEBUG
 
-# service constants
-HOST = 'www.google.com'
-PATH = '/accounts/ClientLogin'
-HEADERS = {
-    'Content-type': 'application/x-www-form-urlencoded',
-    }
-RESPONSE403 = {
-    'BadAuthentication': _('Wrong password or unknown user name.'),
-    'NotVerified': _('Your account has not been verified. Please, login to your Google account directly to resolve the issue.'),
-    'TermsNotAgreed': _('You had not agreed to terms of service. Please, login to your Google account directly to resolve the issue.'),
-    'CaptchaRequired': _('Additional authentication required.'),
-    'Unknown': _('Unknown or unspecified error.'),
-    'AccountDeleted': _('Your account has been deleted.'),
-    'AccountDisabled': _('Your account has been disabled.'),
-    'ServiceUnavailable': _('Authorization service temporarily unavailable.'),
-    }
-
-
-# service exceptions
+# base service exceptions
 class AurhorizationException(Exception):
     """Basic authorization service exception."""
     pass
+
 
 class GoogleAuthException(AuthorizationException):
     """Basic authorization service exception, continuation is possible."""
     pass
 
+
 class GoogleAuthError(AuthorizationException):
     """Basic authorization service error, can not continue."""
     pass
 
+
+# implementations of service exceptions
 class BadAuthenticationError(GoogleAuthError):
     """Wrong password or unknown user name."""
-    pass
+
+    def __str__(self):
+        return _('Wrong password or unknown user name.')
+
 
 class NotVerifiedError(GoogleAuthError):
     """Account has not been verified."""
-    pass
+
+    def __str__(self):
+        return _('Your account has not been verified. '
+            'Please, login to your Google account directly '
+            'to resolve the issue.')
+
 
 class TermsNotAgreedError(GoogleAuthError):
-    """User dod not agree to TOS."""
-    pass
+    """User did not agree to TOS."""
+
+    def __str__(self):
+        return _('You had not agreed to terms of service. '
+            'Please, login to your Google account directly '
+            'to resolve the issue.')
+
 
 class UnknownError(GoogleAuthError):
     """Unknown or unspecified service error."""
-    pass
+
+    def __str__(self):
+        return _('Unknown or unspecified error.')
+
 
 class AccountDeletedError(GoogleAuthError):
     """User account has been deleted."""
-    pass
+
+    def __str__(self):
+        return _('Your account has been deleted.')
+
 
 class AccountDisabledError(GoogleAuthError):
     """User account has been suspended."""
-    pass
+
+    def __str__(self):
+        return _('Your account has been disabled.')
+
 
 class ServiceUnavailableError(GoogleAuthError):
     """Authorization service is temporarily unavailable."""
-    pass
+
+    def __str__(self):
+        return _('Authorization service temporarily unavailable.')
+
 
 class CaptchaRequiredException(GoogleAuthException):
     """Service asks additional security measure (CAPTCHA image)."""
-    pass
+
+    def __str__(self):
+        return _('Additional authentication required.')
 
 
-class GoogleAccount:
+# service constants
+SVC_HOST = 'www.google.com'
+SVC_PATH = '/accounts/ClientLogin'
+HEADERS = {
+    'Content-type': 'application/x-www-form-urlencoded',
+    }
+RESPONSE403 = {
+    'BadAuthentication': BadAuthenticationError,
+    'NotVerified': NotVerifiedError,
+    'TermsNotAgreed': TermsNotAgreedError,
+    'CaptchaRequired': CaptchaRequiredException,
+    'Unknown': UnknownError,
+    'AccountDeleted': AccountDeletedError,
+    'AccountDisabled': AccountDisabledError,
+    'ServiceUnavailable': ServiceUnavailableError,
+    }
 
-    def __init__(self, email, password):
-        self.email = email
-        self.password = password
 
-    def login(self):
-        http = httplib.HTTPSConnection(HOST)
+class GoogleAuth:
+    """Class that handles authentication at Google services."""
+    
+    def __init__(self, email, password, proxy=None):
+        if proxy:
+            self.host = '%s:%d' % (proxy['host'], proxy['port'])
+            self.path = 'https://%s%s' % (SVC_HOST, SVC_PATH)
+        else:
+            self.host = SVC_HOST
+            self.path = SVC_PATH
+        self.loginParams = {
+            'Email': email,
+            'Passwd': password,
+            'service': 'xapi',
+            'source': SOURCE,
+        }
+
+    def login(self, service='xapi'):
+        http = httplib.HTTPSConnection(self.host)
+        if service != 'xapi':
+            self.loginParams['service'] = service
+        params = urllib.urlencode(self.loginParams)
+        http.request('POST', self.path, params, HEADERS)
+        response = http.getresponse()
+        if response.status == '403':
+            # maybe we have problem...
+            pass
