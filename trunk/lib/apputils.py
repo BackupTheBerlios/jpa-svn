@@ -84,6 +84,10 @@ def ellipsize(text, maxLength=30):
     return text[:maxLength - 3] + '...'
 
 def openURL(url, system, browserCmd=None):
+    """
+    An attempt to "platform-independently" opening URL in webbrowser.
+    Most of this code is dirty hack borrowed from Gajim code.
+    """
     if system == 'system':
         browser = webbrowser.get()
         browser.open(url, 1)

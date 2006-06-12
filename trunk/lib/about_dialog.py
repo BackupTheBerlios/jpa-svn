@@ -45,7 +45,7 @@ class AboutDialog(EditDialog):
             fp.close()
         bf = gtk.TextBuffer(None)
         self.txLicense.set_buffer(bf)
-        bf.set_text(data.decode('utf-8'))
+        bf.set_text(data)
     
     def run(self):
         self.window.run()
