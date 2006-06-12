@@ -20,7 +20,7 @@
 
 __revision__ = '$Id$'
 
-import email.Utils
+import email.Utils, base64
 import xmlrpclib
 
 import api, proxytools
@@ -35,7 +35,8 @@ class CommonXmlRpcTransport(api.WeblogTransport):
     def getServerProxy(self):    
         kw = {}
         if self.proxy:
-            kw['transport'] = proxytools.ProxyTransport(self.proxy['host'], self.proxy['port'])
+            kw['transport'] = proxytools.ProxyTransport(self.proxy['host'],
+                self.proxy['port'])
         kw['encoding'] = 'utf-8'
         return xmlrpclib.ServerProxy(self.uri, **kw)
 
@@ -71,8 +72,8 @@ class CommonXmlRpcTransport(api.WeblogTransport):
         if DEBUG:
             print body
         try:
-            assignedId = s.metaWeblog.newPost(blogId, self.userName, self.passwd,
-                body, not entry.isDraft)
+            assignedId = s.metaWeblog.newPost(blogId, self.userName,
+                self.passwd, body, not entry.isDraft)
             return assignedId
         except xmlrpclib.Fault, e:
             raise api.ServiceError(e.faultString)
@@ -120,6 +121,26 @@ class CommonXmlRpcTransport(api.WeblogTransport):
             print 'started deleting entry'
         s = self.getServerProxy()
         try:
-            s.blogger.deletePost(APPKEY, entryId, self.userName, self.passwd, True)
+            s.blogger.deletePost(APPKEY, entryId, self.userName, self.passwd,
+                True)
+        except xmlrpclib.Fault, e:
+            raise api.ServiceError(e.faultString)
+
+    def newMediaObject(self, blogId, media):
+        if DEBUG:
+            print 'started sending media entry'
+        body = {}
+        body['name'] = media.name
+        body['type'] = media.mime
+        fp = open(media.localName, 'rb')
+        try:
+            data = fp.read()
+        finally:
+            fp.close()
+        body['bits'] = base64.b64encode(data)
+        s = self.getServerProxy()
+        try:
+            return s.metaWeblog.newMediaObject(blogId, self.userName,
+                self.passwd, body)[0]
         except xmlrpclib.Fault, e:
             raise api.ServiceError(e.faultString)

@@ -172,8 +172,31 @@ class Media(SQLObject):
     localPath = UnicodeCol(dbName='local_path')
     weblog = ForeignKey('Weblog')
 
-    def publish(self, parent):
-        pass
+    def publish(self, weblog, parent):
+        transportType = weblog.identity.transportType
+        if DEBUG:
+            print transportType
+        login = weblog.identity.login
+        password = weblog.identity.password
+        uri = weblog.identity.serviceURI
+        if DEBUG:
+            print uri
+        proxy = appconst.CFG.getProxy()
+        transportClass = transport.TRANSPORTS[transportType]
+        if DEBUG:
+            print transportClass
+        transportObj = transportClass(login, password, proxy, uri)
+        if DEBUG:
+            print transportObj
+        try:
+            msg = _('Started sending media object "%s" to weblog %s') % \
+                (self.name, weblog.name)
+            parent.updateStatus(msg)
+            self.URI = transportObj.newMediaObject(weblog.weblogID, self)
+        except transport.ServiceError, e:
+            msg = _('Error while publishing media "%s" to weblog %s: %s') %\
+                (self.name, weblog.name, e)
+            parent.updateStatus(msg)
 
 
 class Category(SQLObject):
