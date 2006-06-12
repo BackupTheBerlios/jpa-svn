@@ -31,7 +31,8 @@ from appconst import DEBUG
 import entry_dialog, categories_dialog, prefs_dialog, category_dialog, \
     about_dialog, identities_dialog, identity_dialog, htmlview_dialog, \
     weblogs_dialog, weblog_dialog, weblogdisco_dialog, weblogsel_dialog, \
-    pubhistory_dialog, catsel_dialog, filter_dialog, captcha_dialog
+    pubhistory_dialog, catsel_dialog, filter_dialog, captcha_dialog, \
+    mediafiles_dialog
 
 class Controller:
 
@@ -125,7 +126,8 @@ class Controller:
         dialog.show()
 
     def showMedia(self):
-        pass
+        dialog = mediafiles_dialog.MediafilesDialog(self)
+        dialog.show()
 
     def showPreferences(self, parent):
         dialog = prefs_dialog.PreferencesDialog(parent)

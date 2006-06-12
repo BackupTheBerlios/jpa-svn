@@ -172,6 +172,9 @@ class Media(SQLObject):
     localPath = UnicodeCol(dbName='local_path')
     weblog = ForeignKey('Weblog')
 
+    def publish(self, parent):
+        pass
+
 
 class Category(SQLObject):
     """
