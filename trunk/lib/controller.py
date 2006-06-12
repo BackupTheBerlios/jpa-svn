@@ -21,7 +21,6 @@
 __revision__ = '$Id$'
 
 import os, tempfile
-import webbrowser
 
 import louie
 import gtk
