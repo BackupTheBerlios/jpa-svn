@@ -29,6 +29,7 @@ class SingleInstance:
     """ Limits application to single instance """
 
     def __init__(self):
+        self.mutex = None
         self.mutexname = 'jpa_{D0E858DF-985E-4907-B7FB-8D732C3FC3B9}'
         self.mutex = CreateMutex(None, False, self.mutexname)
         self.lasterror = GetLastError()
