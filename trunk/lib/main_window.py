@@ -256,6 +256,9 @@ class MainWindow:
             self.cfg.setOption('main', 'hsplit_pos', str(pos))
         self.cfg.saveConfig()
         gtk.main_quit()
+
+    def _menuitemSelect(self, menuItem, *args):
+        print menuItem.get_tooltip_text()
     
     def _addEntry(self, *args):
         self.controller.newEntry(self)

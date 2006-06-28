@@ -49,6 +49,7 @@
 		      <property name="label">gtk-new</property>
 		      <property name="use_stock">True</property>
 		      <signal name="activate" handler="_addEntry" last_modification_time="Wed, 11 Jan 2006 11:47:18 GMT"/>
+		      <signal name="select" handler="_menuitemSelect" last_modification_time="Wed, 28 Jun 2006 14:51:31 GMT"/>
 		    </widget>
 		  </child>
 
