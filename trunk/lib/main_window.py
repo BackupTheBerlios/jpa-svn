@@ -31,7 +31,6 @@ import appconst, version, datamodel, apputils, blogoper, transport
 from appconst import DEBUG
 
 
-
 class MainWindow:
     
     def __init__(self, controller):
@@ -258,7 +257,11 @@ class MainWindow:
         gtk.main_quit()
 
     def _menuitemSelect(self, menuItem, *args):
-        print menuItem.get_tooltip_text()
+        tooltipData = gtk.tooltips_data_get(menuItem)
+        if tooltipData:
+            print tooltipData[2]
+        else:
+            print 'No tooltip associated with this item'
     
     def _addEntry(self, *args):
         self.controller.newEntry(self)
