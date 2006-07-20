@@ -27,7 +27,7 @@ import louie
 import gtk, pango, gobject
 import gtk.glade, gtk.gdk
 
-import appconst, version, datamodel, apputils, blogoper, transport
+import appconst, version, datamodel, apputils, blogoper, transport, tooltips
 from appconst import DEBUG
 
 
@@ -46,6 +46,7 @@ class MainWindow:
         self._loadToolMenu()
         self.mainMenu = {}
         self._loadMainMenu()
+        tooltips.setFileMenuTips(self.mainMenu)
         self.logPanel = self.wTree.get_widget('pnLog')
         self.txLog = self.wTree.get_widget('txLog')
         self.logBuffer = self.txLog.get_buffer()
@@ -142,6 +143,7 @@ class MainWindow:
         self.toolMenu['miShowBoth'] = tree.get_widget('miShowBoth')
 
     def _loadMainMenu(self):
+        self.mainMenu['miFileNew'] = self.wTree.get_widget('miFileNew')
         self.mainMenu['miFileEdit'] = self.wTree.get_widget('miFileEdit')
         self.mainMenu['miFileDelete'] = self.wTree.get_widget('miFileDelete')
         self.mainMenu['miFilePublish'] = self.wTree.get_widget('miFilePublish')
