@@ -27,7 +27,8 @@ import louie
 import gtk, pango, gobject
 import gtk.glade, gtk.gdk
 
-import appconst, version, datamodel, apputils, blogoper, transport, tooltips
+import appconst, version, datamodel, apputils, blogoper, transport, tooltips, \
+    appwindow
 from appconst import DEBUG
 
 

@@ -19,3 +19,8 @@
 """UI elements for gtk.UIManager"""
 
 __revision__ = '$Id$'
+
+import appconst
+
+def getMainMenu():
+    pass

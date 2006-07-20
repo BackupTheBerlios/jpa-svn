@@ -32,5 +32,6 @@ class JPAApplication:
         datamodel.initModel()
         appconst.GLADE_PATH = op.join(appconst.PATHS['share'], 
             appconst.GLADE_FILE)
+        appconst.UI_PATH = appconst.PATHS['share']
         self.controller = controller.Controller()
         self.mainWindow = MainWindow(self.controller)

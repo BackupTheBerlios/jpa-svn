@@ -27,6 +27,7 @@ import gtk.glade
 
 import appconst
 
+
 class JPAWindow:
     """
     Generic window class
@@ -98,3 +99,10 @@ class EditDialog:
         if parent:
             self.window.set_transient_for(parent.window)
         self.wTree.signal_autoconnect(self)
+
+
+## convenience functions
+def getUIFileName(windowModuleName):
+    moduleName, ext = op.splitext(windowModuleName)
+    moduleName = op.split(moduleName)[1]
+    return op.join(appconst.UI_PATH, '%s.ui.xml' % moduleName)
