@@ -21,6 +21,7 @@
 __revision__ = '$Id$'
 
 import os.path as op
+import locale
 
 import louie
 import gtk, gobject, pango
@@ -81,11 +82,13 @@ class EntryDialog:
             model.append((bodyType, ))
         self.cbxContentType.set_model(model)
         model = gtk.ListStore(str)
-        model.append(('system', ))
+        lang, enc = locale.getdefaultlocale()
+        if lang:
+            model.append((lang, ))
+        else:
+            model.append(('system', ))
         self.cbxLang.set_model(model)
-        cell = gtk.CellRendererText()
-        self.cbxLang.pack_start(cell, True)
-        self.cbxLang.add_attribute(cell, 'text', 0)
+        self.cbxLang.set_text_column(0)
         self.cbxLang.set_active(0)
         if self.entry:
             title = self.entry.title
@@ -186,6 +189,9 @@ class EntryDialog:
             self.lbVisLevelDesc.set_label(_('private level %d') % visLevel)
         else:
             self.lbVisLevelDesc.set_label(_('public'))
+
+    def on_cbxLang_changed(self, *args):
+        pass
     
     def on_frmEntry_delete_event(self, *args):
         if self.autosaveTimer:
