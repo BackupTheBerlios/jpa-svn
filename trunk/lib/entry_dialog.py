@@ -56,6 +56,7 @@ class EntryDialog:
         if hasSpeller and useSpell:
             self.speller = gtkspell.Spell(self.txBody)
         self.cbxContentType = self.wTree.get_widget('cbxContentType')
+        self.cbxLang = self.wTree.get_widget('cbxLang')
         self.ckbIsDraft = self.wTree.get_widget('ckbIsDraft')
         self.lvCategory = self.wTree.get_widget('lvCategory')
         self.wTree.signal_autoconnect(self)
@@ -79,6 +80,13 @@ class EntryDialog:
         for bodyType in datamodel.BODY_TYPES:
             model.append((bodyType, ))
         self.cbxContentType.set_model(model)
+        model = gtk.ListStore(str)
+        model.append((_('system default'), ))
+        self.cbxLang.set_model(model)
+        cell = gtk.CellRendererText()
+        self.cbxLang.pack_start(cell, True)
+        self.cbxLang.add_attribute(cell, 'text', 0)
+        self.cbxLang.set_active(0)
         if self.entry:
             title = self.entry.title
             self.window.set_title(_('Editing entry "%s"') % title)
