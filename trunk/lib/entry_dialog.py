@@ -81,15 +81,14 @@ class EntryDialog:
         for bodyType in datamodel.BODY_TYPES:
             model.append((bodyType, ))
         self.cbxContentType.set_model(model)
-        model = gtk.ListStore(str)
+        langModel = gtk.ListStore(str)
         lang, enc = locale.getdefaultlocale()
-        if lang:
-            model.append((lang, ))
-        else:
-            model.append(('system', ))
-        self.cbxLang.set_model(model)
+        usedLocales = self.cfg.getList('editing', 'locales')
+        lastUsedLocale = self.cfg.getOption('editing', 'last_locale', lang)
+        for localeCode in usedLocales:
+            langModel.append((localeCode, ))
+        self.cbxLang.set_model(langModel)
         self.cbxLang.set_text_column(0)
-        self.cbxLang.set_active(0)
         if self.entry:
             title = self.entry.title
             self.window.set_title(_('Editing entry "%s"') % title)
@@ -105,6 +104,8 @@ class EntryDialog:
                 for entryCategory in self.entry.categories:
                     if entryCategory.name == name:
                         categoryItem[0] = True
+            if len(langModel) > 0:
+                self.cbxLang.set_active(usedLocales.index(self.entry.lang))
         else:
             self.window.set_title(_('Editing new entry'))
             self.lbVisLevelDesc.set_label(_('public'))
@@ -112,9 +113,12 @@ class EntryDialog:
             bodyType = self.cfg.getOption('editing', 'def_body_type', 'textile')
             self.cbxContentType.set_active(datamodel.BODY_TYPES.index(bodyType))
             model = self.lvCategory.get_model()
-            defaultCats = self.cfg.getOption('editing', 'def_categories', '').split(',')
+            defaultCats = self.cfg.getOption('editing', \
+                'def_categories', '').split(',')
             for categoryItem in model:
                 categoryItem[0] = categoryItem[1] in defaultCats
+            if len(langModel) > 0:
+                self.cbxLang.set_active(usedLocales.index(lastUsedLocale))                
         expAdvanced = self.wTree.get_widget('expAdvanced')
         expAdvanced.set_expanded(False)
 
@@ -166,6 +170,7 @@ class EntryDialog:
         entry.bodyType = bodyType
         entry.visibilityLevel = visibilityLevel
         entry.isDraft = isDraft
+        entry.lang = self.cbxLang.child.get_text()
         self.entry = entry
 
     ### signal handlers ###
@@ -208,6 +213,15 @@ class EntryDialog:
         if self.autosaveTimer:
             gobject.source_remove(self.autosaveTimer)
         self._saveEntry()
+        self.cfg.setOption('editing', 'last_locale', self.entry.lang)
+        model = self.cbxLang.get_model()
+        listOpt = []
+        for item in model:
+            listOpt.append(item)
+        if not self.entry.lang in listOpt:
+            listOpt.append(self.entry.lang)
+        listOpt.sort()
+        self.cfg.setList('editing', 'locales', listOpt)
         if self.isNew:
             event = 'entry-added'
         else:

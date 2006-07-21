@@ -91,3 +91,16 @@ class AppConfig(RawConfigParser):
                 return {'host': host, 'port': port}
         except (NoSectionError, NoOptionError):
             return None
+
+    def getList(self, section, option, default=[], separator=','):
+        """Convenience method to get list from delimited string in option"""
+        option = self.getOption(section, option)
+        if option:
+            return option.split(separator)
+        else:
+            return default
+
+    def setList(self, section, option, value, separator=','):
+        """Convenience method to set option from sequence"""
+        stringVal = separator.join(value)
+        self.setOption(section, option, stringVal)
