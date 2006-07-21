@@ -217,7 +217,7 @@ class EntryDialog:
         model = self.cbxLang.get_model()
         listOpt = []
         for item in model:
-            listOpt.append(item)
+            listOpt.append(item[0])
         if not self.entry.lang in listOpt:
             listOpt.append(self.entry.lang)
         listOpt.sort()
