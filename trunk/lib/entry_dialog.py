@@ -81,7 +81,7 @@ class EntryDialog:
             model.append((bodyType, ))
         self.cbxContentType.set_model(model)
         model = gtk.ListStore(str)
-        model.append((_('system default'), ))
+        model.append(('system', ))
         self.cbxLang.set_model(model)
         cell = gtk.CellRendererText()
         self.cbxLang.pack_start(cell, True)

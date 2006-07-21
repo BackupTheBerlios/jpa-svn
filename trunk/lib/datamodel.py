@@ -83,6 +83,7 @@ class Entry(SQLObject):
     year = IntCol(default=datetime.datetime.now().year)
     categories = RelatedJoin('Category')
     isDraft = BoolCol(default='f')
+    lang = UnicodeCol(dbName='lang', default='system')
     publications = MultipleJoin('Publication', orderBy='-published')
     # indexes
     createdIdx = DatabaseIndex(created)
