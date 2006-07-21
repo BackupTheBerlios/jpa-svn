@@ -51,6 +51,7 @@ class PreferencesDialog(EditDialog):
         self.rbnLabelsOnly = self.wTree.get_widget('rbnLabelsOnly')
         self.ckbShowLog = self.wTree.get_widget('ckbShowLog')
         self.ckbSpellCheck = self.wTree.get_widget('ckbSpellCheck')
+        self.cbxDicts = self.wTree.get_widget('cbxDicts')
         self.ckbOneInstanceOnly = self.wTree.get_widget('ckbOneInstanceOnly')
         self.lvEntryCategories = self.wTree.get_widget('lvEntryCategories')
         self._initGui()
@@ -80,6 +81,7 @@ class PreferencesDialog(EditDialog):
         self.lvEntryCategories.append_column(column0)
         self.lvEntryCategories.append_column(column1)
         self.lvEntryCategories.set_model(model)
+        self._loadDictList()
         self._loadPrefs()
 
     def run(self):
@@ -98,6 +100,9 @@ class PreferencesDialog(EditDialog):
     def _enableCustomBrowserSelection(self, enable):
         self.edBrowserCmd.set_sensitive(enable)
         self.fcbSelectBrowser.set_sensitive(enable)
+
+    def _loadDictList(self):
+        pass
     
     def _loadPrefs(self):
         self.ckbSaveWinSizes.set_active(self.cfg.getOption('windows',
@@ -128,6 +133,7 @@ class PreferencesDialog(EditDialog):
             self.rbnUseGnomeDefBrowser.set_sensitive(False)
             self.rbnUseKdeDefBrowser.set_sensitive(False)
             self.ckbSpellCheck.set_sensitive(False)
+            self.cbxDicts.set_sensitive(False)
         useProxy = (self.cfg.getOption('network', 'use_proxy', '0') == '1')
         proxyHost = self.cfg.getOption('network', 'proxy_host', '')
         proxyPort = self.cfg.getOption('network', 'proxy_port', '0')
