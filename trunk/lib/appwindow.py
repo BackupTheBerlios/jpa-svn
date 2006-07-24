@@ -20,6 +20,7 @@
 
 __revision__ = '$Id$'
 
+import os, glob
 import os.path as op
 
 import gtk
@@ -103,6 +104,24 @@ class EditDialog:
 
 ## convenience functions
 def getUIFileName(windowModuleName):
+    """Return UI file name for specific module"""
     moduleName, ext = op.splitext(windowModuleName)
     moduleName = op.split(moduleName)[1]
-    return op.join(appconst.UI_PATH, '%s.ui.xml' % moduleName)
+    fileName = op.join(appconst.UI_PATH, '%s.ui.xml' % moduleName)
+    if os.access(fileName, os.F_OK):
+        return fileName
+
+def getUIManager(windowModuleName):
+    """Return UIManager for specific module or None"""
+    fileName = getUIFileName(windowModuleName)
+    if fileName:
+        pass
+
+def getAvailableUIFiles():
+    """Return list of available UI files"""
+    files = glob.glob(op.join(appconst.UI_PATH, '*.ui.xml'))
+    i = 0
+    for fileName in files:
+        moduleName, ext = op.splitext(fileName)
+        files[i] = moduleName
+        i = i + 1
