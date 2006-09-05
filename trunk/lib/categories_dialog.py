@@ -47,6 +47,7 @@ class CategoriesDialog(ListWindow):
         self.btnAdd = self.wTree.get_widget('btnAdd')
         self.btnEdit = self.wTree.get_widget('btnEdit')
         self.btnDel = self.wTree.get_widget('btnDel')
+        self.ckbOnlyActive = self.wTree.get_widget('ckbOnlyActive')
         self._connectSignals()
 
     def show(self):
@@ -79,7 +80,8 @@ class CategoriesDialog(ListWindow):
         louie.connect(self.onDataChanged, 'category-deleted')
     
     def _addCategories(self, categories):
-        msg = _('Downloaded %d categories, do you want to update list?') % len(categories)
+        msg = _('Downloaded %d categories, do you want to update list?') \
+            % len(categories)
         if apputils.question(msg):
             for remoteCat in categories:
                 remoteCat['updated'] = False
@@ -93,7 +95,8 @@ class CategoriesDialog(ListWindow):
                     description = remoteCat['description']
                     category = datamodel.Category(name=name,
                         description=description)
-                    self.model.append((name, apputils.ellipsize(description, 80), category))
+                    self.model.append((name,\
+                        apputils.ellipsize(description, 80), category))
         return False
     
     ### "private" methods ###
@@ -133,6 +136,9 @@ class CategoriesDialog(ListWindow):
                 "cann't delete.") % entryCount)
     
     ### signal handlers ###
+    def _toggleShowActive(self, *args):
+        pass
+
     def on_lvCategory_button_press_event(self, *args):
         widget, event = args
         if event.button == 1 and event.type == gtk.gdk._2BUTTON_PRESS:

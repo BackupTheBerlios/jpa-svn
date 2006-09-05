@@ -33,16 +33,19 @@ class CategoryDialog(EditDialog):
         self.category = category
         self.edName = self.wTree.get_widget('edName')
         self.tvDescription = self.wTree.get_widget('tvDescription')
+        self.ckbIsActive = self.wTree.get_widget('ckbIsActive')
         self._initGui()
     
     def _initGui(self):
         if self.category:
             name = self.category.name
             description = self.category.description
+            active = self.category.isActive
             self.edName.set_text(name)
             bf = gtk.TextBuffer()
             bf.set_text(description)
             self.tvDescription.set_buffer(bf)
+            self.ckbIsActive.set_active(active)
             windowTitle = _('Editing category "%s"') % self.category.name
         else:
             windowTitle = _('Editing new category')
@@ -55,11 +58,17 @@ class CategoryDialog(EditDialog):
             bf = self.tvDescription.get_buffer()
             description = bf.get_text(bf.get_start_iter(), 
                 bf.get_end_iter()).decode('utf-8')
+            active = self.ckbIsActive.get_active()
             if self.category:
                 self.category.name = name
                 self.category.description = description
+                self.category.isActive = active
             else:
-                datamodel.Category(name=name, description=description)
+                datamodel.Category(
+                    name=name,
+                    description=description,
+                    isActive=active
+                )
             louie.send('category-changed')
         self.window.destroy()            
 

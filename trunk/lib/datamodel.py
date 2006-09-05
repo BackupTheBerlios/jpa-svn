@@ -206,6 +206,7 @@ class Category(SQLObject):
     """
     name = UnicodeCol(alternateID=True, notNone=True)
     description = UnicodeCol()
+    isActive = BoolCol(default='t', notNone=True, dbName='is_active')
     entries = RelatedJoin('Entry')
 
 
