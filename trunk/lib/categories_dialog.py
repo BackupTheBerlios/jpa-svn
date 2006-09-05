@@ -102,7 +102,10 @@ class CategoriesDialog(ListWindow):
     ### "private" methods ###
     def _loadData(self):
         categories = datamodel.Category.select(orderBy='name')
+        onlyActive = self.ckbOnlyActive.get_active()
         for category in categories:
+            if onlyActive and not category.isActive:
+                continue
             name = category.name
             desc = apputils.ellipsize(category.description, 80)
             self.model.append((name, desc, category))
@@ -137,7 +140,8 @@ class CategoriesDialog(ListWindow):
     
     ### signal handlers ###
     def _toggleShowActive(self, *args):
-        pass
+        self.model.clear()
+        self._loadData()
 
     def on_lvCategory_button_press_event(self, *args):
         widget, event = args
