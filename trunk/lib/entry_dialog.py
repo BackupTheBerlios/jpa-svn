@@ -126,7 +126,8 @@ class EntryDialog:
         model = gtk.ListStore(bool, str)
         self.categories = datamodel.Category.select(orderBy='name')
         for category in self.categories:
-            model.append((False, category.name))
+            if category.isActive:
+                model.append((False, category.name))
         cell0 = gtk.CellRendererToggle()
         cell0.set_property('radio', False)
         cell0.set_property('activatable', True)

@@ -79,7 +79,7 @@ def ellipsize(text, maxLength=30):
     Return text shortened to maxLength - 3 characters with added
     ellipsis ('...').
     """
-    if len(text) <= maxLength:
+    if not text or len(text) <= maxLength:
         return text
     return text[:maxLength - 3] + '...'
 
