@@ -26,10 +26,19 @@ __revision__ = '$Id$'
 import time
 import httplib, urlparse
 import binascii
+# try various ElementTree implementations in order:
+# etree (py2.5), cElementTree, lxml.etree, original ElementTree
 try:
-    import cElementTree as ElementTree
+    from xml.etree import ElementTree
 except ImportError:
-    from elementtree import ElementTree
+    try:
+        import cElementTree as ElementTree
+    except ImportError:
+        try:
+            import lxml.etree as ElementTree
+        except ImportError:
+            # if this one fails, we will be unable to go any further
+            from elementtree import ElementTree
 
 import lib.renderer, lib.version
 from lib.appconst import DEBUG
@@ -73,7 +82,7 @@ def buildBloggerPost(entry):
 
 class BloggerTransport(api.WeblogTransport):
     """Weblog transport that uses Blogger Atom API."""
-    
+
     def __init__(self, userName, passwd, proxyConfig=None, uri=None):
         api.WeblogTransport.__init__(self, userName, passwd, proxyConfig, uri)
         self.authCookie = binascii.b2a_base64('%s:%s' % (userName, passwd))
@@ -90,7 +99,7 @@ class BloggerTransport(api.WeblogTransport):
         else:
             self.path = '/atom%s'
             self.host = 'www.blogger.com'
-    
+
     @classmethod
     def getMetadata(cls):
         """Return transport's metadata for use in service definitions."""
@@ -141,7 +150,7 @@ class BloggerTransport(api.WeblogTransport):
                 data['blogID'] = path.split('/')[-1]
                 blogs[title] = data
         return blogs
-    
+
     def postNew(self, blogId, entry, categories):
         post, data = buildBloggerPost(entry)
         if self.proxy:
@@ -166,7 +175,7 @@ class BloggerTransport(api.WeblogTransport):
                     return link.get('href').split('/')[-1]
         finally:
             connection.close()
-    
+
     def postModified(self, blogId, entryId, entry, categories):
         post, data = buildBloggerPost(entry)
         if self.proxy:
@@ -186,7 +195,7 @@ class BloggerTransport(api.WeblogTransport):
                 print content
         finally:
             connection.close()
-    
+
     def deleteEntry(self, blogId, entryId):
         if self.proxy:
             connection = proxytools.ProxyHTTPSConnection(self.proxy['host'],
@@ -205,7 +214,7 @@ class BloggerTransport(api.WeblogTransport):
                 print content
         finally:
             connection.close()
-    
+
     def getEntry(self, blogId, entryId):
         if self.proxy:
             connection = proxytools.ProxyHTTPSConnection(self.proxy['host'],
