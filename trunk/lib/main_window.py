@@ -318,6 +318,9 @@ class MainWindow:
         else:
             self.frmFilter.show_all()
 
+    def on_miHelp_activate(self, *args):
+        self.controller.showHelpIndex()
+
     def on_miAbout_activate(self, *args):
         self.controller.showAbout(self)
 

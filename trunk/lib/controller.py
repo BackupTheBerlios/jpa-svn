@@ -21,6 +21,7 @@
 __revision__ = '$Id$'
 
 import os, tempfile
+import os.path as op
 
 import louie
 import gtk
@@ -43,6 +44,13 @@ class Controller:
     def showAbout(self, parent):
         dialog = about_dialog.AboutDialog(parent)
         dialog.run()
+
+    def showHelpIndex(self):
+        fileName = op.join(appconst.PATHS['doc'], 'index.html')
+        uri = 'file://%s' % fileName
+        browserType = self.cfg.getOption('features', 'browser', 'system')
+        command = self.cfg.getOption('features', 'browser_cmd', '')
+        apputils.openURL(uri, browserType, command)
 
     def newEntry(self, parent=None):
         dialog = entry_dialog.EntryDialog(None, parent)
@@ -90,7 +98,7 @@ class Controller:
             f.set_name(_('HTML files'))
             f.add_mime_type('text/html')
             dialog.add_filter(f)
-            dialog.set_current_folder(os.path.expanduser('~'))
+            dialog.set_current_folder(op.expanduser('~'))
             if dialog.run() == gtk.RESPONSE_OK:
                 fileName = dialog.get_filename()
                 title = entry.title.encode('utf-8')
