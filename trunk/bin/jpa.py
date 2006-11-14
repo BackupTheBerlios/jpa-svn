@@ -25,7 +25,7 @@ __revision__ = '$Id$'
 # path setup
 import os, sys
 import os.path as op
-basePath = op.dirname(op.dirname(op.abspath(sys.argv[0])))
+basePath = op.dirname(op.dirname(op.abspath(__file__)))
 sys.path.insert(0, basePath)
 paths = {}
 for dirName in ('bin', 'doc', 'lib', 'share'):
