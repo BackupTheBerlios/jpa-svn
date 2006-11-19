@@ -24,10 +24,8 @@ __revision__ = '$Id$'
 import urllib
 import httplib
 
-from lib.appconst import SOURCE, DEBUG
-
 # base service exceptions
-class AurhorizationException(Exception):
+class AuthorizationException(Exception):
     """Basic authorization service exception."""
     pass
 
@@ -108,7 +106,7 @@ SVC_HOST = 'www.google.com'
 SVC_PATH = '/accounts/ClientLogin'
 HEADERS = {
     'Content-type': 'application/x-www-form-urlencoded',
-    }
+}
 RESPONSE403 = {
     'BadAuthentication': BadAuthenticationError,
     'NotVerified': NotVerifiedError,
@@ -118,33 +116,42 @@ RESPONSE403 = {
     'AccountDeleted': AccountDeletedError,
     'AccountDisabled': AccountDisabledError,
     'ServiceUnavailable': ServiceUnavailableError,
-    }
+}
 
 
 class GoogleAuth:
     """Class that handles authentication at Google services."""
     
-    def __init__(self, email, password, proxy=None):
+    def __init__(self, email, password, auth_source, proxy=None):
         if proxy:
             self.host = '%s:%d' % (proxy['host'], proxy['port'])
             self.path = 'https://%s%s' % (SVC_HOST, SVC_PATH)
         else:
             self.host = SVC_HOST
             self.path = SVC_PATH
-        self.loginParams = {
+        self.login_params = {
             'Email': email,
             'Passwd': password,
             'service': 'xapi',
-            'source': SOURCE,
+            'source': auth_source,
         }
 
     def login(self, service='xapi'):
         http = httplib.HTTPSConnection(self.host)
         if service != 'xapi':
-            self.loginParams['service'] = service
-        params = urllib.urlencode(self.loginParams)
+            self.login_params['service'] = service
+        params = urllib.urlencode(self.login_params)
         http.request('POST', self.path, params, HEADERS)
         response = http.getresponse()
-        if response.status == '403':
-            # maybe we have problem...
+        raw_body = response.read().strip().split('\n')
+        body = {}
+        for line in raw_body:
+            k, v = line.split('=', 1)
+            body[k] = v
+        if response.status == 200:
+            try:
+                return body['Auth']
+            except KeyError:
+                raise UnknownError
+        elif response.status == 403:
             pass
