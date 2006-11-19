@@ -124,6 +124,10 @@ class GoogleAuth:
     """Class that handles authentication at Google services."""
     
     def __init__(self, email, password, auth_source='generic/lib', proxy=None):
+        """Google authorization service client constructor. Required arguments
+        are email and password. If you want to specify your agent name, set it
+        in auth_source argument. If you need to use HTTP proxy, pass the proxy
+        dictionary with host and port values (as strings)."""
         self.proxy = None
         if proxy:
             self.host = '%s:%d' % (proxy['host'], proxy['port'])
