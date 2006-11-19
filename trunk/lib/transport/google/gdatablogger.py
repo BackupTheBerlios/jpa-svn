@@ -16,6 +16,8 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-"""GData (Atom 1.0) based blogger.com services"""
+"""GData (Atom 1.0) based blogger.com services.
+This is a follow-up to Atom-based blogger.com services."""
 
 __revision__ = '$Id$'
+
