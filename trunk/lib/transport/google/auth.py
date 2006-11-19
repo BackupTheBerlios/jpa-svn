@@ -45,14 +45,14 @@ class BadAuthenticationError(GoogleAuthError):
     """Wrong password or unknown user name."""
 
     def __str__(self):
-        return _('Wrong password or unknown user name.')
+        return 'Wrong password or unknown user name.'
 
 
 class NotVerifiedError(GoogleAuthError):
     """Account has not been verified."""
 
     def __str__(self):
-        return _('Your account has not been verified. '
+        return ('Your account has not been verified. '
             'Please, login to your Google account directly '
             'to resolve the issue.')
 
@@ -61,7 +61,7 @@ class TermsNotAgreedError(GoogleAuthError):
     """User did not agree to TOS."""
 
     def __str__(self):
-        return _('You had not agreed to terms of service. '
+        return ('You had not agreed to terms of service. '
             'Please, login to your Google account directly '
             'to resolve the issue.')
 
@@ -70,41 +70,42 @@ class UnknownError(GoogleAuthError):
     """Unknown or unspecified service error."""
 
     def __str__(self):
-        return _('Unknown or unspecified error.')
+        return 'Unknown or unspecified error.'
 
 
 class AccountDeletedError(GoogleAuthError):
     """User account has been deleted."""
 
     def __str__(self):
-        return _('Your account has been deleted.')
+        return 'Your account has been deleted.'
 
 
 class AccountDisabledError(GoogleAuthError):
     """User account has been suspended."""
 
     def __str__(self):
-        return _('Your account has been disabled.')
+        return 'Your account has been disabled.'
 
 
 class ServiceUnavailableError(GoogleAuthError):
     """Authorization service is temporarily unavailable."""
 
     def __str__(self):
-        return _('Authorization service temporarily unavailable.')
+        return 'Authorization service temporarily unavailable.'
 
 
 class CaptchaRequiredException(GoogleAuthException):
     """Service asks additional security measure (CAPTCHA image)."""
 
     def __str__(self):
-        return _('Additional authentication required.')
+        return 'Additional authentication required.'
 
 
 # service constants
 SVC_HOST = 'www.google.com'
 SVC_PATH = '/accounts/ClientLogin'
-HEADERS = {
+CAPTCHA_PATH = '/accounts/%s'
+AUTH_HEADERS = {
     'Content-type': 'application/x-www-form-urlencoded',
 }
 RESPONSE403 = {
@@ -122,7 +123,8 @@ RESPONSE403 = {
 class GoogleAuth:
     """Class that handles authentication at Google services."""
     
-    def __init__(self, email, password, auth_source, proxy=None):
+    def __init__(self, email, password, auth_source='generic/lib', proxy=None):
+        self.proxy = None
         if proxy:
             self.host = '%s:%d' % (proxy['host'], proxy['port'])
             self.path = 'https://%s%s' % (SVC_HOST, SVC_PATH)
@@ -136,22 +138,50 @@ class GoogleAuth:
             'source': auth_source,
         }
 
-    def login(self, service='xapi'):
+    def login(self, service='xapi', captcha_auth=None):
+        """This method tries to login user to Google services. If service
+        argument is not provided, generic xapi service code is used.
+        Optional captcha_auth argument contains dictionary of captcha token and
+        the word from captcha image. It should be used solely for reissuing
+        authorization request in case when Google asks for captcha.
+        The method will fail on receiving 403 and raise appropriate exception,
+        as defined above. Such raised exception will contain the whole server
+        response."""
         http = httplib.HTTPSConnection(self.host)
         if service != 'xapi':
             self.login_params['service'] = service
+        if captcha_auth is not None:
+            self.login_params['logintoken'] = captcha_auth['token']
+            self.login_params['logincaptcha'] = captcha_auth['captcha']
         params = urllib.urlencode(self.login_params)
-        http.request('POST', self.path, params, HEADERS)
+        http.request('POST', self.path, params, AUTH_HEADERS)
         response = http.getresponse()
         raw_body = response.read().strip().split('\n')
-        body = {}
+        response_body = {}
         for line in raw_body:
             k, v = line.split('=', 1)
-            body[k] = v
+            response_body[k] = v
         if response.status == 200:
             try:
-                return body['Auth']
+                return response_body['Auth']
             except KeyError:
-                raise UnknownError
+                raise GoogleAuthError, 'Bad response from service'
         elif response.status == 403:
-            pass
+            handler_403 = RESPONSE403[response_body['Error']]
+            raise handler_403, response_body
+
+    def get_captcha_image(self, response_body):
+        """This method downloads CAPTCHA image from Google authorization
+        service and returns it along with authorization token."""
+        image_path = CAPTCHA_PATH % response_body['CaptchaUrl']
+        if self.proxy:
+            host = '%s:%d' % (self.proxy['host'], self.proxy['port'])
+            path = 'https://%s%s' % (SVC_HOST, image_path)
+        else:
+            host = SVC_HOST
+            path = image_path
+        http = httplib.HTTPSConnection(self.host)
+        http.request('GET', path)
+        response = http.getresponse()
+        if response.status == 200:
+            return response_body['CaptchaToken'], response.read()
