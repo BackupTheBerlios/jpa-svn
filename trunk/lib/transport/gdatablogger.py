@@ -21,5 +21,5 @@ This is a follow-up to Atom-based blogger.com services."""
 
 __revision__ = '$Id$'
 
-class BloggerTransport(api.WeblogTransport):
+class BloggerTransport(api.Weblog):
     pass

@@ -20,17 +20,13 @@
 
 __revision__ = '$Id$'
 
-import xmlrpclib
-
-import proxytools
-
 # service errors
 class ServiceError(Exception):
     """Base class for all service errors"""
-    
+
     def __init__(self, message):
         self.message = message
-    
+
     def __str__(self):
         return self.message
 
@@ -40,9 +36,59 @@ class ServiceAuthorizationError(ServiceError): pass
 class ServiceInternalError(ServiceError): pass
 class ServiceUnavailableError(ServiceError): pass
 
+
+### new classes for weblog (and other services) access ###
+class WebIdentity:
+    """User identity at web service hub."""
+
+    def __init__(self, name, service, user_credentials):
+        self.name = name
+        self.service = service
+        self.credentials = user_credentials
+
+    def authorize(self):
+        """Authorize user at service. All needed data should be already
+        available in credentials dictionary."""
+        raise NotImplementedError
+
+    def get_services(self):
+        """Get list of available web services."""
+        raise NotImplementedError
+
+
+class WebService:
+    """Web service abstract prototype"""
+    pass
+
+
+class Weblog(WebService):
+    """Remote access to weblog service"""
+
+    def post_entry(self, entry):
+        """Post new entry to weblog service."""
+        raise NotImplementedError
+
+    def post_modified(self, entry):
+        """Post updated entry to weblog service"""
+        raise NotImplementedError
+
+    def get_latest_entries(self, num_entries=20):
+        """Retrieve list of recently published entries"""
+        raise NotImplementedError
+
+    def get_entry(self, entry_id):
+        """Retrieve single entry from weblog service"""
+        raise NotImplementedError
+
+    def delete_entry(self, entry_id):
+        """Delete single entry from weblog service"""
+        raise NotImplementedError
+
+
+### old and slowly deprecating class ###
 class WeblogTransport:
-    """Nearly-abstract class, specifying base transport functionality"""
-    
+    """Nearly-abstract class, specifying base transport functionality."""
+
     def __init__(self, userName, passwd, proxyConfig=None, uri=None):
         self.proxy = proxyConfig
         self.userName = userName
@@ -58,8 +104,8 @@ class WeblogTransport:
     def getEntry(self, blogId, entryId): raise NotImplementedError
 
     def deleteEntry(self, blogId, entryId): raise NotImplementedError
-    
+
     def getCategories(self, blogId): raise NotImplementedError
-    
+
     def putMediaObject(self, blogId, mediaFileName): raise NotImplementedError
 
