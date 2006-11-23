@@ -21,5 +21,7 @@ This is a follow-up to Atom-based blogger.com services."""
 
 __revision__ = '$Id$'
 
+import api
+
 class AtomWeblog(api.Weblog):
     pass

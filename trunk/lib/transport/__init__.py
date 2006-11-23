@@ -20,7 +20,7 @@
 
 __revision__ = '$Id$'
 
-import blogger, xmlrpcblogger, blox, metaweblog
+import blogger, xmlrpcblogger, blox, metaweblog, atomblogger
 #import jogger
 
 from api import ServiceError, ResourceNotFoundError,\
@@ -28,6 +28,7 @@ from api import ServiceError, ResourceNotFoundError,\
 
 AVAILABLE = [
     'blogger (Atom)',
+    'blogger (GData)',
     #'jogger.pl',
     'blogger (XML-RPC)',
     'blox.pl',
@@ -36,6 +37,7 @@ AVAILABLE = [
 
 TRANSPORTS = {
     'blogger (Atom)': blogger.BloggerTransport,
+    'blogger (GData)': atomblogger.AtomWeblog,
     #'jogger.pl': jogger.JoggerTransport,
     'blogger (XML-RPC)': xmlrpcblogger.BloggerTransport,
     'blox.pl': blox.BloxTransport,
@@ -44,6 +46,7 @@ TRANSPORTS = {
 
 FEATURES = {
     'blogger (Atom)': ('discovery', 'blogID', 'auth'),
+    'blogger (GData)': ('discovery', 'blogID', 'auth', 'categories'),
     #'jogger.pl': (),
     'blogger (XML-RPC)': ('discovery', 'blogID', 'auth'),
     'blox.pl': ('discovery', 'blogID', 'auth', 'category', 'media'),
