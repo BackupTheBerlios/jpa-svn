@@ -41,9 +41,8 @@ class ServiceUnavailableError(ServiceError): pass
 class WebIdentity:
     """User identity at web service hub."""
 
-    def __init__(self, name, service, user_credentials):
+    def __init__(self, name, user_credentials):
         self.name = name
-        self.service = service
         self.credentials = user_credentials
 
     def authorize(self):
@@ -51,8 +50,9 @@ class WebIdentity:
         available in credentials dictionary."""
         raise NotImplementedError
 
-    def get_services(self):
-        """Get list of available web services."""
+    def get_services(self, service_type='all'):
+        """Get list of user web services of specified type or all user
+        services."""
         raise NotImplementedError
 
 

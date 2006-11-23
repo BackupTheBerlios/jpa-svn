@@ -24,6 +24,8 @@ __revision__ = '$Id$'
 import urllib
 import httplib
 
+import api
+
 # base service exceptions
 class AuthorizationException(Exception):
     """Basic authorization service exception."""
@@ -189,3 +191,11 @@ class GoogleAuth:
         response = http.getresponse()
         if response.status == 200:
             return response_body['CaptchaToken'], response.read()
+
+
+class GoogleIdentity(api.WebIdentity):
+    """User identity at google webservices.
+    Uses Google/GMail account data."""
+
+    def authorize(self):
+        pass
