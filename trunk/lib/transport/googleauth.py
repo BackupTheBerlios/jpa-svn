@@ -122,7 +122,7 @@ RESPONSE403 = {
 
 class GoogleAuth:
     """Class that handles authentication at Google services."""
-    
+
     def __init__(self, email, password, auth_source='generic/lib', proxy=None):
         """Google authorization service client constructor. Required arguments
         are email and password. If you want to specify your agent name, set it
