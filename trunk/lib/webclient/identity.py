@@ -26,7 +26,7 @@ __revision__ = '$Id$'
 class Identity:
     """User identity at web service hub."""
 
-    def __init__(self, name, user_credentials):
+    def __init__(self, name, **user_credentials):
         self.name = name
         self.credentials = user_credentials
 

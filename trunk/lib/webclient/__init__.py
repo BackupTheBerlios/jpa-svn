@@ -19,3 +19,6 @@
 """Webservice client framework."""
 
 __revision__ = '$Id$'
+
+# list of supported webservice types
+WEB_SERVICE_TYPES = ('weblog', 'calendar', 'todo')
