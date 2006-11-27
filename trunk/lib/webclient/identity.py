@@ -23,6 +23,11 @@ User web identity (credentials, authorization, etc.)."""
 __revision__ = '$Id$'
 
 
+class AuthorizationException(Exception):
+    """Basic authorization service exception."""
+    pass
+
+
 class Identity:
     """User identity at web service hub."""
 
