@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
+# -*- coding: UTF-8 -*-
 
 # This file is part of JPA.
-# Copyright: (C) 2003 - 2005 Jarek Zgoda <jzgoda@o2.pl>
+# Copyright: (C) 2003 - 2006 Jarek Zgoda <jzgoda@o2.pl>
 #
 # JPA is free software; you can redistribute it and/or modify it under 
 # the terms of the GNU General Public License as published by the Free Software
@@ -16,12 +16,8 @@
 # JPA; if not, write to the Free Software Foundation, Inc., 
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-"""GData (Atom 1.0) based blogger.com services.
-This is a follow-up to Atom-based blogger.com services."""
+"""Webservice client framework.
+
+Implementation of Google webservices."""
 
 __revision__ = '$Id$'
-
-import api
-
-class AtomWeblog(api.Weblog):
-    pass

@@ -37,54 +37,6 @@ class ServiceInternalError(ServiceError): pass
 class ServiceUnavailableError(ServiceError): pass
 
 
-### new classes for weblog (and other services) access ###
-class WebIdentity:
-    """User identity at web service hub."""
-
-    def __init__(self, name, user_credentials):
-        self.name = name
-        self.credentials = user_credentials
-
-    def authorize(self):
-        """Authorize user at service. All needed data should be already
-        available in credentials dictionary."""
-        raise NotImplementedError
-
-    def get_services(self, service_type='all'):
-        """Get list of user web services of specified type or all user
-        services."""
-        raise NotImplementedError
-
-
-class WebService:
-    """Web service abstract prototype"""
-    pass
-
-
-class Weblog(WebService):
-    """Remote access to weblog service"""
-
-    def post_entry(self, entry):
-        """Post new entry to weblog service."""
-        raise NotImplementedError
-
-    def post_modified(self, entry):
-        """Post updated entry to weblog service"""
-        raise NotImplementedError
-
-    def get_latest_entries(self, num_entries=20):
-        """Retrieve list of recently published entries"""
-        raise NotImplementedError
-
-    def get_entry(self, entry_id):
-        """Retrieve single entry from weblog service"""
-        raise NotImplementedError
-
-    def delete_entry(self, entry_id):
-        """Delete single entry from weblog service"""
-        raise NotImplementedError
-
-
 ### old and slowly deprecating class ###
 class WeblogTransport:
     """Nearly-abstract class, specifying base transport functionality."""
