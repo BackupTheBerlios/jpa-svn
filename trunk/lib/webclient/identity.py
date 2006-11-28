@@ -31,9 +31,9 @@ class AuthorizationException(Exception):
 class Identity:
     """User identity at web service hub."""
 
-    def __init__(self, name, **user_credentials):
+    def __init__(self, name, credentials):
         self.name = name
-        self.credentials = user_credentials
+        self.credentials = credentials
 
     def authorize(self):
         """Authorize user at service. All needed data should be already

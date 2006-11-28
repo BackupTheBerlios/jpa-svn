@@ -21,6 +21,8 @@ http://code.google.com/apis/accounts/AuthForInstalledApps.html"""
 
 __revision__ = '$Id$'
 
+import httplib
+
 from webclient.identity import AuthorizationException, Identity
 
 
@@ -95,9 +97,44 @@ class CaptchaRequiredException(GoogleAuthException):
         return 'Additional authentication required.'
 
 
-# real user identity at Google
+### service constants
+SVC_HOST = 'www.google.com'
+SVC_PATH = '/accounts/ClientLogin'
+CAPTCHA_PATH = '/accounts/%s'
+AUTH_HEADERS = {
+    'Content-type': 'application/x-www-form-urlencoded',
+}
+RESPONSE403 = {
+    'BadAuthentication': BadAuthenticationError,
+    'NotVerified': NotVerifiedError,
+    'TermsNotAgreed': TermsNotAgreedError,
+    'CaptchaRequired': CaptchaRequiredException,
+    'Unknown': UnknownError,
+    'AccountDeleted': AccountDeletedError,
+    'AccountDisabled': AccountDisabledError,
+    'ServiceUnavailable': ServiceUnavailableError,
+}
+
+
+### real user identity at Google
 class GoogleIdentity(Identity):
     """User identity at Google services"""
+
+    def __init__(self, name, credentials, proxy=None):
+        Identity.__init__(self, name, credentials)
+        self.proxy = proxy
+        if proxy:
+            self.host = '%s:%d' % (proxy['host'], proxy['port'])
+            self.path = 'https://%s%s' % (SVC_HOST, SVC_PATH)
+        else:
+            self.host = SVC_HOST
+            self.path = SVC_PATH
+        self.login_params = {
+            'Email': credentials['email'],
+            'Passwd': credentials['password'],
+            'service': 'xapi',
+            'source': credentials['user_agent'],
+        }
 
     def authorize(self):
         pass
