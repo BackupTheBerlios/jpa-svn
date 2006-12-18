@@ -132,6 +132,7 @@ class GoogleIdentity(Identity):
             self.host = SVC_HOST
             self.path = SVC_PATH
         self.login_params = {
+            'accountType': 'HOSTED_OR_GOOGLE',
             'Email': credentials['email'],
             'Passwd': credentials['password'],
             'service': 'xapi',
@@ -161,3 +162,6 @@ class GoogleIdentity(Identity):
         elif response.status == 403:
             handler_403 = RESPONSE403[response_body['Error']]
             raise handler_403, response_body
+
+    def get_captcha_image_url(self, captcha_url):
+        return 'http://' + SVC_HOST + CAPTCHA_PATH % captcha_url
