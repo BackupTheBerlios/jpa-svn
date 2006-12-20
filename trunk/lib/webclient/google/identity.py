@@ -21,6 +21,7 @@ http://code.google.com/apis/accounts/AuthForInstalledApps.html"""
 
 __revision__ = '$Id$'
 
+import tempfile
 import httplib
 
 from webclient.identity import AuthorizationException, Identity
@@ -164,4 +165,22 @@ class GoogleIdentity(Identity):
             raise handler_403, response_body
 
     def get_captcha_image_url(self, captcha_url):
-        return 'http://' + SVC_HOST + CAPTCHA_PATH % captcha_url
+        return CAPTCHA_PATH % captcha_url
+
+    def download_captcha_image(self, image_path):
+        http = httplib.HTTPConnection(self.host)
+        try:
+            http.request('GET', image_path)
+            resp = http.getresponse()
+            if resp..status == 200:
+                fd, file_name = tempfile.mkstemp()
+                fp = os.fdopen(fd, 'wb')
+                try:
+                    fp.write(resp.read())
+                finally:
+                    fp.close()
+        finally:
+            http.close()
+
+    def get_services(self, service_type='all'):
+        return none

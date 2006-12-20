@@ -25,7 +25,11 @@ __revision__ = '$Id$'
 
 class WebService:
     """Web service abstract prototype"""
-    pass
+
+    def __init__(self, name):
+        self.name = name
+        self.service_id = None
+        self.service_uri = None
 
 
 class Weblog(WebService):
