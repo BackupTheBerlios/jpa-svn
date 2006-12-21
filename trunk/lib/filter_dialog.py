@@ -23,10 +23,7 @@ __revision__ = '$Id$'
 import locale
 import datetime
 
-try:
-    import louie
-except ImportError:
-    import louie_local as louie
+import louie
 import gtk
 
 import datamodel

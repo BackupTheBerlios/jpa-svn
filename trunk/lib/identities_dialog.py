@@ -20,10 +20,7 @@
 
 __revision__ = '$Id$'
 
-try:
-    import louie
-except ImportError:
-    import louie_local as louie
+import louie
 import gtk, gobject
 
 import apputils, appconst, datamodel, transport

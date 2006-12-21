@@ -22,10 +22,7 @@ __revision__ = '$Id$'
 
 import os.path as op
 
-try:
-    import louie
-except ImportError:
-    import louie_local as louie
+import louie
 import gobject, gtk, gtk.glade, gtk.gdk
 
 import appconst, datamodel, apputils, blogoper
@@ -160,7 +157,8 @@ class CategoriesDialog(ListWindow):
     def _synchronize(self, *args):
         blogs = datamodel.Weblog.select(datamodel.Weblog.q.isActive==True)
         for blog in blogs:
-            thread = blogoper.CategorySynchronizerThread(blog, blog.identity, self)
+            thread = blogoper.CategorySynchronizerThread(blog, \
+                blog.identity, self)
             thread.start()
     
     # custom signals for louie #

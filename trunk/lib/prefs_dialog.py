@@ -20,10 +20,7 @@ __revision__ = '$Id$'
 
 import os, os.path as op
 
-try:
-    import louie
-except ImportError:
-    import louie_local as louie
+import louie
 import gtk, gtk.glade
 
 import appconst, datamodel
