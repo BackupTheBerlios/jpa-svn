@@ -23,7 +23,10 @@ __revision__ = '$Id$'
 import os, tempfile
 import os.path as op
 
-import louie
+try:
+    import louie
+except ImportError:
+    import louie_local as louie
 import gtk
 import gtk.glade
 

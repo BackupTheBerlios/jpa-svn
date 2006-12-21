@@ -22,7 +22,10 @@ __revision__ = '$Id$'
 
 import os.path as op
 
-import louie
+try:
+    import louie
+except ImportError:
+    import louie_local as louie
 import gobject, gtk, gtk.glade, gtk.gdk
 
 import appconst, datamodel, apputils, blogoper

@@ -23,7 +23,10 @@ __revision__ = '$Id$'
 import os.path as op
 import locale
 
-import louie
+try:
+    import louie
+except ImportError:
+    import louie_local as louie
 import gtk, gobject, pango
 import gtk.glade
 

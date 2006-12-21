@@ -23,7 +23,10 @@ __revision__ = '$Id$'
 import os, os.path as op
 import time, datetime
 
-import louie
+try:
+    import louie
+except ImportError:
+    import louie_local as louie
 import gtk, pango, gobject
 import gtk.glade, gtk.gdk
 

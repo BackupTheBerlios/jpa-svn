@@ -23,7 +23,10 @@ __revision__ = '$Id$'
 import time
 import threading, Queue
 
-import louie
+try:
+    import louie
+except ImportError:
+    import louie_local as louie
 import gtk, gobject
 from sqlobject import SQLObjectNotFound
 
