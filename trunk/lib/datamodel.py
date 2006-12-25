@@ -106,19 +106,20 @@ class Entry(SQLObject):
         transportObj = transportClass(login, password, proxy, uri)
         if DEBUG:
             print transportObj
+        args = {'title': self.title, 'name': weblog.name}
         try:
-            msg = _('Started sending entry "%s" to weblog %s') % \
-                (self.title, weblog.name)
+            msg = _('Started sending entry "%(title)s" to weblog %(name)s') % \
+                args
             parent.updateStatus(msg)
             assignedId = transportObj.postNew(weblog.weblogID, self, categories)
-            msg = _('Entry "%s" published to weblog %s') % \
-                (self.title, weblog.name)
+            msg = _('Entry "%(title)s" published to weblog %(name)s') % args
             parent.updateStatus(msg)
             pubDate = datetime.datetime.now()
             parent.updateEntry(self, weblog, pubDate, assignedId)
         except transport.ServiceError, e:
-            msg = _('Error while sending entry "%s" to weblog %s: %s') %\
-                (self.title, weblog.name, e)
+            args['error'] = e
+            msg = _('Error while sending entry "%(title)s" to weblog %(name)s: %(error)s') %\
+                args
             parent.updateStatus(msg)
     
     def updatePublication(self, weblog, pubDate, assignedId):
@@ -143,23 +144,25 @@ class Entry(SQLObject):
         proxy = appconst.CFG.getProxy()
         transportClass = transport.TRANSPORTS[transportType]
         transportObj = transportClass(login, password, proxy, uri)
+        fmtArgs = {'title': self.title, 'name': weblog.name}
         try:
-            msg = _('Started republishing entry "%s" to weblog %s') % \
-                (self.title, weblog.name)
+            msg = _('Started republishing entry "%(title)s" to weblog %(name)s') % \
+                fmtArgs
             parent.updateStatus(msg)
             try:
                 transportObj.postModified(weblog.weblogID, entryId, self, categories)
             except NotImplementedError:
                 # ignore this beast
                 pass
-            msg = _('Entry "%s" republished to weblog %s') % \
-                (self.title, weblog.name)
+            msg = _('Entry "%(title)s" republished to weblog %(name)s') % \
+                fmtArgs
             parent.updateStatus(msg)
             pubDate = datetime.datetime.now()
             parent.updateEntry(self, weblog, pubDate, entryId)
         except transport.ServiceError, e:
-            msg = _('Error while republishing entry "%s" to weblog %s: %s') %\
-                (self.title, weblog.name, e)
+            fmtArgs['error'] = e
+            msg = _('Error while republishing entry "%(title)s" to weblog %(name)s: %(error)s') %\
+                fmtArgs
             parent.updateStatus(msg)
 
 
@@ -189,14 +192,16 @@ class Media(SQLObject):
         transportObj = transportClass(login, password, proxy, uri)
         if DEBUG:
             print transportObj
+        fmtArgs = {'object': self.name, 'weblog': weblog.name}
         try:
-            msg = _('Started sending media object "%s" to weblog %s') % \
-                (self.name, weblog.name)
+            msg = _('Started sending media object "%(object)s" to weblog %(weblog)s') % \
+                fmtArgs
             parent.updateStatus(msg)
             self.URI = transportObj.newMediaObject(weblog.weblogID, self)
         except transport.ServiceError, e:
-            msg = _('Error while publishing media "%s" to weblog %s: %s') %\
-                (self.name, weblog.name, e)
+            fmtArgs['error'] = e
+            msg = _('Error while publishing media object "%(object)s" to weblog %(weblog)s: %(error)s') %\
+                fmtArgs
             parent.updateStatus(msg)
 
 
@@ -231,15 +236,19 @@ class Publication(SQLObject):
         proxy = appconst.CFG.getProxy()
         transportClass = transport.TRANSPORTS[transportType]
         transportObj = transportClass(login, password, proxy, uri)
+        fmtArgs = {'entry': entryTitle, 'weblog': weblog.name}
         try:
-            msg = _('Initiated process of deleting entry "%s" from weblog %s') % (entryTitle, weblog.name)
+            msg = _('Initiated process of deleting entry "%(entry)s" from weblog %(weblog)s') % \
+                fmtArgs
             parent.updateStatus(msg)
             transportObj.deleteEntry(blogId, self.assignedId)
-            msg = _('Entry "%s" deleted from weblog %s') % (entryTitle, weblog.name)
+            msg = _('Entry "%(entry)s" deleted from weblog %(weblog)s') % \
+                fmtArgs
             parent.updateStatus(msg)
         except transport.ServiceError, e:
-            msg = _('Error while trying to delete entry from weblog %s: %s') % \
-                (weblog.name, e)
+            fmtArgs['error'] = e
+            msg = _('Error while trying to delete entry from weblog %(weblog)s: %(error)s') % \
+                fmtArgs
             parent.updateStatus(msg)
         except NotImplementedError:
             msg = _("Service %s doesn't support deleting entries") % weblog.name
@@ -282,6 +291,7 @@ class Weblog(SQLObject):
         proxy = appconst.CFG.getProxy()
         transportClass = transport.TRANSPORTS[self.identity.transportType]
         transportObj = transportClass(login, password, proxy, uri)
+        fmtArgs = {'name': self.name}
         try:
             msg = _('Started downloading categories for weblog %s') % self.name
             parent.updateStatus(msg)
@@ -290,8 +300,9 @@ class Weblog(SQLObject):
             msg = _('Finished downloading categories for weblog %s') % self.name
             parent.updateStatus(msg)
         except transport.ServiceError, e:
-            msg = _('Error while downloading categories for weblog %s: %s') \
-                (self.name, e)
+            fmtArgs['error'] = e
+            msg = _('Error while downloading categories for weblog %(name)s: %(error)s')  % \
+                fmtArgs
             parent.updateStatus(msg)
         except NotImplementedError:
             msg = _('Weblog %s does not support categories') % self.name
