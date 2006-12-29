@@ -123,9 +123,6 @@ class GoogleIdentity(Identity):
 
     def __init__(self, name, credentials, proxy=None):
         Identity.__init__(self, name, credentials)
-        self.proxy = proxy
-        if self.proxy is None:
-            self.proxy = {}
         if proxy:
             self.host = '%s:%d' % (proxy['host'], proxy['port'])
             self.path = 'https://%s%s' % (SVC_HOST, SVC_PATH)
@@ -179,8 +176,9 @@ class GoogleIdentity(Identity):
                     fp.write(resp.read())
                 finally:
                     fp.close()
+                return file_name
         finally:
             http.close()
 
     def get_services(self, service_type='all'):
-        return none
+        return []
