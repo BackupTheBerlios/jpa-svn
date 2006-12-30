@@ -39,7 +39,7 @@ class JPAWindow:
         self.wTree = gtk.glade.XML(appconst.GLADE_PATH, windowName, 'jpa')
         self.window = self.wTree.get_widget(windowName)
         self.window.set_icon_from_file(op.join(appconst.PATHS['img'],
-            'darkbeer.xpm'))        
+            'darkbeer.xpm'))
         self.wTree.signal_autoconnect(self)
 
 
