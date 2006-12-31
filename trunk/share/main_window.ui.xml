@@ -22,7 +22,6 @@
             <menuitem action="Show HTML" />
             <separator />
             <menuitem action="Filter pane" />
-            <menuitem action="Log window" />
         </menu>
         <menu action="Tools">
             <menuitem action="Categories" />

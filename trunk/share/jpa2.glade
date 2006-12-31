@@ -4,7 +4,7 @@
 <glade-interface>
 
 <widget class="GtkWindow" id="frmMain">
-  <property name="title" translatable="yes">JPA</property>
+  <property name="title">JPA</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
   <property name="modal">False</property>
@@ -786,7 +786,7 @@
 		      <child>
 			<widget class="GtkLabel" id="lbTitle">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">%s</property>
+			  <property name="label">%s</property>
 			  <property name="use_underline">False</property>
 			  <property name="use_markup">False</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -813,7 +813,7 @@
 		      <child>
 			<widget class="GtkLabel" id="lbCreated">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">%s</property>
+			  <property name="label">%s</property>
 			  <property name="use_underline">False</property>
 			  <property name="use_markup">False</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -846,7 +846,7 @@
 			  <child>
 			    <widget class="GtkLabel" id="lbSent">
 			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">%s</property>
+			      <property name="label">%s</property>
 			      <property name="use_underline">False</property>
 			      <property name="use_markup">False</property>
 			      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -1308,7 +1308,7 @@
 		      <child>
 			<widget class="GtkLabel" id="lbVisLevelDesc">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">%s</property>
+			  <property name="label">%s</property>
 			  <property name="use_underline">False</property>
 			  <property name="use_markup">False</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
