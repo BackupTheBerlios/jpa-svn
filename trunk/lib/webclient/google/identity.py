@@ -137,34 +137,38 @@ class GoogleIdentity(Identity):
             'source': credentials['user_agent'],
         }
 
-    def authorize(self, service='xapi', captcha_auth=None):
-        self.login_params['service'] = service
-        http = httplib.HTTPSConnection(self.host)
-        self.login_params['service'] = service
+    def authorize(self, service=None, captcha_auth=None):
+        if service:
+            self.login_params['service'] = service
         if captcha_auth:
             self.login_params['logintoken'] = captcha_auth['token']
             self.login_params['logincaptcha'] = captcha_auth['captcha']
         params = urllib.urlencode(self.login_params)
-        http.request('POST', self.path, params, AUTH_HEADERS)
-        response = http.getresponse()
-        raw_body = response.read().strip().split('\n')
-        response_body = {}
-        for line in raw_body:
-            k, v = line.split('=', 1)
-            response_body[k] = v.strip()
-        if response.status == 200:
-            try:
-                return response_body['Auth']
-            except KeyError:
-                raise GoogleAuthError, 'Bad response from service'
-        elif response.status == 403:
-            handler_403 = RESPONSE403[response_body['Error']]
-            raise handler_403, response_body
+        http = httplib.HTTPSConnection(self.host)
+        try:
+            http.request('POST', self.path, params, AUTH_HEADERS)
+            response = http.getresponse()
+            raw_body = response.read().strip().split('\n')
+            response_body = {}
+            for line in raw_body:
+                k, v = line.split('=', 1)
+                response_body[k] = v.strip()
+            if response.status == 200:
+                try:
+                    return {
+                        'Authorization': \
+                            'GoogleLogin auth=%s' % response_body['Auth'],
+                    }
+                except KeyError:
+                    raise GoogleAuthError, 'Bad response from service'
+            elif response.status == 403:
+                handler_403 = RESPONSE403[response_body['Error']]
+                raise handler_403, response_body
+        finally:
+            http.close()
 
-    def get_captcha_image_url(self, captcha_url):
-        return CAPTCHA_PATH % captcha_url
-
-    def download_captcha_image(self, image_path):
+    def download_captcha_image(self, captcha_url):
+        image_path = CAPTCHA_PATH % captcha_url
         http = httplib.HTTPConnection(self.host)
         try:
             http.request('GET', image_path)
@@ -179,6 +183,3 @@ class GoogleIdentity(Identity):
                 return file_name
         finally:
             http.close()
-
-    def get_services(self, service_type='all'):
-        return []
