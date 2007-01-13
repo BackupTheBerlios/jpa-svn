@@ -30,7 +30,7 @@ class JPAApplication:
     
     def __init__(self):
         datamodel.initModel()
-        appconst.GLADE_PATH = op.join(appconst.PATHS['share'], 
+        appconst.GLADE_PATH = op.join(appconst.PATHS['share'], 'ui',
             appconst.GLADE_FILE)
         appconst.UI_PATH = appconst.PATHS['share']
         self.controller = controller.Controller()
