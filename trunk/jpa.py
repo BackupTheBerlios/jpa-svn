@@ -20,6 +20,8 @@ pygtk.require('2.0')
 import gtk
 import gtk.glade
 
+from ui import dlgabout
+
 
 class JPAApp(gtk.StatusIcon):
 
@@ -30,13 +32,18 @@ class JPAApp(gtk.StatusIcon):
         uimgr = self._create_ui()
         self.menu = uimgr.get_widget('/Menubar/Menu/About').props.parent
         self.connect('popup-menu', self._on_popup_menu)
+        self.connect('activate', self._on_action_new)
         self.set_visible(True)
 
     def _create_ui(self):
         ag = gtk.ActionGroup('Actions')
         actions = [
             ('Menu', None, 'Menu'),
-            ('Preferences', gtk.STOCK_PREFERENCES, _('_Preferences...'), None, 
+            ('New', gtk.STOCK_NEW, _('_New...'), None,
+                _('Write new blog entry'), self._on_action_new),
+            ('Archive', None, _('A_rchive'), None,
+                _('View archive of entries'), self._on_action_archive),
+            ('Preferences', gtk.STOCK_PREFERENCES, _('_Preferences...'), None,
                 _('Change program preferences'), self._on_action_preferences),
             ('About', gtk.STOCK_ABOUT, _('_About...'), None,
                 _('About JPA, the Weblog Assistant'), self._on_action_about),
@@ -52,26 +59,17 @@ class JPAApp(gtk.StatusIcon):
     def _on_popup_menu(self, status, button, time):
         self.menu.popup(None, None, None, button, time)
 
+    def _on_action_new(self, *args):
+        pass
+
+    def _on_action_archive(self, *args):
+        pass
+
     def _on_action_preferences(self, *args):
         pass
 
     def _on_action_about(self, *args):
-        dialog = gtk.AboutDialog()
-        try:
-            dialog.set_name('JPA')
-            dialog.set_version('0.6.0')
-            dialog.set_comments(_('Blogger publishing assistant'))
-            dialog.set_website('http://jpa.berlios.de')
-            dialog.set_authors(['Jarek Zgoda <jzgoda@o2.pl>'])
-            dialog.set_copyright(_('Copyright: (c) 2007, Jarek Zgoda <jzgoda@o2.pl>'))
-            fp = open(os.path.join(self.base_dir, 'COPYING'))
-            try:
-                dialog.set_license(fp.read().strip())
-            finally:
-                fp.close()
-            dialog.run()
-        finally:
-            dialog.destroy()
+        dlgabout.show_dialog(self.base_dir)
 
     def _on_action_quit(self, *args):
         gtk.main_quit()
