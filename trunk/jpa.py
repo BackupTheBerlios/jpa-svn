@@ -20,7 +20,7 @@ pygtk.require('2.0')
 import gtk
 import gtk.glade
 
-from ui import dlgabout
+import dlgabout
 
 
 class JPAApp(gtk.StatusIcon):
