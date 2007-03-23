@@ -53,7 +53,7 @@ class JPAApp(gtk.StatusIcon):
         ag.add_actions(actions)
         ui = gtk.UIManager()
         ui.insert_action_group(ag, 0)
-        ui.add_ui_from_file(os.path.join(self.base_dir, 'ui', 'mainmenu.ui'))
+        ui.add_ui_from_file(os.path.join(self.base_dir, 'ui', 'mainmenu.ui.xml'))
         return ui
 
     def _on_popup_menu(self, status, button, time):
