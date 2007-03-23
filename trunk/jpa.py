@@ -14,6 +14,7 @@ __revision__ = '$Id$'
 import os, sys
 import signal
 import fcntl
+import ConfigParser
 
 import pygtk
 pygtk.require('2.0')
@@ -27,6 +28,7 @@ class JPAApp(gtk.StatusIcon):
 
     def __init__(self, base_directory):
         gtk.StatusIcon.__init__(self)
+        self.cfg = self._get_configuration()
         self.base_dir = base_directory
         self.set_from_stock(gtk.STOCK_EDIT)
         uimgr = self._create_ui()
@@ -34,6 +36,24 @@ class JPAApp(gtk.StatusIcon):
         self.connect('popup-menu', self._on_popup_menu)
         self.connect('activate', self._on_action_new)
         self.set_visible(True)
+
+    def _get_configuration(self):
+        home_dir = os.path.expanduser('~/.jpa')
+        if not os.path.isdir(home_dir):
+            os.makedirs(home_dir)
+        config_file = os.path.join(home_dir, 'config')
+        cfg = ConfigParser.SafeConfigParser()
+        try:
+            fp = open(config_file)
+            try:
+                cfg.readfp(fp)
+            finally:
+                fp.close()
+        except IOError:
+            # ignore this, the file just does not exist
+            # we'll have an empty configuration
+            pass
+        return cfg
 
     def _create_ui(self):
         ag = gtk.ActionGroup('Actions')
