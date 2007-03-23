@@ -28,7 +28,7 @@ def show_dialog(base_dir):
         dlg.set_website('http://jpa.berlios.de')
         dlg.set_authors(['Jarek Zgoda <jzgoda@o2.pl>'])
         dlg.set_copyright(_('Copyright: (c) 2007, Jarek Zgoda <jzgoda@o2.pl>'))
-        fp = open(os.path.join(base_dir, 'COPYING'))
+        fp = open(os.path.join(base_dir, 'doc', 'COPYING'))
         try:
             dlg.set_license(fp.read().strip())
         finally:
