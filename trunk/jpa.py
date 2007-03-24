@@ -21,10 +21,11 @@ pygtk.require('2.0')
 import gtk
 import gtk.glade
 
-from forms import dlgabout
+from forms import dlgabout, dlgentry
 
 
 class JPAApp(gtk.StatusIcon):
+    """Main application class"""
 
     def __init__(self, base_directory):
         gtk.StatusIcon.__init__(self)
