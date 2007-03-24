@@ -24,10 +24,15 @@ def show_dialog(base_dir):
         gtk.about_dialog_set_url_hook(open_url, None)
         dlg.set_name('JPA')
         dlg.set_version('0.6.0')
-        dlg.set_comments(_('Blogger publishing assistant'))
+        dlg.set_comments(_('Blogger Publishing Assistant'))
         dlg.set_website('http://jpa.berlios.de')
-        dlg.set_authors(['Jarek Zgoda <jzgoda@o2.pl>'])
-        dlg.set_copyright(_('Copyright: (c) 2007, Jarek Zgoda <jzgoda@o2.pl>'))
+        fp = open(os.path.join(base_dir, 'doc', 'AUTHORS'))
+        try:
+            lines = fp.read().strip().split('\n')
+        finally:
+            fp.close()
+        dlg.set_authors(lines)
+        dlg.set_copyright('Copyright: (c) 2007, Jarek Zgoda <jzgoda@o2.pl>')
         fp = open(os.path.join(base_dir, 'doc', 'COPYING'))
         try:
             dlg.set_license(fp.read().strip())

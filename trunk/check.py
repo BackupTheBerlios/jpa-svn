@@ -26,5 +26,13 @@ if __name__ == "__main__":
                          "(http://www.pygtk.org)" % NAME)
     else: print "found"
 
+    print "Checking for Gnome Python bindings:",
+    try:
+        import gnome
+    except ImportError:
+        raise SystemExit("not found\n%s requires Python bindings for Gnome. "
+                         "(http://www.gnome.org)" % NAME)
+    else: print "found"
+
     print "\nYour system meets the requirements to install %s." % NAME
     print "Type 'make install' (as root) to install it."
