@@ -10,6 +10,10 @@
 
 __revision__ = '$Id$'
 
-USER_DIR = ''
-BASE_DIR = ''
-PATHS = {}
+import os
+
+USER_DIR = os.path.expanduser('~/.jpa')
+if not os.path.isdir(USER_DIR):
+    os.makedirs(USER_DIR)
+BASE_DIR = os.path.dirname(os.path.realpath(__file__))
+GLADE_PATH = os.path.join(BASE_DIR, 'glade', 'jpa.glade')

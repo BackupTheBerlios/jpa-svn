@@ -80,7 +80,7 @@ class JPAApp(gtk.StatusIcon):
         self.menu.popup(None, None, None, button, time)
 
     def _on_action_new(self, *args):
-        pass
+        dlgentry.edit_new_entry()
 
     def _on_action_archive(self, *args):
         pass
@@ -96,11 +96,8 @@ class JPAApp(gtk.StatusIcon):
 
 
 if __name__ == '__main__':
-    user_dir = os.path.expanduser('~/.jpa')
-    if not os.path.isdir(user_dir):
-        os.makedirs(user_dir)
-    const.USER_DIR = user_dir
-    pid_file = os.path.join(user_dir, 'jpa.pid')
+    import const
+    pid_file = os.path.join(const.USER_DIR, 'jpa.pid')
     fp = open(pid_file, 'w')
     try:
         fcntl.lockf(fp, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -108,7 +105,6 @@ if __name__ == '__main__':
         # another instance is running
         sys.exit(0)
     basedir = os.path.dirname(os.path.realpath(__file__))
-    const.BASE_DIR = basedir
     if basedir.endswith('/share/jpa2'):
         sys.path.append(basedir[:-10] + 'lib/jpa2')
     import gettext, locale
