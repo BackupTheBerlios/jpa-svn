@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=JPA
+_GenericName=Weblog Publishing Assistant
+_Comment=The Weblog Publishing Assistant
+Exec=jpa
+Terminal=false
+Type=Application
+Icon=blogger.png
+Categories=Application;Internet;GTK

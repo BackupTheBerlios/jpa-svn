@@ -109,8 +109,8 @@ if __name__ == '__main__':
         sys.exit(0)
     basedir = os.path.dirname(os.path.realpath(__file__))
     const.BASE_DIR = basedir
-    if basedir.endswith("/share/jpa2"):
-        sys.path.append(basedir[:-10] + "lib/jpa2")
+    if basedir.endswith('/share/jpa2'):
+        sys.path.append(basedir[:-10] + 'lib/jpa2')
     import gettext, locale
     locale.setlocale(locale.LC_ALL, '')
     gtk.glade.bindtextdomain('jpa')
