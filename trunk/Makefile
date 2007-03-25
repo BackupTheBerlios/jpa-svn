@@ -1,4 +1,4 @@
-MODULES = config.py const.py player.py stock.py widgets.py
+MODULES = const.py player.py stock.py widgets.py
 MODULE_DIRS = browsers devices formats qltk parse plugins util library
 PROGRAMS = jpa
 SUBDIRS = po

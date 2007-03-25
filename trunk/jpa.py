@@ -21,17 +21,18 @@ pygtk.require('2.0')
 import gtk
 import gtk.glade
 
+import const
 from forms import dlgabout, dlgentry
 
 
 class JPAApp(gtk.StatusIcon):
     """Main application class"""
 
-    def __init__(self, base_directory):
+    def __init__(self):
         gtk.StatusIcon.__init__(self)
         self.cfg = self._get_configuration()
-        self.base_dir = base_directory
-        self.set_from_stock(gtk.STOCK_EDIT)
+        self.set_from_file(os.path.join(const.BASE_DIR, 'blogger.png'))
+        #self.set_from_stock(gtk.STOCK_EDIT)
         uimgr = self._create_ui()
         self.menu = uimgr.get_widget('/Menubar/Menu/About').props.parent
         self.connect('popup-menu', self._on_popup_menu)
@@ -39,10 +40,7 @@ class JPAApp(gtk.StatusIcon):
         self.set_visible(True)
 
     def _get_configuration(self):
-        home_dir = os.path.expanduser('~/.jpa')
-        if not os.path.isdir(home_dir):
-            os.makedirs(home_dir)
-        config_file = os.path.join(home_dir, 'config')
+        config_file = os.path.join(const.USER_DIR, 'config')
         cfg = ConfigParser.SafeConfigParser()
         try:
             fp = open(config_file)
@@ -52,7 +50,7 @@ class JPAApp(gtk.StatusIcon):
                 fp.close()
         except IOError:
             # ignore this, the file just does not exist
-            # we'll have an empty configuration
+            # we'll have an empty configuration and use defaults
             pass
         return cfg
 
@@ -74,7 +72,8 @@ class JPAApp(gtk.StatusIcon):
         ag.add_actions(actions)
         ui = gtk.UIManager()
         ui.insert_action_group(ag, 0)
-        ui.add_ui_from_file(os.path.join(self.base_dir, 'ui', 'mainmenu.ui.xml'))
+        ui.add_ui_from_file(os.path.join(const.BASE_DIR, 'ui',
+            'mainmenu.ui.xml'))
         return ui
 
     def _on_popup_menu(self, status, button, time):
@@ -90,7 +89,7 @@ class JPAApp(gtk.StatusIcon):
         pass
 
     def _on_action_about(self, *args):
-        dlgabout.show_dialog(self.base_dir)
+        dlgabout.show_dialog()
 
     def _on_action_quit(self, *args):
         gtk.main_quit()
@@ -100,6 +99,7 @@ if __name__ == '__main__':
     user_dir = os.path.expanduser('~/.jpa')
     if not os.path.isdir(user_dir):
         os.makedirs(user_dir)
+    const.USER_DIR = user_dir
     pid_file = os.path.join(user_dir, 'jpa.pid')
     fp = open(pid_file, 'w')
     try:
@@ -108,6 +108,7 @@ if __name__ == '__main__':
         # another instance is running
         sys.exit(0)
     basedir = os.path.dirname(os.path.realpath(__file__))
+    const.BASE_DIR = basedir
     if basedir.endswith("/share/jpa2"):
         sys.path.append(basedir[:-10] + "lib/jpa2")
     import gettext, locale
@@ -118,7 +119,7 @@ if __name__ == '__main__':
     SIGNALS = [signal.SIGINT, signal.SIGTERM, signal.SIGHUP]
     for sig in SIGNALS:
         signal.signal(sig, gtk.main_quit)
-    app = JPAApp(basedir)
+    app = JPAApp()
     gtk.main()
     if os.path.isfile(pid_file):
         os.unlink(pid_file)

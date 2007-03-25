@@ -15,10 +15,12 @@ import os
 import gtk
 import gnome
 
+import const
+
 def open_url(dialog, url, user_data):
     gnome.url_show(url)
 
-def show_dialog(base_dir):
+def show_dialog():
     dlg = gtk.AboutDialog()
     try:
         gtk.about_dialog_set_url_hook(open_url, None)
@@ -26,14 +28,14 @@ def show_dialog(base_dir):
         dlg.set_version('0.6.0')
         dlg.set_comments(_('Blogger Publishing Assistant'))
         dlg.set_website('http://jpa.berlios.de')
-        fp = open(os.path.join(base_dir, 'doc', 'AUTHORS'))
+        fp = open(os.path.join(const.BASE_DIR, 'doc', 'AUTHORS'))
         try:
             lines = fp.read().strip().split('\n')
         finally:
             fp.close()
         dlg.set_authors(lines)
         dlg.set_copyright('Copyright: (c) 2007, Jarek Zgoda <jzgoda@o2.pl>')
-        fp = open(os.path.join(base_dir, 'doc', 'COPYING'))
+        fp = open(os.path.join(const.BASE_DIR, 'doc', 'COPYING'))
         try:
             dlg.set_license(fp.read().strip())
         finally:
