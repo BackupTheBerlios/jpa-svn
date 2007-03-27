@@ -1,14 +1,17 @@
 top_srcdir = ../
 NAME = jpa
 ALL_LINGUAS = pl
-PREFIX ?= /usr
+PREFIX ?= /usr/local
 PO_DIR ?= $(PREFIX)/share/locale
 
 all:
 
 po: $(addsuffix .mo, $(ALL_LINGUAS))
 
-jpa.pot: POTFILES.in ../*.py ../forms/*.py
+tmp/jpa.glade.h:
+	intltool-extract --type=gettext/glade --local ../glade/jpa.glade
+
+jpa.pot: POTFILES.in ../*.py ../forms/*.py tmp/jpa.glade.h
 	intltool-update --pot --gettext-package=$(NAME)
 
 %.po: jpa.pot
@@ -25,6 +28,7 @@ check-%: %.po
 clean:
 	rm -f untitled.pot messages.mo jpa.gmo notexist missing
 	rm -f *.mo
+	rm -rf tmp
 
 distclean: clean
 	rm -f *~

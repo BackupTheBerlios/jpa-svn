@@ -1,5 +1,5 @@
 MODULES = const.py player.py stock.py widgets.py
-MODULE_DIRS = browsers devices formats qltk parse plugins util library
+MODULE_DIRS = forms ui glade doc
 PROGRAMS = jpa
 SUBDIRS = po
 PREFIX ?= /usr/local
@@ -17,7 +17,7 @@ make-install-dirs:
 	mkdir -p $(DESTDIR)$(PREFIX)/$(TO)
 
 install: make-install-dirs install-dirs install-programs
-	install -m 644 $(MODULES) audio-*.png media-*.png device-*.png $(DESTDIR)$(PREFIX)/$(TO)
+	install -m 644 $(MODULES) $(DESTDIR)$(PREFIX)/$(TO)
 	cd po && make install-po DESTDIR=$(DESTDIR)
 
 install-dirs: $(addprefix dir-install-, $(MODULE_DIRS))
