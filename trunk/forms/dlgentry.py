@@ -26,6 +26,8 @@ class EntryWindow(object):
         self.w_tree = gtk.glade.XML(const.GLADE_PATH, 'dlg_entry', 'jpa')
         self.w_tree.signal_autoconnect(self)
         self.window = self.w_tree.get_widget('dlg_entry')
+        self.window.set_icon_from_file(os.path.join(const.BASE_DIR,
+            'blogger.png'))
         self.tv_text = self.w_tree.get_widget('tv_text')
         self.tv_text.modify_font(pango.FontDescription('Monospace'))
         self.window.present()
