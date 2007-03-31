@@ -12,8 +12,12 @@ __revision__ = '$Id$'
 
 import os
 
+# program directories and file paths
 USER_DIR = os.path.expanduser('~/.jpa')
 if not os.path.isdir(USER_DIR):
     os.makedirs(USER_DIR)
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 GLADE_PATH = os.path.join(BASE_DIR, 'glade', 'jpa.glade')
+
+# constants, please, don't touch this
+ENTRY_FIELDS = ('id', 'title', 'text', 'content_type', 'labels', 'published')
