@@ -32,7 +32,7 @@ class JPAApp(gtk.StatusIcon):
     def __init__(self):
         gtk.StatusIcon.__init__(self)
         self.cfg = const.CONFIG = self._get_configuration()
-        self.set_from_file(os.path.join(const.BASE_DIR, 'blogger.png'))
+        self.set_from_file(os.path.join(const.BASE_DIR, 'blogger0.png'))
         uimgr = self._create_ui()
         self.menu = uimgr.get_widget('/Menubar/Menu/About').props.parent
         self.connect('popup-menu', self._on_popup_menu)

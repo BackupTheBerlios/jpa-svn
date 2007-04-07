@@ -14,13 +14,19 @@ import os
 import webbrowser
 
 def open_url(url, system='system', command=None):
-    if system == 'system':
+    """A function that opens document at URL using somewhat-default
+    web browser. As there's no real default, a little cheating is done
+    here. By specifying system as "gnome" or "kde", the platform's default
+    will be used. If you specify system as "system", you will rely on what
+    standard webbrowser module decides to use. Alternatively you may specify
+    anything and give a ready system command to launch your browser."""
+    if system.lower() == 'system':
         browser = webbrowser.get()
         browser.open(url, 1)
         return
-    elif system == 'kde':
+    elif system.lower() == 'kde':
         cmd = 'kfmclient exec'
-    elif system == 'gnome':
+    elif system.lower() == 'gnome':
         cmd = 'gnome-open'
     else:
         cmd = command

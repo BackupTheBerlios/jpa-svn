@@ -17,6 +17,7 @@ import gtk
 
 import sysutils
 import const
+import frmutils
 
 def open_url(dialog, url, user_data):
     system = const.CONFIG.get('misc', 'system')
@@ -27,6 +28,7 @@ def show_dialog():
     dlg = gtk.AboutDialog()
     try:
         gtk.about_dialog_set_url_hook(open_url, None)
+        frmutils.set_icon(dlg)
         dlg.set_name('JPA')
         dlg.set_version('0.6.0')
         dlg.set_comments(_('Blogger Publishing Assistant'))
