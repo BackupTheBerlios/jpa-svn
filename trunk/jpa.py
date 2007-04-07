@@ -21,8 +21,9 @@ pygtk.require('2.0')
 import gtk
 import gtk.glade
 
+import data
 import const
-from forms import dlgabout, dlgentry
+import forms
 
 
 class JPAApp(gtk.StatusIcon):
@@ -30,7 +31,7 @@ class JPAApp(gtk.StatusIcon):
 
     def __init__(self):
         gtk.StatusIcon.__init__(self)
-        self.cfg = self._get_configuration()
+        self.cfg = const.CONFIG = self._get_configuration()
         self.set_from_file(os.path.join(const.BASE_DIR, 'blogger.png'))
         uimgr = self._create_ui()
         self.menu = uimgr.get_widget('/Menubar/Menu/About').props.parent
@@ -79,7 +80,7 @@ class JPAApp(gtk.StatusIcon):
         self.menu.popup(None, None, None, button, time)
 
     def _on_action_new(self, *args):
-        dlgentry.edit_new_entry()
+        forms.edit_new_entry()
 
     def _on_action_archive(self, *args):
         pass
@@ -88,7 +89,7 @@ class JPAApp(gtk.StatusIcon):
         pass
 
     def _on_action_about(self, *args):
-        dlgabout.show_dialog()
+        forms.show_about()
 
     def _on_action_quit(self, *args):
         gtk.main_quit()

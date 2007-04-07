@@ -11,14 +11,17 @@
 __revision__ = '$Id$'
 
 import os
+import ConfigParser
 
 import gtk
-import gnome
 
+import sysutils
 import const
 
 def open_url(dialog, url, user_data):
-    gnome.url_show(url)
+    system = const.CONFIG.get('misc', 'system')
+    browser_cmd = const.CONFIG.get('misc', 'browser_command')
+    sysutils.open_url(url, system=system)
 
 def show_dialog():
     dlg = gtk.AboutDialog()
