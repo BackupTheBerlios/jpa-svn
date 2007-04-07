@@ -21,3 +21,5 @@ GLADE_PATH = os.path.join(BASE_DIR, 'glade', 'jpa.glade')
 
 # constants, please, don't touch this
 ENTRY_FIELDS = ('id', 'title', 'text', 'content_type', 'labels', 'published')
+
+DEBUG = True
