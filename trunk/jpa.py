@@ -23,6 +23,7 @@ import gtk.glade
 
 import data
 import const
+import sysutils
 import forms
 
 
@@ -32,7 +33,7 @@ class JPAApp(gtk.StatusIcon):
     def __init__(self):
         gtk.StatusIcon.__init__(self)
         self.cfg = const.CONFIG = self._get_configuration()
-        self.set_from_file(os.path.join(const.BASE_DIR, 'blogger0.png'))
+        self.set_from_file(os.path.join(const.BASE_DIR, 'blogger.png'))
         uimgr = self._create_ui()
         self.menu = uimgr.get_widget('/Menubar/Menu/About').props.parent
         self.connect('popup-menu', self._on_popup_menu)
@@ -51,7 +52,7 @@ class JPAApp(gtk.StatusIcon):
         except IOError:
             # ignore this, the file just does not exist
             # we'll have an empty configuration and use defaults
-            pass
+            sysutils.initialize_config(cfg, **const.CONFIG_DEFAULTS)
         return cfg
 
     def _create_ui(self):
@@ -86,7 +87,7 @@ class JPAApp(gtk.StatusIcon):
         pass
 
     def _on_action_preferences(self, *args):
-        pass
+        forms.edit_preferences(self.cfg)
 
     def _on_action_about(self, *args):
         forms.show_about()

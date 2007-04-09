@@ -10,5 +10,8 @@
 
 __revision__ = '$Id$'
 
+from frmutils import *
+
 from dlgabout import show_dialog as show_about
 from dlgentry import edit_new_entry
+from dlgprefs import edit_preferences

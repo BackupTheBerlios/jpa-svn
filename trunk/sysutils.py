@@ -38,3 +38,12 @@ def open_url(url, system='system', command=None):
         os.system(cmd)
     except:
         pass
+
+def initialize_config(config, **section_dicts):
+    """A function that initializes application config using
+    defaults. Each section has to be a dictionary."""
+    for name, section in section_dicts.items():
+        if not config.has_section(name):
+            config.add_section(name)
+        for k, v in section.items():
+            config.set(name, k, v)

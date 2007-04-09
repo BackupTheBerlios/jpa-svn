@@ -1,4 +1,4 @@
-MODULES = const.py player.py stock.py widgets.py
+MODULES = const.py data.py jpa.py sysutils.py
 MODULE_DIRS = forms ui glade doc
 PROGRAMS = jpa
 SUBDIRS = po

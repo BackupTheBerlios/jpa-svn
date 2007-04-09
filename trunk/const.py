@@ -19,7 +19,13 @@ if not os.path.isdir(USER_DIR):
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 GLADE_PATH = os.path.join(BASE_DIR, 'glade', 'jpa.glade')
 
-# constants, please, don't touch this
-ENTRY_FIELDS = ('id', 'title', 'text', 'content_type', 'labels', 'published')
+# configuration defaults
+CONFIG_DEFAULTS = {
+    'blogger': {
+        'login': '',
+        'password': '',
+        'save_credentials': '0',
+    },
+}
 
 DEBUG = True

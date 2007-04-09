@@ -12,8 +12,7 @@ __revision__ = '$Id$'
 
 import os
 
-import const
+from const import BASE_DIR
 
-def set_icon(window):
-    window.set_icon_from_file(os.path.join(const.BASE_DIR,
-        'blogger0.png'))
+def set_window_icon(window):
+    window.set_icon_from_file(os.path.join(BASE_DIR, 'blogger.png'))

@@ -15,7 +15,7 @@ import os
 import gtk, pango
 import gtk.glade
 
-import frmutils
+import forms
 import const
 
 def edit_new_entry():
@@ -27,7 +27,7 @@ class EntryWindow(object):
         self.w_tree = gtk.glade.XML(const.GLADE_PATH, 'dlg_entry', 'jpa')
         self.w_tree.signal_autoconnect(self)
         self.window = self.w_tree.get_widget('dlg_entry')
-        frmutils.set_icon(self.window)
+        forms.set_window_icon(self.window)
         self.tv_text = self.w_tree.get_widget('tv_text')
         self.tv_text.modify_font(pango.FontDescription('Monospace'))
         self.window.present()
