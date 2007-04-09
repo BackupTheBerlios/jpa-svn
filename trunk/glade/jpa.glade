@@ -691,6 +691,9 @@
 			  <child>
 			    <widget class="GtkComboBox" id="cbx_text_type">
 			      <property name="visible">True</property>
+			      <property name="items" translatable="yes">Markdown
+HTML
+plain</property>
 			      <property name="add_tearoffs">False</property>
 			      <property name="focus_on_click">True</property>
 			    </widget>
