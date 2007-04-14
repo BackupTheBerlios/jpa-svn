@@ -16,18 +16,17 @@ import gtk, pango
 import gtk.glade
 
 import forms
+from forms.gladehelper import GladeWindow
 import const
 
 def edit_new_entry():
     dlg = EntryWindow()
 
-class EntryWindow(object):
+class EntryWindow(GladeWindow):
 
     def __init__(self, entry_dict={}):
-        self.w_tree = gtk.glade.XML(const.GLADE_PATH, 'dlg_entry', 'jpa')
-        self.w_tree.signal_autoconnect(self)
-        self.window = self.w_tree.get_widget('dlg_entry')
+        self.create_ui(const.GLADE_PATH, 'dlg_entry', domain='jpa')
+        self.window = self.ui.dlg_entry
         forms.set_window_icon(self.window)
-        self.tv_text = self.w_tree.get_widget('tv_text')
-        self.tv_text.modify_font(pango.FontDescription('Monospace'))
+        self.ui.tv_text.modify_font(pango.FontDescription('Monospace'))
         self.window.present()
