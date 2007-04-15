@@ -18,6 +18,7 @@ import gtk.glade
 import forms
 from forms.gladehelper import GladeWindow
 import const
+import data
 
 def edit_new_entry():
     dlg = EntryWindow()
@@ -25,8 +26,27 @@ def edit_new_entry():
 class EntryWindow(GladeWindow):
 
     def __init__(self, entry_dict={}):
+        self.entry = None
         self.create_ui(const.GLADE_PATH, 'dlg_entry', domain='jpa')
         self.window = self.ui.dlg_entry
         forms.set_window_icon(self.window)
-        self.ui.tv_text.modify_font(pango.FontDescription('Monospace'))
-        self.window.present()
+        self.ui.tv_text.modify_font(pango.FontDescription('Monospace 10'))
+        self.run()
+
+    def run(self):
+        while 1:
+            ret = self.window.run()
+            if ret == gtk.RESPONSE_APPLY:
+                self.save()
+            elif ret == gtk.RESPONSE_OK:
+                self.save()
+                break
+            else:
+                break
+        self.window.destroy()
+
+    def save(self):
+        if self.entry:
+            pass
+        else:
+            pass

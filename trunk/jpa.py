@@ -32,6 +32,7 @@ class JPAApp(gtk.StatusIcon):
 
     def __init__(self):
         gtk.StatusIcon.__init__(self)
+        data.init_model()
         self.cfg = const.CONFIG = self._get_configuration()
         self.set_from_file(os.path.join(const.BASE_DIR, 'blogger.png'))
         self.set_tooltip('JPA v. %s' % const.VERSION_STRING)

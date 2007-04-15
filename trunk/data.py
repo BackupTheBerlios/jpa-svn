@@ -6,88 +6,71 @@
 # it under the terms of the GNU General Public License version 2 as
 # published by the Free Software Foundation.
 
-"""Application data model and support routines - SQLAlchemy based attempt."""
+"""Application data model and support routines."""
 
 __revision__ = '$Id$'
 
 import os
 import datetime
 
-import sqlalchemy as sa
-import sqlalchemy.orm as orm
+import sqlobject as so
 
 import const
 
 
-# these are our mapped objects
-class Weblog(object):
-
-    def __init__(self, name, blogger_id):
-        self.name = name
-        self.blogger_id = blogger_id
-
-    def __repr__(self):
-        return u'%s (%s)' % (self.name, self.blogger_id)
+BODY_TYPES = ['plain', 'markdown', 'HTML']
 
 
-class Entry(object):
+class Label(so.SQLObject):
+    title = so.UnicodeCol(alternateID=True, notNone=True)
+    entries = so.RelatedJoin('Entry')
 
-    def __repr__(self):
-        return self.title
+
+class Weblog(so.SQLObject):
+    name = so.UnicodeCol(alternateID=True)
+    weblog_id = so.UnicodeCol(default=None)
+    is_active = so.BoolCol(default='t', notNone=True)
+    active_idx = so.DatabaseIndex(is_active)
 
 
-class Publication(object):
+class Entry(so.SQLObject):
+    created = so.DateTimeCol(default=datetime.datetime.utcnow)
+    title = so.UnicodeCol()
+    text = so.UnicodeCol()
+    text_type = so.EnumCol(enumValues=BODY_TYPES, default='plain')
+    is_draft = so.BoolCol(default='f')
+    publications = so.MultipleJoin('Publication', orderBy='-published')
+    labels = so.RelatedJoin('Label')
+    created_idx = so.DatabaseIndex(created)
+    title_idx = so.DatabaseIndex(title)
 
-    def __init__(self, entry, weblog, assigned_url):
-        self.entry = entry
-        self.weblog = weblog
-        self.assigned_url = assigned_url
 
-    def __repr__(self):
-        return u'%s - %s' % (self.publication_date.isoformat(), self.assigned_url)
+class Publication(so.SQLObject):
+    published = so.DateTimeCol(notNone=True,
+        default=datetime.datetime.utcnow)
+    entry = so.ForeignKey('Entry')
+    weblog = so.ForeignKey('Weblog')
+    assigned_id = so.UnicodeCol()
+    pub_idx = so.DatabaseIndex(published)
 
-# module initialization section
-_db_filename = os.path.abspath(os.path.join(const.USER_DIR, 'jpa.db'))
-_metadata = sa.BoundMetaData('sqlite:///%s' % _db_filename)
-_debug = getattr(const, 'DEBUG', False)
-_metadata.engine.echo = _debug
-weblogs_table = sa.Table('weblog', _metadata,
-    sa.Column('weblog_id', sa.Integer, primary_key=True),
-    sa.Column('blogger_id', sa.Unicode, nullable=False, unique=True),
-    sa.Column('name', sa.Unicode(80), index=True),
-    sa.Column('description', sa.Unicode),
-)
-weblogs_table.create(checkfirst=True)
-entries_table = sa.Table('entry', _metadata,
-    sa.Column('entry_id', sa.Integer, primary_key=True),
-    sa.Column('created', sa.DateTime, default=datetime.datetime.utcnow(),
-        index=True),
-    sa.Column('title', sa.Unicode(100), nullable=False),
-    sa.Column('text', sa.Unicode),
-    sa.Column('content_type', sa.Unicode(20), default=u'markdown'),
-    sa.Column('labels', sa.Unicode),
-    sa.Column('is_draft', sa.Boolean, default=False),
-)
-entries_table.create(checkfirst=True)
-publications_table = sa.Table('publication', _metadata,
-    sa.Column('publication_id', sa.Integer, primary_key=True),
-    sa.Column('date', sa.DateTime, default=datetime.datetime.utcnow(),
-        index=True),
-    sa.Column('weblog_id', sa.Integer, sa.ForeignKey('weblog.weblog_id')),
-    sa.Column('entry_id', sa.Integer, sa.ForeignKey('entry.entry_id')),
-    sa.Column('assigned_url', sa.Unicode),
-)
-publications_table.create(checkfirst=True)
 
-orm.clear_mappers()
-orm.mapper(Weblog, weblogs_table, properties={
-    'publications': orm.relation(Publication),
-})
-orm.mapper(Publication, publications_table, properties={
-    'weblog': orm.relation(Weblog),
-    'entry': orm.relation(Entry),
-})
-orm.mapper(Entry, entries_table, properties={
-    'publications': orm.relation(Publication),
-})
-session = orm.create_session()
+# module initialization
+def init_model():
+    _db_filename = os.path.abspath(os.path.join(const.USER_DIR, 'jpa.db'))
+    schema_empty = False
+    if not os.access(_db_filename, os.F_OK):
+        schema_empty = True
+        root, tail = os.path.split(_db_filename)
+        if not os.path.isdir(root):
+            os.makedirs(root)
+    if os.name == 'nt':
+        uri = _db_filename.replace(':', '|').replace('\\', '/')
+        uri = 'sqlite:///%s' % uri
+    else:
+        uri = 'sqlite://%s' % _db_filename
+    connection = so.connectionForURI(uri)
+    so.sqlhub.processConnection = connection
+    Entry.createTable(ifNotExists=True)
+    Label.createTable(ifNotExists=True)
+    Publication.createTable(ifNotExists=True)
+    Weblog.createTable(ifNotExists=True)
