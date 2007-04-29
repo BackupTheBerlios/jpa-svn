@@ -1,13 +1,33 @@
 <ui>
     <menubar name="Menubar">
-        <menu action="Menu">
+        <menu action="FileMenu">
             <menuitem action="New"/>
-            <menuitem action="Archive"/>
-            <separator/>
-            <menuitem action="Preferences"/>
-            <menuitem action="About"/>
+            <menuitem action="Edit"/>
+            <menuitem action="SaveAs"/>
+            <menuitem action="Publish"/>
             <separator/>
             <menuitem action="Quit"/>
         </menu>
+        <menu action="EditMenu">
+            <menuitem action="Preferences"/>
+        </menu>
+        <menu action="ViewMenu">
+            <menuitem action="RefreshView"/>
+        </menu>
+        <menu action="ToolsMenu">
+            <menuitem action="BlogList"/>
+        </menu>
+        <menu action="HelpMenu">
+            <menuitem action="About"/>
+        </menu>
     </menubar>
+    <toolbar name="Toolbar">
+        <toolitem action="New"/>
+        <toolitem action="Edit"/>
+        <toolitem action="Publish"/>
+        <separator/>
+        <toolitem action="RefreshView"/>
+        <separator/>
+        <toolitem action="Preferences"/>
+    </toolbar>
 </ui>

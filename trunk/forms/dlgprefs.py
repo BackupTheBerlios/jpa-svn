@@ -11,10 +11,9 @@
 __revision__ = '$Id$'
 
 import os
-from ConfigParser import NoSectionError, NoOptionError
+from ConfigParser import NoSectionError
 
 import gtk
-import gtk.glade
 
 import forms
 from forms.gladehelper import GladeWindow
