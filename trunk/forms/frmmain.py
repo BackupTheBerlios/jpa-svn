@@ -14,12 +14,13 @@ import os
 
 import gtk
 
-import const, forms
+import const, forms, data
 
 
 class MainWindow(object):
 
     def __init__(self):
+        self.data = data.Storage()
         widget_tree = gtk.glade.XML(const.GLADE_PATH, 'frm_main', 'JPA')
         widget_tree.signal_autoconnect(self)
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
