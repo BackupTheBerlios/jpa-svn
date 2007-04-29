@@ -19,7 +19,6 @@ import ConfigParser
 import pygtk
 pygtk.require('2.0')
 import gtk
-import gtk.glade
 
 import data
 import const
@@ -99,7 +98,6 @@ class JPAApp(gtk.StatusIcon):
 
 
 if __name__ == '__main__':
-    import const
     pid_file = os.path.join(const.USER_DIR, 'jpa.pid')
     fp = open(pid_file, 'w')
     try:

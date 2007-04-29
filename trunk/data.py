@@ -30,6 +30,7 @@ class Weblog(so.SQLObject):
     name = so.UnicodeCol(alternateID=True)
     weblog_id = so.UnicodeCol(default=None)
     is_active = so.BoolCol(default='t', notNone=True)
+    # indexes
     active_idx = so.DatabaseIndex(is_active)
 
 
@@ -41,6 +42,7 @@ class Entry(so.SQLObject):
     is_draft = so.BoolCol(default='f')
     publications = so.MultipleJoin('Publication', orderBy='-published')
     labels = so.RelatedJoin('Label')
+    # indexes
     created_idx = so.DatabaseIndex(created)
     title_idx = so.DatabaseIndex(title)
 
@@ -51,6 +53,7 @@ class Publication(so.SQLObject):
     entry = so.ForeignKey('Entry')
     weblog = so.ForeignKey('Weblog')
     assigned_id = so.UnicodeCol()
+    # indexes
     pub_idx = so.DatabaseIndex(published)
 
 
