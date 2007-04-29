@@ -56,6 +56,10 @@ class MainWindow(object):
         self.quit()
         return False
 
+    def on_btn_search_clicked(self, widget, data=None):
+        print "search"
+
+    # uimanager
     def _on_uimanager__connect_proxy(self, uimgr, action, widget):
         tooltip = action.get_property('tooltip')
         if isinstance(widget, (gtk.Item, )) and tooltip:
@@ -70,6 +74,7 @@ class MainWindow(object):
         for name, cid in cids:
             widget.disconnect(cid)
 
+    # actions
     def _on_action_item__select(self, item, tooltip):
         self.statusbar.push(self._menu_cix, tooltip)
 
