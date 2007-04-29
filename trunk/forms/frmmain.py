@@ -29,6 +29,10 @@ class MainWindow(object):
         self.window.set_size_request(720, 560)
         self.main_box = gtk.VBox()
         uimgr = self._create_ui()
+        uimgr.connect('connect-proxy',
+            self._on_uimanager__connect_proxy)
+        uimgr.connect('disconnect-proxy',
+            self._on_uimanager__disconnect_proxy)
         menubar = uimgr.get_widget('/Menubar')
         self.main_box.pack_start(menubar, expand=False)
         toolbar = uimgr.get_widget('/Toolbar')
@@ -39,6 +43,7 @@ class MainWindow(object):
         self.statusbar = gtk.Statusbar()
         self.main_box.pack_end(self.statusbar, expand=False)
         self.window.add(self.main_box)
+        self._menu_cix = -1
 
     def show(self):
         self.window.show_all()
@@ -50,6 +55,26 @@ class MainWindow(object):
     def delete_event(self, widget, event, data=None):
         self.quit()
         return False
+
+    def _on_uimanager__connect_proxy(self, uimgr, action, widget):
+        tooltip = action.get_property('tooltip')
+        if isinstance(widget, (gtk.Item, )) and tooltip:
+            cid = widget.connect(
+                'select', self._on_action_item__select, tooltip)
+            cid2 = widget.connect(
+                'deselect', self._on_action_item__deselect)
+            widget.set_data('kiwiapp::cids', (cid, cid2))
+
+    def _on_uimanager__disconnect_proxy(self, uimgr, action, widget):
+        cids = widget.get_data('kiwiapp::cids') or ()
+        for name, cid in cids:
+            widget.disconnect(cid)
+
+    def _on_action_item__select(self, item, tooltip):
+        self.statusbar.push(self._menu_cix, tooltip)
+
+    def _on_action_item__deselect(self, item):
+        self.statusbar.pop(self._menu_cix)
 
     def _on_action_new(self, action):
         pass
@@ -67,7 +92,7 @@ class MainWindow(object):
         self.quit()
 
     def _on_action_preferences(self, action):
-        pass
+        forms.edit_preferences()
 
     def _on_action_refresh(self, action):
         pass

@@ -20,7 +20,9 @@ from forms.gladehelper import GladeWindow
 import const
 
 
-def edit_preferences(config):
+def edit_preferences(config=None):
+    if config is None:
+        config = const.CONFIG
     dlg = PreferencesWindow(config)
 
 
