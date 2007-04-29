@@ -30,7 +30,7 @@ def show_dialog():
         gtk.about_dialog_set_url_hook(open_url, None)
         forms.set_window_icon(dlg)
         dlg.set_name('JPA')
-        dlg.set_version('0.6.0')
+        dlg.set_version(const.VERSION_STRING)
         dlg.set_comments(_('Blogger Publishing Assistant'))
         dlg.set_website('http://jpa.berlios.de')
         fp = open(os.path.join(const.BASE_DIR, 'doc', 'AUTHORS'))

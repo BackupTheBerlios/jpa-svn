@@ -18,7 +18,6 @@ import gtk.glade
 import forms
 from forms.gladehelper import GladeWindow
 import const
-import data
 
 def edit_new_entry():
     dlg = EntryWindow()

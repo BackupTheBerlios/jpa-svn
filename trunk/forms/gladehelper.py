@@ -31,13 +31,13 @@ I don't know why, but the access machinery made into infinite recursion...
 """
 
 
-import sys 
-import os 
+import sys
+import os
 
-import pygtk 
+import pygtk
 pygtk.require('2.0')
-import gtk 
-import gtk.glade 
+import gtk
+import gtk.glade
 
 import xml.dom.minidom
 
@@ -58,7 +58,7 @@ class _CachedParser:
 cachedParser = _CachedParser()
 
 
-class GladeWindow(object): 
+class GladeWindow(object):
 
     def create_ui(self, gladefile, window, checkcallbacks=False, domain=None):
         self.__dict__['gladefile'] = gladefile
@@ -102,38 +102,38 @@ class GladeWindow(object):
         
     def check_callbacks(self, gladefile):
         dom = cachedParser.parse(gladefile)
-        conf = dom.getElementsByTagName("glade-interface")[0] 
-        for node in conf.childNodes: 
-            if node.nodeName == "widget": 
-                wn = self.get_attribute(node, "id") 
-                if wn == self.window: 
+        conf = dom.getElementsByTagName("glade-interface")[0]
+        for node in conf.childNodes:
+            if node.nodeName == "widget":
+                wn = self.get_attribute(node, "id")
+                if wn == self.window:
                     # widget found
-                    self.handle_node(node) 
+                    self.handle_node(node)
                     return 
     
-    def handle_node(self, node): 
-        if node.nodeName == "widget": 
-            self.handle_widget(node) 
+    def handle_node(self, node):
+        if node.nodeName == "widget":
+            self.handle_widget(node)
              
-        if node.hasChildNodes(): 
-            for child in node.childNodes: 
-                self.handle_node(child) 
+        if node.hasChildNodes():
+            for child in node.childNodes:
+                self.handle_node(child)
     
     def handle_widget(self, widget):
         # connect signals
-        if widget.hasChildNodes(): 
-            for child in widget.childNodes: 
-                if child.nodeName == "signal": 
-                    signal = self.get_attribute(child, "handler") 
+        if widget.hasChildNodes():
+            for child in widget.childNodes:
+                if child.nodeName == "signal":
+                    signal = self.get_attribute(child, "handler")
                     if signal not in dir(self):
-                        classname = self.__class__.__name__ 
+                        classname = self.__class__.__name__
                         print "WARNING: method [" + signal + "] in class [" + classname + "] not found!"
     
-    def get_attribute(self, node, name): 
-        attrs = node.attributes 
-        for i in range(attrs.length): 
-            att = attrs.item(i) 
-            if att.name == name: 
-                return att.nodeValue 
+    def get_attribute(self, node, name):
+        attrs = node.attributes
+        for i in range(attrs.length):
+            att = attrs.item(i)
+            if att.name == name:
+                return att.nodeValue
 
 
