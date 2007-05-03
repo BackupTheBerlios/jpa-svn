@@ -49,6 +49,7 @@ class PreferencesWindow(GladeWindow):
         self.window.destroy()
 
     def _load_config(self):
+        # Blogger authorization data
         try:
             auth = dict(self.cfg.items('auth'))
         except NoSectionError:
@@ -57,6 +58,14 @@ class PreferencesWindow(GladeWindow):
         self.ui.ed_login.set_text(auth.get('login', ''))
         self.ui.ed_password.set_text(auth.get('password', ''))
         self.ui.check_save_auth.set_active(save_auth)
+        # fonts
+        try:
+            fonts = dict(self.cfg.items('fonts'))
+        except NoSectionError:
+            fonts = {}
+        self.ui.font_button_entry_view.set_font_name(fonts.get('entry', 'Sans 12'))
+        self.ui.font_button_entry_editor.set_font_name(fonts.get('editor', 'Monospace 10'))
+        self.ui.font_button_log.set_font_name(fonts.get('log', 'Monospace 10'))
 
     # GTK signal handlers
     def on_check_save_auth_toggled(self, *args):
@@ -83,7 +92,16 @@ class PreferencesWindow(GladeWindow):
         else:
             value = '0'
         self.cfg.set('auth', 'save_auth', value)
-        # save configuration file
+        # fonts
+        if not self.cfg.has_section('fonts'):
+            self.cfg.add_section('fonts')
+        self.cfg.set('fonts', 'entry',
+            self.ui.font_button_entry_view.get_font_name())
+        self.cfg.set('fonts', 'editor',
+            self.ui.font_button_entry_editor.get_font_name())
+        self.cfg.set('fonts', 'log',
+            self.ui.font_button_log.get_font_name())
+        # now, save configuration file
         config_file = os.path.join(const.USER_DIR, 'config')
         fp = open(config_file, 'w')
         try:

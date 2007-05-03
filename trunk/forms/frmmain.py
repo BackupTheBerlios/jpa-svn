@@ -12,7 +12,7 @@ __revision__ = '$Id$'
 
 import os
 
-import gtk
+import gtk, pango
 
 import const, forms, data
 
@@ -21,8 +21,8 @@ class MainWindow(object):
 
     def __init__(self):
         self.data = data.Storage()
-        widget_tree = gtk.glade.XML(const.GLADE_PATH, 'frm_main', 'JPA')
-        widget_tree.signal_autoconnect(self)
+        self.widget_tree = gtk.glade.XML(const.GLADE_PATH, 'frm_main', 'JPA')
+        self.widget_tree.signal_autoconnect(self)
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         self.window.connect('delete-event', self.delete_event)
         forms.set_window_icon(self.window)
@@ -38,18 +38,20 @@ class MainWindow(object):
         self.main_box.pack_start(menubar, expand=False)
         toolbar = uimgr.get_widget('/Toolbar')
         self.main_box.pack_start(toolbar, expand=False)
-        main_widget = widget_tree.get_widget('main_box')
+        main_widget = self.widget_tree.get_widget('main_box')
         main_widget.unparent()
         self.main_box.pack_start(main_widget)
         self.statusbar = gtk.Statusbar()
         self.main_box.pack_end(self.statusbar, expand=False)
         self.window.add(self.main_box)
         self._menu_cix = -1
+        self._set_widget_properties()
 
     def show(self):
         self.window.show_all()
 
     def quit(self):
+        self.data.save()
         gtk.main_quit()
 
     # signal handlers
@@ -143,3 +145,11 @@ class MainWindow(object):
         ui.add_ui_from_file(os.path.join(const.BASE_DIR, 'ui',
             'mainmenu.ui.xml'))
         return ui
+
+    def _set_widget_properties(self):
+        log_view = self.widget_tree.get_widget('text_log_view')
+        try:
+            log_font_name = self.cfg.get('fonts', 'log')
+        except:
+            log_font_name = 'Monospace 10'
+        log_view.modify_font(pango.FontDescription(log_font_name))

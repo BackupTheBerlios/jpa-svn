@@ -26,17 +26,26 @@ class Storage(object):
         else:
             self.filename = filename
         if os.path.isfile(self.filename):
-            fp = open(self.filename, 'b')
+            fp = open(self.filename, 'rb')
             try:
-                self.items = pickle.load(fp)
+                self._items = pickle.load(fp)
             finally:
                 fp.close()
         else:
-            self.items = []
+            self._items = []
 
     def save(self):
         fp = open(self.filename, 'wb')
         try:
-            pickle.dump(self.items, fp, -1)
+            pickle.dump(self._items, fp, -1)
         finally:
             fp.close()
+
+    def get_item(self):
+        try:
+            return self._items.pop(0)
+        except IndexError:
+            return None
+
+    def add_item(self, item):
+        self._items.append(item)
