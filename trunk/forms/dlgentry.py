@@ -18,16 +18,17 @@ import const
 
 def edit_new_entry():
     dlg = EntryWindow()
+    return dlg.run()
 
 class EntryWindow(GladeWindow):
 
     def __init__(self, entry_dict={}):
         self.entry = entry_dict
+        self.saved = False
         self.create_ui(const.GLADE_PATH, 'dlg_entry', domain='jpa')
         self.window = self.ui.dlg_entry
         forms.set_window_icon(self.window)
         self._set_widget_properties()
-        self.run()
 
     def run(self):
         while 1:
@@ -40,12 +41,14 @@ class EntryWindow(GladeWindow):
             else:
                 break
         self.window.destroy()
+        return self.saved
 
     def save(self):
         if self.entry:
             entry = self.entry
         else:
             entry = {}
+        self.saved = True
 
     def _set_widget_properties(self):
         try:

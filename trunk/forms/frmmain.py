@@ -85,7 +85,8 @@ class MainWindow(object):
         self.statusbar.pop(self._menu_cix)
 
     def _on_action_new(self, action):
-        forms.edit_new_entry()
+        changed = forms.edit_new_entry()
+        print changed
 
     def _on_action_edit(self, action):
         pass
