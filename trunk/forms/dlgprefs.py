@@ -63,8 +63,10 @@ class PreferencesWindow(GladeWindow):
             fonts = dict(self.cfg.items('fonts'))
         except NoSectionError:
             fonts = {}
-        self.ui.font_button_entry_view.set_font_name(fonts.get('entry', 'Sans 12'))
-        self.ui.font_button_entry_editor.set_font_name(fonts.get('editor', 'Monospace 10'))
+        self.ui.font_button_entry_view.set_font_name(fonts.get('entry',
+            'Sans 12'))
+        self.ui.font_button_entry_editor.set_font_name(fonts.get('editor',
+            'Monospace 10'))
         self.ui.font_button_log.set_font_name(fonts.get('log', 'Monospace 10'))
 
     # GTK signal handlers

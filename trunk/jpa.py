@@ -15,6 +15,7 @@ import os, sys
 import signal
 import fcntl
 import ConfigParser
+import Queue
 
 import pygtk
 pygtk.require('2.0')
@@ -30,6 +31,7 @@ class JPAApp(object):
 
     def __init__(self):
         self.cfg = const.CONFIG = self._get_configuration()
+        self.queue = Queue.Queue()
         self.main_window = forms.MainWindow()
         self.main_window.show()
 

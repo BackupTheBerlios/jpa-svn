@@ -11,6 +11,7 @@
 __revision__ = '$Id$'
 
 import gtk, pango
+import gobject
 
 import forms
 from forms.gladehelper import GladeWindow
@@ -56,3 +57,9 @@ class EntryWindow(GladeWindow):
         except:
             font_name = 'Monospace 10'
         self.ui.tv_text.modify_font(pango.FontDescription(font_name))
+        completion = gtk.EntryCompletion()
+        self.ui.ed_labels.set_completion(completion)
+        store = gtk.ListStore(gobject.TYPE_STRING)
+        completion.set_model(store)
+        completion.set_text_column(0)
+        completion.connect('match-selected', self.on_match_selected)
