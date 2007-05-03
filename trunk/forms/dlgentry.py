@@ -10,10 +10,7 @@
 
 __revision__ = '$Id$'
 
-import os
-
 import gtk, pango
-import gtk.glade
 
 import forms
 from forms.gladehelper import GladeWindow
@@ -25,11 +22,11 @@ def edit_new_entry():
 class EntryWindow(GladeWindow):
 
     def __init__(self, entry_dict={}):
-        self.entry = None
+        self.entry = entry_dict
         self.create_ui(const.GLADE_PATH, 'dlg_entry', domain='jpa')
         self.window = self.ui.dlg_entry
         forms.set_window_icon(self.window)
-        self.ui.tv_text.modify_font(pango.FontDescription('Monospace 10'))
+        self._set_widget_properties()
         self.run()
 
     def run(self):
@@ -46,6 +43,13 @@ class EntryWindow(GladeWindow):
 
     def save(self):
         if self.entry:
-            pass
+            entry = self.entry
         else:
-            pass
+            entry = {}
+
+    def _set_widget_properties(self):
+        try:
+            font_name = const.CONFIG.get('fonts', 'editor')
+        except:
+            font_name = 'Monospace 10'
+        self.ui.tv_text.modify_font(pango.FontDescription(font_name))

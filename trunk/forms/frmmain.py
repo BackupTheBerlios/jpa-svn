@@ -85,7 +85,7 @@ class MainWindow(object):
         self.statusbar.pop(self._menu_cix)
 
     def _on_action_new(self, action):
-        pass
+        forms.edit_new_entry()
 
     def _on_action_edit(self, action):
         pass
@@ -149,7 +149,13 @@ class MainWindow(object):
     def _set_widget_properties(self):
         log_view = self.widget_tree.get_widget('text_log_view')
         try:
-            log_font_name = self.cfg.get('fonts', 'log')
+            font_name = self.cfg.get('fonts', 'log')
         except:
-            log_font_name = 'Monospace 10'
-        log_view.modify_font(pango.FontDescription(log_font_name))
+            font_name = 'Monospace 10'
+        log_view.modify_font(pango.FontDescription(font_name))
+        entry_view = self.widget_tree.get_widget('text_entry_body')
+        try:
+            font_name = self.cfg.get('fonts', 'entry')
+        except:
+            font_name = 'Sans 12'
+        entry_view.modify_font(pango.FontDescription(font_name))
