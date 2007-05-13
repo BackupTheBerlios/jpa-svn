@@ -10,6 +10,8 @@
 
 __revision__ = '$Id$'
 
+from ConfigParser import NoSectionError, NoOptionError
+
 import gtk, pango
 import gobject
 
@@ -48,18 +50,46 @@ class EntryWindow(GladeWindow):
         if self.entry:
             entry = self.entry
         else:
-            entry = {}
+            text_buffer = self.ui.tv_text.get_buffer()
+            labels_text = self.ui.ed_labels.get_text().decode('utf-8').strip()
+            if labels_text == u'':
+                labels = []
+            else:
+                labels = [label.strip() for label in labels_text.split(',')]
+            entry = {
+                'title': self.ui.ed_title.get_text().decode('utf-8'),
+                'text': text_buffer.get_text(text_buffer.get_start_iter(),
+                    text_buffer.get_end_iter()).decode('utf-8'),
+                'labels': labels,
+                'is_draft': self.ui.ckb_is_draft.get_active(),
+            }
+        print entry
         self.saved = True
 
     def _set_widget_properties(self):
         try:
             font_name = const.CONFIG.get('fonts', 'editor')
-        except:
+        except (NoSectionError, NoOptionError):
             font_name = 'Monospace 10'
         self.ui.tv_text.modify_font(pango.FontDescription(font_name))
+        model = gtk.ListStore(str)
+        for markup_type in const.MARKUP_TYPES:
+            model.append((markup_type, ))
+        self.ui.combo_contenttype.set_model(model)
+        cell = gtk.CellRendererText()
+        self.ui.combo_contenttype.pack_start(cell)
+        self.ui.combo_contenttype.add_attribute(cell, 'text', 0)
+        self.ui.combo_contenttype.set_active(0)
         completion = gtk.EntryCompletion()
         self.ui.ed_labels.set_completion(completion)
         store = gtk.ListStore(gobject.TYPE_STRING)
         completion.set_model(store)
         completion.set_text_column(0)
         completion.connect('match-selected', self.on_match_selected)
+        if self.entry:
+            self.ui.ed_title.set_text(self.entry['title'])
+            bf = self.ui.tv_text.get_buffer()
+            bf.set_text(self.entry['text'])
+
+    def on_match_selected(self, *args, **kwds):
+        pass

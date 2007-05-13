@@ -15,6 +15,7 @@ try:
     import cPickle as pickle
 except ImportError:
     import pickle
+import threading
 
 
 class Storage(object):
@@ -33,6 +34,7 @@ class Storage(object):
                 fp.close()
         else:
             self._items = []
+        self.lock = threading.Lock()
 
     def save(self):
         fp = open(self.filename, 'wb')
@@ -42,10 +44,18 @@ class Storage(object):
             fp.close()
 
     def get_item(self):
+        self.lock.acquire()
         try:
-            return self._items.pop(0)
-        except IndexError:
-            return None
+            try:
+                return self._items.pop(0)
+            except IndexError:
+                return None
+        finally:
+            self.lock.release()
 
     def add_item(self, item):
-        self._items.append(item)
+        self.lock.acquire()
+        try:
+            self._items.append(item)
+        finally:
+            self.lock.release()

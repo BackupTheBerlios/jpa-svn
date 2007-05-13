@@ -27,6 +27,8 @@ CONFIG_DEFAULTS = {
         'save_credentials': '0',
     },
 }
+# this has to be list, as tuples don't provide index()
+MARKUP_TYPES = [u'markdown', u'html', u'plain']
 
 DEBUG = True
 
