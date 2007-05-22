@@ -11,16 +11,14 @@
 __revision__ = '$Id$'
 
 import os
-try:
-    import cPickle as pickle
-except ImportError:
-    import pickle
-import threading
+import cPickle as pickle
+from Queue import Queue, Empty
 
 
 class Storage(object):
 
     def __init__(self, filename=None):
+        self.items = Queue()
         if filename is None:
             import const
             self.filename = os.path.join(const.USER_DIR, 'queue')
@@ -29,33 +27,32 @@ class Storage(object):
         if os.path.isfile(self.filename):
             fp = open(self.filename, 'rb')
             try:
-                self._items = pickle.load(fp)
+                items = pickle.load(fp)
             finally:
                 fp.close()
         else:
-            self._items = []
-        self.lock = threading.Lock()
+            items = []
+        for item in items:
+            self.items.put_nowait(item)
 
     def save(self):
+        items = []
+        while 1:
+            try:
+                items.append(self.items.get_nowait())
+            except Empty:
+                break
         fp = open(self.filename, 'wb')
         try:
-            pickle.dump(self._items, fp, -1)
+            pickle.dump(items, fp, -1)
         finally:
             fp.close()
 
     def get_item(self):
-        self.lock.acquire()
         try:
-            try:
-                return self._items.pop(0)
-            except IndexError:
-                return None
-        finally:
-            self.lock.release()
+            return self.items.get_nowait()
+        except Empty:
+            pass
 
     def add_item(self, item):
-        self.lock.acquire()
-        try:
-            self._items.append(item)
-        finally:
-            self.lock.release()
+        self.items.put_nowait(item)
