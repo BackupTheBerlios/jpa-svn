@@ -38,7 +38,6 @@ app-install-%: make-install-dirs %.desktop
 
 clean:
 	rm -f *.py[co] */*.py[co] messages.mo
-	rm -rf coverage
 	for D in $(SUBDIRS); do cd $$D && make clean && cd ..; done
 
 distclean: clean
