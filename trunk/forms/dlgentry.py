@@ -52,16 +52,23 @@ class EntryWindow(GladeWindow):
         else:
             text_buffer = self.ui.tv_text.get_buffer()
             labels_text = self.ui.ed_labels.get_text().decode('utf-8').strip()
-            if labels_text == u'':
+            if len(labels_text) == 0:
                 labels = []
             else:
                 labels = [label.strip() for label in labels_text.split(',')]
+            model = self.ui.combo_contenttype.get_model()
+            active = self.ui.combo_contenttype.get_active()
+            if active < 0:
+                content_type = ''
+            else:
+                content_type = model[active][0]
             entry = {
                 'title': self.ui.ed_title.get_text().decode('utf-8'),
                 'text': text_buffer.get_text(text_buffer.get_start_iter(),
                     text_buffer.get_end_iter()).decode('utf-8'),
                 'labels': labels,
                 'is_draft': self.ui.ckb_is_draft.get_active(),
+                'content_type': content_type,
             }
         print entry
         self.saved = True
@@ -76,9 +83,6 @@ class EntryWindow(GladeWindow):
         for markup_type in const.MARKUP_TYPES:
             model.append((markup_type, ))
         self.ui.combo_contenttype.set_model(model)
-        cell = gtk.CellRendererText()
-        self.ui.combo_contenttype.pack_start(cell)
-        self.ui.combo_contenttype.add_attribute(cell, 'text', 0)
         self.ui.combo_contenttype.set_active(0)
         completion = gtk.EntryCompletion()
         self.ui.ed_labels.set_completion(completion)
@@ -88,8 +92,10 @@ class EntryWindow(GladeWindow):
         completion.connect('match-selected', self.on_match_selected)
         if self.entry:
             self.ui.ed_title.set_text(self.entry['title'])
+            self.window.set_title(_('Entry: %s') % self.entry['title'])
             bf = self.ui.tv_text.get_buffer()
             bf.set_text(self.entry['text'])
+            self.ui.combo_contenttype.set_active(const.MARKUP_TYPES.index(self.entry['content_type']))
 
     def on_match_selected(self, *args, **kwds):
         pass

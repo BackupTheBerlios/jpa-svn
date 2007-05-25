@@ -33,6 +33,7 @@ class PreferencesWindow(GladeWindow):
         self.create_ui(const.GLADE_PATH, 'dlg_prefs', domain='jpa')
         self.window = self.ui.dlg_prefs
         forms.set_window_icon(self.window)
+        self._set_widgets()
         self._load_config()
         self.run()
 
@@ -48,6 +49,13 @@ class PreferencesWindow(GladeWindow):
                 break
         self.window.destroy()
 
+    def _set_widgets(self):
+        model = gtk.ListStore(str)
+        for markup_type in const.MARKUP_TYPES:
+            model.append((markup_type, ))
+        self.ui.combo_texttype.set_model(model)
+        self.ui.nbk_main.set_current_page(0)
+
     def _load_config(self):
         # Blogger authorization data
         try:
@@ -58,6 +66,13 @@ class PreferencesWindow(GladeWindow):
         self.ui.ed_login.set_text(auth.get('login', ''))
         self.ui.ed_password.set_text(auth.get('password', ''))
         self.ui.check_save_auth.set_active(save_auth)
+        # misc
+        try:
+            misc = dict(self.cfg.items('misc'))
+        except NoSectionError:
+            misc = {}
+        content_type = misc.get('content_type', 'markdown')
+        self.ui.combo_texttype.set_active(const.MARKUP_TYPES.index(content_type))
         # fonts
         try:
             fonts = dict(self.cfg.items('fonts'))
@@ -94,6 +109,16 @@ class PreferencesWindow(GladeWindow):
         else:
             value = '0'
         self.cfg.set('auth', 'save_auth', value)
+        # misc
+        if not self.cfg.has_section('misc'):
+            self.cfg.add_section('misc')
+        model = self.ui.combo_texttype.get_model()
+        active = self.ui.combo_texttype.get_active()
+        if active < 0:
+            content_type = 'markdown'
+        else:
+            content_type = model[active][0]
+        self.cfg.set('misc', 'content_type', content_type)
         # fonts
         if not self.cfg.has_section('fonts'):
             self.cfg.add_section('fonts')
