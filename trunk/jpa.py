@@ -13,12 +13,12 @@ __revision__ = '$Id$'
 
 import os, sys
 import signal
-import fcntl
 import ConfigParser
 
 import pygtk
 pygtk.require('2.0')
 import gtk
+import gobject
 
 import const
 import sysutils
@@ -50,16 +50,21 @@ class JPAApp(object):
 
 
 if __name__ == '__main__':
-    pid_file = os.path.join(const.USER_DIR, 'jpa.pid')
-    fp = open(pid_file, 'w')
-    try:
-        fcntl.lockf(fp, fcntl.LOCK_EX | fcntl.LOCK_NB)
-    except IOError:
-        # another instance is running
-        sys.exit(0)
+    if os.name == 'nt':
+        pass
+    elif os.name == 'posix':
+        import fcntl
+        pid_file = os.path.join(const.USER_DIR, 'jpa.pid')
+        fp = open(pid_file, 'w')
+        try:
+            fcntl.lockf(fp, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except IOError:
+            # another instance is running
+            sys.exit(0)
     basedir = os.path.dirname(os.path.realpath(__file__))
     if basedir.endswith('/share/jpa2'):
         sys.path.append(basedir[:-10] + 'lib/jpa2')
+    gobject.threads_init()
     import gettext, locale
     locale.setlocale(locale.LC_ALL, '')
     gtk.glade.bindtextdomain('jpa')

@@ -54,7 +54,6 @@ class PreferencesWindow(GladeWindow):
         for markup_type in const.MARKUP_TYPES:
             model.append((markup_type, ))
         self.ui.combo_texttype.set_model(model)
-        self.ui.nbk_main.set_current_page(0)
 
     def _load_config(self):
         # Blogger authorization data
@@ -66,6 +65,7 @@ class PreferencesWindow(GladeWindow):
         self.ui.ed_login.set_text(auth.get('login', ''))
         self.ui.ed_password.set_text(auth.get('password', ''))
         self.ui.check_save_auth.set_active(save_auth)
+        self.ui.tbl_auth_data.set_sensitive(save_auth)
         # misc
         try:
             misc = dict(self.cfg.items('misc'))
@@ -83,11 +83,25 @@ class PreferencesWindow(GladeWindow):
         self.ui.font_button_entry_editor.set_font_name(fonts.get('editor',
             'Monospace 10'))
         self.ui.font_button_log.set_font_name(fonts.get('log', 'Monospace 10'))
+        # network
+        try:
+            newtwork = dict(self.cfg.items('networks'))
+        except NoSectionError:
+            network = {}
+        use_proxy = (network.get('use_proxy', '0') == '1')
+        self.ui.check_use_proxy.set_active(use_proxy)
+        self.ui.ed_proxy_host.set_text(network.get('proxy_host', ''))
+        self.ui.spin_proxy_port.set_value(int(network.get('proxy_port', 8080)))
+        self.ui.ed_proxy_login.set_text(network.get('proxy_login', ''))
+        self.ui.ed_proxy_password.set_text(network.get('proxy_password', ''))
+        self.ui.tbl_proxy_settings.set_sensitive(use_proxy)
 
     # GTK signal handlers
     def on_check_save_auth_toggled(self, *args):
         self.ui.tbl_auth_data.set_sensitive(args[0].get_active())
-        self.ui.ed_login.grab_focus()
+
+    def on_check_use_proxy_toggled(self, *args):
+        self.ui.tbl_proxy_settings.set_sensitive(args[0].get_active())
 
     # miscellaneous
     def save_config(self):
@@ -109,7 +123,7 @@ class PreferencesWindow(GladeWindow):
         else:
             value = '0'
         self.cfg.set('auth', 'save_auth', value)
-        # misc
+        # misc - miscellanea
         if not self.cfg.has_section('misc'):
             self.cfg.add_section('misc')
         model = self.ui.combo_texttype.get_model()
@@ -128,6 +142,29 @@ class PreferencesWindow(GladeWindow):
             self.ui.font_button_entry_editor.get_font_name())
         self.cfg.set('fonts', 'log',
             self.ui.font_button_log.get_font_name())
+        # network
+        if not self.cfg.has_section('network'):
+            self.cfg.add_section('network')
+        use_proxy = self.ui.check_use_proxy.get_active()
+        if use_proxy:
+            proxy_host = self.ui.ed_proxy_host.get_text()
+            proxy_port = str(self.ui.spin_proxy_port.get_value_as_int())
+            proxy_login = self.ui.ed_proxy_login.get_text()
+            proxy_passwd = self.ui.ed_proxy_password.get_text()
+        else:
+            proxy_host = ''
+            proxy_port = '0'
+            proxy_login = ''
+            proxy_passwd = ''
+        if use_proxy:
+            value = '1'
+        else:
+            value = '0'
+        self.cfg.set('network', 'use_proxy', value)
+        self.cfg.set('network', 'proxy_host', proxy_host)
+        self.cfg.set('network', 'proxy_port', proxy_port)
+        self.cfg.set('network', 'proxy_login', proxy_login)
+        self.cfg.set('network', 'proxy_password', proxy_passwd)
         # now, save configuration file
         config_file = os.path.join(const.USER_DIR, 'config')
         fp = open(config_file, 'w')
