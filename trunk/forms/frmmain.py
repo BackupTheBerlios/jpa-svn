@@ -115,7 +115,7 @@ class MainWindow(object):
         pass
 
     def _on_action_list_blogs(self, action):
-        pass
+        forms.show_blogs_list()
 
     def _on_action_about(self, action):
         forms.show_about()
@@ -144,7 +144,7 @@ class MainWindow(object):
             ('ToolsMenu', None, _('_Tools')),
             ('BlogList', None, _('_Blogs'), None,
                 _('List of blogs'), self._on_action_list_blogs),
-            ('HelpMenu', None, _('Help')),
+            ('HelpMenu', None, _('_Help')),
             ('About', gtk.STOCK_ABOUT, _('_About...'), None,
                 _('About JPA, the Weblog Assistant'), self._on_action_about),
         ]
@@ -153,6 +153,9 @@ class MainWindow(object):
         ui.insert_action_group(ag, 0)
         ui.add_ui_from_file(os.path.join(const.BASE_DIR, 'ui',
             'mainmenu.ui.xml'))
+        # initial disabling of some actions
+        ag.get_action('Edit').set_sensitive(False)
+        ag.get_action('Publish').set_sensitive(False)
         return ui
 
     def _set_widget_properties(self):
