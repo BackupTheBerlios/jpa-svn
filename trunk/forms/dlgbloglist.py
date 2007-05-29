@@ -10,10 +10,13 @@
 
 __revision__ = '$Id$'
 
+import os
 import time
 import threading, Queue
+import cPickle as pickle
 
 import gobject
+import gtk
 from gdata import service
 
 import const
@@ -59,36 +62,71 @@ class UpdaterThread(threading.Thread):
 class BlogListWindow(GladeWindow):
 
     def __init__(self):
-        self.weblogs = []
         self.create_ui(const.GLADE_PATH, 'dlg_bloglist', domain='jpa')
         self.window = self.ui.dlg_bloglist
         forms.set_window_icon(self.window)
         self._set_widgets()
-        self.idle_timer = gobject.idle_add(self._pulse)
+        self.idle_timer = None
         self.queue = Queue.Queue()
-        updater = UpdaterThread(self.queue)
-        updater.start()
+        self.updater = UpdaterThread(self.queue)
         self.window.present()
 
     def _set_widgets(self):
-        pass
+        model = gtk.ListStore(str, str, str)
+        cells = (gtk.CellRendererText(), gtk.CellRendererText(),
+            gtk.CellRendererText())
+        columns = (
+            gtk.TreeViewColumn(_('Title'), cells[0], text=0),
+            gtk.TreeViewColumn(_('Blog URL'), cells[1], text=1),
+            gtk.TreeViewColumn(_('Updated'), cells[2], text=2),
+        )
+        for column in columns:
+            self.ui.list_blogs.append_column(column)
+        self.ui.list_blogs.set_model(model)
+        try:
+            fp = open(os.path.join(const.USER_DIR, 'weblogs'), 'rb')
+            try:
+                weblogs = pickle.load(fp)
+            finally:
+                fp.close()
+        except IOError:
+            weblogs = []
+        self._update_blog_list(weblogs)
 
     def _pulse(self):
+        weblogs = []
         try:
-            self.weblogs = self.queue.get_nowait()
-            print self.weblogs
+            weblogs = self.queue.get_nowait()
+            self._update_blog_list(weblogs)
+            fp = open(os.path.join(const.USER_DIR, 'weblogs'), 'wb')
+            try:
+                pickle.dump(weblogs, fp, -1)
+            finally:
+                fp.close()
             self.ui.progress_update.set_fraction(0.0)
-            self.ui.box_update.hide()
         except Queue.Empty:
             pass
-        if len(self.weblogs) == 0:
+        if len(weblogs) == 0:
             time.sleep(0.1)
             self.ui.progress_update.pulse()
             return True
         return False
 
+    def _update_blog_list(self, weblogs):
+        model = self.ui.list_blogs.get_model()
+        model.clear()
+        for weblog in weblogs:
+            model.append((weblog['title'], weblog['alternate'],
+                weblog['updated']))
+
     def on_btn_update_clicked(self, *args):
-        print 'update'
+        self.idle_timer = gobject.idle_add(self._pulse)
+        self.updater.start()
 
     def on_btn_close_clicked(self, *args):
-        gobject.source_remove(self.idle_timer)
+        if self.idle_timer:
+            gobject.source_remove(self.idle_timer)
+        self.window.destroy()
+
+    def on_dlg_bloglist_close(self, *args):
+        print 'close'
