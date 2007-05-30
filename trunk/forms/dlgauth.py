@@ -6,9 +6,9 @@
 # it under the terms of the GNU General Public License version 2 as
 # published by the Free Software Foundation.
 
-"""Transport package initialization"""
+"""Authentication/login dialog"""
 
 __revision__ = '$Id$'
 
-# service singleton
-service = None
+def get_auth_data(captcha=None):
+    pass

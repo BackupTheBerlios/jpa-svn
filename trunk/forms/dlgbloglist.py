@@ -23,6 +23,7 @@ from gdata import service
 import const
 import forms
 from forms.gladehelper import GladeWindow
+import transport
 
 def show_blogs_list():
     dlg = BlogListWindow()
@@ -30,18 +31,17 @@ def show_blogs_list():
 
 class UpdaterThread(threading.Thread):
 
-    def __init__(self, queue):
+    def __init__(self, queue, login, password):
+        self.login = login
+        self.password = password
         self.queue = queue
         threading.Thread.__init__(self)
 
     def run(self):
         blogs = []
-        try:
-            login = const.CONFIG.get('auth', 'login')
-            password = const.CONFIG.get('auth', 'password')
-        except (NoSectionError, NoOptionError):
-            return
-        svc = service.GDataService(login, password)
+        if not transport.service:
+            transport.service = service.GDataService(self.login, self.password)
+        svc = transport.service
         svc.source = 'zgoda-JPA-0.6'
         svc.service = 'blogger'
         svc.server = 'www.blogger.com'
@@ -72,7 +72,6 @@ class BlogListWindow(GladeWindow):
         self._set_widgets()
         self.idle_timer = None
         self.queue = Queue.Queue()
-        self.updater = UpdaterThread(self.queue)
         self.window.present()
 
     def _set_widgets(self):
@@ -124,8 +123,15 @@ class BlogListWindow(GladeWindow):
                 weblog['updated']))
 
     def on_btn_update_clicked(self, *args):
+        try:
+            login = const.CONFIG.get('auth', 'login')
+            password = const.CONFIG.get('auth', 'password')
+        except (NoSectionError, NoOptionError):
+            return
         self.idle_timer = gobject.idle_add(self._pulse)
-        self.updater.start()
+        updater = UpdaterThread(self.queue, login, password)
+        updater.setDaemon(True)
+        updater.start()
 
     def on_btn_close_clicked(self, *args):
         if self.idle_timer:
