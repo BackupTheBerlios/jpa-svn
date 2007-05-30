@@ -17,3 +17,4 @@ from dlgabout import show_dialog as show_about
 from dlgentry import edit_new_entry
 from dlgprefs import edit_preferences
 from dlgbloglist import show_blogs_list
+from dlgauth import get_auth_data

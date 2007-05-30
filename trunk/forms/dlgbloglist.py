@@ -126,8 +126,10 @@ class BlogListWindow(GladeWindow):
         try:
             login = const.CONFIG.get('auth', 'login')
             password = const.CONFIG.get('auth', 'password')
+            if not (login and password):
+                raise NoSectionError('auth')
         except (NoSectionError, NoOptionError):
-            return
+            login, password, captcha = forms.get_auth_data()
         self.idle_timer = gobject.idle_add(self._pulse)
         updater = UpdaterThread(self.queue, login, password)
         updater.setDaemon(True)
