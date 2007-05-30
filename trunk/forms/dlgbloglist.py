@@ -14,6 +14,7 @@ import os
 import time
 import threading, Queue
 import cPickle as pickle
+from ConfigParser import NoSectionError, NoOptionError
 
 import gobject
 import gtk
@@ -35,8 +36,11 @@ class UpdaterThread(threading.Thread):
 
     def run(self):
         blogs = []
-        login = const.CONFIG.get('auth', 'login')
-        password = const.CONFIG.get('auth', 'password')
+        try:
+            login = const.CONFIG.get('auth', 'login')
+            password = const.CONFIG.get('auth', 'password')
+        except (NoSectionError, NoOptionError):
+            return
         svc = service.GDataService(login, password)
         svc.source = 'zgoda-JPA-0.6'
         svc.service = 'blogger'
@@ -128,5 +132,6 @@ class BlogListWindow(GladeWindow):
             gobject.source_remove(self.idle_timer)
         self.window.destroy()
 
-    def on_dlg_bloglist_close(self, *args):
-        print 'close'
+    def on_dlg_bloglist_delete_event(self, *args):
+        if self.idle_timer:
+            gobject.source_remove(self.idle_timer)

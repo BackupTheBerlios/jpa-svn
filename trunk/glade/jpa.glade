@@ -2617,6 +2617,7 @@
   <property name="focus_on_map">True</property>
   <property name="urgency_hint">False</property>
   <property name="has_separator">True</property>
+  <signal name="delete_event" handler="on_dlg_bloglist_delete_event" last_modification_time="Wed, 30 May 2007 11:39:16 GMT"/>
 
   <child internal-child="vbox">
     <widget class="GtkVBox" id="dialog-vbox5">
