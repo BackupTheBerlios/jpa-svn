@@ -31,7 +31,8 @@ def show_blogs_list():
 
 class UpdaterThread(threading.Thread):
 
-    def __init__(self, queue, login, password):
+    def __init__(self, service, queue, login, password):
+        self.service = service
         self.login = login
         self.password = password
         self.queue = queue
@@ -39,16 +40,9 @@ class UpdaterThread(threading.Thread):
 
     def run(self):
         blogs = []
-        if not transport.service:
-            transport.service = service.GDataService(self.login, self.password)
-        svc = transport.service
-        svc.source = 'zgoda-JPA-0.6'
-        svc.service = 'blogger'
-        svc.server = 'www.blogger.com'
-        svc.ProgrammaticLogin()
-        query = service.Query()
+        query = self.service.Query()
         query.feed = '/feeds/default/blogs'
-        feed = svc.Get(query.ToUri())
+        feed = self.service.Get(query.ToUri())
         for entry in feed.entry:
             blog_dict = {
                 'id': entry.id.text,
@@ -130,8 +124,26 @@ class BlogListWindow(GladeWindow):
                 raise NoSectionError('auth')
         except (NoSectionError, NoOptionError):
             login, password, captcha = forms.get_auth_data()
+        if not (login and password):
+            return
+        if not transport.service:
+            transport.service = service.GDataService(login, password)
+        svc = transport.service
+        svc.source = 'zgoda-JPA-0.6'
+        svc.service = 'blogger'
+        svc.server = 'www.blogger.com'
+        try:
+            svc.ProgrammaticLogin()
+        except service.CaptchaRequired:
+            url = svc.captcha_url
+            token = svc.captcha_token
+            login, password, captcha = forms.get_auth_data(url)
+            svc.ProgrammaticLogin(token, captcha)
+        except service.BadAuthentication:
+            # show the error
+            pass
         self.idle_timer = gobject.idle_add(self._pulse)
-        updater = UpdaterThread(self.queue, login, password)
+        updater = UpdaterThread(svc, self.queue, login, password)
         updater.setDaemon(True)
         updater.start()
 

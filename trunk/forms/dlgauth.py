@@ -18,14 +18,16 @@ import const
 import forms
 from forms.gladehelper import GladeWindow
 
-def get_auth_data(captcha=None):
-    dlg = AuthenticationDialog(captcha)
+def get_auth_data(login=None, password=None, captcha=None):
+    dlg = AuthenticationDialog(login, password, captcha)
     return dlg.run()
 
 
 class AuthenticationDialog(GladeWindow):
 
-    def __init__(self, captcha):
+    def __init__(self, login, password, captcha):
+        self.login = login
+        self.password = password
         self.captcha = captcha
         self.create_ui(const.GLADE_PATH, 'dlg_auth', domain='jpa')
         self.window = self.ui.dlg_auth
@@ -46,9 +48,14 @@ class AuthenticationDialog(GladeWindow):
                 if self.ui.check_save_auth.get_active():
                     self._save_auth_data()
             break
-        return result
+        self.window.destroy()
+        return tuple(result)
 
     def _set_widgets(self):
+        if self.login:
+            self.ui.ed_login.set_text(self.login)
+        if self.password:
+            self.ui.ed_password.set_text(self.password)
         if self.captcha:
             self.ui.box_captcha.show_all()
         else:
