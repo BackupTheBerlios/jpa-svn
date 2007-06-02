@@ -6,6 +6,8 @@
             <menuitem action="SaveAs"/>
             <menuitem action="Publish"/>
             <separator/>
+            <menuitem action="ToggleOnline"/>
+            <separator/>
             <menuitem action="Quit"/>
         </menu>
         <menu action="EditMenu">

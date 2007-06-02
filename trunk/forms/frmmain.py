@@ -21,6 +21,7 @@ import const, forms, data
 class MainWindow(object):
 
     def __init__(self):
+        self.online = False
         self.cfg = const.CONFIG
         self.data = data.Storage()
         self.widget_tree = gtk.glade.XML(const.GLADE_PATH, 'frm_main', 'JPA')
@@ -105,6 +106,9 @@ class MainWindow(object):
     def _on_action_publish(self, action):
         pass
 
+    def _on_action_toggle_online(self, action):
+        self.online = not self.online
+
     def _on_action_quit(self, action):
         self.quit()
 
@@ -131,7 +135,7 @@ class MainWindow(object):
                 _('Edit entry'), self._on_action_edit),
             ('SaveAs', gtk.STOCK_SAVE_AS, _('Save _As...'), None,
                 _('Save entry to disk file'), self._on_action_save_as),
-            ('Publish', gtk.STOCK_CONNECT, _('_Publish'), None,
+            ('Publish', gtk.STOCK_EXECUTE, _('_Publish'), None,
                 _('Publish an entry to weblog'), self._on_action_publish),
             ('Quit', gtk.STOCK_QUIT, _('_Quit'), None,
                 _('Close the program'), self._on_action_quit),
@@ -149,6 +153,11 @@ class MainWindow(object):
                 _('About JPA, the Weblog Assistant'), self._on_action_about),
         ]
         ag.add_actions(actions)
+        toggle_actions = [
+            ('ToggleOnline', None, _('_Online'), None,
+                _('Toggle online mode'), self._on_action_toggle_online),
+        ]
+        ag.add_toggle_actions(toggle_actions)
         ui = gtk.UIManager()
         ui.insert_action_group(ag, 0)
         ui.add_ui_from_file(os.path.join(const.BASE_DIR, 'ui',
