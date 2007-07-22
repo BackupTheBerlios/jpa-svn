@@ -206,6 +206,7 @@
 	      <child>
 		<widget class="GtkEntry" id="ed_labels">
 		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">Enter entry labels, separated by comma</property>
 		  <property name="can_focus">True</property>
 		  <property name="editable">True</property>
 		  <property name="visibility">True</property>
@@ -300,6 +301,7 @@
 	      <child>
 		<widget class="GtkCheckButton" id="ckb_is_draft">
 		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">Mark to save entry as draft</property>
 		  <property name="can_focus">True</property>
 		  <property name="label" translatable="yes">_Draft</property>
 		  <property name="use_underline">True</property>
@@ -655,7 +657,7 @@
 			  <child>
 			    <widget class="GtkLabel" id="label21">
 			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Entry text type:</property>
+			      <property name="label" translatable="yes">Default entry content type:</property>
 			      <property name="use_underline">False</property>
 			      <property name="use_markup">False</property>
 			      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -1099,6 +1101,7 @@
 			  <child>
 			    <widget class="GtkCheckButton" id="check_save_auth">
 			      <property name="visible">True</property>
+			      <property name="tooltip" translatable="yes">Check to save authorization data across sessions</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">Save a_uthorization data</property>
 			      <property name="use_underline">True</property>
@@ -1711,6 +1714,7 @@
 	  <child>
 	    <widget class="GtkCheckButton" id="check_save_auth">
 	      <property name="visible">True</property>
+	      <property name="tooltip" translatable="yes">Check to save authorization data across sessions</property>
 	      <property name="can_focus">True</property>
 	      <property name="label" translatable="yes">Save authentication data</property>
 	      <property name="use_underline">True</property>
@@ -2641,6 +2645,7 @@
 	      <child>
 		<widget class="GtkTreeView" id="list_blogs">
 		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">List of your blogs on Blogger</property>
 		  <property name="can_focus">True</property>
 		  <property name="headers_visible">True</property>
 		  <property name="rules_hint">True</property>
