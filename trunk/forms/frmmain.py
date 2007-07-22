@@ -11,6 +11,7 @@
 __revision__ = '$Id$'
 
 import os
+import cPickle as pickle
 from ConfigParser import NoSectionError, NoOptionError
 
 import gtk, pango
@@ -72,6 +73,14 @@ class MainWindow(object):
     def on_btn_search_clicked(self, widget, data=None):
         print "search"
 
+    def on_combo_blogs_changed(self, widget, data=None):
+        model = widget.get_model()
+        active = widget.get_active()
+        if active >= 0:
+            self.online = True
+            title, feed, post_url = model[active]
+            print title, feed, post_url
+
     # uimanager
     def _on_uimanager__connect_proxy(self, uimgr, action, widget):
         tooltip = action.get_property('tooltip')
@@ -108,6 +117,8 @@ class MainWindow(object):
 
     def _on_action_toggle_online(self, action):
         self.online = not self.online
+        if self.online:
+            self._go_online()
 
     def _on_action_quit(self, action):
         self.quit()
@@ -180,3 +191,35 @@ class MainWindow(object):
         except (NoSectionError, NoOptionError):
             font_name = 'Sans 12'
         entry_view.modify_font(pango.FontDescription(font_name))
+        # entries list
+        entry_list = self.widget_tree.get_widget('lv_entries')
+        model = gtk.ListStore(str, str)
+        cells = (gtk.CellRendererText(), gtk.CellRendererText())
+        columns = (
+            gtk.TreeViewColumn(_('Title'), cells[0], text=0),
+            gtk.TreeViewColumn(_('Published'), cells[1], text=1),
+        )
+        for column in columns:
+            entry_list.append_column(column)
+        entry_list.set_model(model)
+        # blogs combo
+        try:
+            fp = open(os.path.join(const.USER_DIR, 'weblogs'), 'rb')
+            try:
+                self.weblogs = pickle.load(fp)
+            finally:
+                fp.close()
+        except IOError:
+            self.weblogs = []
+        model = gtk.ListStore(str, str, str)
+        for weblog in self.weblogs:
+            model.append((weblog['title'], weblog['feed'], weblog['post']))
+        blogs_combo = self.widget_tree.get_widget('combo_blogs')
+        cell = gtk.CellRendererText()
+        blogs_combo.pack_start(cell, True)
+        blogs_combo.add_attribute(cell, 'text', 0)
+        blogs_combo.set_model(model)
+
+    def _go_online(self):
+        entry_list = self.widget_tree.get_widget('lv_entries')
+        model = entry_list.get_model()
