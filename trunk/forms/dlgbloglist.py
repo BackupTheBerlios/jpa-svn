@@ -40,7 +40,7 @@ class UpdaterThread(threading.Thread):
 
     def run(self):
         blogs = []
-        query = self.service.Query()
+        query = service.Query()
         query.feed = '/feeds/default/blogs'
         feed = self.service.Get(query.ToUri())
         for entry in feed.entry:

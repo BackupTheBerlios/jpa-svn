@@ -95,7 +95,9 @@ class EntryWindow(GladeWindow):
             self.window.set_title(_('Entry: %s') % self.entry['title'])
             bf = self.ui.tv_text.get_buffer()
             bf.set_text(self.entry['text'])
-            self.ui.combo_contenttype.set_active(const.MARKUP_TYPES.index(self.entry['content_type']))
+            self.ui.combo_contenttype.set_active(
+                const.MARKUP_TYPES.index(self.entry['content_type'])
+            )
 
     def on_match_selected(self, *args, **kwds):
         pass
