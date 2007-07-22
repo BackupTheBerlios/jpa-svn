@@ -126,12 +126,7 @@ class BlogListWindow(GladeWindow):
             login, password, captcha = forms.get_auth_data()
         if not (login and password):
             return
-        if not transport.service:
-            transport.service = service.GDataService(login, password)
-        svc = transport.service
-        svc.source = 'zgoda-JPA-0.6'
-        svc.service = 'blogger'
-        svc.server = 'www.blogger.com'
+        svc = transport.get_service(login, password)
         try:
             svc.ProgrammaticLogin()
         except service.CaptchaRequired:

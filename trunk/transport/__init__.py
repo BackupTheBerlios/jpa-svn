@@ -10,5 +10,18 @@
 
 __revision__ = '$Id$'
 
+from gdata import service as gdataservice
+
+import const
+
 # service singleton
-service = None
+__service = None
+
+def get_service(login, password):
+    global __service
+    if not __service:
+        __service = gdataservice.GDataService(login, password)
+        __service.source = 'zgoda-JPA-%s' % const.VERSION_STRING
+        __service.service = 'blogger'
+        __service.server = 'www.blogger.com'
+    return __service
