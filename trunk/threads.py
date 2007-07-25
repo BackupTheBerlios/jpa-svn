@@ -12,4 +12,16 @@ __revision__ = '$Id$'
 
 import threading
 
+import const
+import transport
 import signals
+
+class EntriesRetrieverThread(threading.Thread):
+
+    def __init__(self, blog, service):
+        threading.Thread.__init__(self)
+        self.blog = blog
+        self.service = service
+
+    def run(self):
+        blog_id = self.blog['id']

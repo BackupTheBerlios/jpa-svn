@@ -80,6 +80,9 @@ class MainWindow(object):
             self.online = True
             title, feed, post_url = model[active]
             print title, feed, post_url
+            for blog in self.weblogs:
+                if blog['title'] == title:
+                    break
 
     # uimanager
     def _on_uimanager__connect_proxy(self, uimgr, action, widget):
