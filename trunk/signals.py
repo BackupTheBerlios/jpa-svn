@@ -6,10 +6,16 @@
 # it under the terms of the GNU General Public License version 2 as
 # published by the Free Software Foundation.
 
-"""Program threads library"""
+"""Application signals"""
 
-__revision__ = '$Id$'
+__revision__ = '$Id'
 
-import threading
+# entry-related signals
+entry_posted = object()
+entry_deleted = object()
 
-import signals
+# comment-related signals
+comment_deleted = object()
+
+# miscellaneous signals
+post_list_retrieving_finished = object()
