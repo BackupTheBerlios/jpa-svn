@@ -1,4 +1,4 @@
-MODULES = const.py data.py jpa.py sysutils.py markdown.py
+MODULES = const.py data.py jpa.py sysutils.py markdown.py signals.py threads.py textile.py
 MODULE_DIRS = forms transport ui glade doc
 PROGRAMS = jpa
 SUBDIRS = po
