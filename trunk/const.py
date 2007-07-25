@@ -28,7 +28,7 @@ CONFIG_DEFAULTS = {
     },
 }
 # this has to be list, as tuples don't provide index()
-MARKUP_TYPES = [u'markdown', u'html', u'plain']
+MARKUP_TYPES = [u'textile', u'markdown', u'html', u'plain']
 
 DEBUG = True
 
