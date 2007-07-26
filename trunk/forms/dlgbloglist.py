@@ -53,6 +53,9 @@ class UpdaterThread(threading.Thread):
                 rel = link.rel.split('#')[-1]
                 href = link.href
                 blog_dict[rel] = href
+                if rel == 'self':
+                    blog_id = href.split('/')[-1]
+                    blog_dict['blog_id'] = blog_id
             blogs.append(blog_dict)
         self.queue.put_nowait(blogs)
 
