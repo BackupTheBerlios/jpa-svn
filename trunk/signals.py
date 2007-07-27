@@ -8,7 +8,7 @@
 
 """Application signals"""
 
-__revision__ = '$Id'
+__revision__ = '$Id$'
 
 # entry-related signals
 entry_posted = object()
