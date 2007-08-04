@@ -31,10 +31,8 @@ def show_blogs_list():
 
 class UpdaterThread(threading.Thread):
 
-    def __init__(self, service, queue, login, password):
+    def __init__(self, service, queue):
         self.service = service
-        self.login = login
-        self.password = password
         self.queue = queue
         threading.Thread.__init__(self)
 
@@ -141,7 +139,7 @@ class BlogListWindow(GladeWindow):
             # show the error
             pass
         self.idle_timer = gobject.idle_add(self._pulse)
-        updater = UpdaterThread(svc, self.queue, login, password)
+        updater = UpdaterThread(svc, self.queue)
         updater.setDaemon(True)
         updater.start()
 

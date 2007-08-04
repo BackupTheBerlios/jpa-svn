@@ -12,6 +12,7 @@ __revision__ = '$Id$'
 
 import os
 import cPickle as pickle
+import Queue
 from ConfigParser import NoSectionError, NoOptionError
 
 import gtk, pango
@@ -22,7 +23,6 @@ import const, forms, data
 class MainWindow(object):
 
     def __init__(self):
-        self.online = False
         self.cfg = const.CONFIG
         self.data = data.Storage()
         self.widget_tree = gtk.glade.XML(const.GLADE_PATH, 'frm_main', 'JPA')
@@ -51,6 +51,7 @@ class MainWindow(object):
         self.window.add(self.main_box)
         self._menu_cix = -1
         self._set_widget_properties()
+        self.queue = Queue.Queue()
 
     def show(self):
         self.window.show_all()
@@ -77,11 +78,9 @@ class MainWindow(object):
         model = widget.get_model()
         active = widget.get_active()
         if active >= 0:
-            self.online = True
             title, feed, post_url = model[active]
-            print title, feed, post_url
             for blog in self.weblogs:
-                if blog['title'] == title:
+                if blog['post_url'] == post_url:
                     break
 
     # uimanager
@@ -117,11 +116,6 @@ class MainWindow(object):
 
     def _on_action_publish(self, action):
         pass
-
-    def _on_action_toggle_online(self, action):
-        self.online = not self.online
-        if self.online:
-            self._go_online()
 
     def _on_action_quit(self, action):
         self.quit()
@@ -167,11 +161,6 @@ class MainWindow(object):
                 _('About JPA, the Weblog Assistant'), self._on_action_about),
         ]
         ag.add_actions(actions)
-        toggle_actions = [
-            ('ToggleOnline', None, _('_Online'), None,
-                _('Toggle online mode'), self._on_action_toggle_online),
-        ]
-        ag.add_toggle_actions(toggle_actions)
         ui = gtk.UIManager()
         ui.insert_action_group(ag, 0)
         ui.add_ui_from_file(os.path.join(const.BASE_DIR, 'ui',
@@ -222,7 +211,3 @@ class MainWindow(object):
         blogs_combo.pack_start(cell, True)
         blogs_combo.add_attribute(cell, 'text', 0)
         blogs_combo.set_model(model)
-
-    def _go_online(self):
-        entry_list = self.widget_tree.get_widget('lv_entries')
-        model = entry_list.get_model()

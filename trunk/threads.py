@@ -18,10 +18,11 @@ import signals
 
 class EntriesRetrieverThread(threading.Thread):
 
-    def __init__(self, blog, service):
+    def __init__(self, service, queue, blog):
         threading.Thread.__init__(self)
         self.blog = blog
         self.service = service
 
     def run(self):
-        blog_id = self.blog['id']
+        blog_id = self.blog['blog_id']
+        feed = self.service.GetFeed('/feeds/%s/posts/default' % blog_id)
