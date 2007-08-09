@@ -78,10 +78,8 @@ class MainWindow(object):
         model = widget.get_model()
         active = widget.get_active()
         if active >= 0:
-            title, feed, post_url = model[active]
-            for blog in self.weblogs:
-                if blog['post_url'] == post_url:
-                    break
+            title, feed, post_url, blog_id = model[active]
+            print blog_id
 
     # uimanager
     def _on_uimanager__connect_proxy(self, uimgr, action, widget):
@@ -203,9 +201,10 @@ class MainWindow(object):
                 fp.close()
         except IOError:
             self.weblogs = []
-        model = gtk.ListStore(str, str, str)
+        model = gtk.ListStore(str, str, str, str)
         for weblog in self.weblogs:
-            model.append((weblog['title'], weblog['feed'], weblog['post']))
+            model.append((weblog['title'], weblog['feed'], weblog['post'],
+                weblog['blog_id']))
         blogs_combo = self.widget_tree.get_widget('combo_blogs')
         cell = gtk.CellRendererText()
         blogs_combo.pack_start(cell, True)
